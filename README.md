@@ -147,7 +147,28 @@ Sell consulting calls. Deliver service manually. Learn what clients actually nee
    NUXT_WEBHOOK_URL=https://discord.com/api/webhooks/...
 ```
 
-4. **Deploy**
+4. **QR Codes for In-Person Distribution** _(Optional)_
+   
+   Generate trackable QR codes for events, flyers, or business cards.
+   
+   **Recommended tool:** [Dub.co](https://dub.co) (free tier: 1K clicks/mo)
+   
+   **Quick setup:**
+```bash
+   # 1. Sign up at dub.co
+   # 2. Create short links for your offers:
+   #    /offers/mentorship → go.yourdomain.com/mentor
+   #    /offers/template → go.yourdomain.com/template
+   
+   # 3. Per campaign (conference, meetup, etc):
+   #    - Open link in Dub dashboard
+   #    - Add UTM: utm_campaign=techcrunch2024
+   #    - Download QR code
+```
+   
+   **Alternatives:** bit.ly, rebrandly, or any URL shortener with QR generation.
+
+5. **Deploy**
    
    ```bash
    pnpm run build

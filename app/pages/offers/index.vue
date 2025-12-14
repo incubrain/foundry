@@ -7,9 +7,6 @@ const { getFounder, getAllOffers } = useContentCache();
 const { data: founder } = await getFounder();
 const { data: offers } = await getAllOffers();
 
-// QR Modal State
-const isShareOpen = ref(false);
-
 // 🎯 Use VueUse share composable
 const shareOptions = computed(() => ({
   title: `Connect with ${founder.value?.given_name}`,
@@ -32,7 +29,7 @@ const shareProfile = async () => {
     }
   } else {
     // Fallback: Copy to clipboard
-    const { copy, copied } = useClipboard({ source: window.location.href });
+    const { copy } = useClipboard({ source: window.location.href });
     await copy();
 
     // Optional: Show toast
@@ -44,16 +41,6 @@ const shareProfile = async () => {
     });
   }
 };
-
-// QR URL
-const baseUrl = useRequestURL().origin;
-const qrUrl = computed(() => {
-  const url = new URL(`${baseUrl}/offers`);
-  url.searchParams.set('utm_source', 'qr');
-  url.searchParams.set('utm_medium', 'inperson');
-  url.searchParams.set('utm_campaign', 'offers');
-  return url.toString();
-});
 
 definePageMeta({ layout: false });
 
@@ -154,26 +141,15 @@ onMounted(() => {
           />
         </div>
 
-        <!-- Share Actions -->
-        <div class="flex gap-3 pt-4">
+        <!-- Share Action -->
+        <div class="flex justify-center pt-4">
           <UButton
             label="Share Profile"
             icon="i-heroicons-share"
             size="lg"
-            class="flex-1"
             variant="outline"
             color="neutral"
             @click="shareProfile"
-          />
-
-          <UButton
-            icon="i-heroicons-qr-code"
-            size="lg"
-            variant="outline"
-            color="neutral"
-            aria-label="Show QR Code"
-            square
-            @click="isShareOpen = true"
           />
         </div>
 
@@ -188,27 +164,6 @@ onMounted(() => {
           />
         </div>
       </div>
-
-      <!-- QR Modal -->
-      <UModal v-model:open="isShareOpen">
-        <template #header>
-          <div class="flex items-center gap-2">
-            <UIcon name="i-heroicons-qr-code" class="text-xl" />
-            <h3 class="font-semibold">Share Profile</h3>
-          </div>
-        </template>
-
-        <template #body>
-          <div class="flex flex-col items-center gap-6 py-4">
-            <div class="text-center space-y-2">
-              <p class="text-sm font-medium">Scan to see all offers</p>
-              <p class="text-xs text-muted">Point your camera at the QR code</p>
-            </div>
-
-            <TeamQRCode :url="qrUrl" />
-          </div>
-        </template>
-      </UModal>
     </UContainer>
   </div>
 </template>
