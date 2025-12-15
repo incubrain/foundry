@@ -111,7 +111,7 @@ const hero = computed(() => props.data);
       >
         <div
           class="absolute -inset-1 bg-linear-to-r from-primary-500 to-secondary-500 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"
-        ></div>
+        />
 
         <div
           class="relative rounded-xl bg-neutral-900 border border-neutral-800 p-2 shadow-2xl ring-1 ring-white/10 transform transition-transform duration-700 hover:scale-[1.01] hover:rotate-x-1"

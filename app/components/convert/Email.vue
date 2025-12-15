@@ -155,7 +155,7 @@ const formClasses = computed(() =>
           height: 0;
           width: 0;
         "
-      />
+      >
 
       <div :class="formClasses">
         <UFormField name="email">

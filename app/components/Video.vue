@@ -192,7 +192,7 @@ const errorStateClass =
       @loadeddata="handleLoadedData"
       @error="handleError"
     >
-      <source :src="src" type="video/mp4" />
+      <source :src="src" type="video/mp4" >
       <p>Your browser doesn't support video playback.</p>
     </video>
 

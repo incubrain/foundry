@@ -30,7 +30,7 @@ if (isDev && import.meta.client) {
 
 <template>
   <UApp>
-    <DevEvents ref="eventTrigger" v-if="isDev" class="hidden lg:block" />
+    <DevEvents v-if="isDev" ref="eventTrigger" class="hidden lg:block" />
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
