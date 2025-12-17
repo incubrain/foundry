@@ -1,0 +1,16 @@
+/**
+ * Icon Library Configuration
+ * 
+ * This file centralizes icon library configuration to ensure consistency across:
+ * 
+ * 1. **Nuxt Config** (`nuxt.config.ts`):
+ *    - Used in `icon.serverBundle.collections` to tree-shake 
+ * 
+ * 2. **Content Config** (`content.config.ts`):
+ *    - Used in `property().editor({ iconLibraries })` to configure which icon
+ *      libraries are available in the Nuxt Studio icon picker
+ */
+
+export const ICON_LIBRARIES = ['lucide', 'mdi', 'logos'] as const;
+
+export type IconLibrary = typeof ICON_LIBRARIES[number];

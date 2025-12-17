@@ -1,7 +1,8 @@
 // content.config.ts
-import { defineCollection, defineContentConfig, z } from '@nuxt/content';
+import { defineCollection, defineContentConfig, z, property } from '@nuxt/content';
 import { asSeoCollection } from '@nuxtjs/seo/content';
 import { getActiveConfigSource } from './shared/utils/config-resolver';
+import { ICON_LIBRARIES } from './shared/config/icons';
 import path from 'node:path';
 
 const FAQ_COLORS = z.enum(['error', 'warning', 'success', 'info']);
@@ -23,7 +24,7 @@ export default defineContentConfig({
       schema: z.object({
         title: z.string(),
         description: z.string().optional(),
-        image: z.string().optional(),
+        image: property(z.string().optional()).editor({ input: 'media' }),
         // Optional fields for updates
         version: z.string().optional(),
         date: z.string().optional(),
@@ -42,7 +43,7 @@ export default defineContentConfig({
           name: z.string(),
           legal_name: z.string(),
           founding_year: z.number(),
-          logo: z.string(),
+          logo: property(z.string()).editor({ input: 'media' }),
           mission: z.string(),
         }),
         founder: z.object({
@@ -51,14 +52,14 @@ export default defineContentConfig({
           email: z.string().email(),
           role: z.string(),
           avatar: z.object({
-            src: z.string(),
+            src: property(z.string()).editor({ input: 'media' }),
             alt: z.string(),
           }),
           bio: z.string(),
           links: z.array(z.object({
             label: z.string(),
             url: z.string(),
-            icon: z.string(),
+            icon: property(z.string()).editor({ input: 'icon', iconLibraries: ICON_LIBRARIES }),
           })).optional(),
         }),
       }),
@@ -73,7 +74,7 @@ export default defineContentConfig({
       schema: z.object({
         type: z.enum(['warning', 'objection', 'support', 'general', 'values']),
         label: z.string(),
-        icon: z.string(),
+        icon: property(z.string()).editor({ input: 'icon', iconLibraries: ICON_LIBRARIES }),
         color: FAQ_COLORS,
         items: z.array(z.object({
           label: z.string(),

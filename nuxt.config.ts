@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import { fileURLToPath } from 'node:url';
 import { getActiveConfigSource } from './shared/utils/config-resolver';
-import path from 'node:path';
+import { ICON_LIBRARIES } from './shared/config/icons';
 
 const appConfig = getActiveConfigSource();
 
@@ -19,7 +19,7 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@vueuse/nuxt',
     '@nuxt/scripts',
-    // 'nuxt-studio', // {DX}: studio breaks HMR alpha.2
+    'nuxt-studio', // {DX}: studio breaks HMR alpha.2
   ],
 
   // {CONFIG}
@@ -89,26 +89,26 @@ export default defineNuxtConfig({
     ],
   },
 
-  // {DX}: studio breaks HMR alpha.2
-  // studio: {
-  //     // Studio admin route (default: '/_studio')
-  //     route: '/_studio',
-  //
-  //     // {FIX}: broken, pending triage of this https://github.com/nuxt-content/studio/pull/73
-  //     // development: {
-  //     //   sync: true, // Enable development mode
-  //     // },
-  //
-  //     // GitHub repository configuration (owner and repo are required)
-  //     repository: {
-  //       provider: 'github', // only GitHub is currently supported
-  //       owner: 'incubrain', // your GitHub username or organization
-  //       repo: 'founder-funnel', // your repository name
-  //       branch: 'main', // the branch to commit to (default: main)
-  //       rootDir: appConfig.prefix,
-  //       private: true,
-  //     },
-  //   },
+  // {DX}: studio breaks HMR
+  studio: {
+      // Studio admin route (default: '/_studio')
+      route: '/_studio',
+  
+      // {FIX}: broken, pending triage of this https://github.com/nuxt-content/studio/pull/73
+      development: {
+        sync: true, // Enable development mode
+      },
+  
+      // GitHub repository configuration (owner and repo are required)
+      repository: {
+        provider: 'github', // only GitHub is currently supported
+        owner: 'incubrain', // your GitHub username or organization
+        repo: 'founder-funnel', // your repository name
+        branch: 'main', // the branch to commit to (default: main)
+        rootDir: appConfig.prefix,
+        private: true,
+      },
+    },
 
   ssr: true,
 
@@ -256,7 +256,7 @@ export default defineNuxtConfig({
     serverBundle: {
       // {DX}: Using full @iconify/json no need to install collection packages
       // collections array enables tree-shake
-      collections: ['lucide', 'mdi', 'logos'],
+      collections: [ ...ICON_LIBRARIES ],
     },
   },
 });
