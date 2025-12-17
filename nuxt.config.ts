@@ -19,7 +19,7 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@vueuse/nuxt',
     '@nuxt/scripts',
-    'nuxt-studio', // {DX}: studio breaks HMR alpha.2
+    // 'nuxt-studio', // {DX}: studio breaks HMR beta.1
   ],
 
   // {CONFIG}
@@ -89,26 +89,26 @@ export default defineNuxtConfig({
     ],
   },
 
-  // {DX}: studio breaks HMR
-  studio: {
-      // Studio admin route (default: '/_studio')
-      route: '/_studio',
-  
-      // {FIX}: broken, pending triage of this https://github.com/nuxt-content/studio/pull/73
-      development: {
-        sync: true, // Enable development mode
-      },
-  
-      // GitHub repository configuration (owner and repo are required)
-      repository: {
-        provider: 'github', // only GitHub is currently supported
-        owner: 'incubrain', // your GitHub username or organization
-        repo: 'founder-funnel', // your repository name
-        branch: 'main', // the branch to commit to (default: main)
-        rootDir: appConfig.prefix,
-        private: true,
-      },
-    },
+  // {DX}: studio breaks HMR beta.1
+  // studio: {
+  //     // Studio admin route (default: '/_studio')
+  //     route: '/_studio',
+  // 
+  //     // {FIX}: broken, pending triage of this https://github.com/nuxt-content/studio/pull/73
+  //     development: {
+  //       sync: true, // Enable development mode
+  //     },
+  // 
+  //     // GitHub repository configuration (owner and repo are required)
+  //     repository: {
+  //       provider: 'github', // only GitHub is currently supported
+  //       owner: 'incubrain', // your GitHub username or organization
+  //       repo: 'founder-funnel', // your repository name
+  //       branch: 'main', // the branch to commit to (default: main)
+  //       rootDir: appConfig.prefix,
+  //       private: true,
+  //     },
+  //   },
 
   ssr: true,
 
@@ -226,16 +226,18 @@ export default defineNuxtConfig({
   },
 
   routeRules: {
-    '/': {
-      ssr: true,
-      prerender: false,
+    '/': { ssr: true, prerender: false },
+    '/offers/**': { ssr: true, prerender: false },
+    '/founder': { ssr: true, prerender: false },
+    '/decisions': { swr: 3600 },
+    '/decisions/**': { swr: 3600 },
+    '/decisions.xml': {
+      swr: 3600,
+      headers: {
+        'Content-Type': 'application/xml; charset=utf-8',
+        'Cache-Control': 'public, max-age=3600',
+      },
     },
-    '/offers/**': {
-      ssr: true,
-      prerender: false,
-    },
-    '/story': { ssr: true, prerender: false },
-    '/updates': { swr: 3600 }, // Updates cached for 1 hour, regenerates in background
     '/updates/**': { swr: 3600 },
   },
 

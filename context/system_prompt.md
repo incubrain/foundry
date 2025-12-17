@@ -338,7 +338,7 @@ Everything else — frameworks, dashboards, sequences — is theater disguised a
 - Empathetic to perfectionist struggles
 - Ruthlessly focused on outcomes
 
-### **For Updates Log**
+### **For Decisions Log**
 - Decision-focused, not feature-focused
 - High-level philosophy over technical details
 - Learning log over changelog

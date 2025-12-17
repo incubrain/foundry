@@ -26,10 +26,9 @@ export default defineContentConfig({
         description: z.string().optional(),
         excerpt: z.string().optional(),
         image: property(z.string().optional()).editor({ input: 'media' }),
-        // Optional fields for updates
-        label: z.string().optional(),
+        // Decision-specific fields (all optional for backward compatibility)
+        label: z.enum(['pivot', 'persist', 'kill', 'experiment', 'signal', 'strategy', 'learning', 'feature']).optional(),
         date: z.string().optional(),
-
       }),
     })),
 

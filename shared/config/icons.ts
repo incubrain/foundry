@@ -11,6 +11,6 @@
  *      libraries are available in the Nuxt Studio icon picker
  */
 
-export const ICON_LIBRARIES = ['lucide', 'mdi', 'logos'] as const;
+export const ICON_LIBRARIES = ['lucide', 'mdi', 'logos', 'simple-icons'] as const;
 
 export type IconLibrary = typeof ICON_LIBRARIES[number];

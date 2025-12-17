@@ -12,7 +12,6 @@ const copyrightYear = computed(() =>
     ? `${currentYear}`
     : `${configData.value?.business.founding_year} - ${currentYear}`,
 );
-
 </script>
 
 <template>
@@ -70,14 +69,22 @@ const copyrightYear = computed(() =>
 
     <template #right>
       <div class="flex flex-col gap-4">
-        <span class="text-sm font-semibold">Follow Us</span>
-        <ConvertSocial
-          location="footer"
-          size="md"
-          variant="soft"
-          color="secondary"
-          gap="normal"
-        />
+        <p class="text-sm font-semibold">Follow Us</p>
+        <div class="flex gap-2">
+          <ConvertSocial
+            location="footer"
+            size="md"
+            variant="soft"
+            color="secondary"
+          />
+          <ConvertRSS
+            location="footer"
+            size="lg"
+            variant="soft"
+            color="secondary"
+            :show-label="false"
+          />
+        </div>
       </div>
     </template>
 

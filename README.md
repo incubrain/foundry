@@ -272,6 +272,26 @@ Your template supports this path. Service revenue funds validation. Client feedb
 
 ---
 
+---
+
+## Decisions Log
+
+We document every strategic decision, pivot, and learning in our public [Decisions Log](/decisions).
+
+**Why?**
+- **Transparency:** See how we think, not just what we ship
+- **Learning:** Real validation decisions from real founders
+- **Accountability:** Public decisions force clear reasoning
+
+**Subscribe via RSS:** [/decisions.xml](/decisions.xml)
+
+Perfect for:
+- Investors monitoring portfolio thinking
+- Founders learning from validation experiments
+- Mentors assessing decision quality
+
+---
+
 ## Contributing
 
 Found a bug? See a better way? Pull requests welcome for:
@@ -299,7 +319,8 @@ Everything else? Fair game.
 
 - **Issues:** [GitHub Issues](https://github.com/incubrain/founder-funnel/issues)
 - **Discussions:** [GitHub Discussions](https://github.com/incubrain/founder-funnel/discussions)
-- **Updates:** [Project Updates](https://founder-funnel.incubrain.org/updates)
+- **Decisions Log:** [Strategic Decisions](https://founder-funnel.incubrain.org/decisions)
+- **RSS Feed:** [Subscribe](https://founder-funnel.incubrain.org/decisions.xml)
 
 ---
 

@@ -32,9 +32,14 @@ export const NAVIGATION: NavigationConfig = {
   },
   main: [
     {
-      label: 'Updates',
-      to: '/updates',
-      icon: 'i-lucide-file-text',
+      label: 'Founder',
+      to: '/founder',
+      icon: 'i-lucide-user',
+    },
+    {
+      label: 'Decisions',
+      to: '/decisions',
+      icon: 'i-lucide-compass',
     },
   ],
   footerLinks: [
@@ -42,7 +47,7 @@ export const NAVIGATION: NavigationConfig = {
       label: 'About',
       children: [
         { label: 'Founder', to: '/founder' },
-        { label: 'Updates', to: '/updates' },
+        { label: 'Decisions', to: '/decisions' },
       ],
     },
     {

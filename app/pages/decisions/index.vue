@@ -4,26 +4,35 @@ import type { ButtonProps } from '@nuxt/ui';
 const { getFounder } = useContentCache();
 const { data: founderData } = await getFounder();
 
-const { data: page } = await useAsyncData('updates-page', () =>
-  queryCollection('pages').path('/updates').first(),
+const { data: page } = await useAsyncData('decisions-page', () =>
+  queryCollection('pages').path('/decisions').first(),
 );
 
-const { data: updates, pending } = useAsyncData('updates-list', () =>
+const { data: decisions, pending } = useAsyncData('decisions-list', () =>
   queryCollection('pages')
-    .select('path', 'label', 'date', 'title', 'description', 'image')
-    .where('path', 'LIKE', '/updates/%')
+    .select('path', 'label', 'date', 'title', 'description', 'image', 'image')
+    .where('path', 'LIKE', '/decisions/%')
     .where('label', 'IS NOT NULL')
     .order('date', 'DESC')
     .all(),
 );
 
 useHead({
-  title: page.value?.title || 'Updates',
+  title: page.value?.title || 'Decisions',
   meta: [
     {
       name: 'description',
       content:
-        page.value?.description || 'Product updates and strategic decisions.',
+        page.value?.description ||
+        'Strategic decisions and validation learnings.',
+    },
+  ],
+  link: [
+    {
+      rel: 'alternate',
+      type: 'application/rss+xml',
+      title: 'Decisions Feed',
+      href: '/decisions.xml',
     },
   ],
 });
@@ -55,10 +64,10 @@ const scrollToTop = () => {
 <template>
   <UPage>
     <UPageHero
-      icon="i-lucide-lightbulb"
+      icon="i-lucide-compass"
       :title="page?.title"
       :description="page?.description"
-      headline="Think different, ship faster"
+      headline="Evidence-based decision making"
       class="bg-none!"
     >
       <template #body>
@@ -70,13 +79,22 @@ const scrollToTop = () => {
 
         <div class="flex flex-col items-center gap-4 py-8">
           <span class="text-sm font-medium text-muted">Follow Our Journey</span>
+
           <ConvertSocial
-            location="updates-hero"
+            location="decisions-hero"
             size="lg"
             variant="ghost"
             color="neutral"
             :rounded="false"
             gap="normal"
+          />
+
+          <ConvertRSS
+            location="decisions-hero"
+            size="lg"
+            variant="soft"
+            color="secondary"
+            :show-label="true"
           />
         </div>
       </template>
@@ -94,22 +112,22 @@ const scrollToTop = () => {
         </div>
 
         <UEmpty
-          v-else-if="!updates?.length"
-          title="No updates yet"
-          description="Check back soon for product updates and strategic decisions."
+          v-else-if="!decisions?.length"
+          title="No decisions yet"
+          description="Check back soon for strategic decisions and learnings."
           icon="i-lucide-inbox"
         />
 
         <UChangelogVersions v-else :indicator="false">
           <UChangelogVersion
-            v-for="update in updates"
-            :key="update.label"
-            :title="update.title"
-            :description="update.description"
+            v-for="decision in decisions"
+            :key="decision.label"
+            :title="decision.title"
+            :description="decision.description"
             :authors="authors"
-            :image="update.image"
-            :date="update.date"
-            :to="update.path"
+            :image="decision.image"
+            :date="decision.date"
+            :to="decision.path"
             :badge="undefined"
             :ui="{
               indicator:
@@ -125,14 +143,14 @@ const scrollToTop = () => {
                   <NuxtTime
                     class="text-xs text-muted font-medium tracking-wide"
                     locale="en-US"
-                    :datetime="update.date"
+                    :datetime="decision.date"
                     year="numeric"
                     month="short"
                     day="numeric"
                   />
                 </div>
                 <UBadge variant="subtle">
-                  {{ update.label }}
+                  {{ decision.label }}
                 </UBadge>
               </div>
             </template>
