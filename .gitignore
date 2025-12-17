@@ -26,6 +26,9 @@ repomix-changed.*
 .env
 .env.*
 !.env.example
+
+# Misc
 strategy
 ideas
 backups
+trash
