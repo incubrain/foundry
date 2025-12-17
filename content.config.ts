@@ -24,9 +24,10 @@ export default defineContentConfig({
       schema: z.object({
         title: z.string(),
         description: z.string().optional(),
+        excerpt: z.string().optional(),
         image: property(z.string().optional()).editor({ input: 'media' }),
         // Optional fields for updates
-        version: z.string().optional(),
+        label: z.string().optional(),
         date: z.string().optional(),
 
       }),

@@ -10,8 +10,9 @@ const { data: page } = await useAsyncData('updates-page', () =>
 
 const { data: updates, pending } = useAsyncData('updates-list', () =>
   queryCollection('pages')
+    .select('path', 'label', 'date', 'title', 'description', 'image')
     .where('path', 'LIKE', '/updates/%')
-    .where('version', 'IS NOT NULL')
+    .where('label', 'IS NOT NULL')
     .order('date', 'DESC')
     .all(),
 );
@@ -35,36 +36,6 @@ const authors = [
     target: '_blank',
   },
 ];
-
-const expandedUpdates = ref<Set<string>>(new Set());
-const isExpanded = (version: string) => expandedUpdates.value.has(version);
-
-const toggleUpdate = (version: string) => {
-  if (expandedUpdates.value.has(version)) {
-    expandedUpdates.value.delete(version);
-  } else {
-    expandedUpdates.value.add(version);
-  }
-};
-
-const allExpanded = computed(() => {
-  if (!updates.value) return false;
-  return updates.value.every((update) =>
-    expandedUpdates.value.has(update.version),
-  );
-});
-
-const toggleAll = () => {
-  if (!updates.value) return;
-
-  if (allExpanded.value) {
-    expandedUpdates.value.clear();
-  } else {
-    updates.value.forEach((update) =>
-      expandedUpdates.value.add(update.version),
-    );
-  }
-};
 
 const showScrollTop = ref(false);
 
@@ -132,11 +103,13 @@ const scrollToTop = () => {
         <UChangelogVersions v-else :indicator="false">
           <UChangelogVersion
             v-for="update in updates"
-            :key="update.version"
+            :key="update.label"
             :title="update.title"
             :description="update.description"
-            :date="update.date"
             :authors="authors"
+            :image="update.image"
+            :date="update.date"
+            :to="update.path"
             :badge="undefined"
             :ui="{
               indicator:
@@ -145,23 +118,8 @@ const scrollToTop = () => {
               container: 'px-8',
             }"
           >
-            <template #title>
-              <NuxtLink :to="update.path" class="hover:underline">
-                {{ update.title }}
-              </NuxtLink>
-            </template>
-
             <template #indicator>
               <div class="flex flex-col items-end gap-3 text-right">
-                <div
-                  class="inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-primary/5 border border-primary/10"
-                >
-                  <UIcon name="i-lucide-tag" class="size-3.5 text-primary" />
-                  <span class="text-sm font-semibold font-mono text-primary">
-                    {{ update.version }}
-                  </span>
-                </div>
-
                 <div class="flex items-center gap-2">
                   <UIcon name="i-lucide-calendar" class="size-3.5 text-muted" />
                   <NuxtTime
@@ -173,81 +131,9 @@ const scrollToTop = () => {
                     day="numeric"
                   />
                 </div>
-              </div>
-            </template>
-
-            <template #body>
-              <div v-if="!isExpanded(update.version)" class="pt-6">
-                <div class="prose line-clamp-3">
-                  <ContentRenderer v-if="update" :value="update" />
-                </div>
-                <div class="flex gap-4 py-4 justify-between">
-                  <UButton
-                    variant="link"
-                    icon="i-lucide-chevron-down"
-                    trailing
-                    class="px-0"
-                    @click="toggleUpdate(update.version)"
-                  >
-                    Read more
-                  </UButton>
-                  <UButton
-                    :to="update.path"
-                    variant="link"
-                    color="neutral"
-                    icon="i-lucide-arrow-right"
-                    class="px-0"
-                    trailing
-                  >
-                    Full Update
-                  </UButton>
-                </div>
-              </div>
-
-              <div v-else class="pt-6">
-                <div class="prose max-w-none">
-                  <ContentRenderer v-if="update" :value="update" />
-                </div>
-                <div class="flex gap-4 mt-4">
-                  <UButton
-                    variant="link"
-                    icon="i-lucide-chevron-up"
-                    trailing
-                    @click="toggleUpdate(update.version)"
-                  >
-                    Show less
-                  </UButton>
-                  <UButton
-                    :to="update.path"
-                    variant="ghost"
-                    color="neutral"
-                    icon="i-lucide-arrow-right"
-                    trailing
-                  >
-                    View full update
-                  </UButton>
-                </div>
-              </div>
-            </template>
-
-            <template #authors>
-              <div class="flex items-center justify-between gap-4 flex-wrap">
-                <div class="flex flex-wrap gap-x-4 gap-y-1.5">
-                  <UUser
-                    v-for="(author, index) in authors"
-                    :key="index"
-                    v-bind="author"
-                  />
-                </div>
-
-                <div
-                  class="lg:hidden inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-primary/5 border border-primary/10"
-                >
-                  <UIcon name="i-lucide-tag" class="size-3.5 text-primary" />
-                  <span class="text-sm font-semibold font-mono text-primary">
-                    {{ update.version }}
-                  </span>
-                </div>
+                <UBadge variant="subtle">
+                  {{ update.label }}
+                </UBadge>
               </div>
             </template>
           </UChangelogVersion>
@@ -255,28 +141,16 @@ const scrollToTop = () => {
       </UContainer>
     </UPageBody>
 
-    <div class="fixed bottom-8 right-8 z-50 space-x-2">
-      <UButton
-        v-if="showScrollTop"
-        :icon="allExpanded ? 'i-lucide-minimize-2' : 'i-lucide-maximize-2'"
-        size="lg"
-        color="neutral"
-        variant="soft"
-        class="shadow-lg"
-        :aria-label="allExpanded ? 'Collapse all' : 'Expand all'"
-        @click="toggleAll"
-      />
-      <UButton
-        v-if="showScrollTop"
-        icon="i-lucide-arrow-up"
-        size="lg"
-        variant="soft"
-        color="neutral"
-        aria-label="Scroll to top"
-        class="shadow-lg"
-        @click="scrollToTop"
-      />
-    </div>
+    <UButton
+      v-if="showScrollTop"
+      icon="i-lucide-arrow-up"
+      size="xl"
+      variant="outline"
+      color="neutral"
+      aria-label="Scroll to top"
+      class="fixed bottom-8 right-8 z-50 shadow-lg"
+      @click="scrollToTop"
+    />
   </UPage>
 </template>
 
