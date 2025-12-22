@@ -50,6 +50,7 @@ const hero = computed(() => props.data);
     />
 
     <div
+      v-if="hero.badge"
       class="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center"
     >
       <a
@@ -84,7 +85,7 @@ const hero = computed(() => props.data);
           class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4"
         >
           <ConvertFunnel
-            offer-slug="template-guide"
+            offer-slug="mentorship"
             location="hero"
             size="xl"
             class="font-black text-toned"

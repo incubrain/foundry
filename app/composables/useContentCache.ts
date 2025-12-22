@@ -37,7 +37,7 @@ export const useContentCache = () => {
 
   /**
    * Get offer by slug
-   * @param slug - Offer slug (e.g., 'template-guide', 'mentorship')
+   * @param slug - Offer slug (e.g., 'mentorship')
    * @param options - useAsyncData options
    */
   const getOffer = (slug: string, options?: { lazy?: boolean; server?: boolean }) => {

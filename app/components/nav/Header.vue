@@ -21,16 +21,25 @@ const headerClasses = computed(() => ({
 </script>
 
 <template>
-  <UHeader mode="slideover" :class="headerClasses" to="/">
+  <UHeader
+    mode="slideover"
+    :class="headerClasses"
+    to="/"
+    :ui="{
+      left: 'flex items-center',
+      center: 'flex flex-1 items-center',
+      right: 'flex items-center',
+    }"
+  >
     <template #title>
       <Logo size="md" />
     </template>
 
     <UNavigationMenu
-      class="flex grow mx-auto max-w-xl justify-center items-center"
+      class="flex grow mx-auto max-w-xl justify-center items-center w-full flex-1"
       :items="NAVIGATION.main"
       color="neutral"
-      content-orientation="horizontal"
+      content-orientation="vertical"
     />
 
     <template #right>

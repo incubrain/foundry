@@ -13,7 +13,7 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   label: 'Get Access',
   layout: 'stacked',
-  successRedirect: '/offers/template-guide-success',
+  successRedirect: '/offers/success',
 });
 
 // Schema

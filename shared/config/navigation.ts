@@ -32,14 +32,19 @@ export const NAVIGATION: NavigationConfig = {
   },
   main: [
     {
-      label: 'Founder',
+      label: 'Our Story',
       to: '/founder',
-      icon: 'i-lucide-user',
     },
     {
-      label: 'Decisions',
-      to: '/decisions',
-      icon: 'i-lucide-compass',
+      label: 'Offers',
+      children: [
+        {
+          label: 'Mentorship',
+          to: '/offers/mentorship',
+          icon: 'i-lucide-group',
+        },
+        { label: 'Join Us', to: '/offers/join-us', icon: 'i-lucide-user' },
+      ],
     },
   ],
   footerLinks: [
@@ -48,12 +53,15 @@ export const NAVIGATION: NavigationConfig = {
       children: [
         { label: 'Founder', to: '/founder' },
         { label: 'Decisions', to: '/decisions' },
+        {
+          label: 'Roadmap',
+          to: 'https://github.com/incubrain/founder-funnel/discussions/133',
+        },
       ],
     },
     {
       label: 'Offers',
       children: [
-        { label: 'Template Guide', to: '/offers/template-guide' },
         { label: 'Mentorship', to: '/offers/mentorship' },
         { label: 'Join Us', to: '/offers/join-us' },
       ],
