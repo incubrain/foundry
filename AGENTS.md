@@ -11,7 +11,7 @@
 3. Max 50 lines per component, 5 props max
 4. Content in YAML, not hardcoded
 
-See: `.agent/anti_patterns.md` for violations
+See: `.agent/rules/anti-patterns.md` for violations
 
 ## Architecture Quick Ref
 - Signal capture (email/presales/bookings)
@@ -19,7 +19,7 @@ See: `.agent/anti_patterns.md` for violations
 - Webhook streaming (no database)
 - Multi-config (showcase ≠ user starting point)
 
-See: `.agent/architecture.md` for boundaries
+See: `.agent/rules/architecture.md` for boundaries
 
 ## Common Tasks
 - Add new section: Copy existing, edit `content/*.yml`
@@ -53,6 +53,4 @@ If all "No" → Don't build it
 - "Might need someday"
 - "Users will want this"
 - "Competitor has this"
-- "It's only X lines"
-
-→ See Values Filter in `.agent/anti_patterns.md`
+- "It's only N lines"

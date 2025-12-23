@@ -1,4 +1,6 @@
-# Anti-Patterns
+---
+trigger: always_on
+---
 
 ## Never Do This
 

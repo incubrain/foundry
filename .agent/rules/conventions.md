@@ -1,4 +1,6 @@
-# Conventions
+---
+trigger: always_on
+---
 
 ## Function Priority
 

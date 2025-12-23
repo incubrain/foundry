@@ -1,4 +1,6 @@
-# Decisions
+---
+trigger: always_on
+---
 
 ## Current Boundaries
 

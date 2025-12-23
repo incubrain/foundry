@@ -1,4 +1,6 @@
-# Architecture
+---
+trigger: always_on
+---
 
 ## System Boundaries
 
