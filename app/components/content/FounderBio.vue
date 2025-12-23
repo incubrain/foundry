@@ -13,10 +13,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 <template>
   <section class="my-12">
-    <!-- Title -->
-
     <div class="max-w-4xl space-y-8">
-      <!-- Intro + Avatar -->
       <div class="flex items-start gap-6">
         <NuxtImg
           v-if="avatar"

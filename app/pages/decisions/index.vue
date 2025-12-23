@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import type { ButtonProps } from '@nuxt/ui';
-
 const { getFounder } = useContentCache();
 const { data: founderData } = await getFounder();
 

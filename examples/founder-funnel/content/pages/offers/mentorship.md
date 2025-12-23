@@ -70,13 +70,15 @@ client:
 
 quote: "Mac helped us kill the 'do everything' approach. We went from <$10K/year to $5M in contracts. Hardest part was saying no to everything else. But that's what made room for this to work."
 
-partnerLogos:
-  - src: /logos/dark-sky-international.svg
-    alt: Dark Sky International
-  - src: /logos/maharashtra-govt.svg
-    alt: Government of Maharashtra
-  - src: /logos/astronera.svg
-    alt: Astronera
+partner:
+  label: Working with
+  logos:
+    - src: /logos/dark-sky-international.svg
+      alt: Dark Sky International
+    - src: /logos/maharashtra-govt.svg
+      alt: Government of Maharashtra
+    - src: /logos/astronera.svg
+      alt: Astronera
 ---
 ::
 

@@ -10,8 +10,6 @@ interface AccordionItemData {
 }
 
 interface Props {
-  title?: string;
-  description?: string;
   // Direct items to display (overrides fetching)
   items?: AccordionItemData[];
   // If items not provided, filter fetched FAQs by these types
@@ -74,17 +72,6 @@ const uiItems = computed<AccordionItem[]>(() =>
 <template>
   <section class="my-16">
     <div class="max-w-3xl mx-auto space-y-8">
-      <!-- Section Header -->
-      <div v-if="title || description" class="space-y-3">
-        <h2 v-if="title" class="text-3xl font-bold text-highlighted">
-          {{ title }}
-        </h2>
-        <p v-if="description" class="text-lg text-muted">
-          {{ description }}
-        </p>
-      </div>
-
-      <!-- Accordion -->
       <div v-if="uiItems.length">
         <UAccordion
           :items="uiItems"

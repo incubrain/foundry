@@ -72,7 +72,7 @@ const accordionItems = computed(() =>
           'justify-start md:justify-center',
           'scrollbar-hide',
           /* Ensure no conflicting border styles */
-          '!border-b-0 !-mb-0',
+          'border-b-0! mb-0!',
         ].join(' '),
         trigger: [
           'inline-flex items-center gap-1.5',

@@ -1,16 +1,14 @@
 <!-- app/components/content/FeatureGrid.vue -->
 <script setup lang="ts">
 interface Feature {
-  title: string;
-  description: string;
+  title?: string;
+  description?: string;
   icon?: string;
   to?: string;
   target?: string;
 }
 
 interface Props {
-  title?: string;
-  description?: string;
   features: Feature[];
   columns?: 2 | 3 | 4;
   orientation?: 'horizontal' | 'vertical';
@@ -33,17 +31,6 @@ const gridClasses = computed(() => {
 
 <template>
   <section class="my-16">
-    <!-- Section Header -->
-    <div v-if="title || description" class="text-center space-y-3 mb-12">
-      <h2 v-if="title" class="text-3xl font-bold text-highlighted">
-        {{ title }}
-      </h2>
-      <p v-if="description" class="text-lg text-muted max-w-2xl mx-auto">
-        {{ description }}
-      </p>
-    </div>
-
-    <!-- Feature Grid -->
     <div :class="gridClasses">
       <UPageFeature
         v-for="(feature, index) in features"

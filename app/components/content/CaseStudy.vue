@@ -6,12 +6,16 @@ interface Client {
   company: string;
   avatar?: string;
   website?: string;
+  action?: string;
 }
 
 interface Props {
   client: Client;
   quote: string;
-  partnerLogos?: Array<{ src: string; alt: string }>;
+  partner?: {
+    label?: string;
+    logos?: Array<{ src: string; alt: string }>;
+  };
 }
 
 const props = defineProps<Props>();
@@ -19,13 +23,10 @@ const props = defineProps<Props>();
 
 <template>
   <section class="my-12 lg:my-16">
-    <!-- Main Content -->
     <div class="max-w-4xl space-y-6">
-      <!-- Client Card + Quote (Merged) -->
       <div
         class="p-5 rounded-lg bg-muted/10 border border-neutral-800 space-y-4"
       >
-        <!-- Avatar + Info -->
         <div class="flex items-start gap-4">
           <NuxtImg
             v-if="client.avatar"
@@ -51,11 +52,11 @@ const props = defineProps<Props>();
         </div>
 
         <!-- Trust Signals -->
-        <div v-if="partnerLogos?.length" class="flex items-center gap-3 pt-2">
-          <span class="text-xs text-muted">Working with:</span>
+        <div v-if="partner?.logos?.length" class="flex items-center gap-3 pt-2">
+          <span class="text-xs text-muted">{{ partner?.label }}</span>
           <div class="flex gap-3">
             <NuxtImg
-              v-for="logo in partnerLogos"
+              v-for="logo in partner?.logos"
               :key="logo.alt"
               :src="logo.src"
               :alt="logo.alt"
@@ -68,7 +69,7 @@ const props = defineProps<Props>();
         <div v-if="client.website" class="flex justify-end">
           <UButton
             :to="client.website"
-            label="Visit Website"
+            :label="client.action || 'Visit Website'"
             variant="link"
             color="primary"
             size="sm"
