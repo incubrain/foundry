@@ -28,7 +28,7 @@ export const NAVIGATION: NavigationConfig = {
   layout: {
     banner: { sticky: true, offer: 'mentorship' },
     navbar: { sticky: false },
-    footer: { offer: 'join-us' },
+    footer: { offer: 'mentorship' },
   },
   main: [
     {
@@ -36,15 +36,9 @@ export const NAVIGATION: NavigationConfig = {
       to: '/founder',
     },
     {
-      label: 'Offers',
-      children: [
-        {
-          label: 'Mentorship',
-          to: '/offers/mentorship',
-          icon: 'i-lucide-group',
-        },
-        { label: 'Join Us', to: '/offers/join-us', icon: 'i-lucide-user' },
-      ],
+      label: 'Mentorship',
+      to: '/offers/mentorship',
+      icon: 'i-lucide-group',
     },
   ],
   footerLinks: [
@@ -61,10 +55,7 @@ export const NAVIGATION: NavigationConfig = {
     },
     {
       label: 'Offers',
-      children: [
-        { label: 'Mentorship', to: '/offers/mentorship' },
-        { label: 'Join Us', to: '/offers/join-us' },
-      ],
+      children: [{ label: 'Mentorship', to: '/offers/mentorship' }],
     },
   ],
 } as const;
