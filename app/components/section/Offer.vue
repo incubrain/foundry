@@ -131,7 +131,7 @@ const transformedFeatures = computed(() => {
 
           <template #button>
             <div class="pt-4 w-full">
-              <ConvertEmail location="product-section" />
+              <ConvertFunnel to="/offers/mentorship" location="product-section" />
             </div>
           </template>
         </UPricingPlan>

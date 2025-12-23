@@ -49,7 +49,7 @@ const cardClasses = computed(() => [
 
 <template>
   <!-- Wrapper for badge positioning -->
-  <div class="relative pt-4">
+  <div class="relative pt-4 lg:pt-0">
     <!-- Badge (positioned outside card) -->
     <div v-if="badge" class="absolute top-0 left-6 z-10">
       <UBadge :label="badge" />

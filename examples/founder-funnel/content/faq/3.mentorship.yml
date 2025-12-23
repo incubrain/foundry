@@ -1,0 +1,28 @@
+type: mentorship
+label: Mentorship
+icon: i-lucide-help-circle
+color: info
+items:
+  - label: What if I'm not ready to ship yet?
+    content: Then you're not ready for mentorship. This is for founders ready to execute, not plan forever.
+  
+  - label: Can I skip the prep work?
+    content: No. If you skip prep, I'll reschedule. Prep work makes our live time 10x more valuable.
+  
+  - label: What if I don't have a product yet?
+    content: Perfect. We'll validate demand first, then build only if market proves it's worth building.
+  
+  - label: How do refunds work?
+    content: First session unsatisfied? Full refund, no questions asked. After that, monthly commitment.
+  
+  - label: Can I book one-off sessions?
+    content: No. Monthly commitment ensures continuity and accountability. One-offs don't create lasting change.
+  
+  - label: When can I start?
+    content: First sessions typically happen within 5-7 days of booking. Limited to 20 total founders in 2025.
+  
+  - label: What happens between sessions?
+    content: You execute. I'm available via DM in the private community for quick questions, but the real work happens between our monthly calls.
+  
+  - label: Do you work with non-technical founders?
+    content: No. This program is specifically designed for technical founders (3+ years dev experience) who can implement their own solutions.
