@@ -1,14 +1,9 @@
 <!-- app/components/content/FounderBio.vue -->
 <script setup lang="ts">
-interface Section {
-  items: string[];
-}
-
 interface Props {
   name: string;
   intro: string;
   avatar?: string;
-  sections: Section[];
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -32,21 +27,6 @@ const props = withDefaults(defineProps<Props>(), {
         <div class="flex-1">
           <p class="text-lg text-muted leading-relaxed">{{ intro }}</p>
         </div>
-      </div>
-
-      <!-- Dynamic Sections -->
-      <div v-for="(section, index) in sections" :key="index" class="space-y-3">
-        <h3 class="text-lg font-bold text-highlighted">{{ section.title }}</h3>
-        <ul class="space-y-2 pl-1">
-          <li
-            v-for="(item, i) in section.items"
-            :key="i"
-            class="flex items-start gap-2 text-muted"
-          >
-            <span class="text-primary mt-1">•</span>
-            <span>{{ item }}</span>
-          </li>
-        </ul>
       </div>
     </div>
   </section>

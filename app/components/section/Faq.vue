@@ -42,17 +42,12 @@ const activeFaqs = computed(() => {
 });
 
 // Build accordion items for active tab
-const accordionItems = computed<AccordionItem[]>(() =>
-  activeFaqs.value.map((faq, i) => ({
-    value: String(i),
+const accordionItems = computed(() =>
+  activeFaqs.value.map((faq) => ({
     label: faq.label,
     content: faq.content,
     icon: faq.icon,
-    ui: {
-      leadingIcon: `text-${faq.color}`,
-      trigger: 'text-base font-medium py-4',
-      body: 'text-muted pb-4 pl-7',
-    },
+    color: faq.color,
   })),
 );
 </script>
@@ -97,18 +92,7 @@ const accordionItems = computed<AccordionItem[]>(() =>
     />
 
     <div v-if="accordionItems.length" class="w-full mx-auto">
-      <UAccordion
-        :items="accordionItems"
-        :unmount-on-hide="false"
-        :ui="{
-          item: 'border-b border-neutral-800 first:border-t last:mb-0 overflow-hidden last:border-b',
-          trigger:
-            'group flex-1 flex items-center gap-3 font-medium text-sm p-4 hover:bg-muted/30 transition-colors',
-          body: 'text-sm p-4 leading-relaxed',
-          leadingIcon: 'size-4',
-          content: 'data-[state=open]:bg-muted/30',
-        }"
-      />
+      <FaqAccordion :items="accordionItems" />
     </div>
   </SectionWrapper>
 </template>

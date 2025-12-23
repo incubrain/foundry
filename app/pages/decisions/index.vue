@@ -75,7 +75,10 @@ const scrollToTop = () => {
           class="absolute top-0 inset-0 bg-grid-white pointer-events-none -z-10"
         />
 
-        <ValuesAccordion />
+        <FaqAccordion
+          :types="['values']"
+          class="bg-default max-w-3xl mx-auto pb-8 lg:pb-0 px-4"
+        />
 
         <div class="flex flex-col items-center gap-4 py-8">
           <span class="text-sm font-medium text-muted">Follow Our Journey</span>

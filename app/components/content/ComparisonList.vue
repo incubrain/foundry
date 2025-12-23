@@ -8,7 +8,8 @@ interface Column {
   title: string;
   icon?: string;
   color?: 'error' | 'warning' | 'neutral' | 'success' | 'info' | 'primary';
-  items: ComparisonItem[];
+  description?: string;
+  items?: ComparisonItem[];
 }
 
 interface Props {
@@ -68,7 +69,11 @@ const rightColorClass = computed(() => colorClasses[rightColumn.value.color]);
           </h3>
         </div>
 
-        <ul class="space-y-3">
+        <p v-if="leftColumn.description" class="text-muted leading-relaxed">
+          {{ leftColumn.description }}
+        </p>
+
+        <ul v-if="leftColumn.items?.length" class="space-y-3">
           <li
             v-for="(item, index) in leftColumn.items"
             :key="index"
@@ -95,7 +100,11 @@ const rightColorClass = computed(() => colorClasses[rightColumn.value.color]);
           </h3>
         </div>
 
-        <ul class="space-y-3">
+        <p v-if="rightColumn.description" class="text-muted leading-relaxed">
+          {{ rightColumn.description }}
+        </p>
+
+        <ul v-if="rightColumn.items?.length" class="space-y-3">
           <li
             v-for="(item, index) in rightColumn.items"
             :key="index"

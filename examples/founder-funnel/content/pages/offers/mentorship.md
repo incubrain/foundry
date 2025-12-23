@@ -68,18 +68,7 @@ client:
   avatar: /team/shweta-avatar.jpg
   website: https://astronera.org
 
-challenge: "Positioned as 'one-stop shop for astronomy' across India. Broad services, no differentiation, <$10K/year revenue. Scattered approach meant competing everywhere, winning nowhere."
-
-solution: "Killed everything except Dark Sky conservation in Maharashtra. Strategic partnership with Dark Sky International. Top-down government approach. Lonar Crater as global proof point."
-
 quote: "Mac helped us kill the 'do everything' approach. We went from <$10K/year to $5M in contracts. Hardest part was saying no to everything else. But that's what made room for this to work."
-
-lessons:
-  - text: "Focus beats breadth. One vertical done exceptionally well beats serving everyone poorly"
-  - text: "Geography unlocks doors. Home state advantage (Maharashtra) opened government connections"
-  - text: "Strategic partnerships amplify credibility. Dark Sky International opened institutional doors"
-  - text: "Top-down beats bottom-up for big contracts. Government moves slow but writes massive checks"
-  - text: "Proof point unlocked pipeline. Lonar Crater's global significance validated the entire approach"
 
 partnerLogos:
   - src: /logos/dark-sky-international.svg
@@ -90,6 +79,32 @@ partnerLogos:
     alt: Astronera
 ---
 ::
+
+<!-- CHALLENGE VS SOLUTION -->
+::comparison-list{class="my-12"}
+---
+left:
+  title: The Challenge
+  icon: i-lucide-alert-circle
+  color: error
+  description: "Positioned as 'one-stop shop for astronomy' across India. Broad services, no differentiation, <$10K/year revenue. Scattered approach meant competing everywhere, winning nowhere."
+
+right:
+  title: The Solution
+  icon: i-lucide-check-circle
+  color: success
+  description: "Killed everything except Dark Sky conservation in Maharashtra. Strategic partnership with Dark Sky International. Top-down government approach. Lonar Crater as global proof point."
+---
+::
+
+<!-- MENTOR'S PLAYBOOK -->
+### Why This Worked
+
+1. **Focus beats breadth.** One vertical done exceptionally well beats serving everyone poorly
+2. **Geography unlocks doors.** Home state advantage (Maharashtra) opened government connections
+3. **Strategic partnerships amplify credibility.** Dark Sky International opened institutional doors
+4. **Top-down beats bottom-up for big contracts.** Government moves slow but writes massive checks
+5. **Proof point unlocked pipeline.** Lonar Crater's global significance validated the entire approach
 
 ---
 
@@ -187,8 +202,6 @@ showTabs: false
 <!-- 9. GUARANTEE (AFTER FAQ) -->
 
 
-<!-- 10. SCARCITY BANNER -->
-
 
 ---
 
@@ -257,35 +270,32 @@ description: "Book your free consultation. If we're a good fit, you'll be charge
 name: Mac
 intro: "I'm Mac, a technical founder who spent 13 years failing before building profitable businesses. I write code, ship products, and help founders avoid the mistakes that cost me a decade."
 avatar: /team/mac-avatar.jpg
-
-sections:
-  - title: "What I've Built"
-    items:
-      - "GitHub: 74 stars across open-source projects"
-      - "Built and sold SaaS products"
-      - "Profitable in 2025 after years of struggle"
-      - "Now helping technical founders avoid my mistakes"
-  
-  - title: "Why This Works (Not Another Business Coach)"
-    items:
-      - "I write code. No corporate fluff, just tactical execution."
-      - "I won't sugarcoat: some ideas deserve to die quickly"
-      - "You don't need to explain technical tradeoffs to me"
-      - "I understand 'just ship it' vs 'build it right'"
-      - "I get the founder loneliness, I've lived it"
-      - "I'm selective: I only work with founders I believe in"
-  
-  - title: "My Approach"
-    items:
-      - "Brutally honest (your idea might suck, and I'll tell you)"
-      - "Ship-first mentality (done > perfect)"
-      - "If I don't think I can help you, I'll say so in the consultation call"
-      - "If you're not ready to ship, I'll push you anyway"
-      - "Results-focused (revenue, customers, traction—not vanity metrics)"
 ---
 ::
 
----
+### What I've Built
+
+- GitHub: 74 stars across open-source projects
+- Built and sold SaaS products
+- Profitable in 2025 after years of struggle
+- Now helping technical founders avoid my mistakes
+
+### Why This Works (Not Another Business Coach)
+
+- I write code. No corporate fluff, just tactical execution.
+- I won't sugarcoat: some ideas deserve to die quickly
+- You don't need to explain technical tradeoffs to me
+- I understand 'just ship it' vs 'build it right'
+- I get the founder loneliness, I've lived it
+- I'm selective: I only work with founders I believe in
+
+### My Approach
+
+- Brutally honest (your idea might suck, and I'll tell you)
+- Ship-first mentality (done > perfect)
+- If I don't think I can help you, I'll say so in the consultation call
+- If you're not ready to ship, I'll push you anyway
+- Results-focused (revenue, customers, traction—not vanity metrics)
 
 <!-- 13. FINAL CTA -->
 ::convert-multiple
@@ -306,8 +316,6 @@ options:
     highlighted: false
 ---
 ::
-
----
 
 ::div{class="text-center mt-12 text-sm text-muted"}
 Questions? Email mac@incubrain.org or book a consultation call to discuss.

@@ -8,16 +8,9 @@ interface Client {
   website?: string;
 }
 
-interface Lesson {
-  text: string;
-}
-
 interface Props {
   client: Client;
-  challenge: string;
-  solution: string;
   quote: string;
-  lessons: Lesson[];
   partnerLogos?: Array<{ src: string; alt: string }>;
 }
 
@@ -82,41 +75,6 @@ const props = defineProps<Props>();
             trailing-icon="i-lucide-external-link"
             target="_blank"
           />
-        </div>
-      </div>
-
-      <!-- Challenge + Solution (Side-by-side on desktop) -->
-      <div class="grid md:grid-cols-2 gap-4">
-        <!-- Challenge -->
-        <div class="p-4 space-y-2">
-          <h3 class="text-base font-bold text-error">The Challenge</h3>
-          <p class="text-sm text-muted leading-relaxed">{{ challenge }}</p>
-        </div>
-
-        <!-- Solution -->
-        <div class="p-4 space-y-2">
-          <h3 class="text-base font-bold text-success">The Solution</h3>
-          <p class="text-sm text-muted leading-relaxed">{{ solution }}</p>
-        </div>
-      </div>
-
-      <!-- Mentor's Playbook (Condensed) -->
-      <div class="p-5">
-        <div class="space-y-3">
-          <h3 class="text-lg font-bold flex items-center gap-2">
-            <UIcon name="i-lucide-book-open" class="size-4" />
-            Why This Worked
-          </h3>
-          <ul class="space-y-2">
-            <li
-              v-for="(lesson, index) in lessons"
-              :key="index"
-              class="flex items-start gap-2 text-sm text-muted leading-relaxed"
-            >
-              <span class="font-bold shrink-0">{{ index + 1 }}.</span>
-              <span>{{ lesson.text }}</span>
-            </li>
-          </ul>
         </div>
       </div>
     </div>
