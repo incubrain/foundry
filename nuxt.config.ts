@@ -73,12 +73,12 @@ export default defineNuxtConfig({
 
       // Medium Priority: Updates/Changelog
       {
-        title: 'Updates',
+        title: 'Decisions',
         description: 'Product updates and strategic decisions',
         contentCollection: 'pages',
         contentFilters: [
-          { field: 'path', operator: 'LIKE', value: '/updates/%' },
-          { field: 'version', operator: 'IS NOT NULL' }, // Only versioned updates
+          { field: 'path', operator: 'LIKE', value: '/decisions/%' },
+          { field: 'label', operator: 'IS NOT NULL' }, // Only labeled decisions
         ],
       },
 
@@ -99,25 +99,25 @@ export default defineNuxtConfig({
   },
 
   // {DX}: studio breaks HMR beta.1
-  // studio: {
-  //     // Studio admin route (default: '/_studio')
-  //     route: '/_studio',
-  //
-  //     // {FIX}: broken, pending triage of this https://github.com/nuxt-content/studio/pull/73
-  //     development: {
-  //       sync: true, // Enable development mode
-  //     },
-  //
-  //     // GitHub repository configuration (owner and repo are required)
-  //     repository: {
-  //       provider: 'github', // only GitHub is currently supported
-  //       owner: 'incubrain', // your GitHub username or organization
-  //       repo: 'founder-funnel', // your repository name
-  //       branch: 'main', // the branch to commit to (default: main)
-  //       rootDir: appConfig.prefix,
-  //       private: true,
-  //     },
-  //   },
+  studio: {
+      // Studio admin route (default: '/_studio')
+      route: '/_studio',
+  
+      // {FIX}: broken, pending triage of this https://github.com/nuxt-content/studio/pull/73
+      development: {
+        sync: true, // Enable development mode
+      },
+  
+      // GitHub repository configuration (owner and repo are required)
+      repository: {
+        provider: 'github', // only GitHub is currently supported
+        owner: 'incubrain', // your GitHub username or organization
+        repo: 'founder-funnel', // your repository name
+        branch: 'main', // the branch to commit to (default: main)
+        rootDir: appConfig.prefix,
+        private: true,
+      },
+    },
 
   ssr: true,
 
