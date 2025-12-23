@@ -13,7 +13,7 @@
   },
   "files.associations": {
     "*.css": "tailwindcss",
-    "*.md": "markdown"
+    "*.md": "mdc"
   },
   "tailwindCSS.includeLanguages": {
     "vue": "html",
@@ -26,10 +26,22 @@
     "**/.nuxt/**",
     "**/.output/**"
   ],
-  "mdc.enableFormatting": false,
+  "mdc.enableFormatting": true,
+  "mdc.enableComponentMetadataCompletions": true,
+  "mdc.componentMetadataLocalFilePattern": "**/.nuxt/component-meta.mjs",
   "[markdown]": {
-    "editor.defaultFormatter": null,
-    "editor.formatOnSave": false
+    "editor.defaultFormatter": "nuxt.mdc",
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true,
+    "editor.detectIndentation": false
+  },
+  "[mdc]": {
+    "editor.defaultFormatter": "nuxt.mdc",
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true,
+    "editor.detectIndentation": false
   },
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "typescript.tsdk": "node_modules/typescript/lib",

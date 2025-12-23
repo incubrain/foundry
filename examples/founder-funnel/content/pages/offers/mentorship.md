@@ -3,20 +3,15 @@ title: Founder Compass Mentorship
 description: Strategic mentorship for technical founders building their first profitable business
 ---
 
-<!-- 1. VIDEO HERO -->
 ::div{class="aspect-video w-full max-w-4xl mx-auto my-12"}
 <iframe class="w-full h-full rounded-lg border border-neutral-800" src="https://www.youtube.com/embed/_uo7CXd33Uc?si=WdoXeSEIDJZY9A1h" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 ::
 
----
 
-<!-- 2. WHO THIS IS FOR / NOT FOR (QUALIFICATION) -->
 ## Are You My Kind of Founder?
 
 ::comparison-list
 ---
-title: null
-
 left:
   title: Not a Fit
   icon: i-lucide-x
@@ -28,7 +23,6 @@ left:
     - text: Established, profitable business
     - text: First-time founder with no experience
     - text: Just exploring ideas casually
-
 right:
   title: Good Fit
   icon: i-lucide-check
@@ -51,10 +45,6 @@ right:
   ---
   :::
 ::
-
----
-
-<!-- 3. CASE STUDY (PROOF) -->
 
 ## From Scattered Effort to $5M in Government Contracts
 ##### Shweta Kulkarni (CEO, Astronera) scaled 50x in 6 months by narrowing her focus
@@ -82,7 +72,6 @@ partner:
 ---
 ::
 
-<!-- CHALLENGE VS SOLUTION -->
 ::comparison-list{class="my-12"}
 ---
 left:
@@ -99,7 +88,6 @@ right:
 ---
 ::
 
-<!-- MENTOR'S PLAYBOOK -->
 ### Why This Worked
 
 1. **Focus beats breadth.** One vertical done exceptionally well beats serving everyone poorly
@@ -108,9 +96,6 @@ right:
 4. **Top-down beats bottom-up for big contracts.** Government moves slow but writes massive checks
 5. **Proof point unlocked pipeline.** Lonar Crater's global significance validated the entire approach
 
----
-
-<!-- 4. WHAT SUCCESS LOOKS LIKE -->
 ## What 90 Days Looks Like
 
 Working with me, founders typically:
@@ -122,12 +107,9 @@ Working with me, founders typically:
 - **10x their output** by focusing ruthlessly and leveraging AI
 
 ::div{class="mt-8"}
-  :u-button{to="#choose-your-format" label="See Mentorship Options" size="lg"}
+:u-button{to="#choose-your-format" label="See Mentorship Options" size="lg"}
 ::
 
----
-
-<!-- 5. BEFORE/AFTER TRANSFORMATION -->
 ::comparison-list
 ---
 title: The Transformation
@@ -140,7 +122,6 @@ left:
     - text: 6 months in, zero revenue
     - text: Drowning in technical perfectionism
     - text: No idea if the market wants this
-
 right:
   title: After
   icon: i-lucide-check
@@ -153,9 +134,6 @@ right:
 ---
 ::
 
----
-
-<!-- 6. WHAT YOU GET -->
 ## What You Get
 
 ::feature-grid
@@ -166,33 +144,26 @@ features:
   - title: Your Founder Compass (1 Hour/Month)
     description: Strategic planning session where we review your decisions log, kill bad ideas, and map your next 30 days. This isn't coaching, it's tactical warfare against your own indecision.
     icon: i-lucide-compass
-  
   - title: Pre-Meeting Strategic Review
     description: I review your decisions log before every session so we don't waste time catching up. You get 60 minutes of pure strategic execution planning.
     icon: i-lucide-file-search
-  
   - title: Async Slack Access
     description: Quick questions, decision validation, "should I build this?" checks. Not 24/7 consulting, but tactical unblocking when you're stuck.
     icon: i-lucide-message-square
-  
   - title: Decision Framework (Not Hand-Holding)
     description: I teach you how to make faster, better decisions. You'll walk away with a mental model for shipping, not dependency on me.
     icon: i-lucide-brain
-  
   - title: Real-World Product Validation
     description: Not theory. I help you validate (or kill) ideas with real customers in real markets. We focus on revenue, not vanity metrics.
     icon: i-lucide-target
-  
   - title: Technical Founder Perspective
     description: I'm not a "business coach." I'm a technical founder who ships code. I understand your struggles because I live them.
     icon: i-lucide-code
 ---
 ::
 
----
-
-<!-- 8. FAQ -->
 ## Common Questions
+
 ::faq-accordion
 ---
 types:
@@ -201,11 +172,6 @@ showTabs: false
 ---
 ::
 
-<!-- 9. GUARANTEE (AFTER FAQ) -->
-
-
-
----
 
 ## Choose Your Format
 
@@ -236,7 +202,6 @@ options:
       - Face-to-face strategic planning
       - Local founder community access
       - Async Slack support
-  
   - url: https://cal.com/drew/remote
     title: Remote Global Sessions
     price: $250
@@ -264,9 +229,8 @@ description: "Book your free consultation. If we're a good fit, you'll be charge
 ---
 ::
 
----
-
 ## The Founder Behind This
+
 ::founder-bio
 ---
 name: Mac
@@ -299,7 +263,6 @@ avatar: /team/mac-avatar.jpg
 - If you're not ready to ship, I'll push you anyway
 - Results-focused (revenue, customers, traction—not vanity metrics)
 
-<!-- 13. FINAL CTA -->
 ::convert-pricing
 ---
 options:
@@ -309,7 +272,6 @@ options:
     priceInterval: /month
     buttonLabel: Free Consultation Call
     highlighted: false
-  
   - url: https://cal.com/drew/remote
     title: Remote Global
     price: $250

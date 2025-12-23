@@ -1,3 +1,7 @@
 {
-  "recommendations": []
+  "recommendations": [
+    "nuxt.mdc",
+    "vue.volar",
+    "bradlc.vscode-tailwindcss"
+  ]
 }
