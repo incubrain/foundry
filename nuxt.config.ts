@@ -36,30 +36,30 @@ export default defineNuxtConfig({
   llms: {
     domain: 'https://founder-funnel.incubrain.org',
     title: 'Founder Funnel',
-    description: 'Open-source landing page template for technical founders validating product ideas',
-    
+    description:
+      'Open-source landing page template for technical founders validating product ideas',
+
     sections: [
       // High Priority: Revenue Pages (Offers)
       {
         title: 'Product Offers',
-        description: 'Ways to work with us - mentorship, templates, and opportunities',
+        description:
+          'Ways to work with us - mentorship, templates, and opportunities',
         contentCollection: 'pages',
         contentFilters: [
           { field: 'path', operator: 'LIKE', value: '/offers/%' },
           { field: 'path', operator: 'NOT LIKE', value: '%-success' }, // Exclude success pages
         ],
       },
-      
+
       // Medium Priority: About/Story
       {
         title: 'About',
         description: 'Founder story and mission',
         contentCollection: 'pages',
-        contentFilters: [
-          { field: 'path', operator: '=', value: '/founder' },
-        ],
+        contentFilters: [{ field: 'path', operator: '=', value: '/founder' }],
       },
-      
+
       // Medium Priority: Updates/Changelog
       {
         title: 'Updates',
@@ -70,18 +70,16 @@ export default defineNuxtConfig({
           { field: 'version', operator: 'IS NOT NULL' }, // Only versioned updates
         ],
       },
-      
+
       // Low Priority: Home Page
       {
         title: 'Overview',
         description: 'Product overview and value proposition',
         contentCollection: 'pages',
-        contentFilters: [
-          { field: 'path', operator: '=', value: '/' },
-        ],
+        contentFilters: [{ field: 'path', operator: '=', value: '/' }],
       },
     ],
-    
+
     notes: [
       'This is an open-source project (MIT License)',
       'Template designed for technical founders validating ideas',
@@ -93,12 +91,12 @@ export default defineNuxtConfig({
   // studio: {
   //     // Studio admin route (default: '/_studio')
   //     route: '/_studio',
-  // 
+  //
   //     // {FIX}: broken, pending triage of this https://github.com/nuxt-content/studio/pull/73
   //     development: {
   //       sync: true, // Enable development mode
   //     },
-  // 
+  //
   //     // GitHub repository configuration (owner and repo are required)
   //     repository: {
   //       provider: 'github', // only GitHub is currently supported
@@ -228,6 +226,7 @@ export default defineNuxtConfig({
   routeRules: {
     '/': { ssr: true, prerender: false },
     '/offers/**': { ssr: true, prerender: false },
+    '/success': { ssr: true, prerender: false },
     '/founder': { ssr: true, prerender: false },
     '/decisions': { swr: 3600 },
     '/decisions/**': { swr: 3600 },
@@ -258,7 +257,7 @@ export default defineNuxtConfig({
     serverBundle: {
       // {DX}: Using full @iconify/json no need to install collection packages
       // collections array enables tree-shake
-      collections: [ ...ICON_LIBRARIES ],
+      collections: [...ICON_LIBRARIES],
     },
   },
 });

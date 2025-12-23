@@ -77,7 +77,7 @@ const copyrightYear = computed(() =>
             variant="soft"
             color="secondary"
           />
-          <ConvertRSS
+          <ConvertRss
             location="footer"
             size="lg"
             variant="soft"

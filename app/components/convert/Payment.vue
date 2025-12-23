@@ -1,4 +1,3 @@
-<!-- app/components/convert/Payment.vue -->
 <script setup lang="ts">
 interface Props {
   url: string;

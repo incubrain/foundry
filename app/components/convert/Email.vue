@@ -8,12 +8,18 @@ interface Props {
   note?: string;
   layout?: 'stacked' | 'horizontal';
   successRedirect?: string;
+  offerSlug?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   label: 'Get Access',
   layout: 'stacked',
-  successRedirect: '/offers/success',
+  successRedirect: undefined,
+});
+
+const redirectPath = computed(() => {
+  if (props.successRedirect) return props.successRedirect;
+  return props.offerSlug ? `/success?offer=${props.offerSlug}` : '/success';
 });
 
 // Schema
@@ -58,7 +64,7 @@ const handleSubmit = async () => {
     // Client-side honeypot check (silent reject)
     if (honeypot.value) {
       isSuccess.value = true;
-      navigateTo(props.successRedirect);
+      navigateTo(redirectPath.value);
       return;
     }
 
@@ -86,7 +92,8 @@ const handleSubmit = async () => {
     } satisfies EventPayload);
 
     isSuccess.value = true;
-    navigateTo(props.successRedirect);
+
+    navigateTo(redirectPath.value);
   } catch (error: any) {
     // Validation failed
     if (error.issues) {
@@ -155,7 +162,7 @@ const formClasses = computed(() =>
           height: 0;
           width: 0;
         "
-      >
+      />
 
       <div :class="formClasses">
         <UFormField name="email">

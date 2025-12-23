@@ -92,7 +92,7 @@ const scrollToTop = () => {
             gap="normal"
           />
 
-          <ConvertRSS
+          <ConvertRss
             location="decisions-hero"
             size="lg"
             variant="soft"
