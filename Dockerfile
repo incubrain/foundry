@@ -14,6 +14,7 @@ ARG STUDIO_GITHUB_BRANCH_NAME="main"
 ARG PORT=3000
 ARG HOST=0.0.0.0
 
+ENV NODE_ENV="production"
 ENV NODE_OPTIONS="--max-old-space-size=3072"
 
 # Expose as environment variables

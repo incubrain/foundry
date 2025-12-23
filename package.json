@@ -8,7 +8,7 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare",
+    "postinstall": "[ \"$NODE_ENV\" = \"production\" ] && echo 'Skipping prepare in production' || nuxt prepare",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "ship": "git push",
