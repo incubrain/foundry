@@ -11,7 +11,7 @@ Check your email — we just sent you the goods.
 
 - **Check your inbox** - We've sent confirmation
 - **Join the community** - Connect with other founders
-- **Follow for updates** - Stay in the loop
+- **Follow for decisions** - Follow our growth
 
 ---
 

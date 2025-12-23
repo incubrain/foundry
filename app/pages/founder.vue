@@ -8,8 +8,6 @@ const { data: story } = await useAsyncData('founder-story', () =>
   queryCollection('pages').path('/founder').first(),
 );
 
-
-
 // SEO
 useHead({
   title: founder.value
@@ -49,7 +47,7 @@ useHead({
         >
           <template #links>
             <ConvertFunnel
-              offer-slug="join-us"
+              offer-slug="mentorship"
               location="founder-story"
               size="xl"
               block
