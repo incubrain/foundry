@@ -26,8 +26,7 @@ export interface EventPayload {
   target?: string;
   timestamp?: number;
   data?: {
-    formId?: string;
-    email?: string;
+    formData?: Record<string, any>;
     userId?: string;
     offerId?: string;
     antiSpam?: {
@@ -37,6 +36,8 @@ export interface EventPayload {
       turnstileToken?: string;
     };
     metadata?: Record<string, any>;
+    // Generic data record for other event types
+    [key: string]: any;
   };
   response?: Record<string, any>;
   _devToolsTriggered?: boolean;

@@ -82,7 +82,7 @@ const triggerEvent = async () => {
   const eventData: Record<string, any> = {
     offerId: 'magnet',
     location: route.path,
-    formId: 'email_capture',
+    formData: { formId: 'email_capture' },
   };
 
   const payload: EventPayload = {

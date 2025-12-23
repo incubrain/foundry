@@ -10,9 +10,6 @@ defineProps<Props>();
 
 const isOpen = defineModel<boolean>('open', { default: false });
 
-const { getFounder } = useContentCache();
-const { data: founder } = await getFounder();
-
 const closeMenu = () => {
   isOpen.value = false;
 };

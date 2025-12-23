@@ -2,9 +2,9 @@
 import { z } from 'zod';
 
 const captureSchema = z.object({
-  email: z.string().email(),
-  formId: z.string(),
+  formData: z.record(z.any()),
   metadata: z.record(z.any()).optional(),
+  antiSpam: z.any().optional(),
 });
 
 // Global rate limiter instance
@@ -17,11 +17,15 @@ type WebhookPlatform = 'telegram' | 'slack' | 'discord' | 'unknown';
  */
 function detectPlatform(url: string): WebhookPlatform {
   const lowerUrl = url.toLowerCase();
-  
+
   if (lowerUrl.includes('api.telegram.org')) return 'telegram';
   if (lowerUrl.includes('hooks.slack.com')) return 'slack';
-  if (lowerUrl.includes('discord.com/api/webhooks') || lowerUrl.includes('discordapp.com/api/webhooks')) return 'discord';
-  
+  if (
+    lowerUrl.includes('discord.com/api/webhooks') ||
+    lowerUrl.includes('discordapp.com/api/webhooks')
+  )
+    return 'discord';
+
   return 'unknown';
 }
 
@@ -29,137 +33,186 @@ function detectPlatform(url: string): WebhookPlatform {
  * Format message for specific platform with spam flags
  */
 function formatMessage(
-  platform: WebhookPlatform, 
+  platform: WebhookPlatform,
   data: {
-    email: string;
-    formId: string;
+    formData?: Record<string, any>;
     metadata?: Record<string, any>;
     flags: SpamFlags;
-  }, 
-  chatId?: string
+  },
+  chatId?: string,
 ) {
   const location = data.metadata?.location || 'unknown';
   const ctaType = data.metadata?.ctaType || 'unknown';
-  const risk = data.flags.score > 50 ? '⚠️' : data.flags.score > 20 ? '⚡' : '✅';
-  
+  const risk =
+    data.flags.score > 50 ? '⚠️' : data.flags.score > 20 ? '⚡' : '✅';
+  const primaryEmail = data.formData?.email || 'No Email';
+
+  // Format fields for display
+  const fieldList = Object.entries(data.formData || {})
+    .filter(([key]) => key !== 'email') // Email is shown separately or at top
+    .map(([key, value]) => `${key}: ${value}`);
+
   switch (platform) {
     case 'telegram':
       if (!chatId) {
-        throw new Error('NUXT_TELEGRAM_CHAT_ID is required for Telegram webhooks');
+        throw new Error(
+          'NUXT_TELEGRAM_CHAT_ID is required for Telegram webhooks',
+        );
       }
-      // Simple text format - Markdown requires escaping special characters
-      // Using plain text to avoid 400 errors from unescaped characters
+
       const telegramLines = [
         `${risk} New Lead`,
         '',
-        `📧 Email: ${data.email}`,
-        `📝 Form: ${data.formId}`,
+        `📧 ${primaryEmail}`,
+        ...fieldList.map((f) => `🔹 ${f}`),
+        '',
+        `📝 Form: ${data.formData?.formId}`,
         `📍 Location: ${location}`,
         `🎯 CTA: ${ctaType}`,
       ];
-      
+
       // Add spam flags if present
       if (data.flags.score > 0) {
         telegramLines.push('', `⚠️ Risk Score: ${data.flags.score}/100`);
         if (data.flags.fast) telegramLines.push('⚡ Fast submission');
         if (data.flags.noJs) telegramLines.push('🤖 No JavaScript');
       }
-      
+
       return {
         chat_id: chatId,
         text: telegramLines.join('\n'),
       };
-      
+
     case 'slack':
+      // Build fields block
+      const slackFields = [
+        {
+          type: 'mrkdwn',
+          text: `*Email*\n${primaryEmail}`,
+        },
+        ...Object.entries(data.formData || {})
+          .filter(([k]) => k !== 'email')
+          .map(([key, value]) => ({
+            type: 'mrkdwn',
+            text: `*${key.charAt(0).toUpperCase() + key.slice(1)}*\n${value}`,
+          })),
+      ];
+
       return {
-        text: `${risk} New Lead: ${data.email}`,
+        text: `${risk} New Lead: ${primaryEmail}`,
         blocks: [
           {
-            type: "section",
+            type: 'section',
             text: {
-              type: "mrkdwn",
-              text: `*New Email Capture*\n📧 \`${data.email}\`\n📝 ${data.formId}`
-            }
+              type: 'mrkdwn',
+              text: `*New Lead captured*`,
+            },
           },
           {
-            type: "context",
-            elements: [{
-              type: "mrkdwn",
-              text: `${location} | ${ctaType}${data.flags.score > 0 ? ` | Risk: ${data.flags.score}` : ''}`
-            }]
+            type: 'section',
+            fields: slackFields,
           },
-        ]
+          {
+            type: 'context',
+            elements: [
+              {
+                type: 'mrkdwn',
+                text: `📝 ${data.formData?.formId} | 📍 ${location} | ⚠️ Risk: ${data.flags.score}`,
+              },
+            ],
+          },
+        ],
       };
-      
+
     case 'discord':
-      const color = data.flags.score > 50 ? 0xff6b6b : data.flags.score > 20 ? 0xffd93d : 0x00ff00;
+      const color =
+        data.flags.score > 50
+          ? 0xff6b6b
+          : data.flags.score > 20
+            ? 0xffd93d
+            : 0x00ff00;
+
+      const discordFields = [
+        { name: '📧 Email', value: `\`${primaryEmail}\``, inline: false },
+        ...Object.entries(data.formData || {})
+          .filter(([k]) => k !== 'email')
+          .map(([key, value]) => ({
+            name: key.charAt(0).toUpperCase() + key.slice(1),
+            value: String(value), // Ensure string
+            inline: true,
+          })),
+        { name: '📝 Form', value: data.formData?.formId, inline: true },
+        { name: '📍 Location', value: location, inline: true },
+        data.flags.score > 0
+          ? { name: '⚠️ Risk', value: `${data.flags.score}/100`, inline: true }
+          : null,
+      ].filter(Boolean);
+
       return {
         content: `${risk} **New Lead**`,
-        embeds: [{
-          color,
-          fields: [
-            { name: '📧', value: `\`${data.email}\``, inline: false },
-            { name: '📝', value: data.formId, inline: true },
-            { name: '📍', value: location, inline: true },
-            { name: '🎯', value: ctaType, inline: true },
-            data.flags.score > 0 ? { name: '⚠️', value: `${data.flags.score}/100`, inline: true } : null,
-          ].filter(Boolean),
-          timestamp: new Date().toISOString(),
-        }]
+        embeds: [
+          {
+            color,
+            fields: discordFields,
+            timestamp: new Date().toISOString(),
+          },
+        ],
       };
-      
+
     default:
-      return { text: `${risk} ${data.email}` };
+      return {
+        text: `${risk} ${primaryEmail} - ${JSON.stringify(data.formData)}`,
+      };
   }
 }
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
-  const { email, formId, metadata, antiSpam } = body;
-  
+  const { formData, metadata, antiSpam } = body;
+
   // Get IP for rate limiting
   const ip = getRequestIP(event, { xForwardedFor: true }) || 'unknown';
-  
+
   // === ANTI-SPAM VALIDATION ===
-  
+
   // Validate anti-spam data
   const flags = validateAntiSpam(antiSpam || {});
-  
+
   // Log suspicious activity
   if (flags.score > 0) {
     logger.warn('[Anti-Spam] Suspicious submission:', {
-      email,
+      email: formData?.email,
       ip: ip.substring(0, 10) + '...',
       flags,
     });
   }
-  
+
   // HARD REJECT: Honeypot triggered
   if (flags.honeypot) {
-    logger.warn('[Anti-Spam] Honeypot triggered - silent reject:', email);
-    
+    logger.warn('[Anti-Spam] Honeypot triggered - silent reject:', formData?.email);
+
     // Return success to user (don't reveal detection)
     return {
       success: true,
       message: 'Thanks! Check your email.',
     };
   }
-  
+
   // HARD REJECT: Rate limit exceeded
   if (rateLimiter.check(ip)) {
-    logger.warn('[Anti-Spam] Rate limit exceeded:', ip, email);
-    
+    logger.warn('[Anti-Spam] Rate limit exceeded:', ip, formData?.email);
+
     throw createError({
       statusCode: 429,
       statusMessage: 'Too Many Requests',
       message: 'Too many submissions. Please try again in a few minutes.',
     });
   }
-  
+
   // === EMAIL VALIDATION ===
-  
-  const parsed = captureSchema.safeParse({ email, formId, metadata});
-  
+
+  const parsed = captureSchema.safeParse({ formData, metadata });
+
   if (!parsed.success) {
     throw createError({
       statusCode: 400,
@@ -168,10 +221,10 @@ export default defineEventHandler(async (event) => {
       data: parsed.error.errors,
     });
   }
-  
+
   const config = useRuntimeConfig();
   const webhookUrl = config.webhookUrl;
-  
+
   if (!webhookUrl) {
     logger.box({
       title: '❌ Webhook Not Configured',
@@ -195,17 +248,21 @@ export default defineEventHandler(async (event) => {
         borderStyle: 'rounded',
       },
     });
-    
+
     throw createError({
       statusCode: 500,
       statusMessage: 'Webhook Not Configured',
-      message: 'Webhook URL is missing. Supports Telegram, Slack, or Discord. Add NUXT_WEBHOOK_URL to your .env file. See terminal for setup instructions.',
+      message:
+        'Webhook URL is missing. Supports Telegram, Slack, or Discord. Add NUXT_WEBHOOK_URL to your .env file. See terminal for setup instructions.',
     });
   }
-  
+
   // Parse multiple webhook URLs (comma-separated)
-  const webhookUrls = webhookUrl.split(',').map(url => url.trim()).filter(Boolean);
-  
+  const webhookUrls = webhookUrl
+    .split(',')
+    .map((url) => url.trim())
+    .filter(Boolean);
+
   if (webhookUrls.length === 0) {
     throw createError({
       statusCode: 500,
@@ -213,39 +270,50 @@ export default defineEventHandler(async (event) => {
       message: 'No valid webhook URLs found',
     });
   }
-  
+
   const telegramChatId = config.telegramChatId;
-  
+
   // Send to all webhooks in parallel
   const results = await Promise.allSettled(
     webhookUrls.map(async (url) => {
       const platform = detectPlatform(url);
-      
+
       let message;
       try {
-        message = formatMessage(platform, {
-          email: parsed.data.email,
-          formId: parsed.data.formId,
-          metadata: parsed.data.metadata,
-          flags,
-        }, telegramChatId);
+        message = formatMessage(
+          platform,
+          {
+            formData: parsed.data.formData,
+            metadata: parsed.data.metadata,
+            flags,
+          },
+          telegramChatId,
+        );
       } catch (error) {
         logger.error(`[${platform}] Failed to format message:`, {
           error: error instanceof Error ? error.message : 'Unknown error',
         });
         throw error;
       }
-      
+
       try {
         const response = await $fetch(url, {
           method: 'POST',
           body: message,
         });
-        
+
         // Validate Telegram response
-        if (platform === 'telegram' && response && typeof response === 'object') {
-          const telegramResponse = response as { ok: boolean; description?: string; error_code?: number };
-          
+        if (
+          platform === 'telegram' &&
+          response &&
+          typeof response === 'object'
+        ) {
+          const telegramResponse = response as {
+            ok: boolean;
+            description?: string;
+            error_code?: number;
+          };
+
           if (!telegramResponse.ok) {
             logger.error('[telegram] API returned error:', {
               ok: telegramResponse.ok,
@@ -253,45 +321,52 @@ export default defineEventHandler(async (event) => {
               description: telegramResponse.description,
               sentPayload: message,
             });
-            
-            throw new Error(telegramResponse.description || 'Telegram API returned ok: false');
+
+            throw new Error(
+              telegramResponse.description || 'Telegram API returned ok: false',
+            );
           }
         }
-        
-        logger.success(`[${platform}] Lead delivered:`, parsed.data.email);
-        
+
+        logger.success(
+          `[${platform}] Lead delivered:`,
+          parsed.data.formData?.email,
+        );
+
         return { platform, url: url.substring(0, 30) + '...', success: true };
       } catch (error: any) {
         logger.error(`[${platform}] Delivery failed:`, {
           url: url.substring(0, 10) + '...',
           error: error instanceof Error ? error.message : 'Unknown error',
         });
-        
+
         throw error;
       }
-    })
+    }),
   );
-  
+
   // Analyze results
-  const successful = results.filter(r => r.status === 'fulfilled');
-  const failed = results.filter(r => r.status === 'rejected');
-  
+  const successful = results.filter((r) => r.status === 'fulfilled');
+  const failed = results.filter((r) => r.status === 'rejected');
+
   logger.info('Webhook delivery summary:', {
     total: webhookUrls.length,
     successful: successful.length,
     failed: failed.length,
   });
-  
+
   // Return success if at least one webhook succeeded
   if (successful.length > 0) {
     return {
       success: true,
       delivered: successful.length,
       failed: failed.length,
-      platforms: successful.map(r => (r as PromiseFulfilledResult<any>).value),
+      platforms: successful.map(
+        (r) => (r as PromiseFulfilledResult<any>).value,
+      ),
     };
   }
-  
+
   // All failed - throw error
   throw createError({
     statusCode: 500,

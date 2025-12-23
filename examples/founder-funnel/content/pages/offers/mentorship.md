@@ -219,7 +219,7 @@ description: "I will not scale beyond 20 mentorships. This ensures I can give ea
 ---
 ::
 
-::convert-multiple
+::convert-pricing
 ---
 options:
   - url: https://cal.com/drew/pune
@@ -230,7 +230,7 @@ options:
     badge: null
     description: Monthly 1-hour sessions in Pune. Coffee shop strategy sessions or co-working deep dives.
     location: Pune, India
-    buttonLabel: Book Consultation Call
+    buttonLabel: Free Consultation Call
     highlighted: true
     features:
       - Face-to-face strategic planning
@@ -245,7 +245,7 @@ options:
     badge: null
     description: Monthly 1-hour video calls. Works across any timezone. Same tactical focus, just remote.
     location: Remote (Global)
-    buttonLabel: Book Consultation Call
+    buttonLabel: Free Consultation Call
     highlighted: false
     features:
       - Video call strategic sessions
@@ -300,21 +300,21 @@ avatar: /team/mac-avatar.jpg
 - Results-focused (revenue, customers, traction—not vanity metrics)
 
 <!-- 13. FINAL CTA -->
-::convert-multiple
+::convert-pricing
 ---
 options:
   - url: https://cal.com/drew/pune
     title: Pune In-Person
     price: $125
     priceInterval: /month
-    buttonLabel: Book Consultation Call
+    buttonLabel: Free Consultation Call
     highlighted: false
   
   - url: https://cal.com/drew/remote
     title: Remote Global
     price: $250
     priceInterval: /month
-    buttonLabel: Book Consultation Call
+    buttonLabel: Free Consultation Call
     highlighted: false
 ---
 ::

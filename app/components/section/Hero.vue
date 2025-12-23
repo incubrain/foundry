@@ -84,26 +84,22 @@ const hero = computed(() => props.data);
         <div
           class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4"
         >
-          <ConvertFunnel
+          <ConvertInternal
             offer-slug="mentorship"
             location="hero"
             size="xl"
             class="font-black text-toned"
           />
 
-          <UButton
-            to="#demo"
-            variant="link"
-            color="neutral"
-            size="xl"
-            class="font-medium text-neutral-400 hover:text-white transition-colors"
-          >
-            {{ hero.cta.secondary }}
-            <UIcon
-              :name="hero.cta.secondaryIcon || 'i-lucide-arrow-right'"
-              class="ml-1 w-4 h-4"
-            />
-          </UButton>
+          <ConvertExternal
+            to="https://github.com/incubrain/founder-funnel"
+            :label="hero.cta.secondary"
+            :icon="hero.cta.secondaryIcon"
+            variant="button"
+            button-color="neutral"
+            button-variant="link"
+            button-size="xl"
+          />
         </div>
       </div>
 

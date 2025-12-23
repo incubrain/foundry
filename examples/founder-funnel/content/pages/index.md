@@ -132,23 +132,23 @@ data:
 ::section-offer
 ---
 data:
-  title: The Validation Template
-  description: Stop building. Start validating.
-  price: Free
+  title: Founder Compass Mentorship
+  description: Strategic mentorship for technical founders building their first profitable business.
+  price: $250/mo
   features:
-    - title: "Nuxt 4 + Tailwind v4"
+    - title: "Kill 2-3 bad ideas fast"
       icon: status-available
-    - title: "Conversion Components"
+    - title: "Ship MVP in 4-6 weeks"
       icon: status-available
-    - title: "Analytics Intergration"
+    - title: "First customer in 90 days"
       icon: status-available
-    - title: "Automated SEO"
+    - title: "Technical Founder Perspective"
       icon: status-available
-    - title: "Zero Dependencies"
+    - title: "Real-World Product Validation"
       icon: status-available
   intro:
-    title: Everything You Need to Validate
-    description: Don't spend $50/mo on landing page builders. Use the stack you already know.
+    title: Stop Building in the Dark
+    description: Don't waste another year building a product nobody wants. Get the strategic guidance you need to ship.
 ---
 ::
 

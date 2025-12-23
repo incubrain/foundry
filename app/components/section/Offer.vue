@@ -131,23 +131,30 @@ const transformedFeatures = computed(() => {
 
           <template #button>
             <div class="pt-4 w-full">
-              <ConvertFunnel to="/offers/mentorship" location="product-section" />
+              <ConvertInternal
+                offer-slug="mentorship"
+                label="Get Started"
+                location="product-section"
+                block
+                size="xl"
+              />
             </div>
           </template>
         </UPricingPlan>
 
         <div class="mt-4 flex flex-col gap-4 justify-center items-center">
           <UBadge variant="soft">OR</UBadge>
-          <ConvertFunnel
-            to="/offers/mentorship"
-            label="Book a Call Instead"
-            icon="i-lucide-calendar"
+          <ConvertExternal
+            to="https://github.com/incubrain/founder-funnel"
+            label="One Click Deploy"
+            icon="i-lucide-rocket"
             location="product-section-alt"
+            type="social"
             size="xl"
             block
             variant="button"
             button-variant="outline"
-            color="secondary"
+            button-color="secondary"
           />
         </div>
       </div>

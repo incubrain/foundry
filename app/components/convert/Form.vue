@@ -1,10 +1,19 @@
-<!-- app/components/convert/Email.vue -->
+<!-- app/components/convert/Form.vue -->
 <script setup lang="ts">
 import { z } from 'zod';
 
-interface Props {
-  location: string;
+interface FieldDef {
+  name: string;
   label?: string;
+  type: 'text' | 'email' | 'textarea' | 'tel';
+  placeholder?: string;
+  required?: boolean;
+}
+
+interface Props {
+  fields?: FieldDef[];
+  location: string;
+  submitLabel?: string;
   note?: string;
   layout?: 'stacked' | 'horizontal';
   successRedirect?: string;
@@ -12,7 +21,16 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  label: 'Get Access',
+  fields: () => [
+    {
+      name: 'email',
+      label: 'Email Address',
+      type: 'email',
+      placeholder: 'your@email.com',
+      required: true,
+    },
+  ],
+  submitLabel: 'Get Access',
   layout: 'stacked',
   successRedirect: undefined,
 });
@@ -22,21 +40,34 @@ const redirectPath = computed(() => {
   return props.offerSlug ? `/success?offer=${props.offerSlug}` : '/success';
 });
 
-// Schema
-const schema = z.object({
-  email: z.string().email('Please enter a valid email address'),
+// Dynamic State
+const state = reactive<Record<string, any>>({});
+// Initialize state
+props.fields.forEach((field) => {
+  state[field.name] = undefined;
 });
 
-const state = reactive({ email: '' });
+// Dynamic Schema
+const schema = computed(() => {
+  const shape: Record<string, any> = {};
 
-// Real-time validation
-const is_valid_email = computed(() => {
-  try {
-    schema.parse({ email: state.email });
-    return true;
-  } catch {
-    return false;
-  }
+  props.fields.forEach((field) => {
+    let validator = z.string();
+
+    if (field.type === 'email') {
+      validator = validator.email('Please enter a valid email address');
+    }
+
+    if (!field.required) {
+      validator = validator.optional().or(z.literal(''));
+    } else {
+      validator = validator.min(1, `${field.label || field.name} is required`);
+    }
+
+    shape[field.name] = validator;
+  });
+
+  return z.object(shape);
 });
 
 // Form submission state
@@ -44,7 +75,6 @@ const { trackEvent } = useEvents();
 const route = useRoute();
 const toast = useToast();
 const isSubmitting = ref(false);
-const isSuccess = ref(false);
 
 // Anti-spam tracking
 const formRenderedAt = ref(Date.now());
@@ -59,25 +89,23 @@ const handleSubmit = async () => {
   isSubmitting.value = true;
 
   try {
-    const validated = schema.parse(state);
+    const validated = schema.value.parse(state);
 
     // Client-side honeypot check (silent reject)
     if (honeypot.value) {
-      isSuccess.value = true;
       navigateTo(redirectPath.value);
       return;
     }
 
     await trackEvent({
-      id: `email_capture_submit`,
+      id: `form_submit_${props.location}`,
       type: 'form_submitted',
       location: route.path,
       action: 'submit',
-      target: 'email_capture',
+      target: 'form_capture',
       timestamp: Date.now(),
       data: {
-        formId: 'email_capture',
-        email: validated.email,
+        formData: { ...validated, formId: props.location }, // Capture all dynamic fields + formId
         antiSpam: {
           honeypot: honeypot.value,
           timeOnForm: Date.now() - formRenderedAt.value,
@@ -91,15 +119,13 @@ const handleSubmit = async () => {
       },
     } satisfies EventPayload);
 
-    isSuccess.value = true;
-
     navigateTo(redirectPath.value);
   } catch (error: any) {
     // Validation failed
     if (error.issues) {
       toast.add({
-        title: 'Invalid email',
-        description: 'Please check your email address and try again.',
+        title: 'Validation Error',
+        description: error.issues[0]?.message || 'Please check your inputs.',
         color: 'error',
       });
       isSubmitting.value = false;
@@ -118,14 +144,14 @@ const handleSubmit = async () => {
     });
 
     await trackEvent({
-      id: `email_capture_error`,
+      id: `form_error_${props.location}`,
       type: 'form_error',
       location: 'form',
       action: 'submission_failed',
-      target: 'email_capture',
+      target: 'form_capture',
       timestamp: Date.now(),
       data: {
-        formId: 'email_capture',
+        formId: props.location,
       },
       error: errorMsg,
     });
@@ -137,8 +163,8 @@ const handleSubmit = async () => {
 // Dynamic classes
 const formClasses = computed(() =>
   props.layout === 'horizontal'
-    ? 'flex flex-col sm:flex-row gap-3'
-    : 'space-y-3',
+    ? 'flex flex-col sm:flex-row gap-3 items-end'
+    : 'space-y-4',
 );
 </script>
 
@@ -165,27 +191,43 @@ const formClasses = computed(() =>
       />
 
       <div :class="formClasses">
-        <UFormField name="email">
-          <UInput
-            v-model="state.email"
-            type="email"
-            placeholder="your@email.com"
-            size="xl"
-            :disabled="isSubmitting"
+        <!-- Dynamic Fields Loop -->
+        <template v-for="field in fields" :key="field.name">
+          <UFormField
+            :name="field.name"
+            :label="layout === 'stacked' ? field.label : undefined"
             :class="layout === 'horizontal' ? 'flex-1' : 'w-full'"
-          />
-        </UFormField>
+          >
+            <UTextarea
+              v-if="field.type === 'textarea'"
+              v-model="state[field.name]"
+              :placeholder="field.placeholder"
+              size="xl"
+              :disabled="isSubmitting"
+              :rows="3"
+              autoresize
+            />
+            <UInput
+              v-else
+              v-model="state[field.name]"
+              :type="field.type"
+              :placeholder="field.placeholder"
+              size="xl"
+              :disabled="isSubmitting"
+            />
+          </UFormField>
+        </template>
+
         <UButton
           type="submit"
           size="xl"
           :block="layout === 'stacked'"
           :loading="isSubmitting"
-          :disabled="state.email && (!is_valid_email || isSubmitting)"
           variant="solid"
           color="primary"
           class="cursor-pointer disabled:cursor-not-allowed text-toned font-black"
         >
-          {{ label }}
+          {{ submitLabel }}
         </UButton>
       </div>
     </UForm>

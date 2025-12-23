@@ -109,7 +109,7 @@ const copyrightYear = computed(() =>
             color="neutral"
             aria-label="View Analytics Dashboard"
           />
-          <ConvertFunnel
+          <ConvertInternal
             to="/offers/mentorship"
             label="Hire Me"
             icon="i-lucide-calendar"

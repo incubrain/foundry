@@ -7,13 +7,12 @@ import type { EventPayload } from '#shared/types/events';
  */
 export async function webhookHandler(payload: EventPayload): Promise<any> {
   if (payload.type !== 'form_submitted') return;
-  
+
   try {
     const response = await $fetch('/api/v1/webhook', {
       method: 'POST',
       body: {
-        email: payload.data.email,
-        formId: payload.data.formId,
+        formData: payload.data.formData,
         metadata: payload.data.metadata,
         antiSpam: payload.data.antiSpam,
       },
