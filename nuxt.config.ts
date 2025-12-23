@@ -33,6 +33,17 @@ export default defineNuxtConfig({
     redirectToCanonicalSiteUrl: true,
   },
 
+  hooks: {
+    'components:extend': (components) => {
+      // {DX}: Adds these components to the global scope, making them available in Nuxt Studio via '/' command palette
+      const globals = components.filter((c) =>
+        ['UButton', 'UIcon'].includes(c.pascalName),
+      );
+
+      globals.forEach((c) => (c.global = true));
+    },
+  },
+
   llms: {
     domain: 'https://founder-funnel.incubrain.org',
     title: 'Founder Funnel',
