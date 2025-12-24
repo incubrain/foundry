@@ -38,15 +38,9 @@ const { trackEvent } = useEvents();
 
 const handleClick = () => {
   trackEvent({
-    id: 'banner_click',
-    type: 'cta_click',
-    location: 'banner',
-    action: 'click',
-    target: cta.value.to,
-    data: {
-      offerSlug: props.offerSlug,
-      ctaLabel: cta.value.label,
-    },
+    id: `offer_click_${props.offerSlug}_banner`,
+    type: 'offer_click',
+    target: 'service_internal',
   });
 };
 </script>

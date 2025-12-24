@@ -1,9 +1,7 @@
 // app/utils/webhook.handler.ts
-import type { EventPayload } from '#shared/types/events';
 
 /**
  * Sends form submission data to webhook endpoint
- * Replaces server-pipe.handler with simpler webhook approach
  */
 export async function webhookHandler(payload: EventPayload): Promise<any> {
   if (payload.type !== 'form_submitted') return;
@@ -13,7 +11,6 @@ export async function webhookHandler(payload: EventPayload): Promise<any> {
       method: 'POST',
       body: {
         formData: payload.data.formData,
-        metadata: payload.data.metadata,
         antiSpam: payload.data.antiSpam,
       },
     });

@@ -3,7 +3,6 @@ import { z } from 'zod';
 
 const captureSchema = z.object({
   formData: z.record(z.any()),
-  metadata: z.record(z.any()).optional(),
   antiSpam: z.any().optional(),
 });
 
@@ -36,13 +35,10 @@ function formatMessage(
   platform: WebhookPlatform,
   data: {
     formData?: Record<string, any>;
-    metadata?: Record<string, any>;
     flags: SpamFlags;
   },
   chatId?: string,
 ) {
-  const location = data.metadata?.location || 'unknown';
-  const ctaType = data.metadata?.ctaType || 'unknown';
   const risk =
     data.flags.score > 50 ? '⚠️' : data.flags.score > 20 ? '⚡' : '✅';
   const primaryEmail = data.formData?.email || 'No Email';
@@ -67,8 +63,6 @@ function formatMessage(
         ...fieldList.map((f) => `🔹 ${f}`),
         '',
         `📝 Form: ${data.formData?.formId}`,
-        `📍 Location: ${location}`,
-        `🎯 CTA: ${ctaType}`,
       ];
 
       // Add spam flags if present
@@ -117,7 +111,7 @@ function formatMessage(
             elements: [
               {
                 type: 'mrkdwn',
-                text: `📝 ${data.formData?.formId} | 📍 ${location} | ⚠️ Risk: ${data.flags.score}`,
+                text: `📝 ${data.formData?.formId} | ⚠️ Risk: ${data.flags.score}`,
               },
             ],
           },
@@ -142,7 +136,6 @@ function formatMessage(
             inline: true,
           })),
         { name: '📝 Form', value: data.formData?.formId, inline: true },
-        { name: '📍 Location', value: location, inline: true },
         data.flags.score > 0
           ? { name: '⚠️ Risk', value: `${data.flags.score}/100`, inline: true }
           : null,
@@ -168,7 +161,7 @@ function formatMessage(
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
-  const { formData, metadata, antiSpam } = body;
+  const { formData, antiSpam } = body;
 
   // Get IP for rate limiting
   const ip = getRequestIP(event, { xForwardedFor: true }) || 'unknown';
@@ -211,7 +204,7 @@ export default defineEventHandler(async (event) => {
 
   // === EMAIL VALIDATION ===
 
-  const parsed = captureSchema.safeParse({ formData, metadata });
+  const parsed = captureSchema.safeParse({ formData });
 
   if (!parsed.success) {
     throw createError({
@@ -284,7 +277,6 @@ export default defineEventHandler(async (event) => {
           platform,
           {
             formData: parsed.data.formData,
-            metadata: parsed.data.metadata,
             flags,
           },
           telegramChatId,

@@ -21,12 +21,10 @@ function sendToAnalytics(payload: EventPayload, analyticsProxy: any) {
   const eventName = `${payload.type}`;
 
   // Extract user identity and traffic attribution
-  const userId = payload.data?.userId;
+  const userId = payload.userId;
 
   const eventData = {
     event_id: payload.id,
-    location: payload.location,
-    action: payload.action,
     target: payload.target,
     timestamp: payload.timestamp,
     id: userId,

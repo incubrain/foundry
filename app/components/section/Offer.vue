@@ -132,7 +132,7 @@ const transformedFeatures = computed(() => {
           <template #button>
             <div class="pt-4 w-full">
               <ConvertInternal
-                offer-slug="mentorship"
+                offer-slug="booking"
                 label="Get Started"
                 location="product-section"
                 block

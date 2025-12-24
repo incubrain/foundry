@@ -1,17 +1,21 @@
 <!-- components/nav/Anchor.vue -->
 <script setup lang="ts">
-import { NAVIGATION } from '#shared/config/navigation';
+import { NAVIGATION, type SectionId } from '#shared/config/navigation';
 
 interface Props {
-  id: SectionAnchor;
+  id: SectionId;
 }
 
 const props = defineProps<Props>();
 
 const getStickyOffset = () => {
-  const banner = NAVIGATION.layout.banner?.sticky ? 'var(--ui-banner-height)+' : '';
+  const banner = NAVIGATION.layout.banner?.sticky
+    ? 'var(--ui-banner-height)+'
+    : '';
 
-  const navbar = NAVIGATION.layout.navbar?.sticky ? 'var(--ui-header-height)+' : '';
+  const navbar = NAVIGATION.layout.navbar?.sticky
+    ? 'var(--ui-header-height)+'
+    : '';
 
   const offset = '--spacing(12)';
 
@@ -19,7 +23,6 @@ const getStickyOffset = () => {
 };
 
 const anchorOffset = getStickyOffset();
-const cleanId = computed(() => props.id.replace(/^#/, ''));
 
 onMounted(() => {
   const element = document.getElementById(props.id);
@@ -31,7 +34,7 @@ onMounted(() => {
 
 <template>
   <div
-    :id="cleanId"
+    :id="id"
     :style="{ scrollMarginTop: anchorOffset }"
     class="anchor-target"
   />

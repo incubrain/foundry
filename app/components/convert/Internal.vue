@@ -1,10 +1,11 @@
 <!-- app/components/convert/Internal.vue -->
 <script setup lang="ts">
 import type { ButtonProps, PageCardProps } from '@nuxt/ui';
+import type { OfferId } from '#shared/types/events';
 
 interface Props {
   // Option 1: Query by slug
-  offerSlug?: string;
+  offerSlug?: OfferId;
 
   // Option 2: Explicit props (overrides query)
   to?: string;
@@ -55,17 +56,9 @@ const { trackEvent } = useEvents();
 
 const handleClick = async () => {
   await trackEvent({
-    id: `convert_internal_click_${props.location}`,
-    type: 'cta_click', // Kept as cta_click broadly, but ID distinguishes it
-    location: props.location,
-    action: 'click',
-    target: cta.value.to,
-    data: {
-      ctaType: 'internal_nav',
-      offerSlug: props.offerSlug,
-      ctaLabel: cta.value.label,
-      variant: props.variant,
-    },
+    id: `offer_click_${props.offerSlug}_${props.location}`,
+    type: 'offer_click',
+    target: `${props.offerSlug}_internal`,
   });
 };
 </script>

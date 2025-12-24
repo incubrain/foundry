@@ -1,8 +1,10 @@
 <!-- app/components/section/SectionWrapper.vue -->
 <script setup lang="ts">
 import { useIntersectionObserver } from '@vueuse/core';
+import type { SectionId } from '#shared/config/navigation';
+
 interface Props {
-  id: SectionAnchor;
+  id: SectionId;
   intro: {
     title: string;
     description: string;
@@ -28,10 +30,9 @@ useIntersectionObserver(
   ([{ isIntersecting }]) => {
     if (isIntersecting) {
       trackEvent({
-        id: props.id,
+        id: `section_view_${props.id}`,
         type: 'section_view',
-        action: 'view',
-        location: props.id,
+        target: props.id, // SectionId
       });
     }
   },

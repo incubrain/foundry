@@ -22,23 +22,25 @@ const toast = useToast();
 
 const feedUrl = 'https://founder-funnel.incubrain.org/decisions.xml';
 
-const handleRSSClick = (action: string, target?: string) => {
+type RSSType =
+  | 'feedly'
+  | 'inoreader'
+  | 'newsblur'
+  | 'oldreader'
+  | 'xml'
+  | 'copy';
+
+const handleRSSClick = (target?: 'internal' | 'external', type?: RSSType) => {
   trackEvent({
-    id: `rss_${action}_${props.location}`,
-    type: 'cta_click',
-    location: props.location,
-    action: 'click',
-    target: target || feedUrl,
-    data: {
-      ctaType: 'rss',
-      action,
-    },
+    id: `offer_click_rss_${props.location}_${type}`,
+    type: 'offer_click',
+    target: `rss_${target}`,
   });
 };
 
 const copyFeedUrl = async () => {
   await copy(feedUrl);
-  handleRSSClick('copy');
+  handleRSSClick('internal', 'copy');
 
   toast.add({
     title: 'Feed URL Copied',
@@ -48,8 +50,8 @@ const copyFeedUrl = async () => {
   });
 };
 
-const handleReaderClick = (url: string) => {
-  handleRSSClick('reader', url);
+const handleReaderClick = (url: string, type?: RSSType) => {
+  handleRSSClick('external', type);
   window.open(url, '_blank');
 };
 
@@ -63,7 +65,7 @@ const actions = [
     label: 'Open Feed',
     icon: 'i-lucide-external-link',
     click: () => {
-      handleRSSClick('open');
+      handleRSSClick('internal', 'xml');
       window.open(feedUrl, '_blank');
     },
   },
@@ -73,6 +75,7 @@ const actions = [
     click: () =>
       handleReaderClick(
         `https://feedly.com/i/subscription/feed/${encodeURIComponent(feedUrl)}`,
+        'feedly',
       ),
   },
   {
@@ -81,6 +84,7 @@ const actions = [
     click: () =>
       handleReaderClick(
         `https://www.inoreader.com/?add_feed=${encodeURIComponent(feedUrl)}`,
+        'inoreader',
       ),
   },
   {
@@ -89,6 +93,7 @@ const actions = [
     click: () =>
       handleReaderClick(
         `https://www.newsblur.com/?url=${encodeURIComponent(feedUrl)}`,
+        'newsblur',
       ),
   },
   {
@@ -97,6 +102,7 @@ const actions = [
     click: () =>
       handleReaderClick(
         `https://theoldreader.com/feeds/subscribe?url=${encodeURIComponent(feedUrl)}`,
+        'oldreader',
       ),
   },
 ];

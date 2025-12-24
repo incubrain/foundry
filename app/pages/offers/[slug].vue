@@ -49,20 +49,6 @@ defineOgImage({
     image: business.value?.logo,
   },
 });
-
-const { trackEvent } = useEvents();
-onMounted(() => {
-  trackEvent({
-    id: `offer_${slug}_view`,
-    type: 'element_viewed',
-    location: `offer-page-${slug}`,
-    action: 'page_view',
-    target: `/offers/${slug}`,
-    data: {
-      offerId: slug,
-    },
-  });
-});
 </script>
 
 <template>

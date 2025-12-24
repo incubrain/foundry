@@ -1,11 +1,12 @@
 <!-- app/components/convert/External.vue -->
 <script setup lang="ts">
 import type { ButtonProps } from '@nuxt/ui';
+import type { OfferId } from '#shared/types/events';
 
 interface Props {
   // Functional
   to: string;
-  type: 'payment' | 'booking' | 'apply' | 'social';
+  type: OfferId;
   location: string;
 
   // Content
@@ -62,17 +63,9 @@ const { trackEvent } = useEvents();
 
 const handleClick = () => {
   trackEvent({
-    id: `convert_${props.type}_click_${props.location}`,
-    type: 'cta_click',
-    location: props.location,
-    action: 'click',
-    target: props.to,
-    data: {
-      ctaType: props.type, // 'payment', 'booking', etc.
-      variant: props.variant,
-      price: props.price,
-      title: props.title,
-    },
+    id: `offer_click_${props.type}_${props.location}`,
+    type: 'offer_click',
+    target: `${props.type}_external`,
   });
 };
 

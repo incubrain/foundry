@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { useShare } from '@vueuse/core';
 
-const { trackEvent } = useEvents();
-
 const { getFounder, getAllOffers } = useContentCache();
 const { data: founder } = await getFounder();
 const { data: offers } = await getAllOffers();
@@ -53,17 +51,6 @@ useHead({
       content: 'Explore our offers and ways to work together.',
     },
   ],
-});
-
-// Track page view
-onMounted(() => {
-  trackEvent({
-    id: 'offers_page_view',
-    type: 'element_viewed',
-    location: 'offers_page',
-    action: 'page_view',
-    target: '/offers',
-  });
 });
 </script>
 

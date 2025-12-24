@@ -1,6 +1,6 @@
 <!-- components/DevEvents.vue -->
 <script setup lang="ts">
-import type { EventPayload } from '#shared/types/events';
+import type { EventInput } from '#shared/types/events';
 import type { SelectMenuItem } from '@nuxt/ui';
 import { EVENT_METADATA } from '#shared/config/events';
 
@@ -24,24 +24,27 @@ const nuxtApp = useNuxtApp();
 
 const eventChainTracking = ref<EventExecution[]>([]);
 
-nuxtApp.hook('events:dev', (event) => {
-  const existingEvent = eventChainTracking.value.find((e) => e.id === event.eventId);
+nuxtApp.hook('events:dev', (payload) => {
+  // payload now contains full EventPayload + _devStatus
+  const existingEvent = eventChainTracking.value.find(
+    (e) => e.id === payload.id,
+  );
 
   if (existingEvent) {
-    existingEvent.status = event.status;
-    if (event.status === 'success') {
-      existingEvent.data = event.data;
+    existingEvent.status = payload._devStatus;
+    if (payload._devStatus === 'success') {
+      existingEvent.data = payload.data;
     } else {
-      existingEvent.error = event.error;
+      existingEvent.error = payload.error;
     }
   } else {
     eventChainTracking.value.push({
-      id: event.eventId,
-      type: event.eventType,
+      id: payload.id,
+      type: payload.type,
       timestamp: Date.now(),
-      data: event.data,
-      error: event.error,
-      status: event.status,
+      data: payload.data,
+      error: payload.error,
+      status: payload._devStatus,
     });
   }
 });
@@ -49,8 +52,8 @@ nuxtApp.hook('events:dev', (event) => {
 const groupedItems = computed<SelectMenuItem[][]>(() => {
   const byCategory: Record<string, SelectMenuItem[]> = {
     form: [{ type: 'label', label: 'Form Events' }],
-    action: [{ type: 'label', label: 'Action Events' }],
-    other: [{ type: 'label', label: 'Other Events' }],
+    conversion: [{ type: 'label', label: 'Conversion Events' }],
+    engagement: [{ type: 'label', label: 'Engagement Events' }],
   };
 
   Object.entries(EVENT_METADATA).forEach(([eventType, meta]) => {
@@ -70,31 +73,60 @@ const selectedEvent = ref<SelectMenuItem | null>(null);
 const triggerEvent = async () => {
   if (!selectedEvent.value) return;
 
+  // Clear previous tracking
   eventChainTracking.value = [];
 
-  const eventType = (
-    typeof selectedEvent.value === 'object' && 'value' in selectedEvent.value
-      ? selectedEvent.value.value
-      : selectedEvent.value
-  ) as TrackedEvents;
+  const eventType = selectedEvent.value as TrackedEvents;
 
-  // Provide sensible default data for testing
-  const eventData: Record<string, any> = {
-    offerId: 'magnet',
-    location: route.path,
-    formData: { formId: 'email_capture' },
-  };
+  // Generate minimal test data based on event type
+  let payload: EventInput;
 
-  const payload: EventPayload = {
-    id: `devtools_${Date.now()}`,
-    type: eventType,
-    location: route.path,
-    action: 'devtools_trigger',
-    target: 'manual',
-    timestamp: Date.now(),
-    data: eventData,
-    _devToolsTriggered: true,
-  };
+  if (eventType === 'form_submitted') {
+    payload = {
+      id: `devtools_${Date.now()}`,
+      type: 'form_submitted',
+      target: 'payment', // Test with payment target
+      data: {
+        formData: { email: 'test@example.com', formId: 'test_form' },
+        antiSpam: {
+          honeypot: '',
+          timeOnForm: 5000,
+          jsToken: 'test_token',
+        },
+      },
+      _devToolsTriggered: true,
+    };
+  } else if (eventType === 'form_error') {
+    payload = {
+      id: `devtools_${Date.now()}`,
+      type: 'form_error',
+      target: 'payment',
+      data: {
+        formData: {
+          formId: 'test_form',
+        },
+      },
+      error: 'Test error message',
+      _devToolsTriggered: true,
+    };
+  } else if (eventType === 'offer_click') {
+    payload = {
+      id: `devtools_${Date.now()}`,
+      type: 'offer_click',
+      target: 'payment', // or 'service_internal', 'social', etc.
+      _devToolsTriggered: true,
+    };
+  } else if (eventType === 'section_view') {
+    payload = {
+      id: `devtools_${Date.now()}`,
+      type: 'section_view',
+      target: 'benefits', // Test with benefits section
+      _devToolsTriggered: true,
+    };
+  } else {
+    // Fallback for any unmapped type (shouldn't happen)
+    return;
+  }
 
   await trackEvent(payload);
 };

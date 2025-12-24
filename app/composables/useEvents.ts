@@ -1,19 +1,20 @@
 // composables/useEvents.ts
+import type { EventInput, EventPayload } from '#shared/types/events';
+
 export const useEvents = () => {
   const nuxtApp = useNuxtApp();
   const { getUserId } = useUserIdentity();
 
-  const trackEvent = async (event: EventPayload) => {
+  const trackEvent = async (event: EventInput): Promise<Record<string, any> | undefined> => {
     const userId = getUserId();
+    const timestamp = Date.now();
 
-    const payload = {
+    // ✅ Type-safe construction of complete payload
+    const payload: EventPayload = {
       ...event,
-      timestamp: Date.now(),
-      data: {
-        ...event.data,
-        userId,
-      },
-    } satisfies EventPayload;
+      userId,
+      timestamp,
+    } as EventPayload;
 
     await nuxtApp.callHook('events:emit', payload);
 

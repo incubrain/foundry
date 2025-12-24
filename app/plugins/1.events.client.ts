@@ -1,16 +1,17 @@
 // plugins/events.client.ts
+import type { EventPayload, TrackedEvents } from '#shared/types/events';
+
 type EventHandler = (payload: EventPayload) => void | Promise<any>;
 
-// Global handlers that run for ALL events (initialized in setup)
+// Global handlers that run for ALL events
 const globalHandlers: EventHandler[] = [analyticsHandler];
 
-// Event-specific handlers
+// ✅ Pre-computed handler map (built once at plugin setup)
 const EVENT_HANDLER_CONFIG: Record<TrackedEvents, EventHandler[]> = {
-  element_viewed: [],
   form_submitted: [webhookHandler],
   form_error: [],
+  offer_click: [],
   section_view: [],
-  cta_click: [],
 };
 
 // Handler map (built once in setup)
@@ -27,9 +28,11 @@ export default defineNuxtPlugin({
       globalHandlers.push(consoleLogger);
     }
 
-    // Build handler map once
+    // ✅ Build handler map once (O(1) lookup later)
     eventHandlers = new Map<TrackedEvents, EventHandler[]>();
-    for (const [eventType, specificHandlers] of Object.entries(EVENT_HANDLER_CONFIG)) {
+    for (const [eventType, specificHandlers] of Object.entries(
+      EVENT_HANDLER_CONFIG,
+    )) {
       eventHandlers.set(eventType as TrackedEvents, [
         ...globalHandlers,
         ...specificHandlers,
@@ -39,10 +42,10 @@ export default defineNuxtPlugin({
     return {};
   },
   hooks: {
-    'events:emit': async (payload) => {
+    'events:emit': async (payload: EventPayload) => {
+      // ✅ O(1) map lookup - no type guards needed at runtime
       const handlers = eventHandlers.get(payload.type);
       const nuxtApp = useNuxtApp();
-
 
       if (!handlers) {
         if (import.meta.dev) {
@@ -65,10 +68,8 @@ export default defineNuxtPlugin({
 
           if (payload._devToolsTriggered && import.meta.dev) {
             nuxtApp.callHook('events:dev', {
-              eventId: payload.id,
-              eventType: payload.type,
-              status: 'error',
-              error,
+              ...payload,
+              _devStatus: 'error' as const,
             });
           }
         }
@@ -76,10 +77,8 @@ export default defineNuxtPlugin({
 
       if (payload._devToolsTriggered && import.meta.dev) {
         nuxtApp.callHook('events:dev', {
-          eventId: payload.id,
-          eventType: payload.type,
-          status: 'success',
-          data: payload.data,
+          ...payload,
+          _devStatus: 'success' as const,
         });
       }
     },

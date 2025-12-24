@@ -110,6 +110,7 @@ const copyrightYear = computed(() =>
             aria-label="View Analytics Dashboard"
           />
           <ConvertInternal
+            offer-slug="booking"
             to="/offers/mentorship"
             label="Hire Me"
             icon="i-lucide-calendar"

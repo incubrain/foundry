@@ -85,7 +85,7 @@ const hero = computed(() => props.data);
           class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4"
         >
           <ConvertInternal
-            offer-slug="mentorship"
+            offer-slug="booking"
             location="hero"
             size="xl"
             class="font-black text-toned"
@@ -95,6 +95,8 @@ const hero = computed(() => props.data);
             to="https://github.com/incubrain/founder-funnel"
             :label="hero.cta.secondary"
             :icon="hero.cta.secondaryIcon"
+            type="social"
+            location="hero"
             variant="button"
             button-color="neutral"
             button-variant="link"

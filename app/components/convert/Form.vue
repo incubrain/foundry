@@ -1,6 +1,7 @@
 <!-- app/components/convert/Form.vue -->
 <script setup lang="ts">
 import { z } from 'zod';
+import type { OfferId } from '#shared/types/events';
 
 interface FieldDef {
   name: string;
@@ -17,7 +18,7 @@ interface Props {
   note?: string;
   layout?: 'stacked' | 'horizontal';
   successRedirect?: string;
-  offerSlug?: string;
+  offerSlug?: OfferId;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -100,10 +101,7 @@ const handleSubmit = async () => {
     await trackEvent({
       id: `form_submit_${props.location}`,
       type: 'form_submitted',
-      location: route.path,
-      action: 'submit',
-      target: 'form_capture',
-      timestamp: Date.now(),
+      target: `${props.offerSlug}_internal`, // or 'booking' based on form context
       data: {
         formData: { ...validated, formId: props.location }, // Capture all dynamic fields + formId
         antiSpam: {
@@ -111,14 +109,8 @@ const handleSubmit = async () => {
           timeOnForm: Date.now() - formRenderedAt.value,
           jsToken: jsToken.value,
         },
-        metadata: {
-          location: props.location,
-          userAgent: navigator.userAgent,
-          timestamp: Date.now(),
-        },
       },
-    } satisfies EventPayload);
-
+    });
     navigateTo(redirectPath.value);
   } catch (error: any) {
     // Validation failed
@@ -146,12 +138,11 @@ const handleSubmit = async () => {
     await trackEvent({
       id: `form_error_${props.location}`,
       type: 'form_error',
-      location: 'form',
-      action: 'submission_failed',
-      target: 'form_capture',
-      timestamp: Date.now(),
+      target: `${props.offerSlug}_internal`, // or 'booking' based on form context
       data: {
-        formId: props.location,
+        formData: {
+          formId: props.location,
+        },
       },
       error: errorMsg,
     });

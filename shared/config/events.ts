@@ -5,26 +5,32 @@ export const EVENT_METADATA: Partial<
       label: string;
       description: string;
       icon: string;
-      category: 'form' | 'action' | 'other';
+      category: 'form' | 'conversion' | 'engagement';
     }
   >
 > = {
   form_submitted: {
     label: 'Form Submit',
-    description: 'Server submission → Triggers feedback',
+    description: 'Form submitted successfully',
     icon: 'i-lucide-check-circle',
     category: 'form',
   },
   form_error: {
     label: 'Form Error',
-    description: 'Validation failed',
+    description: 'Form validation failed',
     icon: 'i-lucide-alert-circle',
     category: 'form',
   },
-  element_viewed: {
-    label: 'Element View',
-    description: 'Element viewed',
+  offer_click: {
+    label: 'Offer Click',
+    description: 'User clicked on offer/CTA',
+    icon: 'i-lucide-mouse-pointer-click',
+    category: 'conversion',
+  },
+  section_view: {
+    label: 'Section View',
+    description: 'Section came into viewport',
     icon: 'i-lucide-eye',
-    category: 'action',
+    category: 'engagement',
   },
 } as const;

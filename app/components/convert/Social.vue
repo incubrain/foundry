@@ -31,15 +31,9 @@ const gapClasses = {
 
 const handleClick = (platform: string, url: string) => {
   trackEvent({
-    id: `social_click_${props.location}`,
-    type: 'cta_click',
-    location: props.location,
-    action: 'click',
-    target: url,
-    data: {
-      platform,
-      ctaType: 'social',
-    },
+    id: `offer_click_${props.location}_${platform.toLocaleLowerCase()}`,
+    type: 'offer_click',
+    target: 'social_external',
   });
 };
 </script>

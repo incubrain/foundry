@@ -1,12 +1,7 @@
 // shared/config/navigation.ts
 import type { NavigationMenuItem } from '@nuxt/ui';
 
-export type SectionAnchor =
-  | '#benefits'
-  | '#outcome'
-  | '#offer'
-  | '#results'
-  | '#faq';
+export type SectionId = 'benefits' | 'outcome' | 'offer' | 'results' | 'faq';
 
 export interface NavigationConfig {
   layout: {
