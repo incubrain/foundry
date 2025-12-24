@@ -5,6 +5,8 @@ import { ICON_LIBRARIES } from './shared/config/icons';
 
 const appConfig = getActiveConfigSource();
 
+const SITE_URL = 'https://founder-funnel.incubrain.org';
+
 export default defineNuxtConfig({
   dir: {
     public: appConfig.publicDir,
@@ -19,12 +21,12 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@vueuse/nuxt',
     '@nuxt/scripts',
-    // 'nuxt-studio', // {DX}: studio breaks HMR beta.1
+    'nuxt-studio', // {DX}: studio breaks HMR beta.1
   ],
 
   // {CONFIG}
   site: {
-    url: 'https://founder-funnel.incubrain.org',
+    url: SITE_URL,
     name: 'Founder Funnel',
     description: 'Open-source funnel for technical founders',
   },
@@ -45,7 +47,7 @@ export default defineNuxtConfig({
   },
 
   llms: {
-    domain: 'https://founder-funnel.incubrain.org',
+    domain: SITE_URL,
     title: 'Founder Funnel',
     description:
       'Open-source landing page template for technical founders validating product ideas',
@@ -182,6 +184,7 @@ export default defineNuxtConfig({
       debug: true,
       analyticsLink: '',
       configSource: '',
+      siteUrl: SITE_URL,
       scripts: {
         umamiAnalytics: {
           websiteId: '',

@@ -1,11 +1,13 @@
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig();
-  const siteUrl = config.public.siteUrl || 'https://founder-funnel.incubrain.org';
+  const siteUrl = config.public.siteUrl;
 
   // Fetch site config for author info
-  const siteConfig = await queryCollection(event, 'config').path('/config/site').first();
-  const authorName = siteConfig?.founder?.given_name 
-    ? `${siteConfig.founder.given_name} ${siteConfig.founder.surname}` 
+  const siteConfig = await queryCollection(event, 'config')
+    .where('stem', '=', 'config/site')
+    .first();
+  const authorName = siteConfig?.founder?.given_name
+    ? `${siteConfig.founder.given_name} ${siteConfig.founder.surname}`
     : 'Founder Funnel Team';
 
   // Fetch decisions

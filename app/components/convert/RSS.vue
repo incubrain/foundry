@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { SelectMenuProps } from '@nuxt/ui';
+
 interface Props {
   location: string;
   size?: SelectMenuProps['size'];
