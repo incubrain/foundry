@@ -209,6 +209,7 @@ export default defineNuxtConfig({
     '/': { ssr: true, prerender: false },
     '/offers/**': { ssr: true, prerender: false },
     '/success': { ssr: true, prerender: false },
+    '/success/**': { ssr: true, prerender: false },
     '/about': { ssr: true, prerender: false },
     '/decisions': { swr: 3600 },
     '/decisions/**': { swr: 3600 },

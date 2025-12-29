@@ -2,8 +2,10 @@
 const { getFounder } = useContentCache();
 const { data: founderData } = await getFounder();
 
-const { data: page } = await useAsyncData('decisions-page', () =>
-  queryCollection('pages').path('/decisions').first(),
+const route = useRoute();
+
+const { data: pageData } = await useAsyncData('decisions-page-layout', () =>
+  queryCollection('pages').path(route.path).first(),
 );
 
 const { data: decisions, pending } = useAsyncData('decisions-list', () =>
@@ -16,12 +18,12 @@ const { data: decisions, pending } = useAsyncData('decisions-list', () =>
 );
 
 useHead({
-  title: page.value?.title || 'Decisions',
+  title: pageData.value?.title || 'Decisions',
   meta: [
     {
       name: 'description',
       content:
-        page.value?.description ||
+        pageData.value?.description ||
         'Strategic decisions and validation learnings.',
     },
   ],
@@ -63,8 +65,8 @@ const scrollToTop = () => {
   <UPage>
     <UPageHero
       icon="i-lucide-compass"
-      :title="page?.title"
-      :description="page?.description"
+      :title="pageData?.title"
+      :description="pageData?.description"
       headline="Evidence-based decision making"
       class="bg-none!"
     >

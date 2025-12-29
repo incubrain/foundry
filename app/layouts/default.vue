@@ -1,5 +1,19 @@
-<script lang="ts" setup>
-const isDev = import.meta.dev;
+<script setup lang="ts">
+const route = useRoute();
+
+// 🎯 TRACKING: Generic page view (for homepage, etc.)
+const { trackEvent } = useEvents();
+onMounted(() => {
+  const pageName =
+    route.path === '/' ? 'homepage' : route.path.replace('/', '');
+  trackEvent({
+    id: `${pageName}_view`,
+    type: 'element_viewed',
+    action: 'page_view',
+    location: pageName,
+    target: route.path,
+  });
+});
 </script>
 
 <template>

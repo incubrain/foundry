@@ -2,31 +2,32 @@
 const route = useRoute();
 const slug = route.params.slug as string;
 
-// Fetch decision content
+// Fetch decision content - layout needs to fetch if not provided via props, but typically layout wraps content
+// In Nuxt Content, the page content is often available via route or composition
+// But here, we are moving the PAGE logic to LAYOUT
+// The catchall page fetches the content and passes it to ContentRenderer
+// But the layout needs specific data like 'surround'
+
+// We need to fetch the content again or rely on useRoute().path to fetch it
+// Since catchall did the fetch, we can resuse useAsyncData key if we knew it, or just fetch again (deduped)
+
 const { data: decision } = await useAsyncData(`decision-${slug}`, () =>
-  queryCollection('pages').path(`/decisions/${slug}`).first(),
+  queryCollection('pages').path(route.path).first(),
 );
 
 // Fetch surround data
 const { data: surround } = await useAsyncData(`decision-${slug}-surround`, () =>
-  queryCollectionItemSurroundings('pages', `/decisions/${slug}`, {
+  queryCollectionItemSurroundings('pages', route.path, {
     fields: ['title', 'description', 'label'],
   }),
 );
 
-if (!decision.value) {
-  throw createError({
-    statusCode: 404,
-    statusMessage: 'Decision not found',
-  });
-}
-
 useHead({
-  title: decision.value.title,
+  title: decision.value?.title,
   meta: [
     {
       name: 'description',
-      content: decision.value.description,
+      content: decision.value?.description,
     },
   ],
 });
@@ -42,7 +43,7 @@ useHead({
               <div class="flex flex-col gap-1">
                 <!-- Version/Label -->
                 <div
-                  v-if="decision.label"
+                  v-if="decision?.label"
                   class="flex items-center text-sm gap-2"
                 >
                   <UIcon name="i-lucide-tag" class="size-4 text-primary" />
@@ -53,6 +54,7 @@ useHead({
                 <div class="flex items-center gap-2">
                   <UIcon name="i-lucide-calendar" class="size-4 text-muted" />
                   <NuxtTime
+                    v-if="decision?.date"
                     :datetime="decision.date"
                     year="numeric"
                     month="short"
@@ -72,22 +74,22 @@ useHead({
                 color="neutral"
                 variant="soft"
                 size="sm"
-                label="Back to Decisions"
+                label="Back"
                 class="justify-start"
               />
               <ConvertInternal
                 offer-slug="mentorship"
                 location="decision_log"
-                variant="card"
-                :spotlight="true"
-                spotlight-color="secondary"
+                variant="button"
+                button-variant="outline"
+                color="secondary"
               />
             </div>
           </div>
         </UPageAside>
       </template>
 
-      <UPageBody class="max-w-2xl mx-auto">
+      <UPageBody class="max-w-xl mx-auto">
         <div>
           <div class="lg:hidden mb-8 space-y-6">
             <UButton
@@ -101,7 +103,7 @@ useHead({
 
             <div class="flex flex-wrap items-center gap-4 text-sm">
               <div
-                v-if="decision.label"
+                v-if="decision?.label"
                 class="flex items-center gap-2 px-2.5 py-1 rounded-md bg-primary/5 border border-primary/10"
               >
                 <UIcon name="i-lucide-tag" class="size-3.5 text-primary" />
@@ -112,6 +114,7 @@ useHead({
               <div class="flex items-center gap-2 text-muted">
                 <UIcon name="i-lucide-calendar" class="size-3.5" />
                 <NuxtTime
+                  v-if="decision?.date"
                   :datetime="decision.date"
                   year="numeric"
                   month="long"
@@ -122,14 +125,14 @@ useHead({
           </div>
 
           <h1 class="text-4xl font-bold tracking-tight mb-4">
-            {{ decision.title }}
+            {{ decision?.title }}
           </h1>
           <p class="text-xl text-muted leading-relaxed mb-8">
-            {{ decision.description }}
+            {{ decision?.description }}
           </p>
 
           <article class="prose max-w-none">
-            <ContentRenderer v-if="decision" :value="decision" />
+            <slot />
           </article>
 
           <USeparator v-if="surround?.filter(Boolean).length" class="my-12" />
