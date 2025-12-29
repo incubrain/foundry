@@ -6,7 +6,7 @@ import {
   property,
 } from '@nuxt/content';
 import { asSeoCollection } from '@nuxtjs/seo/content';
-import { ICON_LIBRARIES } from '../../../shared/config/icons';
+import { ICON_LIBRARIES } from '../../shared/config/icons';
 
 const FAQ_COLORS = z.enum(['error', 'warning', 'success', 'info']);
 

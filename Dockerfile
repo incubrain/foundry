@@ -35,16 +35,11 @@ WORKDIR /app
 # Copy package files and workspace configuration
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc tsconfig.json nuxt.config.ts .gitignore ./
 
-# Copy the main app directory
-COPY app ./app
+# Copy workspace directories
 COPY layers ./layers  
 COPY modules ./modules  
 COPY shared ./shared  
-COPY content ./content
 COPY templates ./templates
-
-
-# Copy other workspace directories
 COPY public ./public
 COPY server ./server
 
