@@ -7,14 +7,14 @@ const { data: page } = await useAsyncData(`layout-page-${route.path}`, () =>
 );
 
 // 🎯 SEO: Add RSS link if page has rssLink frontmatter
-if (page.value?.rssLink) {
+if (page.value?.hasRss) {
   useHead({
     link: [
       {
         rel: 'alternate',
         type: 'application/rss+xml',
         title: `${page.value.title} Feed`,
-        href: page.value.rssLink,
+        href: `/rss${route.path}`,
       },
     ],
   });

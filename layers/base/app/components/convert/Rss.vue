@@ -1,26 +1,42 @@
+<!-- layers/base/app/components/convert/Rss.vue -->
 <script setup lang="ts">
 import type { SelectMenuProps } from '@nuxt/ui';
 
 interface Props {
+  // Feed configuration
+  feedPath?: string; // e.g., 'decisions', 'blog', 'updates'
+  feedUrl?: string; // Full URL override (if not using feedPath)
+
+  // Tracking
   location: string;
+
+  // UI customization
   size?: SelectMenuProps['size'];
   variant?: SelectMenuProps['variant'];
   color?: SelectMenuProps['color'];
   showLabel?: boolean;
+  label?: string; // Custom label (default: 'RSS')
 }
 
 const props = withDefaults(defineProps<Props>(), {
+  feedPath: 'decisions', // Default to decisions feed
   size: 'lg',
   variant: 'ghost',
   color: 'neutral',
   showLabel: true,
+  label: 'RSS',
 });
 
+const config = useRuntimeConfig();
 const { trackEvent } = useEvents();
 const { copy } = useClipboard();
 const toast = useToast();
 
-const feedUrl = 'https://founder-funnel.incubrain.org/decisions.xml';
+// Compute final feed URL
+const feedUrl = computed(() => {
+  if (props.feedUrl) return props.feedUrl;
+  return `${config.public.siteUrl}/rss/${props.feedPath}`;
+});
 
 type RSSType =
   | 'feedly'
@@ -32,14 +48,14 @@ type RSSType =
 
 const handleRSSClick = (target?: 'internal' | 'external', type?: RSSType) => {
   trackEvent({
-    id: `offer_click_rss_${props.location}_${type}`,
+    id: `offer_click_rss_${props.location}_${props.feedPath}_${type}`,
     type: 'offer_click',
     target: `rss_${target}`,
   });
 };
 
 const copyFeedUrl = async () => {
-  await copy(feedUrl);
+  await copy(feedUrl.value);
   handleRSSClick('internal', 'copy');
 
   toast.add({
@@ -55,7 +71,7 @@ const handleReaderClick = (url: string, type?: RSSType) => {
   window.open(url, '_blank');
 };
 
-const actions = [
+const actions = computed(() => [
   {
     label: 'Copy Feed URL',
     icon: 'i-lucide-copy',
@@ -66,7 +82,7 @@ const actions = [
     icon: 'i-lucide-external-link',
     click: () => {
       handleRSSClick('internal', 'xml');
-      window.open(feedUrl, '_blank');
+      window.open(feedUrl.value, '_blank');
     },
   },
   {
@@ -74,7 +90,7 @@ const actions = [
     icon: 'i-simple-icons-feedly',
     click: () =>
       handleReaderClick(
-        `https://feedly.com/i/subscription/feed/${encodeURIComponent(feedUrl)}`,
+        `https://feedly.com/i/subscription/feed/${encodeURIComponent(feedUrl.value)}`,
         'feedly',
       ),
   },
@@ -83,7 +99,7 @@ const actions = [
     icon: 'i-simple-icons-inoreader',
     click: () =>
       handleReaderClick(
-        `https://www.inoreader.com/?add_feed=${encodeURIComponent(feedUrl)}`,
+        `https://www.inoreader.com/?add_feed=${encodeURIComponent(feedUrl.value)}`,
         'inoreader',
       ),
   },
@@ -92,7 +108,7 @@ const actions = [
     icon: 'i-lucide-newspaper',
     click: () =>
       handleReaderClick(
-        `https://www.newsblur.com/?url=${encodeURIComponent(feedUrl)}`,
+        `https://www.newsblur.com/?url=${encodeURIComponent(feedUrl.value)}`,
         'newsblur',
       ),
   },
@@ -101,11 +117,11 @@ const actions = [
     icon: 'i-lucide-book-open',
     click: () =>
       handleReaderClick(
-        `https://theoldreader.com/feeds/subscribe?url=${encodeURIComponent(feedUrl)}`,
+        `https://theoldreader.com/feeds/subscribe?url=${encodeURIComponent(feedUrl.value)}`,
         'oldreader',
       ),
   },
-];
+]);
 
 // Handle selection from USelectMenu
 const handleSelect = (option: any) => {
@@ -141,7 +157,7 @@ const handleSelect = (option: any) => {
           class="w-full flex items-center gap-2"
         >
           <UIcon name="i-lucide-rss" class="text-xl" />
-          {{ showLabel ? 'RSS' : undefined }}
+          {{ showLabel ? label : undefined }}
         </span>
       </template>
 

@@ -283,7 +283,7 @@ We document every strategic decision, pivot, and learning in our public [Decisio
 - **Learning:** Real validation decisions from real founders
 - **Accountability:** Public decisions force clear reasoning
 
-**Subscribe via RSS:** [/decisions.xml](/decisions.xml)
+**Subscribe via RSS:** [/rss/decisions](/rss/decisions)
 
 Perfect for:
 - Investors monitoring portfolio thinking
@@ -320,7 +320,7 @@ Everything else? Fair game.
 - **Issues:** [GitHub Issues](https://github.com/incubrain/founder-funnel/issues)
 - **Discussions:** [GitHub Discussions](https://github.com/incubrain/founder-funnel/discussions)
 - **Decisions Log:** [Strategic Decisions](https://founder-funnel.incubrain.org/decisions)
-- **RSS Feed:** [Subscribe](https://founder-funnel.incubrain.org/decisions.xml)
+- **RSS Feed:** [Subscribe](https://founder-funnel.incubrain.org/rss/decisions)
 
 ---
 

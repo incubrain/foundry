@@ -213,7 +213,7 @@ export default defineNuxtConfig({
     '/about': { ssr: true, prerender: false },
     '/decisions': { swr: 3600 },
     '/decisions/**': { swr: 3600 },
-    '/decisions.xml': {
+    '/rss/**': {
       swr: 3600,
       headers: {
         'Content-Type': 'application/xml; charset=utf-8',
