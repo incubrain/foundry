@@ -3,18 +3,9 @@ import type { ButtonProps } from '@nuxt/ui';
 
 export type ConfigSource = 'founder-funnel' | 'root';
 
-export interface SectionCta {
-  headline: string;
-  message: string;
-  button: {
-    to: ButtonProps['to'];
-    icon?: ButtonProps['icon'];
-    color?: ButtonProps['color'];
-    variant?: ButtonProps['variant'];
-    label: ButtonProps['label'];
-    note?: string;
-    disabled?: ButtonProps['disabled'];
-  };
-  primary?: boolean;
+// Keep HeroCta as used by Hero specialized component
+export interface HeroCta {
+  primary: string;
+  secondary: string;
+  secondaryIcon?: string;
 }
-

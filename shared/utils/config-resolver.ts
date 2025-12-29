@@ -1,67 +1,28 @@
-// shared/utils/config-resolver.ts
 import path from 'node:path';
-import type { ConfigSource } from '~~/shared/types/config';
 
-export interface ConfigPaths {
-  /** The config source name: 'founder-funnel' | 'root' */
-  source: ConfigSource;
-  /** Relative prefix path for examples (e.g., 'examples/founder-funnel') or empty string for root */
-  prefix: string;
-  /** Absolute path to the public directory */
-  publicDir: string;
-  /** Absolute path to the content directory */
-  contentDir: string;
-  /** Absolute path to the config directory */
-  configDir: string;
-}
+export const getActiveConfigSource = () => {
+  const source = process.env.NUXT_PUBLIC_CONFIG_SOURCE || 'founder-funnel';
 
-/**
- * Get active configuration paths
- * 
- * Determines which example configuration to use based on NUXT_PUBLIC_CONFIG_SOURCE
- * and returns ready-to-use absolute paths for all config-related directories.
- * 
- * @returns Configuration object with source name and absolute paths
- * 
- * @example
- * ```ts
- * // .env: NUXT_PUBLIC_CONFIG_SOURCE="founder-funnel"
- * const config = getActiveConfigSource();
- * // Returns: {
- * //   source: 'founder-funnel',
- * //   prefix: 'examples/founder-funnel',
- * //   publicDir: '/absolute/path/to/examples/founder-funnel/public',
- * //   contentDir: '/absolute/path/to/examples/founder-funnel/content',
- * //   configDir: '/absolute/path/to/examples/founder-funnel/config',
- * // }
- * ```
- */
-export function getActiveConfigSource(): ConfigPaths {
-  let source = process.env.NUXT_PUBLIC_CONFIG_SOURCE || '';
-
-  if (import.meta.client) {
-    source = useRuntimeConfig().public.configSource;
-  }
-
-  const resolvedSource = (source || 'root') as ConfigSource;
-  const prefix = resolvedSource === 'root' ? '' : `examples/${resolvedSource}`;
-  const cwd = process.cwd();
-
-  // Construct absolute paths
-  const basePath = resolvedSource === 'root' ? cwd : path.resolve(cwd, prefix);
-  
-  const config: ConfigPaths = {
-    source: resolvedSource,
-    prefix,
-    publicDir: resolvedSource === 'root' ? 'public' : path.resolve(cwd, prefix, 'public'),
-    contentDir: path.resolve(basePath, 'content'),
-    configDir: path.resolve(basePath, 'config'),
+  // Define available sources and their prefixes
+  const sources: Record<string, string> = {
+    'root': '.',
+    'founder-funnel': 'templates/founder-funnel',
   };
 
-  console.log('[config-resolver] Resolved to:', {
-    source: config.source,
-    prefix: config.prefix,
-  });
+  const prefix = sources[source] || sources['founder-funnel'];
+  const rootDir = process.cwd();
 
-  return config;
-}
+  console.log(
+    `[config-resolver] Resolved to: { source: '${source}', prefix: '${prefix}' }`,
+  );
+
+  return {
+    source,
+    prefix,
+    // Absolute paths
+    rootDir,
+    contentDir: path.resolve(rootDir, prefix, 'content'),
+    publicDir: path.resolve(rootDir, prefix, 'public'),
+    configDir: path.resolve(rootDir, prefix, 'config'),
+  };
+};

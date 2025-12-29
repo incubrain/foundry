@@ -128,7 +128,7 @@ Sell consulting calls. Deliver service manually. Learn what clients actually nee
    ::section-hero
    ::
    
-   ::section-product
+   ::section-offer
    ::
    
    <!-- Uncomment when driving traffic -->

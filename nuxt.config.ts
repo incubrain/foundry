@@ -1,28 +1,11 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import { fileURLToPath } from 'node:url';
-import { getActiveConfigSource } from './shared/utils/config-resolver';
 import { ICON_LIBRARIES } from './shared/config/icons';
-
-const appConfig = getActiveConfigSource();
 
 const SITE_URL = 'https://founder-funnel.incubrain.org';
 
 export default defineNuxtConfig({
-  dir: {
-    public: appConfig.publicDir,
-  },
-
-  modules: [
-    '@nuxtjs/seo',
-    '@nuxt/ui',
-    '@nuxt/content', // <-- Must be after @nuxtjs/seo & @nuxt/ui
-    'nuxt-llms', // <-- Add AFTER @nuxt/content
-    '@nuxt/fonts',
-    '@nuxt/image',
-    '@vueuse/nuxt',
-    '@nuxt/scripts',
-    'nuxt-studio', // {DX}: studio breaks HMR beta.1
-  ],
+  extends: ['./templates/founder-funnel'],
 
   // {CONFIG}
   site: {
@@ -68,9 +51,9 @@ export default defineNuxtConfig({
       // Medium Priority: About/Story
       {
         title: 'About',
-        description: 'Founder story and mission',
+        description: 'Our story and mission',
         contentCollection: 'pages',
-        contentFilters: [{ field: 'path', operator: '=', value: '/founder' }],
+        contentFilters: [{ field: 'path', operator: '=', value: '/about' }],
       },
 
       // Medium Priority: Decisions
@@ -98,27 +81,6 @@ export default defineNuxtConfig({
       'Template designed for technical founders validating ideas',
       'Built with Nuxt 4, Tailwind v4, TypeScript',
     ],
-  },
-
-  // {DX}: studio breaks HMR beta.1
-  studio: {
-    // Studio admin route (default: '/_studio')
-    route: '/_studio',
-
-    // {FIX}: broken, pending triage of this https://github.com/nuxt-content/studio/pull/73
-    development: {
-      sync: true, // Enable development mode
-    },
-
-    // GitHub repository configuration (owner and repo are required)
-    repository: {
-      provider: 'github', // only GitHub is currently supported
-      owner: 'incubrain', // your GitHub username or organization
-      repo: 'founder-funnel', // your repository name
-      branch: 'main', // the branch to commit to (default: main)
-      rootDir: appConfig.prefix,
-      private: true,
-    },
   },
 
   ssr: true,
@@ -199,7 +161,14 @@ export default defineNuxtConfig({
     telegramChatId: '',
   },
 
-  css: ['~/assets/css/main.css'],
+  events: {
+    providers: ['umami', 'console', 'webhook'],
+    webhook: {
+      enabled: true,
+      platforms: ['discord'], // Default, override with env if needed
+    },
+    debug: true,
+  },
 
   ui: {
     theme: {
@@ -214,7 +183,6 @@ export default defineNuxtConfig({
       ],
     },
   },
-
   alias: {
     '#config': fileURLToPath(
       new URL('./shared/config/index.ts', import.meta.url),
@@ -241,7 +209,7 @@ export default defineNuxtConfig({
     '/': { ssr: true, prerender: false },
     '/offers/**': { ssr: true, prerender: false },
     '/success': { ssr: true, prerender: false },
-    '/founder': { ssr: true, prerender: false },
+    '/about': { ssr: true, prerender: false },
     '/decisions': { swr: 3600 },
     '/decisions/**': { swr: 3600 },
     '/decisions.xml': {

@@ -1,259 +1,174 @@
 ---
-title: Your Product Name
-description: One-sentence value proposition. What do you do for whom?
+title: Founder Funnel
+description: Open-source landing page template for experienced technical founders.
+sitemap:
+  loc: /
 ---
-
-<!-- 
-  🚀 PROGRESSIVE VALIDATION TEMPLATE
-  
-  Start minimal. Expand as you validate.
-  
-  STAGE 1 (Always visible):
-    - Hero: Value prop + primary CTA
-    - Product: What you're offering + email capture
-  
-  STAGE 2 (Uncomment when driving traffic):
-    - Benefits: Why your solution matters
-    - Outcome: How it works, what they get
-  
-  STAGE 3 (Uncomment when fielding questions):
-    - FAQ: Address objections and technical details
-  
-  STAGE 4 (Uncomment when you have proof):
-    - Results: Testimonials and social proof
--->
-
-<!-- ============================================ -->
-<!-- STAGE 1: MINIMAL VALIDATION                 -->
-<!-- ============================================ -->
 
 ::section-hero
 ---
-data:
-  badge:
-    title: Open Source
-    description: MIT Licensed
-    to: https://github.com/yourusername/your-repo
-  intro:
-    # Answer: What problem do you solve? For whom?
-    # Example: "Ship Validated Products" not "Revolutionary Platform"
-    title: Your Outcome-Focused Headline
-    
-    # One sentence. What do they get? Why does it matter?
-    # Example: "Help technical founders validate before building—so they don't waste months on products nobody wants."
-    description: The core value proposition that makes someone care.
-  
-  media:
-    # Start with 'image', switch to 'video' when you have one
-    type: image
-    src: /product/hero-screenshot.png
-    alt: Screenshot showing your product's main value
+badge:
+  label: Open Source
+  description: 74 ★
+  to: https://github.com/incubrain/founder-funnel
+  icon: i-simple-icons-github
+cta:
+  primary: Get Started
+  secondary: One Click Deploy
+  secondaryIcon: i-simple-icons-github
+intro:
+  title: Own Your Funnel
+  highlight: Start Validating.
+  description: >
+    The open-source landing page template for technical founders. Capture leads,
+    and validate your idea without monthly fees.
+media:
+  src: /product/gated-dashboard.png
+  alt: App Dashboard
+metric:
+  icon: i-lucide-trending-up
+  label: Monthly Revenue
+  value: $12,038
+  delta: +21%
+trusted:
+  text: Trusted by builders at 70+ startups
+  icons:
+    - i-simple-icons-nuxtdotjs
+    - i-simple-icons-tailwindcss
+    - i-simple-icons-typescript
+    - i-simple-icons-vercel
+    - i-simple-icons-supabase
 ---
 ::
 
-::section-product
----
-data:
-  intro:
-    # What are they signing up for?
-    title: What You're Offering
-    
-    # Be specific: "Email course" vs "Resources", "Template" vs "Solution"
-    description: The thing they get when they give you their email.
-  
-  # Free? $49? "Launching Q2 2025"?
-  price: Free
-  
-  features:
-    # What's included? Be concrete, not abstract.
-    # Good: "Nuxt 4 + Tailwind starter"
-    # Bad: "Modern tech stack"
-    
-    - title: Specific deliverable 1
-      icon: status-available
-    
-    - title: Specific deliverable 2
-      icon: status-available
-    
-    - title: Specific deliverable 3
-      icon: status-available
-    
-    # Use status-beta for "coming soon" features
-    - title: Future deliverable
-      icon: status-beta
----
-::
-
-<!-- ============================================ -->
-<!-- STAGE 2: DRIVING TRAFFIC                    -->
-<!-- Uncomment when you need to explain WHY      -->
-<!-- ============================================ -->
-
-<!-- 
 ::section-benefits
 ---
-data:
-  intro:
-    # The pain point your audience feels daily
-    title: The Problem Your Audience Has
-    
-    # Why does this problem matter? What's at stake?
-    description: Quantify the pain if possible—"42% of startups fail because..." beats "This is a common problem."
-  
-  cta:
-    headline: Ready to solve this?
-    message: One sentence transitioning to your offer.
-    button:
-      label: See How It Works
-      to: '#offer'
-      icon: i-lucide-arrow-down
-  
-  items:
-    # Pick 3-6 benefits. Focus on OUTCOMES, not features.
-    # Formula: [Outcome] so you can [Result]
-    
-    - id: benefit-1
-      # Not: "Fast Performance"
-      # Yes: "Ship in 30 Minutes"
-      title: Specific outcome they get
-      icon: i-lucide-zap
-      # Why does this outcome matter? What does it enable?
-      description: The tactical benefit explained in 1-2 sentences. Focus on what changes for them.
-    
-    - id: benefit-2
-      title: Another concrete outcome
-      icon: i-lucide-shield
-      description: Why this matters to them specifically.
-    
-    - id: benefit-3
-      title: Third outcome
-      icon: i-lucide-target
-      description: The result they care about.
+cta:
+  headline: Ready to validate?
+  message: Define your problem, capture the signal, and prove the market exists.
+  label: Start Validating
+  to: "#offer"
+  icon: i-lucide-arrow-down
+items:
+  - id: eliminate-creep
+    title: Eliminate Feature Creep
+    icon: i-lucide-shield-alert
+    description: Default to NO. If a feature doesn't capture signal or prove demand,
+      it doesn't belong here. Focus on the core value proposition.
+  - id: test-fast
+    title: Test in Hours, Not Weeks
+    icon: i-lucide-timer-reset
+    description: Clone, configure, and deploy in under 30 minutes. Don't waste
+      momentum building infrastructure before you have customers.
+  - id: get-data
+    title: Get Real Data
+    icon: i-lucide-bar-chart-4
+    description: Opinions don't matter. Measure intent through email captures,
+      presales, and clicks. Let the market dictate your roadmap.
+  - id: multiple-paths
+    title: Validate Any Model
+    icon: i-lucide-split
+    description: Whether it's SaaS, a digital product, or a service—capture the
+      right signal. Email, payments, or bookings.
+  - id: best-part-no-part
+    title: Best Part matches No Part
+    icon: i-lucide-scissors
+    description: The most reliable system is the simplest one. We removed the
+      complexity so you can focus on the message.
+  - id: vendor-independent
+    title: You Own The Stack
+    icon: i-lucide-database-zap
+    description: No lock-in. It's just a Nuxt app. When you validate demand, you
+      already have the foundation to build the full product.
+description: 42% of startups fail because they build products nobody wants. Stop
+  guessing and start validating.
+headline: The "Default to No" Philosophy
+title: Stop Building in the Dark
 ---
 ::
--->
 
-<!-- 
 ::section-outcome
 ---
-data:
-  intro:
-    # What's the journey from "I need this" to "I'm using it"?
-    title: How This Actually Works
-    description: The bridge from awareness to action.
-  
-  steps:
-    # Max 3 steps. Keep it simple.
-    # Pattern: Action → Result
-    
-    - id: step-1
-      # What do they do first?
-      title: 1. The First Action
-      icon: i-lucide-download
-      # How long? How hard? Be honest.
-      description: What they actually do—be specific. "Run npm install" not "Easy setup."
-      # What do they have after this step?
-      result: Tangible output after step 1
-    
-    - id: step-2
-      title: 2. The Core Action
-      icon: i-lucide-edit
-      description: The main value-creating activity.
-      result: What they achieve here
-    
-    - id: step-3
-      title: 3. Go Live
-      icon: i-lucide-rocket
-      description: The final step that delivers value.
-      result: The end state they reach
-  
-  features:
-    # Supporting capabilities—what makes the steps above possible?
-    # Pick 4-6. Be specific, not generic.
-    
-    - title: Core capability 1
-      description: What problem does this solve? How does it help complete the steps above?
-      icon: i-lucide-zap
-    
-    - title: Key differentiator
-      description: Why is this better than alternatives? What's unique?
-      icon: i-lucide-star
-    
-    - title: Time/effort saver
-      description: What does this eliminate? What does it automate?
-      icon: i-lucide-clock
-    
-    - title: Trust signal
-      description: What gives them confidence? Open source? Battle-tested? Used by X companies?
-      icon: i-lucide-shield-check
+features:
+  - title: Signal Capture
+    description: Proven patterns for email waitlists, presale payments, and service
+      bookings.
+    icon: i-lucide-magnet
+  - title: Conversion Optimized
+    description: Components designed to turn visitors into leads. Social proof,
+      clean CTAs, and trust signals.
+    icon: i-lucide-trending-up
+  - title: Event Analytics
+    description: Know exactly where your users come from and what they do.
+      Zero-config Umami integration.
+    icon: i-lucide-line-chart
+  - title: Markdown Driven
+    description: Manage your content in simple files. No complex CMS or database
+      required to start.
+    icon: i-lucide-file-text
+  - title: Webhook Ready
+    description: Stream your leads directly to Slack, Discord, or your CRM. Own your data.
+    icon: i-lucide-webhook
+  - title: Open Source
+    description: Built for developers by developers. Extend it, change it, own it.
+    icon: i-lucide-github
+steps:
+  - id: define
+    title: 1. Define the Offer
+    icon: i-lucide-pencil-ruler
+    description: Clarify the problem and your solution in `site.yml`. Focus on the
+      "Who" and the "Why".
+    result: Clear Value Prop
+  - id: deploy
+    title: 2. Deploy & Share
+    icon: i-lucide-rocket
+    description: Push to production in minutes. Share your link where your customers
+      hang out.
+    result: Live Traffic
+  - id: measure
+    title: 3. Measure Signal
+    icon: i-lucide-activity
+    description: "Watch the events stream in. Analyze conversion rates. Decide:
+      Pivot or Build."
+    result: Hard Evidence
+description: A simple, repeatable process to bridge the gap between "I have an
+  idea" and "People want this."
+title: From Idea to First Customer
 ---
 ::
--->
 
-<!-- ============================================ -->
-<!-- STAGE 3: ANSWERING OBJECTIONS              -->
-<!-- Uncomment when you have common questions    -->
-<!-- ============================================ -->
+::section-offer
+---
+cta:
+  label: Get Started
+  to: /offers/mentorship
+features:
+  - title: Kill 2-3 bad ideas fast
+    icon: status-available
+  - title: Ship MVP in 4-6 weeks
+    icon: status-available
+  - title: First customer in 90 days
+    icon: status-available
+  - title: Technical Founder Perspective
+    icon: status-available
+  - title: Real-World Product Validation
+    icon: status-available
+description: Strategic mentorship for technical founders building their first
+  profitable business.
+price: $250/mo
+title: Founder Compass Mentorship
+---
+::
 
-<!-- 
 ::section-faq
 ---
-data:
-  intro:
-    title: Common Questions
-    # Why should they read this section?
-    description: Answers to help you decide if this is right for you.
-  
-  cta:
-    headline: Still have questions?
-    message: Check the docs or ask the community.
-    button:
-      label: View Documentation
-      to: https://docs.yourproduct.com
-      icon: i-lucide-book-open
----
-:: 
--->
-
-
-<!-- ============================================ -->
-<!-- STAGE 4: SOCIAL PROOF                       -->
-<!-- Uncomment when you have testimonials/metrics -->
-<!-- ============================================ -->
-
-<!-- 
-::section-results
----
-data:
-  intro:
-    title: Results from Real Users
-    description: What happens when people actually use this.
-  
-  items:
-    # Real testimonials > fake ones
-    # If you don't have testimonials yet, DELETE this section
-    
-    - quote: Specific outcome they achieved. "Saved me 40 hours" beats "This is great!"
-      name: Real Person Name
-      role: Their title or credibility marker
-      avatarUrl: /testimonials/person-1.jpg
-      link: https://twitter.com/theirhandle
-      highlight: false
-    
-    # Highlight your strongest testimonial
-    - quote: Your best result. Make this one count.
-      name: Another Real Person
-      role: Why we should trust them
-      avatarUrl: /testimonials/person-2.jpg
-      link: null
-      highlight: true
-    
-    - quote: Third testimonial for credibility.
-      name: Third Person
-      role: Their context
-      avatarUrl: /testimonials/person-3.jpg
-      link: null
-      highlight: false
+cta:
+  headline: Still have questions?
+  message: Check the code or ask the community.
+  label: GitHub Repo
+  to: https://github.com/incubrain/founder-funnel
+  icon: i-simple-icons-github
+description: Answers to help you decide if this template is right for you.
+title: Common Questions
 ---
 ::
--->

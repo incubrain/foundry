@@ -27,8 +27,8 @@ export const NAVIGATION: NavigationConfig = {
   },
   main: [
     {
-      label: 'Our Story',
-      to: '/founder',
+      label: 'About',
+      to: '/about',
     },
     {
       label: 'Mentorship',
@@ -40,7 +40,7 @@ export const NAVIGATION: NavigationConfig = {
     {
       label: 'About',
       children: [
-        { label: 'Founder', to: '/founder' },
+        { label: 'Our Story', to: '/about' },
         { label: 'Decisions', to: '/decisions' },
         {
           label: 'Roadmap',

@@ -1,0 +1,16 @@
+/* assets/css/main.css */
+@source "../../../content/**/*";
+
+@import 'tailwindcss';
+
+@import './tokens/colors.css';
+@import './tokens/typography.css';
+@import './tokens/layout.css';
+
+@import '@nuxt/ui';
+
+@layer base {
+  * {
+    border-color: var(--ui-border);
+  }
+}

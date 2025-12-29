@@ -75,11 +75,12 @@ useHead({
                 label="Back to Decisions"
                 class="justify-start"
               />
-              <ConvertFunnel
+              <ConvertInternal
                 offer-slug="mentorship"
-                location="decision-sidebar"
-                size="sm"
-                color="secondary"
+                location="decision_log"
+                variant="card"
+                :spotlight="true"
+                spotlight-color="secondary"
               />
             </div>
           </div>

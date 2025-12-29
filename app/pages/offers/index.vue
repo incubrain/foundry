@@ -116,7 +116,7 @@ useHead({
           </h2>
 
           <!-- Offer Cards -->
-          <ConvertFunnel
+          <ConvertInternal
             v-for="offer in offers"
             :key="offer.stem"
             :offer-slug="offer.stem.replace('offers/', '')"
