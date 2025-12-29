@@ -40,7 +40,6 @@ COPY layers ./layers
 COPY modules ./modules  
 COPY shared ./shared  
 COPY templates ./templates
-COPY public ./public
 COPY server ./server
 
 # Install dependencies
