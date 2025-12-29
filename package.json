@@ -42,7 +42,7 @@
     "@compodium/nuxt": "0.1.0-beta.12",
     "@nuxt/eslint": "1.12.1",
     "@nuxt/hints": "1.0.0-alpha.5",
-    "@types/node": "^22.19.3",
+    "@types/node": "^25.0.3",
     "@types/nodemailer": "^7.0.4",
     "vitest": "^4.0.16",
     "vue-tsc": "^3.2.1"
