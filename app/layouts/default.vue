@@ -1,11 +1,29 @@
 <script setup lang="ts">
 const route = useRoute();
 
-// 🎯 TRACKING: Generic page view (for homepage, etc.)
+// 🎯 Fetch page data for RSS link support
+const { data: page } = await useAsyncData(`layout-page-${route.path}`, () =>
+  queryCollection('pages').path(route.path).first(),
+);
+
+// 🎯 SEO: Add RSS link if page has rssLink frontmatter
+if (page.value?.rssLink) {
+  useHead({
+    link: [
+      {
+        rel: 'alternate',
+        type: 'application/rss+xml',
+        title: `${page.value.title} Feed`,
+        href: page.value.rssLink,
+      },
+    ],
+  });
+}
+
+// 🎯 TRACKING: Generic page view
 const { trackEvent } = useEvents();
 onMounted(() => {
-  const pageName =
-    route.path === '/' ? 'homepage' : route.path.replace('/', '');
+  const pageName = route.path === '/' ? 'homepage' : route.path.replace('/', '');
   trackEvent({
     id: `${pageName}_view`,
     type: 'element_viewed',

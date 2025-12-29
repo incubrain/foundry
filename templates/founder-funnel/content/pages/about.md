@@ -3,13 +3,13 @@ title: Our Story
 description: The story behind the Founder Funnel
 ---
 
-<iframe 
+<iframe
 style="
-    width: 100%;
-    aspect-ratio: 16/9;
-    border: none;
-  "
-  src="https://www.youtube.com/embed/x-nOBBb0Pr8?si=TMpge5PsOEi17M94" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+width: 100%;
+aspect-ratio: 16/9;
+border: none;
+"
+src="https://www.youtube.com/embed/x-nOBBb0Pr8?si=TMpge5PsOEi17M94" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 Hi, I'm Mac; I created the Founder Funnel to break my cycle; after 13 years as a struggling founder and an ADHD diagnosis I've identified what was blocking me.
 
@@ -30,3 +30,24 @@ It's painful to admit, but I was addicted to building.
 Why now, what's changed? Honestly; I'm tired of being broke when I know I have so much value to give; I'm tired of the excuses that stop me from helping others like me; and I'm tired of not allowing myself to be happy.
 
 **It's exhausting and I'm done!!**
+
+::nav-cta
+---
+title: Want to work together?
+description: We are building a team of A-players who want to help founders succeed.
+orientation: vertical
+variant: outline
+---
+
+#links
+  ::convert-internal
+  ---
+  offerSlug: mentorship
+  location: founder-story
+  variant: button
+  spotlight: true
+  spotlightColor: primary
+  ---
+  ::
+
+::

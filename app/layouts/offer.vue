@@ -1,20 +1,37 @@
 <script setup lang="ts">
+import confetti from 'canvas-confetti';
+
 const route = useRoute();
-const slug = route.path.split('/').pop(); // Extract slug from path
+const slug = route.path.split('/').pop();
+
+// 🎯 DETECT: Success page vs Offer page
+const isSuccessPage = computed(() => route.path.includes('/success'));
 
 // 🎯 TRACKING: Page view event
 const { trackEvent } = useEvents();
 onMounted(() => {
+  const eventType = isSuccessPage.value ? 'success' : 'offer';
   trackEvent({
-    id: `offer_${slug}_view`,
+    id: `${eventType}_${slug}_view`,
     type: 'element_viewed',
     action: 'page_view',
-    location: `offer-page-${slug}`,
+    location: isSuccessPage.value ? 'success-page' : `offer-page-${slug}`,
     target: route.path,
   });
 });
 
-// 🎯 SEO: Inject meta tags (page content available in slot)
+// 🎯 CONFETTI: Auto-trigger for success pages
+onMounted(() => {
+  if (isSuccessPage.value) {
+    confetti({
+      particleCount: 100,
+      spread: 70,
+      origin: { y: 0.6 },
+    });
+  }
+});
+
+// 🎯 SEO: Inject meta tags
 const { data: page } = await useAsyncData(`offer-${slug}`, () =>
   queryCollection('pages').path(route.path).first(),
 );
@@ -26,26 +43,33 @@ useSeoMeta({
   ogDescription: page.value?.description,
 });
 
-// 🎯 OG IMAGE: Generate social preview
-const { getSiteConfig } = useContentCache();
-const { data: config } = await getSiteConfig();
+// 🎯 OG IMAGE: Generate for offer pages only (not success)
+if (!isSuccessPage.value) {
+  const { getSiteConfig } = useContentCache();
+  const { data: config } = await getSiteConfig();
 
-defineOgImage({
-  component: 'Frame',
-  props: {
-    title: page.value?.title,
-    description: page.value?.description,
-    image: config.value?.business?.logo,
-  },
-});
+  defineOgImage({
+    component: 'Frame',
+    props: {
+      title: page.value?.title,
+      description: page.value?.description,
+      image: config.value?.business?.logo,
+    },
+  });
+}
 </script>
 
 <template>
   <div
-    class="min-h-screen flex items-center justify-center relative overflow-hidden py-16 sm:py-20 lg:py-24"
+    :class="[
+      'relative min-h-screen flex items-center justify-center',
+      isSuccessPage
+        ? 'bg-linear-to-b from-background to-muted/20'
+        : 'overflow-hidden py-16 sm:py-20 lg:py-24',
+    ]"
   >
-    <!-- Background decoration -->
-    <div class="absolute inset-0 pointer-events-none">
+    <!-- Background decoration (offer pages only) -->
+    <div v-if="!isSuccessPage" class="absolute inset-0 pointer-events-none">
       <div
         class="absolute top-0 right-0 w-1/2 h-full bg-linear-to-l from-primary/5 to-transparent"
       />
@@ -54,20 +78,32 @@ defineOgImage({
       />
     </div>
 
-    <!-- Logo in top center -->
+    <!-- Logo -->
     <div
-      class="absolute top-6 left-0 right-0 z-50 flex justify-center pointer-events-none"
+      :class="[
+        'absolute top-6 left-0 right-0 flex justify-center',
+        isSuccessPage ? 'z-50' : 'z-50 pointer-events-none',
+      ]"
     >
-      <div class="pointer-events-auto">
+      <div :class="{ 'pointer-events-auto': !isSuccessPage }">
         <NuxtLink to="/"><Logo /></NuxtLink>
       </div>
     </div>
 
-    <!-- Content from catchall page -->
-    <UContainer class="relative z-10">
+    <!-- Content wrapper: conditional based on page type -->
+    <UContainer v-if="!isSuccessPage" class="relative z-10">
       <div class="max-w-3xl mx-auto">
         <slot />
       </div>
     </UContainer>
+
+    <!-- Success card wrapper -->
+    <div v-else class="max-w-2xl w-full mx-auto px-4">
+      <div
+        class="bg-card rounded-2xl p-8 shadow-xl border border-success/20 w-full"
+      >
+        <slot />
+      </div>
+    </div>
   </div>
 </template>
