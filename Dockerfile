@@ -33,11 +33,12 @@ ENV HOST=$HOST
 WORKDIR /app
 
 # Copy package files and workspace configuration
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc tsconfig.json nuxt.config.ts content.config.ts .gitignore ./
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc tsconfig.json nuxt.config.ts .gitignore ./
 
 # Copy the main app directory
 COPY app ./app
 COPY layers ./layers  
+COPY modules ./modules  
 COPY shared ./shared  
 COPY content ./content
 COPY templates ./templates
