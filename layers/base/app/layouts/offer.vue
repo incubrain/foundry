@@ -7,19 +7,6 @@ const slug = route.path.split('/').pop();
 // 🎯 DETECT: Success page vs Offer page
 const isSuccessPage = computed(() => route.path.includes('/success'));
 
-// 🎯 TRACKING: Page view event
-const { trackEvent } = useEvents();
-onMounted(() => {
-  const eventType = isSuccessPage.value ? 'success' : 'offer';
-  trackEvent({
-    id: `${eventType}_${slug}_view`,
-    type: 'element_viewed',
-    action: 'page_view',
-    location: isSuccessPage.value ? 'success-page' : `offer-page-${slug}`,
-    target: route.path,
-  });
-});
-
 // 🎯 CONFETTI: Auto-trigger for success pages
 onMounted(() => {
   if (isSuccessPage.value) {

@@ -16,8 +16,6 @@ const props = defineProps<{
     label?: string;
     to?: string;
   };
-  // Fallback for migration
-  intro?: { title: string; description: string };
 }>();
 
 const testimonials = computed(() => props.items || []);
@@ -25,10 +23,7 @@ const testimonials = computed(() => props.items || []);
 
 <template>
   <SectionWrapper id="results" has-bottom>
-    <SectionHeader
-      :title="title || intro?.title"
-      :description="description || intro?.description"
-    />
+    <SectionHeader :title="title" :description="description" />
 
     <UPageColumns class="mt-12 sm:mt-16">
       <UPageCard
@@ -55,8 +50,8 @@ const testimonials = computed(() => props.items || []);
       </UPageCard>
     </UPageColumns>
 
-    <template #bottom>
-      <NavCta v-if="cta" :title="cta.headline" :description="cta.message">
+    <template v-if="cta" #cta>
+      <NavCta :title="cta.headline" :description="cta.message">
         <template #links>
           <UButton
             v-if="cta.label && cta.to"

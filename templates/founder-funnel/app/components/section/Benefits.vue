@@ -1,6 +1,5 @@
 <!-- ~/components/section/benefits.vue -->
 <script setup lang="ts">
-// PRD: Flat props, no shared config types
 defineProps<{
   title?: string;
   description?: string;
@@ -46,8 +45,8 @@ defineProps<{
       </UPageCard>
     </UPageGrid>
 
-    <template #cta>
-      <NavCta v-if="cta" :title="cta.headline" :description="cta.message">
+    <template v-if="cta" #cta>
+      <NavCta :title="cta.headline" :description="cta.message">
         <template #links>
           <UButton
             v-if="cta.label && cta.to"

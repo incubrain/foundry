@@ -11,8 +11,6 @@ defineProps<{
     to?: string;
     icon?: string;
   };
-  // Fallback
-  intro?: { title: string; description: string };
 }>();
 
 const { data: faqFiles } = await useAsyncData('faqs', () =>
@@ -64,10 +62,7 @@ const accordionItems = computed(() =>
 
 <template>
   <SectionWrapper id="faq" has-bottom>
-    <SectionHeader
-      :title="title || intro?.title"
-      :description="description || intro?.description"
-    />
+    <SectionHeader :title="title" :description="description" />
 
     <UTabs
       v-model="activeTab"
@@ -110,8 +105,8 @@ const accordionItems = computed(() =>
       <FaqAccordion :items="accordionItems" />
     </div>
 
-    <template #cta>
-      <NavCta v-if="cta" :title="cta.headline" :description="cta.message">
+    <template v-if="cta" #cta>
+      <NavCta :title="cta.headline" :description="cta.message">
         <template #links>
           <UButton
             v-if="cta.label && cta.to"

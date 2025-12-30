@@ -14,12 +14,6 @@ const props = defineProps<{
     description: string;
     icon: string;
   }>;
-  cta?: {
-    headline?: string;
-    message?: string;
-    label?: string;
-    to?: string;
-  };
 }>();
 
 const normalizedSteps = computed(() => {
@@ -41,8 +35,6 @@ const normalizedFeatures = computed(() => props.features || []);
 <template>
   <SectionWrapper id="outcome" has-bottom>
     <SectionHeader :title="title" :description="description" />
-
-    <!-- FIXED: Remove carousel, use responsive grid instead (from previous refactor knowledge) -->
     <div
       v-if="normalizedSteps.length"
       class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 mt-12 sm:mt-16"
@@ -145,20 +137,6 @@ const normalizedFeatures = computed(() => props.features || []);
           </div>
         </div>
       </div>
-
-      <NavCta v-if="cta" :title="cta.headline" :description="cta.message">
-        <template #links>
-          <UButton
-            v-if="cta.label && cta.to"
-            :label="cta.label"
-            :to="cta.to"
-            size="xl"
-            color="primary"
-            variant="solid"
-            trailing
-          />
-        </template>
-      </NavCta>
     </template>
   </SectionWrapper>
 </template>

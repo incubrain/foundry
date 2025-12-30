@@ -10,7 +10,6 @@ const props = defineProps<{
     label?: string;
     to?: string;
   };
-  intro?: { title: string; description: string }; // Legacy/Fallback just in case
 }>();
 
 const { getFounder } = useContentCache();
@@ -24,11 +23,8 @@ const transformedFeatures = computed(() => {
   }));
 });
 
-// Use explicitly provided title/desc or fallback to intro (during migration)
-const displayTitle = computed(() => props.title || props.intro?.title);
-const displayDescription = computed(
-  () => props.description || props.intro?.description,
-);
+const displayTitle = computed(() => props.title);
+const displayDescription = computed(() => props.description);
 </script>
 
 <template>

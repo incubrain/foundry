@@ -4,7 +4,6 @@ FROM node:22.21-bookworm
 RUN corepack enable && corepack prepare pnpm@10.12.0 --activate
 
 # Build args for Railway environment variables
-ARG RAILWAY_DOCKERFILE_PATH=""
 ARG NUXT_PUBLIC_SCRIPTS_UMAMI_ANALYTICS_WEBSITE_ID=""
 ARG NUXT_PUBLIC_SCRIPTS_UMAMI_ANALYTICS_SCRIPT_INPUT_SRC=""
 ARG NUXT_PUBLIC_CONFIG_SOURCE="founder-funnel"
@@ -18,7 +17,6 @@ ENV NODE_ENV="production"
 ENV NODE_OPTIONS="--max-old-space-size=3072"
 
 # Expose as environment variables
-ENV RAILWAY_DOCKERFILE_PATH=$RAILWAY_DOCKERFILE_PATH
 ENV NUXT_PUBLIC_SCRIPTS_UMAMI_ANALYTICS_WEBSITE_ID=$NUXT_PUBLIC_SCRIPTS_UMAMI_ANALYTICS_WEBSITE_ID
 ENV NUXT_PUBLIC_SCRIPTS_UMAMI_ANALYTICS_SCRIPT_INPUT_SRC=$NUXT_PUBLIC_SCRIPTS_UMAMI_ANALYTICS_SCRIPT_INPUT_SRC
 ENV NUXT_PUBLIC_CONFIG_SOURCE=$NUXT_PUBLIC_CONFIG_SOURCE
@@ -40,7 +38,6 @@ COPY layers ./layers
 COPY modules ./modules  
 COPY shared ./shared  
 COPY templates ./templates
-COPY server ./server
 
 # Install dependencies
 RUN pnpm install --frozen-lockfile

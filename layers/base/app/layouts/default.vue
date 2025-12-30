@@ -19,19 +19,6 @@ if (page.value?.hasRss) {
     ],
   });
 }
-
-// 🎯 TRACKING: Generic page view
-const { trackEvent } = useEvents();
-onMounted(() => {
-  const pageName = route.path === '/' ? 'homepage' : route.path.replace('/', '');
-  trackEvent({
-    id: `${pageName}_view`,
-    type: 'element_viewed',
-    action: 'page_view',
-    location: pageName,
-    target: route.path,
-  });
-});
 </script>
 
 <template>
