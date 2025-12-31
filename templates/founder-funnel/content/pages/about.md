@@ -3,6 +3,8 @@ title: Our Story
 description: The story behind the Founder Funnel
 ---
 
+::u-container
+
 <iframe
 style="
 width: 100%;
@@ -31,23 +33,24 @@ Why now, what's changed? Honestly; I'm tired of being broke when I know I have s
 
 **It's exhausting and I'm done!!**
 
-::nav-cta
----
-title: Want to work together?
-description: We are building a team of A-players who want to help founders succeed.
-orientation: vertical
-variant: outline
----
+  ::nav-cta
+  ---
+  title: Want to work together?
+  description: Reach out on social media or send me an email.
+  orientation: vertical
+  variant: outline
+  ---
 
-#links
-  ::convert-internal
-  ---
-  offerSlug: mentorship
-  location: founder-story
-  variant: button
-  spotlight: true
-  spotlightColor: primary
-  ---
+  #links
+    ::convert-social
+    ---
+    location: founder-story
+    size: xl
+    variant: soft
+    color: primary
+    gap: normal
+    showEmail: true
+    ---
+    ::
   ::
-
 ::

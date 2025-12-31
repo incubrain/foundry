@@ -2,9 +2,8 @@
 // Query content based on URL path
 const route = useRoute();
 
-const { data: page } = await useAsyncData(
-  `page-${route.path}`,
-  () => queryCollection('pages').path(route.path).first(),
+const { data: page } = await useAsyncData(`page-${route.path}`, () =>
+  queryCollection('pages').path(route.path).first(),
 );
 
 // Handle 404

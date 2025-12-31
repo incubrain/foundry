@@ -1,4 +1,4 @@
-<!-- app/components/convert/Social.vue -->
+<!-- layers/base/app/components/convert/Social.vue -->
 <script setup lang="ts">
 import type { ButtonProps } from '@nuxt/ui';
 
@@ -9,6 +9,7 @@ interface Props {
   color?: ButtonProps['color'];
   rounded?: boolean;
   gap?: 'tight' | 'normal' | 'relaxed';
+  showEmail?: boolean; // NEW: Show email button
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -17,6 +18,7 @@ const props = withDefaults(defineProps<Props>(), {
   color: 'secondary',
   rounded: true,
   gap: 'normal',
+  showEmail: false, // Default: don't show email
 });
 
 const { getFounder } = useContentCache();
@@ -31,22 +33,45 @@ const gapClasses = {
 
 const handleClick = (platform: string, url: string) => {
   trackEvent({
-    id: `offer_click_${props.location}_${platform.toLocaleLowerCase()}`,
+    id: `offer_click_${props.location}_${platform.toLowerCase()}`,
     type: 'offer_click',
     target: 'social_external',
   });
 };
+
+// Email link (if showEmail is true)
+const emailLink = computed(() => {
+  if (!props.showEmail || !founder.value?.email) return null;
+
+  return {
+    label: 'Email',
+    url: `mailto:${founder.value.email}`,
+    icon: 'i-lucide-mail',
+  };
+});
+
+// Combine email + social links
+const allLinks = computed(() => {
+  const links = [...(founder.value?.links || [])];
+
+  // Prepend email link if enabled
+  if (emailLink.value) {
+    links.unshift(emailLink.value);
+  }
+
+  return links;
+});
 </script>
 
 <template>
-  <div v-if="founder?.links?.length" :class="['flex', gapClasses[gap]]">
+  <div v-if="allLinks.length" :class="['flex flex-wrap', gapClasses[gap]]">
     <UButton
-      v-for="link in founder.links"
+      v-for="link in allLinks"
       :key="link.url"
       :icon="link.icon"
       :to="link.url"
-      external
-      target="_blank"
+      :external="!link.url.startsWith('mailto:')"
+      :target="link.url.startsWith('mailto:') ? undefined : '_blank'"
       :size="size"
       :variant="variant"
       :color="color"
@@ -54,7 +79,7 @@ const handleClick = (platform: string, url: string) => {
         rounded ? 'rounded-full text-default' : '',
         size === 'xl' && rounded ? 'p-3' : '',
       ]"
-      :aria-label="`Visit ${founder.given_name}'s ${link.label}`"
+      :aria-label="`${link.label === 'Email' ? 'Email' : 'Visit'} ${founder.given_name}${link.label === 'Email' ? '' : `'s ${link.label}`}`"
       @click="handleClick(link.label, link.url)"
     />
   </div>

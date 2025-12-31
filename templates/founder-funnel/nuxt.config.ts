@@ -6,7 +6,7 @@ const currentDir = dirname(fileURLToPath(import.meta.url));
 export default defineNuxtConfig({
   extends: ['../../layers/base'],
 
-  // {DX}: studio breaks HMR beta.1
+  // {DX}: studio breaks HMR beta.3
   studio: {
     // Studio admin route (default: '/_studio')
     route: '/_studio',

@@ -33,7 +33,6 @@ export const NAVIGATION: NavigationConfig = {
     {
       label: 'Mentorship',
       to: '/offers/mentorship',
-      icon: 'i-lucide-group',
     },
   ],
   footerLinks: [
