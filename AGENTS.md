@@ -25,7 +25,7 @@ See: `.agent/rules/architecture.md` for boundaries
 - Add new section: Copy existing, edit `content/*.yml`
 - Change validation path: Edit `app/components/convert/*`
 - Add event tracking: Use `useEvents()` composable
-- Deploy: Railway/Vercel one-click
+- Deploy: Standard Node.js/Docker deployment
 
 See: `.agent/conventions.md` for patterns
 

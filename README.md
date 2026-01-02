@@ -2,13 +2,7 @@
 
 > **Stop paying for landing pages. Start owning your validation.**
 
-<div align="center">
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fincubrain%2Ffounder-funnel)
-&nbsp;&nbsp;
-[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/usbhW2?referralCode=gvXQKE)
-
-</div>
 
 ---
 
@@ -172,7 +166,7 @@ Generate trackable QR codes for events, flyers, or business cards.
 
 ```bash
 pnpm run build
-# Deploy to Vercel, Railway, or your host
+# Deploy to your preferred hosting provider
 ```
 
 ---

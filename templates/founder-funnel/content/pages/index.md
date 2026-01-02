@@ -17,8 +17,6 @@ intro:
     The open-source landing page template for technical founders. Capture leads, and validate your idea without monthly fees.
 cta:
   primary: Get Started
-  secondary: One Click Deploy
-  secondaryIcon: i-simple-icons-github
 media:
   src: /product/gated-dashboard.png
   alt: App Dashboard
@@ -33,7 +31,6 @@ trusted:
     - i-simple-icons-nuxtdotjs
     - i-simple-icons-tailwindcss
     - i-simple-icons-typescript
-    - i-simple-icons-vercel
     - i-simple-icons-supabase
 ---
 ::

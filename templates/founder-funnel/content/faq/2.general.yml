@@ -4,19 +4,29 @@ icon: i-lucide-info
 color: info
 items:
   - label: Is this really free?
-    content: Yes. MIT licensed. You own the code. Use it for personal or commercial projects.
+    content:
+      Yes. MIT licensed. You own the code. Use it for personal or commercial
+      projects.
 
   - label: Where can I host this?
-    content: Anywhere that runs Node.js or Docker. Vercel, Railway, Coolify, etc.
+    content:
+      Anywhere that runs Node.js or Docker. Cloud platforms, VPS providers,
+      self-hosted servers, etc.
 
   - label: Do I need to be a developer?
-    content: Yes. This is a code template, not a no-code builder. You need to know how to use a terminal and edit text files.
+    content:
+      Yes. This is a code template, not a no-code builder. You need to know how
+      to use a terminal and edit text files.
 
   - label: How do I style it?
-    content: Tailwind v4. Change tokens in `app.config.ts` or edit the CSS directly.
+    content:
+      Tailwind v4. Change tokens in `app.config.ts` or edit the CSS directly.
 
   - label: How does the gating work?
-    content: Local storage + email capture. No backend database required to start.
+    content:
+      Local storage + email capture. No backend database required to start.
 
   - label: Can I add payments?
-    content: Yes. It's just a Nuxt app. Add Stripe, LemonSqueezy, Razorpay or whatever you want.
+    content:
+      Yes. It's just a Nuxt app. Add Stripe, LemonSqueezy, Razorpay or whatever
+      you want.
