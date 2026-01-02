@@ -1,0 +1,80 @@
+# ========================================
+# Founder Funnel - Template Sync Ignore
+# ========================================
+# Files matching these patterns will NOT be synced from the template
+# Uses glob pattern syntax (like .gitignore)
+# See: https://git-scm.com/docs/gitglossary#Documentation/gitglossary.txt-aiddefpathspecapathspec
+
+# ========================================
+# USER CONTENT (Never sync)
+# ========================================
+
+# All content files (user's business content)
+templates/*/content/**
+
+# User's template-specific config
+templates/*/nuxt.config.ts
+
+# User's custom components (if they add their own)
+templates/*/app/components/**
+
+# ========================================
+# ENVIRONMENT & SECRETS (Never sync)
+# ========================================
+
+# Environment variables (user's secrets)
+.env
+.env.local
+.env.*.local
+
+# Local development
+.vscode/
+.idea/
+*.code-workspace
+
+# ========================================
+# BUILD & DEPENDENCIES (Never sync)
+# ========================================
+
+# Dependencies (will be updated via package.json)
+node_modules/
+.pnpm-store/
+pnpm-lock.yaml
+
+# Build outputs
+.nuxt/
+.output/
+dist/
+.cache/
+
+# ========================================
+# USER CUSTOMIZATIONS (Conditional)
+# ========================================
+
+# Uncomment these if you customize them:
+# shared/config/navigation.ts
+# shared/config/icons.ts
+# nuxt.config.ts (root)
+# package.json (root) - ⚠️ Use with caution, may miss dependency updates
+
+# ========================================
+# GIT & SYSTEM (Never sync)
+# ========================================
+
+.git/
+.DS_Store
+Thumbs.db
+
+# ========================================
+# NOTES
+# ========================================
+# 
+# To exclude ALL files except specific ones, use:
+#   :!file-to-keep.txt
+#   *
+# 
+# Common patterns:
+#   *.log          # All log files
+#   test/          # Entire directory
+#   **/temp/*      # temp folder anywhere in tree
+#   !important.md  # KEEP this file (exception)

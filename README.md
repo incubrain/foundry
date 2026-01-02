@@ -14,15 +14,15 @@
 
 ## The Problem
 
-You're stuck in the loop:
+  You're stuck in the loop:
 
-- "Just one more feature before I launch"
-- "The design isn't perfect yet"
-- "I need to add this integration first"
+  - "Just one more feature before I launch"
+  - "The design isn't perfect yet"
+  - "I need to add this integration first"
 
-Meanwhile, landing page builders charge $50-300/month. Your content is locked in their platform. Migration means rebuilding from scratch.
+  Meanwhile, landing page builders charge $50-300/month. Your content is locked in their platform. Migration means rebuilding from scratch.
 
-**You waste months building. Then discover nobody wants it.**
+  **You waste months building. Then discover nobody wants it.**
 
 ---
 
@@ -41,32 +41,32 @@ Founder Funnel is an open-source landing page template that helps you **prove de
 
 ## What You Get
 
-A complete validation system designed around one question:
+  A complete validation system designed around one question:
 
-**"Is there real demand for this?"**
+  **"Is there real demand for this?"**
 
 ### Signal Capture
 
-Multiple validation paths depending on your offer:
+  Multiple validation paths depending on your offer:
 
-**Email capture** — Visitors convert to leads for your free magnet  
-**Presales** — Collect payment before building the product  
-**Service bookings** — Sell consultation calls, learn from delivery, systematize into product
+  **Email capture** — Visitors convert to leads for your free magnet
+  **Presales** — Collect payment before building the product
+  **Service bookings** — Sell consultation calls, learn from delivery, systematize into product
 
-Each path generates evidence. You measure signal, then decide.
+  Each path generates evidence. You measure signal, then decide.
 
 
 
 
 ### Conversion-Optimized Sections
 
-Hero · Benefits · Outcome · Product · Testimonials · FAQ
+  Hero · Benefits · Outcome · Product · Testimonials · FAQ
 
-Built to convert. Not to look pretty in your portfolio.
+  Built to convert. Not to look pretty in your portfolio.
 
 ### Zero Lock-In
 
-Standard Nuxt app. Swap analytics providers in 5 minutes. Change hosting in 10. Add any integration you want. **You control everything.**
+  Standard Nuxt app. Swap analytics providers in 5 minutes. Change hosting in 10. Add any integration you want. **You control everything.**
 
 ---
 
@@ -98,49 +98,49 @@ Sell consulting calls. Deliver service manually. Learn what clients actually nee
 
 ### Good Fit
 
-- **Technical founders** validating SaaS or digital product ideas
-- **Experienced developers** (3+ years) who can edit config files
-- **Service providers** ready to systematize their delivery
-- **Perfectionists** who need constraints to ship
+  - **Technical founders** validating SaaS or digital product ideas
+  - **Experienced developers** (3+ years) who can edit config files
+  - **Service providers** ready to systematize their delivery
+  - **Perfectionists** who need constraints to ship
 
 ### Not a Fit
 
-- Non-technical founders needing drag-and-drop builders
-- Anyone wanting fully managed no-code solutions
-- Post-PMF companies already scaling validated products
+  - Non-technical founders needing drag-and-drop builders
+  - Anyone wanting fully managed no-code solutions
+  - Post-PMF companies already scaling validated products
 
 ---
 
 ## Quick Start
 
 1. **Clone & Install**
-   ```bash
-   git clone https://github.com/incubrain/founder-funnel.git
-   cd founder-funnel
-   pnpm install
-   ```
+```bash
+git clone https://github.com/incubrain/founder-funnel.git
+cd founder-funnel
+pnpm install
+```
 
 2. **Customize Content**
-   
-   Edit `content/pages/index.md` — uncomment sections as you need them:
+
+Edit `content/pages/index.md` — uncomment sections as you need them:
 ```markdown
    <!-- Start minimal: Hero + Product only -->
    ::section-hero
    ::
-   
+
    ::section-offer
    ::
-   
+
    <!-- Uncomment when driving traffic -->
    <!-- ::section-benefits
    :: -->
 ```
-   
-   Then edit `content/config/site.yml` with your business info.
+
+Then edit `content/config/site.yml` with your business info.
 
 3. **Set Up Webhooks**
-   
-   Configure where leads go (Telegram, Slack, Discord):
+
+Configure where leads go (Telegram, Slack, Discord):
 ```bash
    cp .env.example .env
    # Add your webhook URL
@@ -148,32 +148,147 @@ Sell consulting calls. Deliver service manually. Learn what clients actually nee
 ```
 
 4. **QR Codes for In-Person Distribution** _(Optional)_
-   
-   Generate trackable QR codes for events, flyers, or business cards.
-   
-   **Recommended tool:** [Dub.co](https://dub.co) (free tier: 1K clicks/mo)
-   
-   **Quick setup:**
+
+Generate trackable QR codes for events, flyers, or business cards.
+
+**Recommended tool:** [Dub.co](https://dub.co) (free tier: 1K clicks/mo)
+
+**Quick setup:**
 ```bash
    # 1. Sign up at dub.co
    # 2. Create short links for your offers:
    #    /offers/mentorship → go.yourdomain.com/mentor
    #    /offers/template → go.yourdomain.com/template
-   
+
    # 3. Per campaign (conference, meetup, etc):
    #    - Open link in Dub dashboard
    #    - Add UTM: utm_campaign=techcrunch2024
    #    - Download QR code
 ```
-   
-   **Alternatives:** bit.ly, rebrandly, or any URL shortener with QR generation.
+
+**Alternatives:** bit.ly, rebrandly, or any URL shortener with QR generation.
 
 5. **Deploy**
-   
-   ```bash
-   pnpm run build
-   # Deploy to Vercel, Railway, or your host
-   ```
+
+```bash
+pnpm run build
+# Deploy to Vercel, Railway, or your host
+```
+
+---
+
+## 📦 Keeping Your Template Updated
+
+  Founder Funnel automatically syncs updates from the upstream template to your repository.
+
+### How It Works
+
+  1. **Automatic Updates** — Every month, GitHub Actions checks for template updates
+  2. **Pull Request** — If changes exist, you'll receive a PR with updates
+  3. **Review & Merge** — Review changes, test locally, then merge
+
+### Manual Update
+
+  Don't want to wait for the monthly sync? Trigger an update manually:
+
+  1. Go to **Actions** tab in your repository
+  2. Click **Template Sync** workflow
+  3. Click **Run workflow** → **Run workflow**
+  4. Wait ~1 minute for PR to appear
+
+### What Gets Updated
+
+  ✅ **Core files** (always synced):
+  - `layers/base/*` — Template components, layouts, composables
+  - `modules/events/*` — Event tracking system
+  - `shared/*` — Shared configuration and utilities
+  - `scripts/*` — Build and deployment scripts
+
+  ❌ **Your content** (never synced):
+  - `templates/*/content/**` — Your business content
+  - `templates/*/nuxt.config.ts` — Your template config
+  - `.env*` — Your environment variables
+
+  ⚠️ **Hybrid files** (may conflict):
+  - `shared/config/navigation.ts` — May need manual merge
+  - Root `nuxt.config.ts` — Review carefully
+  - Root `package.json` — Dependency updates
+
+### Reviewing Template Updates
+
+  When you receive a template sync PR:
+
+  1. **Check the "Files changed" tab** — See exactly what changed
+  2. **Look for breaking changes** — Read PR description
+  3. **Test locally** (recommended):
+```bash
+gh pr checkout <PR_NUMBER>  # GitHub CLI
+pnpm install
+pnpm dev
+```
+  4. **Merge or close** — Your choice
+
+### Resolving Conflicts
+
+  If the PR shows merge conflicts (rare):
+
+  1. **Checkout the PR branch** — `gh pr checkout <PR_NUMBER>`
+  2. **Resolve conflicts** — Edit conflicted files
+  3. **Commit resolution** — `git add . && git commit -m "resolve conflicts"`
+  4. **Push** — `git push`
+
+  Most conflicts will be in `shared/config/*` if you customized navigation.
+
+### Disabling Auto-Updates
+
+  Don't want automatic syncs? You have two options:
+
+  **Option 1: Delete the workflow** (permanent)
+```bash
+rm .github/workflows/template-sync.yml
+git commit -am "disable template sync"
+git push
+```
+
+  **Option 2: Disable in GitHub UI** (temporary)
+  1. Go to **Actions** tab
+  2. Click **Template Sync** workflow
+  3. Click **⋯** (three dots) → **Disable workflow**
+
+### Ignoring Specific Files
+
+  Customized a core file and don't want it synced? Add it to `.templatesyncignore`:
+
+```bash
+# Example: You customized the navigation config
+echo "shared/config/navigation.ts" >> .templatesyncignore
+git commit -am "ignore custom navigation"
+git push
+```
+
+  ⚠️ **Warning:** Ignoring core files means you won't receive bug fixes for them.
+
+### Troubleshooting
+
+  **PR not appearing?**
+  - Check **Actions** tab for workflow run status
+  - Ensure GitHub Actions is enabled (Settings → Actions → General)
+  - Verify no error messages in workflow logs
+
+  **Workflow failing?**
+  - Check workflow logs for error details
+  - Common issue: Missing permissions (should auto-configure)
+  - Try manual trigger to see detailed logs
+
+  **Too many PRs?**
+  - Old PRs are auto-closed when new one appears
+  - If needed, manually close old ones
+
+  **Need help?**
+  - [GitHub Discussions](https://github.com/incubrain/founder-funnel/discussions)
+  - [Template Sync Docs](docs/template-updates.md)
+
+---
 
 ## Content Structure
 
@@ -195,7 +310,7 @@ data:
 
 Each section includes:
 - **Decision guides** — When to use this section
-- **Anti-examples** — What NOT to write  
+- **Anti-examples** — What NOT to write
 - **Structure templates** — How to organize your copy
 
 No config files. Just uncomment sections as you grow.
@@ -204,21 +319,21 @@ No config files. Just uncomment sections as you grow.
 
 ## Understanding the Codebase
 
-No docs that go stale. Instead:
+  No docs that go stale. Instead:
 
 ```bash
 pnpm repomix
 ```
 
-This bundles your codebase context into a single file. Paste it into Claude or ChatGPT.
+  This bundles your codebase context into a single file. Paste it into Claude or ChatGPT.
 
-**Ask anything:**
-- "How do I change the color scheme?"
-- "Where do I configure email webhooks?"
-- "How do I hide a section?"
-- "How do I add a presales funnel?"
+  **Ask anything:**
+  - "How do I change the color scheme?"
+  - "Where do I configure email webhooks?"
+  - "How do I hide a section?"
+  - "How do I add a presales funnel?"
 
-The LLM explains the code directly. Always up-to-date. Zero maintenance.
+  The LLM explains the code directly. Always up-to-date. Zero maintenance.
 
 ---
 
@@ -245,30 +360,30 @@ The template captures signal. Your product delivers value.
 
 ### Measure What Matters
 
-Stop chasing traffic. Focus on **signal**:
+  Stop chasing traffic. Focus on **signal**:
 
-- **Email signups** — Are people interested enough to give you their contact?
-- **Presale conversions** — Are people interested enough to pay before you build?
-- **Service bookings** — Are people interested enough to pay for your time?
+  - **Email signups** — Are people interested enough to give you their contact?
+  - **Presale conversions** — Are people interested enough to pay before you build?
+  - **Service bookings** — Are people interested enough to pay for your time?
 
-Quality of signal matters more than quantity of visitors.
+  Quality of signal matters more than quantity of visitors.
 
 ### Fail Fast, Fail Early
 
-Weak signal? Your offer doesn't resonate. Pivot or kill the idea.
+  Weak signal? Your offer doesn't resonate. Pivot or kill the idea.
 
-This is success. You saved months of building something nobody wants.
+  This is success. You saved months of building something nobody wants.
 
 ### Service-to-Product Path
 
-Can't validate with a landing page? Sell service first:
+  Can't validate with a landing page? Sell service first:
 
-1. Offer paid consulting/implementation
-2. Learn what clients actually need
-3. Systematize your process
-4. Build the product that solves it
+  1. Offer paid consulting/implementation
+  2. Learn what clients actually need
+  3. Systematize your process
+  4. Build the product that solves it
 
-Your template supports this path. Service revenue funds validation. Client feedback guides product development.
+  Your template supports this path. Service revenue funds validation. Client feedback guides product development.
 
 ---
 
@@ -276,19 +391,19 @@ Your template supports this path. Service revenue funds validation. Client feedb
 
 ## Decisions Log
 
-We document every strategic decision, pivot, and learning in our public [Decisions Log](/decisions).
+  We document every strategic decision, pivot, and learning in our public [Decisions Log](/decisions).
 
-**Why?**
-- **Transparency:** See how we think, not just what we ship
-- **Learning:** Real validation decisions from real founders
-- **Accountability:** Public decisions force clear reasoning
+  **Why?**
+  - **Transparency:** See how we think, not just what we ship
+  - **Learning:** Real validation decisions from real founders
+  - **Accountability:** Public decisions force clear reasoning
 
-**Subscribe via RSS:** [/rss/decisions](/rss/decisions)
+  **Subscribe via RSS:** [/rss/decisions](/rss/decisions)
 
-Perfect for:
-- Investors monitoring portfolio thinking
-- Founders learning from validation experiments
-- Mentors assessing decision quality
+  Perfect for:
+  - Investors monitoring portfolio thinking
+  - Founders learning from validation experiments
+  - Mentors assessing decision quality
 
 ---
 
@@ -297,7 +412,7 @@ Perfect for:
 Found a bug? See a better way? Pull requests welcome for:
 
 - Bug fixes
-- Documentation improvements  
+- Documentation improvements
 - New validation path examples
 - Performance optimizations
 
@@ -307,11 +422,11 @@ Found a bug? See a better way? Pull requests welcome for:
 
 ## License
 
-MIT — Use for personal or commercial projects.
+  MIT — Use for personal or commercial projects.
 
-**One restriction:** Don't clone this and sell it as a competing template product under a different name.
+  **One restriction:** Don't clone this and sell it as a competing template product under a different name.
 
-Everything else? Fair game.
+  Everything else? Fair game.
 
 ---
 
@@ -324,8 +439,8 @@ Everything else? Fair game.
 
 ---
 
-**Stop overthinking. Start validating.**
+  **Stop overthinking. Start validating.**
 
-Deploy your landing page today. Measure real signal tomorrow. Build only when the evidence is clear.
+  Deploy your landing page today. Measure real signal tomorrow. Build only when the evidence is clear.
 
-Your future self will thank you.
+  Your future self will thank you.
