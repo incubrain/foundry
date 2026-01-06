@@ -1,6 +1,6 @@
-<!-- components/nav/Header.vue -->
+<!-- layers/base/app/components/nav/Header.vue -->
 <script setup lang="ts">
-import { NAVIGATION } from '#shared/config/navigation';
+import { useNavigation } from '#shared/navigation';
 
 const props = withDefaults(
   defineProps<{
@@ -12,6 +12,8 @@ const props = withDefaults(
   },
 );
 
+const { data: navigation } = await useNavigation();
+
 const headerClasses = computed(() => ({
   [`sticky z-40 bg-muted/80 backdrop-blur-md border-b border-default ${props.class}`]:
     props.sticky,
@@ -22,6 +24,7 @@ const headerClasses = computed(() => ({
 
 <template>
   <UHeader
+    v-if="navigation"
     mode="slideover"
     :class="headerClasses"
     to="/"
@@ -37,7 +40,7 @@ const headerClasses = computed(() => ({
 
     <UNavigationMenu
       class="flex grow mx-auto max-w-xl justify-center items-center w-full flex-1"
-      :items="NAVIGATION.main"
+      :items="navigation.main"
       color="neutral"
       content-orientation="vertical"
     />
@@ -56,7 +59,7 @@ const headerClasses = computed(() => ({
     </template>
 
     <template #body>
-      <NavMobile :navigation-items="NAVIGATION.main" />
+      <NavMobile :navigation-items="navigation.main" />
     </template>
   </UHeader>
 </template>

@@ -1,9 +1,11 @@
-<!-- components/nav/Footer.vue -->
+<!-- layers/base/app/components/nav/Footer.vue -->
 <script setup lang="ts">
-import { NAVIGATION } from '#shared/config/navigation';
+import { useNavigation } from '#shared/navigation';
 
 const { getSiteConfig } = useContentCache();
 const { data: configData } = await getSiteConfig();
+
+const { data: navigation } = await useNavigation();
 
 const currentYear = new Date().getFullYear();
 
@@ -16,6 +18,7 @@ const copyrightYear = computed(() =>
 
 <template>
   <UFooter
+    v-if="navigation"
     :ui="{
       root: 'border-t border-default/60',
       container:
@@ -31,7 +34,9 @@ const copyrightYear = computed(() =>
   >
     <template #left>
       <div class="flex flex-col items-start gap-4">
-        <Logo size="md" />
+        <NuxtLink to="/">
+          <Logo size="md" />
+        </NuxtLink>
         <div class="space-y-2">
           <p class="text-muted leading-relaxed font-written text-sm max-w-md">
             {{ configData?.business?.mission }}.
@@ -41,11 +46,11 @@ const copyrightYear = computed(() =>
     </template>
 
     <div
-      v-if="NAVIGATION.footerLinks?.length"
+      v-if="navigation.footerLinks?.length"
       class="grid grid-cols-2 mx-auto gap-8 lg:gap-12 w-full"
     >
       <div
-        v-for="group in NAVIGATION.footerLinks"
+        v-for="group in navigation.footerLinks"
         :key="group.label"
         class="flex flex-col gap-4"
       >

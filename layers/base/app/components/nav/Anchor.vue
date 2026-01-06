@@ -1,6 +1,6 @@
-<!-- components/nav/Anchor.vue -->
+<!-- layers/base/app/components/nav/Anchor.vue -->
 <script setup lang="ts">
-import { NAVIGATION, type SectionId } from '#shared/config/navigation';
+import { useNavigation, type SectionId } from '#shared/navigation';
 
 interface Props {
   id: SectionId;
@@ -8,12 +8,16 @@ interface Props {
 
 const props = defineProps<Props>();
 
+const { data: navigation } = await useNavigation();
+
 const getStickyOffset = () => {
-  const banner = NAVIGATION.layout.banner?.sticky
+  if (!navigation.value) return '--spacing(12)';
+
+  const banner = navigation.value.layout.banner?.sticky
     ? 'var(--ui-banner-height)+'
     : '';
 
-  const navbar = NAVIGATION.layout.navbar?.sticky
+  const navbar = navigation.value.layout.navbar?.sticky
     ? 'var(--ui-header-height)+'
     : '';
 
@@ -22,12 +26,12 @@ const getStickyOffset = () => {
   return `calc(${banner}${navbar}${offset})`;
 };
 
-const anchorOffset = getStickyOffset();
+const anchorOffset = computed(() => getStickyOffset());
 
 onMounted(() => {
   const element = document.getElementById(props.id);
   if (element) {
-    element.style.scrollMarginTop = anchorOffset;
+    element.style.scrollMarginTop = anchorOffset.value;
   }
 });
 </script>
