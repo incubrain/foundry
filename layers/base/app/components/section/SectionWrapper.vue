@@ -1,7 +1,7 @@
 <!-- app/components/section/SectionWrapper.vue -->
 <script setup lang="ts">
 import { useIntersectionObserver } from '@vueuse/core';
-import type { SectionId } from '#shared/config/navigation';
+import type { SectionId } from '#shared/navigation';
 
 interface Props {
   id: SectionId | string;

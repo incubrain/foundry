@@ -27,7 +27,9 @@ if (page.value?.hasRss) {
     <NavHeader />
 
     <main class="pb-12 lg:pb-16">
-      <slot />
+      <UPage>
+        <slot />
+      </UPage>
     </main>
 
     <NavFooter />

@@ -30,7 +30,6 @@ useHead({
   <UContainer>
     <UPage>
       <UPageHeader>
-        <!-- Back Button (Mobile & Desktop) -->
         <template #headline>
           <UButton
             to="/decisions"
@@ -42,15 +41,12 @@ useHead({
           />
         </template>
 
-        <!-- Title -->
         <template #title>
           {{ article?.title }}
         </template>
 
-        <!-- Metadata (Label + Date) -->
         <template #description>
           <div class="flex flex-wrap items-center gap-4 mb-4">
-            <!-- Label Badge -->
             <div
               v-if="article?.label"
               class="flex items-center gap-2 px-3 py-1.5 rounded-md bg-primary/10 border border-primary/20"
@@ -61,7 +57,6 @@ useHead({
               </span>
             </div>
 
-            <!-- Date -->
             <div
               v-if="article?.date"
               class="flex items-center gap-2 text-muted"
@@ -77,7 +72,6 @@ useHead({
             </div>
           </div>
 
-          <!-- Description Text -->
           <p
             v-if="article?.description"
             class="text-lg text-muted leading-relaxed"
@@ -86,7 +80,6 @@ useHead({
           </p>
         </template>
 
-        <!-- Featured Image (if exists) -->
         <template v-if="article?.image" #default>
           <NuxtImg
             :src="article.image"
@@ -98,18 +91,15 @@ useHead({
       </UPageHeader>
 
       <UPageBody class="max-w-3xl mx-auto">
-        <!-- Article Content -->
         <article class="prose prose-lg max-w-none">
           <slot />
         </article>
 
-        <!-- Surround Navigation -->
         <template v-if="surround?.filter(Boolean).length">
           <USeparator class="my-12" />
           <UContentSurround :surround="surround" />
         </template>
 
-        <!-- Mobile CTA -->
         <div class="mt-12 pt-8 border-t">
           <ConvertInternal
             offer-slug="mentorship"
