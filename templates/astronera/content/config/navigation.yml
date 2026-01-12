@@ -1,0 +1,36 @@
+layout:
+  banner:
+    sticky: true
+    offer: certification
+  navbar:
+    sticky: false
+  footer:
+    offer: certification
+
+main:
+  - label: About
+    to: /about
+  - label: Documents
+    to: /documents
+  - label: Dark Sky Certification
+    to: /offers/certification
+
+footerLinks:
+  - label: About
+    children:
+      - label: Our Story
+        to: /about
+      - label: Documents & Research
+        to: /documents
+  - label: Services
+    children:
+      - label: Dark Sky Certification
+        to: /offers/certification
+      - label: Policy Consulting
+        to: /about#partners
+  - label: Resources
+    children:
+      - label: FAQ
+        to: /#faq
+      - label: Contact
+        to: mailto:connectus@astronera.org

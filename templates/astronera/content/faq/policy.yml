@@ -1,0 +1,47 @@
+label: Dark Sky Policy
+type: policy
+icon: i-lucide-lightbulb
+color: secondary
+items:
+  - label: What is TARA?
+    content:
+      Trans-departmental Authority for Regulated ALAN (Artificial Light at
+      Night). Maharashtra's coordinating mechanism bringing Environment,
+      Tourism, Forest, Urban Development, and Energy departments under unified
+      lighting regulation framework.
+
+  - label: Why does Maharashtra need dark sky policy?
+    content:
+      Legal mandate (EPA 1986, Under2 Coalition, Net Zero 2070), economic
+      leakage (₹20-25M tons CO2/year from inefficient lighting), ecological
+      damage (60% invertebrates nocturnal), public health (circadian
+      disruption), and tourism revenue opportunity ($1B → $3B market 2025-2032).
+
+  - label: How is this different from energy efficiency programs?
+    content:
+      Energy efficiency focuses on consumption reduction. Dark sky policy
+      addresses light pollution holistically - direction, spectrum, intensity,
+      timing. This includes shielding, CCT limits, curfews, and ecological
+      sensitivity zones. Achieves 30-70% savings beyond standard efficiency
+      measures.
+
+  - label: What is the implementation timeline?
+    content:
+      Phase 1 (2025-2026) - 6 priority certification sites, regulatory framework
+      adoption. Phase 2 (2027-2028) - District-level rollout, enforcement
+      mechanisms. Phase 3 (2029-2030) - Full state compliance, measurable
+      outcomes on energy, ecology, tourism.
+
+  - label: Who enforces the policy?
+    content:
+      TARA coordinates enforcement through existing departmental authorities.
+      Environment dept for pollution compliance, Urban Development for municipal
+      lighting codes, Forest for protected areas, Tourism for certification
+      sites. AstronEra provides technical secretariat support.
+
+  - label: Does this affect private property?
+    content:
+      Policy focuses on public lighting and commercial outdoor illumination.
+      Private residential lighting encouraged but not mandated to follow
+      guidelines. Commercial properties in ecologically sensitive zones or
+      certification sites subject to regulation.

@@ -1,0 +1,62 @@
+@keyframes twinkle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes pulse {
+  from {
+    opacity: 0.4;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+.shooting-star {
+  position: absolute;
+  width: 100px;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 1) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  animation: shooting-star-anim var(--duration) linear infinite;
+  animation-delay: var(--delay);
+  top: var(--top);
+  left: var(--left);
+  transform: rotate(-45deg);
+}
+
+.shooting-star::before {
+  content: '';
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: white;
+  right: 0;
+  top: -2.5px;
+  filter: blur(2px);
+}
+
+@keyframes shooting-star-anim {
+  0% {
+    transform: translateX(0) translateY(0) rotate(-45deg);
+    opacity: 1;
+  }
+  15% {
+    opacity: 1;
+  }
+  30% {
+    transform: translateX(-200px) translateY(200px) rotate(-45deg);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(-200px) translateY(200px) rotate(-45deg);
+    opacity: 0;
+  }
+}

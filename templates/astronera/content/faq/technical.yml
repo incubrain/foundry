@@ -1,0 +1,62 @@
+label: Technical Standards
+type: technical
+icon: i-lucide-lightbulb
+color: warning
+items:
+  - label: What is ALAN and why regulate it?
+    content:
+      Artificial Light at Night (ALAN) is scientifically established pollutant
+      affecting ecosystems, human health, and energy efficiency. EPA 1986
+      includes light under pollution definition. Regulation required for legal
+      compliance, not optional environmental initiative.
+
+  - label: What are the lighting standards?
+    content:
+      'CCT (Correlated Color Temperature) ≤3000K for all outdoor lighting,
+      full-cutoff fixtures (0 lumens above horizontal), dimming/curfew 11pm-5am
+      in sensitive zones, lux limits based on zone classification (residential:
+      5-10 lux, commercial: 10-20 lux, ecological: <1 lux).'
+
+  - label: What is Sky Quality Meter (SQM)?
+    content:
+      Handheld device measuring sky brightness in magnitudes per square
+      arcsecond (mag/arcsec²). Urban areas typically 17-19, suburban 19-21, dark
+      sky sites >21. Higher number = darker sky = less light pollution. Used for
+      baseline assessment and ongoing monitoring.
+
+  - label: How do you measure lighting compliance?
+    content:
+      Combination of fixture inventory (shielding, CCT verification),
+      illuminance measurements (lux meters), sky quality monitoring (SQM
+      readings at fixed points), spectral analysis (blue light content), and
+      before/after satellite imagery (VIIRS/DNB data).
+
+  - label: What retrofitting is required?
+    content:
+      Replace unshielded fixtures with full-cutoff alternatives, swap cool white
+      (>4000K) to warm white (≤3000K) LEDs, install dimmers/timers for adaptive
+      lighting, remove unnecessary fixtures, redirect sports/commercial lights
+      away from sky. 90% achievable through fixture replacement, not full
+      infrastructure overhaul.
+
+  - label: Can we use existing LED infrastructure?
+    content:
+      Partially. Modern LED fixtures can be retrofitted with warmer CCT modules
+      and shielding attachments. Older installations require replacement.
+      Dimming capability essential - most municipal LEDs already support this
+      through controller upgrades. Average 60-70% of existing infrastructure
+      adaptable.
+
+  - label: How do we avoid blue light without losing visibility?
+    content:
+      '3000K warm white LEDs provide excellent visibility (mesopic vision
+      optimized) while reducing blue content 60-70% vs 5000K cool white. Human
+      eye adapts within 15 minutes. Safety studies show no increase in
+      accidents/crime with warm white street lighting.'
+
+  - label: What about security and safety concerns?
+    content:
+      Dark sky compliant lighting improves security - reduces glare (better
+      facial recognition), eliminates harsh shadows (hiding spots), maintains
+      night vision adaptation. Police data from certified sites shows no
+      increase in crime. Safety = proper illumination of ground, not sky.
