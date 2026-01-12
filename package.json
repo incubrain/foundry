@@ -27,7 +27,7 @@
     "@nuxtjs/seo": "3.2.2",
     "@unhead/vue": "^2.1.1",
     "@vueuse/core": "^14.1.0",
-    "@vueuse/nuxt": "14.0.0",
+    "@vueuse/nuxt": "14.1.0",
     "better-sqlite3": "^12.5.0",
     "canvas-confetti": "^1.9.4",
     "nodemailer": "^7.0.12",
