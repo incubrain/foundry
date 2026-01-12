@@ -17,7 +17,7 @@
     "repomix:new": "{ git ls-files --others --exclude-standard; git diff --name-only; git diff --cached --name-only; } | sort -u | repomix --stdin -o repomix-changed.xml"
   },
   "dependencies": {
-    "@iconify/json": "^2.2.421",
+    "@iconify/json": "^2.2.425",
     "@internationalized/date": "^3.10.1",
     "@nuxt/content": "^3.10.0",
     "@nuxt/image": "2.0.0",
