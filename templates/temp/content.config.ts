@@ -1,9 +1,10 @@
-// templates/founder-funnel/content.config.ts
+// templates/temp/content.config.ts
 import { defineContentConfig, z } from '@nuxt/content';
 import {
   createPagesCollection,
   createConfigCollection,
   createFaqCollection,
+  createNavigationCollection,
   basePagesSchema,
 } from '../../layers/base/content.collections';
 
@@ -28,5 +29,6 @@ export default defineContentConfig({
     }),
     config: createConfigCollection(),
     faq: createFaqCollection(),
+    navigation: createNavigationCollection(),
   },
 });

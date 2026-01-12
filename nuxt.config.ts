@@ -25,22 +25,6 @@ export default defineNuxtConfig({
     },
   },
 
-  ignore: [
-    'content/**', // Ignore all content at root
-    'templates/*/content', // But templates handle their own content
-  ],
-
-  // Vite watcher: Prevents file watching at root/content
-  vite: {
-    server: {
-      watch: {
-        ignored: [
-          '**/content/**', // Don't watch any content dirs
-        ],
-      },
-    },
-  },
-
   // {PERF}: Production only performance optimizations
   $production: {
     sourcemap: false,

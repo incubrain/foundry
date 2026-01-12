@@ -18,61 +18,29 @@ export interface NavigationConfig {
   }[];
 }
 
-function slugToTitle(slug: string): string {
-  return slug
-    .split('-')
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
-}
-
 export const useNavigation = () => {
   return useAsyncData('navigation', async () => {
-    // Query offers from content
-    const offers = await queryCollection('pages')
-      .where('path', 'LIKE', '/offers/%')
-      .where('path', 'NOT LIKE', '%/success%')
-      .select('path', 'title')
-      .all();
+    try {
+      const navConfig = await queryCollection('navigation').first();
 
-    const offerLinks = offers.map((offer) => ({
-      label: slugToTitle(offer.path.split('/').pop()!),
-      to: offer.path,
-    }));
+      if (navConfig) {
+        return navConfig as NavigationConfig;
+      }
+    } catch (error) {
+      console.warn('[navigation] No navigation config found, using defaults');
+    }
 
-    const primaryOffer = offers[0]?.path.split('/').pop() || 'mentorship';
-
-    const navigation: NavigationConfig = {
+    // Fallback defaults if no navigation.yml exists
+    const defaultNavigation: NavigationConfig = {
       layout: {
-        banner: { sticky: true, offer: primaryOffer },
+        banner: { sticky: true, offer: '' },
         navbar: { sticky: false },
-        footer: { offer: primaryOffer },
+        footer: { offer: '' },
       },
-      main: [
-        {
-          label: 'About',
-          to: '/about',
-        },
-        ...offerLinks,
-      ],
-      footerLinks: [
-        {
-          label: 'About',
-          children: [
-            { label: 'Our Story', to: '/about' },
-            { label: 'Decisions', to: '/decisions' },
-            {
-              label: 'Roadmap',
-              to: 'https://github.com/incubrain/founder-funnel/discussions/133',
-            },
-          ],
-        },
-        {
-          label: 'Offers',
-          children: offerLinks,
-        },
-      ],
+      main: [],
+      footerLinks: [],
     };
 
-    return navigation;
+    return defaultNavigation;
   });
 };

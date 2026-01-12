@@ -7,6 +7,7 @@ export const getActiveConfigSource = () => {
   const sources: Record<string, string> = {
     'root': 'templates/temp',
     'founder-funnel': 'templates/founder-funnel',
+    'astronera': 'templates/astronera',
   };
 
   const prefix = String(sources[source] || sources['root']);

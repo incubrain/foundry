@@ -16,7 +16,13 @@ intro:
   description: >
     The open-source landing page template for technical founders. Capture leads, and validate your idea without monthly fees.
 cta:
-  primary: Get Started
+  primary:
+    label: Get Started
+    offerSlug: booking
+  secondary:
+    label: View on GitHub
+    to: https://github.com/incubrain/founder-funnel
+    icon: i-simple-icons-github
 media:
   src: /product/gated-dashboard.png
   alt: App Dashboard

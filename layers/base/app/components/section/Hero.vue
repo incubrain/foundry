@@ -14,9 +14,21 @@ const props = defineProps<{
     description: string;
   };
   cta?: {
-    primary: string;
-    secondary: string;
-    secondaryIcon?: string;
+    primary?: {
+      label: string;
+      offerSlug?: string;
+      to?: string;
+      icon?: string;
+      size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+    };
+    secondary?: {
+      label: string;
+      to: string;
+      icon?: string;
+      variant?: 'button' | 'link';
+      color?: string;
+      size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+    };
   };
   media?: {
     src: string;
@@ -86,26 +98,49 @@ const props = defineProps<{
         </p>
 
         <div
-          v-if="cta"
+          v-if="cta && (cta.primary || cta.secondary)"
           class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4"
         >
+          <!-- Primary CTA - Internal conversion or direct link -->
           <ConvertInternal
-            offer-slug="booking"
+            v-if="cta.primary && cta.primary.offerSlug"
+            :offer-slug="cta.primary.offerSlug"
+            :label="cta.primary.label"
             location="hero"
-            size="xl"
+            :size="cta.primary.size || 'xl'"
             class="font-black text-toned"
           />
+          <UButton
+            v-else-if="cta.primary"
+            :to="cta.primary.to"
+            :label="cta.primary.label"
+            :icon="cta.primary.icon"
+            color="primary"
+            :size="cta.primary.size || 'xl'"
+            class="font-black"
+          />
 
+          <!-- Secondary CTA - External or internal link -->
           <ConvertExternal
-            to="https://github.com/incubrain/founder-funnel"
-            :label="cta.secondary"
-            :icon="cta.secondaryIcon"
+            v-if="cta.secondary && cta.secondary.to.startsWith('http')"
+            :to="cta.secondary.to"
+            :label="cta.secondary.label"
+            :icon="cta.secondary.icon"
             type="social"
             location="hero"
-            variant="button"
-            button-color="neutral"
+            :variant="cta.secondary.variant || 'button'"
+            :button-color="cta.secondary.color || 'neutral'"
             button-variant="link"
-            button-size="xl"
+            :button-size="cta.secondary.size || 'xl'"
+          />
+          <UButton
+            v-else-if="cta.secondary"
+            :to="cta.secondary.to"
+            :label="cta.secondary.label"
+            :icon="cta.secondary.icon"
+            :color="cta.secondary.color || 'neutral'"
+            variant="link"
+            :size="cta.secondary.size || 'xl'"
           />
         </div>
       </div>

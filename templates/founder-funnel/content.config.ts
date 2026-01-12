@@ -4,6 +4,7 @@ import {
   createPagesCollection,
   createConfigCollection,
   createFaqCollection,
+  createNavigationCollection,
   basePagesSchema,
 } from '../../layers/base/content.collections';
 
@@ -28,5 +29,6 @@ export default defineContentConfig({
     }),
     config: createConfigCollection(),
     faq: createFaqCollection(),
+    navigation: createNavigationCollection(),
   },
 });

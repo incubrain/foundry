@@ -1,0 +1,18 @@
+layout:
+  banner:
+    sticky: true
+    offer: ''
+  navbar:
+    sticky: false
+  footer:
+    offer: ''
+
+main:
+  - label: About
+    to: /about
+
+footerLinks:
+  - label: About
+    children:
+      - label: Our Story
+        to: /about

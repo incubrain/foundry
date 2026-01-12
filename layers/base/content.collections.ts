@@ -58,6 +58,9 @@ export const baseFaqSchema = z.object({
     'general',
     'values',
     'mentorship',
+    'policy',
+    'certification',
+    'technical',
   ]),
   label: z.string(),
   icon: property(z.string()).editor({
@@ -69,6 +72,38 @@ export const baseFaqSchema = z.object({
     z.object({
       label: z.string(),
       content: z.string(),
+    }),
+  ),
+});
+
+export const baseNavigationSchema = z.object({
+  layout: z.object({
+    banner: z.object({
+      sticky: z.boolean(),
+      offer: z.string(),
+    }),
+    navbar: z.object({
+      sticky: z.boolean(),
+    }),
+    footer: z.object({
+      offer: z.string(),
+    }),
+  }),
+  main: z.array(
+    z.object({
+      label: z.string(),
+      to: z.string(),
+    }),
+  ),
+  footerLinks: z.array(
+    z.object({
+      label: z.string(),
+      children: z.array(
+        z.object({
+          label: z.string(),
+          to: z.string(),
+        }),
+      ),
     }),
   ),
 });
@@ -104,7 +139,7 @@ export function createConfigCollection({
     type: 'data',
     source: {
       cwd: contentDir,
-      include: 'config/*.yml',
+      include: 'config/site.yml',
     },
     schema,
   });
@@ -120,6 +155,21 @@ export function createFaqCollection({
     source: {
       cwd: contentDir,
       include: 'faq/*.yml',
+    },
+    schema,
+  });
+}
+
+export function createNavigationCollection({
+  schema = baseNavigationSchema,
+}: {
+  schema?: typeof baseNavigationSchema;
+} = {}) {
+  return defineCollection({
+    type: 'data',
+    source: {
+      cwd: contentDir,
+      include: 'config/navigation.yml',
     },
     schema,
   });

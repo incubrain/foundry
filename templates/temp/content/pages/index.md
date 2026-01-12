@@ -47,7 +47,9 @@ intro:
   description: >
     The core value proposition that makes someone care. Keep it under 25 words.
 cta:
-  primary: Get Started
+  primary:
+    label: Get Started
+    to: /offers/your-offer
 media:
   src: /product/hero-screenshot.png
   alt: Screenshot showing your product's main value
