@@ -1,5 +1,4 @@
-import type { HookResult } from '@nuxt/schema';
-import type { SectionId } from '#shared/config/navigation';
+import type { SectionId } from '#shared/navigation';
 
 // Offer IDs from content
 export type OfferId = 'payment' | 'booking' | 'service' | 'social' | 'rss';

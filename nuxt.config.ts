@@ -1,89 +1,12 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import { fileURLToPath } from 'node:url';
-import { ICON_LIBRARIES } from './shared/config/icons';
+import { getActiveConfigSource } from './shared/utils/config-resolver';
 
-const SITE_URL = 'https://founder-funnel.incubrain.org';
+const { prefix } = getActiveConfigSource();
+
+const EXTENDS = `./${prefix}`;
 
 export default defineNuxtConfig({
-  extends: ['./templates/founder-funnel'],
-
-  // {CONFIG}
-  site: {
-    url: SITE_URL,
-    name: 'Founder Funnel',
-    description: 'Open-source funnel for technical founders',
-  },
-
-  seo: {
-    redirectToCanonicalSiteUrl: true,
-  },
-
-  hooks: {
-    'components:extend': (components) => {
-      // {DX}: Adds these components to the global scope, making them available in Nuxt Studio via '/' command palette
-      const globals = components.filter((c) =>
-        ['UButton', 'UIcon'].includes(c.pascalName),
-      );
-
-      globals.forEach((c) => (c.global = true));
-    },
-  },
-
-  llms: {
-    domain: SITE_URL,
-    title: 'Founder Funnel',
-    description:
-      'Open-source landing page template for technical founders validating product ideas',
-
-    sections: [
-      // High Priority: Revenue Pages (Offers)
-      {
-        title: 'Product Offers',
-        description:
-          'Ways to work with us - mentorship, templates, and opportunities',
-        contentCollection: 'pages',
-        contentFilters: [
-          { field: 'path', operator: 'LIKE', value: '/offers/%' },
-          { field: 'path', operator: 'NOT LIKE', value: '%-success' }, // Exclude success pages
-        ],
-      },
-
-      // Medium Priority: About/Story
-      {
-        title: 'About',
-        description: 'Our story and mission',
-        contentCollection: 'pages',
-        contentFilters: [{ field: 'path', operator: '=', value: '/about' }],
-      },
-
-      // Medium Priority: Decisions
-      {
-        title: 'Decisions',
-        description: 'Founders strategic decisions',
-        contentCollection: 'pages',
-        contentFilters: [
-          { field: 'path', operator: 'LIKE', value: '/decisions/%' },
-          { field: 'label', operator: 'IS NOT NULL' }, // Only labeled decisions
-        ],
-      },
-
-      // Low Priority: Home Page
-      {
-        title: 'Overview',
-        description: 'Product overview and value proposition',
-        contentCollection: 'pages',
-        contentFilters: [{ field: 'path', operator: '=', value: '/' }],
-      },
-    ],
-
-    notes: [
-      'This is an open-source project (MIT License)',
-      'Template designed for technical founders validating ideas',
-      'Built with Nuxt 4, Tailwind v4, TypeScript',
-    ],
-  },
-
-  ssr: true,
+  extends: [EXTENDS],
 
   $development: {
     modules: ['@nuxt/eslint', '@compodium/nuxt', '@nuxt/hints'],
@@ -100,11 +23,21 @@ export default defineNuxtConfig({
     nitro: {
       debug: true,
     },
+  },
 
-    // TypeScript checking in dev
-    typescript: {
-      typeCheck: false,
-      strict: false,
+  ignore: [
+    'content/**', // Ignore all content at root
+    'templates/*/content', // But templates handle their own content
+  ],
+
+  // Vite watcher: Prevents file watching at root/content
+  vite: {
+    server: {
+      watch: {
+        ignored: [
+          '**/content/**', // Don't watch any content dirs
+        ],
+      },
     },
   },
 
@@ -130,23 +63,12 @@ export default defineNuxtConfig({
     },
   },
 
-  app: {
-    pageTransition: {
-      name: 'page',
-      mode: 'out-in',
-    },
-    layoutTransition: {
-      name: 'layout',
-      mode: 'out-in',
-    },
-  },
-
   runtimeConfig: {
     public: {
       debug: true,
       analyticsLink: '',
       configSource: '',
-      siteUrl: SITE_URL,
+      siteUrl: '',
       scripts: {
         umamiAnalytics: {
           websiteId: '',
@@ -170,41 +92,6 @@ export default defineNuxtConfig({
     debug: true,
   },
 
-  ui: {
-    theme: {
-      colors: [
-        'primary',
-        'secondary',
-        'neutral',
-        'info',
-        'success',
-        'warning',
-        'error',
-      ],
-    },
-  },
-  alias: {
-    '#config': fileURLToPath(
-      new URL('./shared/config/index.ts', import.meta.url),
-    ),
-    '#types': fileURLToPath(
-      new URL('./shared/types/config.ts', import.meta.url),
-    ),
-    '#constants': fileURLToPath(
-      new URL('./shared/constants.ts', import.meta.url),
-    ),
-  },
-
-  future: {
-    compatibilityVersion: 4,
-  },
-
-  router: {
-    options: {
-      scrollBehaviorType: 'smooth',
-    },
-  },
-
   routeRules: {
     '/': { ssr: true, prerender: false },
     '/offers/**': { ssr: true, prerender: false },
@@ -219,27 +106,6 @@ export default defineNuxtConfig({
         'Content-Type': 'application/xml; charset=utf-8',
         'Cache-Control': 'public, max-age=3600',
       },
-    },
-  },
-
-  experimental: {
-    defaults: {
-      nuxtLink: {
-        externalRelAttribute: 'noopener noreferrer',
-        prefetch: false,
-        prefetchOn: { interaction: true },
-        trailingSlash: 'remove',
-      },
-    },
-  },
-
-  compatibilityDate: '2025-07-15',
-
-  icon: {
-    serverBundle: {
-      // {DX}: Using full @iconify/json no need to install collection packages
-      // collections array enables tree-shake
-      collections: [...ICON_LIBRARIES],
     },
   },
 });

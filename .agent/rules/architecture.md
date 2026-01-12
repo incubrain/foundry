@@ -5,7 +5,7 @@ trigger: always_on
 ## System Boundaries
 
 **In Scope (What We Build):**
-- Landing pages (6 sections)
+- Landing pages (section driven)
 - Signal capture (email/presales/bookings)
 - Event tracking (analytics-agnostic)
 - Webhook streaming (your data, your destination)
@@ -24,22 +24,22 @@ Validation captures intent. Products deliver value. Mixing them creates scope cr
 **Content-First:**
 - Customers edit YAML/Markdown, not code
 - Progressive disclosure (start minimal, expand as validated)
-- See: `content/pages/index.md` for stage comments
+- See: `templates/*/content/pages/index.md` for stage comments
 
 **Multi-Config System:**
 - `NUXT_PUBLIC_CONFIG_SOURCE` = `root` | `founder-funnel`
-- Showcase (`examples/`) ≠ User starting point (`root`)
+- Showcase (`templates/`) ≠ User starting point (`root`)
 - See: `shared/utils/config-resolver.ts`
 
 **Event-Driven:**
 - User action → `useEvents()` → Handler → Provider
 - Swap analytics without changing event code
-- See: `app/plugins/1.events.client.ts`
+- See: `modules/events/*`
 
 **Webhook Streaming:**
 - Capture → Encrypt → Webhook → Your destination
 - No storage decisions required
-- See: `server/api/v1/webhook.post.ts`
+- See: `modules/events/server/handlers/webhook.ts`
 
 ## Critical Constraints
 
@@ -59,29 +59,7 @@ Max nesting: 3 levels
 **SSR Reality:**
 - Nuxt 4: Some client APIs unavailable on server
 - Use `import.meta.client` guards
-- See: `app/composables/useAppStorage.ts`
-
-## File Structure
-
-```
-app/
-├── components/convert/   # Signal capture components
-├── components/section/   # Landing page sections
-├── composables/         # Shared logic (useEvents, useContentCache)
-├── pages/               # Routes
-
-content/
-├── config/              # Site-wide (business, founder)
-├── faq/                # FAQ sections
-├── pages/              # Page content
-
-shared/
-├── config/             # Navigation, events
-├── types/              # TypeScript definitions
-├── utils/              # Config resolver
-
-examples/founder-funnel/ # Template showcase config
-```
+- See: `layers/core/app/composables/useAppStorage.ts`
 
 ## Integration Points
 

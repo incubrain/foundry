@@ -13,7 +13,7 @@
     "lint:fix": "eslint . --fix",
     "ship": "git push",
     "docker": "docker build --memory=4g -f deploy/Dockerfile -t funnel . && docker run --env-file .env --rm -p 3000:3000 funnel",
-    "repomix": "repomix --ignore='public,**/public/**,context,**/assets/**,**/decisions/**'",
+    "repomix": "repomix --ignore='public,**/public/**,context,**/assets/**,**/decisions/**,.agent,'",
     "repomix:new": "{ git ls-files --others --exclude-standard; git diff --name-only; git diff --cached --name-only; } | sort -u | repomix --stdin -o repomix-changed.xml"
   },
   "dependencies": {
@@ -33,7 +33,7 @@
     "nodemailer": "^7.0.12",
     "nuxt": "^4.2.2",
     "nuxt-llms": "^0.1.3",
-    "nuxt-studio": "1.0.0-beta.3",
+    "nuxt-studio": "1.0.0",
     "typescript": "^5.9.3",
     "vue": "^3.5.26",
     "vue-router": "^4.6.4"

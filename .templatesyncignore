@@ -52,8 +52,8 @@ dist/
 # ========================================
 
 # Uncomment these if you customize them:
-# shared/config/navigation.ts
-# shared/config/icons.ts
+# shared/navigation.ts
+# shared/icons.ts
 # nuxt.config.ts (root)
 # package.json (root) - ⚠️ Use with caution, may miss dependency updates
 

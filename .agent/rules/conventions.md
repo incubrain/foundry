@@ -6,10 +6,11 @@ trigger: always_on
 
 1. VueUse (if exists)
 2. External library
-3. Local composable
-4. Inline (single use only)
+3. Inline (single use only)
+4. Local composable
 
 Never build custom if library exists.
+Unless custom adds MASSIVE value
 
 ## Naming
 
@@ -32,10 +33,11 @@ booking_click
 link_click
 ```
 
-**Booleans:** `is_` prefix
+**Booleans:** `is` or `has` prefix
 ```
-is_valid_email
-is_loading
+isValidEmail
+isLoading
+hasPermission
 ```
 
 ## Component Rules
@@ -50,8 +52,8 @@ If more → Use config object prop
 If passing >2 levels → Use composable
 
 **Examples:**
-See: `app/components/convert/Email.vue` (good)
-See: `app/components/section/SectionWrapper.vue` (composables not props)
+See: `layers/base/app/components/convert/Email.vue` (good)
+See: `layers/base/app/components/section/SectionWrapper.vue` (composables not props)
 
 ## Code Patterns
 
@@ -98,9 +100,9 @@ Ship working → Iterate based on data
 
 **Component types:**
 ```
-app/components/convert/   → Signal capture (Email, Booking)
-app/components/section/   → Landing sections (Hero, Benefits)
-app/components/nav/       → Navigation (Header, Footer)
+layers/base/app/components/convert/   → Signal capture (Email, Booking)
+layers/base/app/components/section/   → Landing sections (Hero, Benefits)
+layers/base/app/components/nav/       → Navigation (Header, Footer)
 ```
 
 **Composables:**
