@@ -6,6 +6,7 @@
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
+    "dev:docs": "pnpm --filter \"docs\" dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "[ \"$NODE_ENV\" = \"production\" ] && echo 'Skipping prepare in production' || nuxt prepare",

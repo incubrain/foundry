@@ -75,11 +75,6 @@ export default defineNuxtConfig({
     // Studio admin route (default: '/_studio')
     route: '/_studio',
 
-    // {FIX}: broken, pending triage of this https://github.com/nuxt-content/studio/pull/73
-    // development: {
-    //   sync: true, // Enable development mode
-    // },
-
     // GitHub repository configuration (owner and repo are required)
     repository: {
       provider: 'github', // only GitHub is currently supported

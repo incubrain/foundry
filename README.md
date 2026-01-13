@@ -284,6 +284,71 @@ git push
 
 ---
 
+## 📚 Authority Documentation (Beta)
+
+Build domain authority alongside validation using our integrated **documentation system**.
+
+### Why Authority Matters
+
+After validation proves demand exists, you need **differentiation**. Properly cited, expert-level content:
+- Positions you as the domain expert
+- Creates hard-to-replicate competitive moat
+- Builds trust that converts visitors to customers
+
+### Quick Start
+
+**Run both app and docs together:**
+```bash
+pnpm dev
+# App:  http://localhost:3000
+# Docs: http://localhost:3001
+# MCP:  http://localhost:3001/api/mcp
+```
+
+**Or run individually:**
+```bash
+pnpm dev:app   # Main app only (port 3000)
+pnpm dev:docs  # Docs only (port 3001)
+```
+
+### Example: Dark Sky Maharashtra
+
+See `/docs` for complete case study:
+- Government policy citations
+- Academic research references
+- Implementation guides
+- MCP-enabled for AI tools
+
+### Key Features
+
+**Auto-discovering citations**
+- Write `:reference{}` inline
+- References auto-collect and render
+- No manual listing needed
+
+**Smart cross-linking**
+- Auto-tracks links between pages
+- Shows bidirectional references ("Referenced By")
+- Displays related content based on tags, categories, and links
+- Visual indicators for different link types (policy, research, implementation)
+
+**MCP Resources**
+- Upload source PDFs
+- Expose to AI tools automatically
+- LLMs can access original documents
+
+**Sources tracking**
+- Single page lists all sources
+- Verification dates visible
+- Credibility indicators
+
+**Optional, not required**
+- Validation works without docs
+- Use docs for differentiation
+- Deploy separately if needed
+
+---
+
 ## Content Structure
 
 The template uses **progressive disclosure**—start minimal, expand as you validate.

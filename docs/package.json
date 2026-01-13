@@ -1,0 +1,17 @@
+{
+  "name": "docs",
+  "scripts": {
+    "dev": "nuxt dev --extends docus",
+    "build": "nuxt build --extends docus"
+  },
+  "dependencies": {
+    "better-sqlite3": "^12.5.0",
+    "docus": "latest",
+    "@vueuse/nuxt": "^14.1.0",
+    "nuxt-studio": "1.0.0",
+    "nuxt": "^4.2.2"
+  },
+  "devDependencies": {
+    "@nuxthq/studio": "^2.2.1"
+  }
+}

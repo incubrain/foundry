@@ -1,0 +1,330 @@
+.
+├── AGENTS.md
+├── README.md
+├── deploy
+│   ├── Dockerfile
+│   └── vercel.json
+├── docs
+│   ├── README.md
+│   ├── app
+│   │   ├── layouts
+│   │   │   ├── default.vue
+│   │   │   └── docs.vue
+│   │   └── pages
+│   │       └── [...slug].vue
+│   ├── app.config.ts
+│   ├── app.vue
+│   ├── components
+│   │   └── content
+│   │       ├── BackLinks.vue
+│   │       ├── Reference.vue
+│   │       ├── References.vue
+│   │       ├── RelatedContent.vue
+│   │       ├── SmartLink.vue
+│   │       └── SourcesTable.vue
+│   ├── content
+│   │   ├── 1.policy
+│   │   │   ├── enforcement.md
+│   │   │   ├── index.md
+│   │   │   └── maharashtra-guidelines.md
+│   │   ├── 2.research
+│   │   │   ├── index.md
+│   │   │   └── lonar-crater.md
+│   │   ├── 3.implementation
+│   │   │   ├── index.md
+│   │   │   └── municipal-lighting.md
+│   │   ├── index.md
+│   │   └── sources.md
+│   ├── content.config.ts
+│   ├── nuxt.config.ts
+│   ├── package.json
+│   ├── public
+│   │   └── sources
+│   │       └── README.md
+│   ├── repo-sync-testing.md
+│   ├── server
+│   │   ├── api
+│   │   │   └── mcp
+│   │   │       ├── index.get.ts
+│   │   │       ├── resources
+│   │   │       │   └── list.get.ts
+│   │   │       └── resources.get.ts
+│   │   └── mcp
+│   │       └── resources
+│   ├── template-updates.md
+│   ├── transformers
+│   │   ├── cross-links.ts
+│   │   └── references.ts
+│   └── tsconfig.json
+├── eslint.config.mjs
+├── layers
+│   └── base
+│       ├── app
+│       │   ├── app.config.ts
+│       │   ├── app.vue
+│       │   ├── assets
+│       │   │   └── css
+│       │   │       ├── main.css
+│       │   │       └── tokens
+│       │   │           ├── colors.css
+│       │   │           ├── layout.css
+│       │   │           └── typography.css
+│       │   ├── components
+│       │   │   ├── Logo.vue
+│       │   │   ├── VideoHtml.vue
+│       │   │   ├── VideoIframe.vue
+│       │   │   ├── content
+│       │   │   │   ├── CaseStudy.vue
+│       │   │   │   ├── Changelog.vue
+│       │   │   │   ├── ComparisonList.vue
+│       │   │   │   ├── DocumentsTable.vue
+│       │   │   │   ├── FaqAccordion.vue
+│       │   │   │   ├── FeatureGrid.vue
+│       │   │   │   └── FounderBio.vue
+│       │   │   ├── convert
+│       │   │   │   ├── External.vue
+│       │   │   │   ├── Form.vue
+│       │   │   │   ├── Internal.vue
+│       │   │   │   ├── Pricing.vue
+│       │   │   │   ├── Rss.vue
+│       │   │   │   └── Social.vue
+│       │   │   ├── nav
+│       │   │   │   ├── Anchor.vue
+│       │   │   │   ├── Banner.vue
+│       │   │   │   ├── Cta.vue
+│       │   │   │   ├── Footer.vue
+│       │   │   │   ├── Header.vue
+│       │   │   │   └── Mobile.vue
+│       │   │   └── section
+│       │   │       ├── Benefits.vue
+│       │   │       ├── Faq.vue
+│       │   │       ├── Hero.vue
+│       │   │       ├── Offer.vue
+│       │   │       ├── Outcome.vue
+│       │   │       ├── Results.vue
+│       │   │       ├── SectionHeader.vue
+│       │   │       └── SectionWrapper.vue
+│       │   ├── composables
+│       │   │   ├── useAppStorage.ts
+│       │   │   ├── useContentCache.ts
+│       │   │   └── useDevConfig.ts
+│       │   ├── error.vue
+│       │   ├── layouts
+│       │   │   ├── article.vue
+│       │   │   ├── default.vue
+│       │   │   └── offer.vue
+│       │   ├── middleware
+│       │   │   └── dynamic-layout.global.ts
+│       │   └── pages
+│       │       └── [...slug].vue
+│       ├── content.collections.ts
+│       ├── nuxt.config.ts
+│       └── server
+│           ├── routes
+│           │   └── rss
+│           │       └── [collection].ts
+│           └── utils
+│               ├── cache.ts
+│               ├── logger.ts
+│               ├── rss
+│               │   ├── decisions.ts
+│               │   └── shared.ts
+│               └── rss.handler.ts
+├── modules
+│   └── events
+│       ├── index.ts
+│       ├── runtime
+│       │   ├── components
+│       │   │   └── DevEvents.vue
+│       │   ├── composables
+│       │   │   ├── useEvents.ts
+│       │   │   └── useUserIdentity.ts
+│       │   ├── plugins
+│       │   │   └── events.client.ts
+│       │   ├── providers
+│       │   │   ├── console.ts
+│       │   │   ├── umami.ts
+│       │   │   └── webhook.ts
+│       │   ├── types
+│       │   │   └── events.ts
+│       │   └── utils
+│       │       └── locations.ts
+│       └── server
+│           ├── formatters
+│           │   ├── discord.ts
+│           │   ├── slack.ts
+│           │   ├── telegram.ts
+│           │   └── types.ts
+│           ├── handlers
+│           │   └── webhook.ts
+│           └── utils
+│               ├── anti-spam.test.ts
+│               └── anti-spam.ts
+├── my-docs
+│   ├── README.md
+│   ├── content
+│   │   ├── 1.getting-started
+│   │   │   ├── 2.introduction.md
+│   │   │   ├── 3.installation.md
+│   │   │   ├── 4.project-structure.md
+│   │   │   ├── 5.studio.md
+│   │   │   ├── 6.migration.md
+│   │   │   └── 7.troubleshooting.md
+│   │   ├── 2.essentials
+│   │   │   ├── 1.markdown-syntax.md
+│   │   │   ├── 2.code-blocks.md
+│   │   │   ├── 3.components.md
+│   │   │   └── 4.images-embeds.md
+│   │   └── index.md
+│   └── public
+│       ├── favicon.ico
+│       └── mountains.webp
+├── nuxt.config.ts
+├── package.json
+├── pnpm-lock.yaml
+├── pnpm-workspace.yaml
+├── shared
+│   ├── constants.ts
+│   ├── navigation.ts
+│   └── utils
+│       └── config-resolver.ts
+├── templates
+│   ├── astronera
+│   │   ├── app
+│   │   │   ├── assets
+│   │   │   │   └── css
+│   │   │   │       ├── main.css
+│   │   │   │       └── starfield.css
+│   │   │   ├── composables
+│   │   │   │   └── useStarfield.ts
+│   │   │   └── layouts
+│   │   │       └── documents.vue
+│   │   ├── content
+│   │   │   ├── config
+│   │   │   │   ├── navigation.yml
+│   │   │   │   └── site.yml
+│   │   │   ├── faq
+│   │   │   │   ├── certification.yml
+│   │   │   │   ├── policy.yml
+│   │   │   │   └── technical.yml
+│   │   │   └── pages
+│   │   │       ├── about.md
+│   │   │       ├── documents.md
+│   │   │       ├── index.md
+│   │   │       ├── offers
+│   │   │       │   └── certification.md
+│   │   │       └── success
+│   │   │           └── certification.md
+│   │   ├── content.config.ts
+│   │   ├── nuxt.config.ts
+│   │   └── public
+│   │       ├── images
+│   │       │   ├── about
+│   │       │   │   ├── shweta-kulkarni.jpg
+│   │       │   │   ├── tara-cover.jpg
+│   │       │   │   ├── timeline-comic-1.jpg
+│   │       │   │   ├── timeline-comic-2.jpg
+│   │       │   │   ├── timeline-comic-3.jpg
+│   │       │   │   ├── timeline-comic-4.jpg
+│   │       │   │   ├── timeline-comic-5.jpg
+│   │       │   │   ├── timeline-comic-6.jpg
+│   │       │   │   ├── timeline-comic-7.jpg
+│   │       │   │   └── timeline-comic-8.jpg
+│   │       │   └── logos
+│   │       │       ├── astronera-logo.svg
+│   │       │       └── dsi-logo.svg
+│   │       └── pdfs
+│   │           ├── dark-sky-policy-roadmap-2025.pdf
+│   │           ├── dsi-acknowledgement.pdf
+│   │           ├── dsi-endorsement-2025.pdf
+│   │           └── dsi-endorsement.pdf
+│   ├── founder-funnel
+│   │   ├── content
+│   │   │   ├── config
+│   │   │   │   ├── navigation.yml
+│   │   │   │   └── site.yml
+│   │   │   ├── faq
+│   │   │   │   ├── 1.technical.yml
+│   │   │   │   ├── 2.general.yml
+│   │   │   │   ├── 3.mentorship.yml
+│   │   │   │   └── 4.values.yml
+│   │   │   └── pages
+│   │   │       ├── about.md
+│   │   │       ├── decisions
+│   │   │       │   ├── 00.index.md
+│   │   │       │   ├── 01.template-first-launch.md
+│   │   │       │   ├── 02.validation-system-pivot.md
+│   │   │       │   ├── 03.ruthless-focus.md
+│   │   │       │   ├── 04.removing-developer-friction.md
+│   │   │       │   ├── 05.ai-conversations.md
+│   │   │       │   ├── 06.minimum-viable-idea.md
+│   │   │       │   ├── 07.attention-to-build-framework.md
+│   │   │       │   ├── 08.fail-fast-dx-revolution.md
+│   │   │       │   ├── 09.signal-over-systems.md
+│   │   │       │   └── 10.authority-documentation.md
+│   │   │       ├── index.md
+│   │   │       ├── offers
+│   │   │       │   └── mentorship.md
+│   │   │       └── success
+│   │   │           ├── index.md
+│   │   │           └── mentorship.md
+│   │   ├── content.config.ts
+│   │   ├── nuxt.config.ts
+│   │   └── public
+│   │       ├── favicon-96x96.png
+│   │       ├── favicon.ico
+│   │       ├── favicon.svg
+│   │       ├── ideas.md
+│   │       ├── product
+│   │       │   └── gated-dashboard.png
+│   │       ├── team
+│   │       │   └── founder-avatar.png
+│   │       ├── versions
+│   │       │   ├── magnet-v0.3.0.png
+│   │       │   ├── magnet-v0.3.1.jpg
+│   │       │   ├── v0.2.1.lighthouse.pdf
+│   │       │   ├── v0.2.2.lighthouse.pdf
+│   │       │   ├── validator-v0.1.0.jpg
+│   │       │   ├── validator-v0.2.0.jpg
+│   │       │   ├── validator-v0.2.1.jpg
+│   │       │   ├── validator-v0.3.0.jpg
+│   │       │   └── validator-v0.3.1.jpg
+│   │       └── videos
+│   │           └── example.mp4
+│   └── temp
+│       ├── content
+│       │   ├── config
+│       │   │   ├── navigation.yml
+│       │   │   └── site.yml
+│       │   ├── faq
+│       │   │   ├── 1.warning.yml
+│       │   │   ├── 2.objection.yml
+│       │   │   ├── 3.support.yml
+│       │   │   └── 4.values.yml
+│       │   └── pages
+│       │       ├── about.md
+│       │       ├── decisions
+│       │       │   ├── 00.index.md
+│       │       │   └── 01.launch.md
+│       │       ├── index.md
+│       │       ├── offers
+│       │       │   └── service.md
+│       │       └── success
+│       │           └── index.md
+│       ├── content.config.ts
+│       ├── nuxt.config.ts
+│       └── public
+│           ├── _robots.txt
+│           ├── favicon-96x96.png
+│           ├── favicon.ico
+│           ├── favicon.svg
+│           ├── images
+│           │   ├── product
+│           │   └── team
+│           │       └── founder-avatar.jpeg
+│           └── videos
+│               └── example.mp4
+├── tree.txt
+└── tsconfig.json
+
+105 directories, 223 files
