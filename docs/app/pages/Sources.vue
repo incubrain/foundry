@@ -1,10 +1,24 @@
 <script setup lang="ts">
-import { titleCase } from 'scule';
+import type { Collections } from '@nuxt/content';
 
 const siteConfig = useSiteConfig();
 
+definePageMeta({
+  layout: 'default',
+  // Remove the header
+  header: false,
+  // Remove the footer
+  footer: false,
+});
+const { locale, isEnabled } = useDocusI18n();
+const collectionName = computed(() =>
+  isEnabled.value ? `landing_${locale.value}` : 'landing',
+);
+
 const { data: page } = await useAsyncData('sources-landing', () =>
-  queryCollection('landing').path('/sources').first(),
+  queryCollection(collectionName.value as keyof Collections)
+    .path('/sources')
+    .first(),
 );
 if (!page.value) {
   throw createError({

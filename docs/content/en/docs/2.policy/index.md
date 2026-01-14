@@ -86,10 +86,4 @@ Based on [ecological research](cite\:pmc-ecological-impacts) and [biodiversity s
 - Public awareness levels
 - Compliance rates
 
-## References
 
-:bibliography
-
-## References
-
-:bibliography

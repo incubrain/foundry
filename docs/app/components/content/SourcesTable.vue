@@ -1,89 +1,81 @@
 <script setup lang="ts">
 import type { BadgeProps } from '@nuxt/ui';
 
-// Fetch references from content collection
-const { data: allCategoryRefs } = await useAsyncData('references-table', () =>
-  queryCollection('references').all(),
-);
+// ✅ Use cached references from useCitations
+const { allCategoryRefs } = useCitations();
 
-// ✅ Flatten all sources from all categories
-const sources = computed(() => {
-  if (!allCategoryRefs.value) return [];
-
-  return allCategoryRefs.value.flatMap((cat) =>
-    cat.sources.map((source) => ({
-      name: source.title,
-      credibility: source.credibility || 'unknown',
-      lastVerified: 'Jan 2026',
-      description: source.description || '',
-      url: source.url || '#',
-      pdf: source.pdf,
-      author: source.author || 'Unknown',
-      date: source.date || 'Unknown',
-      topics: source.topics || [],
-    })),
-  );
-});
+const categoryLabels: Record<string, string> = {
+  academic: 'Academic Sources',
+  ngo: 'NGO & Advocacy Organizations',
+  educational: 'Educational Resources',
+  government: 'Government Sources',
+  media: 'Media & Publications',
+};
 
 const credibilityColor: Record<string, BadgeProps['color']> = {
   government: 'primary',
   academic: 'secondary',
   media: 'neutral',
   ngo: 'warning',
+  educational: 'info',
   unknown: 'neutral',
-};
-
-const credibilityLabels = {
-  government: 'Government',
-  academic: 'Academic',
-  media: 'Media',
-  ngo: 'NGO',
 };
 </script>
 
 <template>
-  <div class="my-8">
-    <UTable
-      :data="sources"
-      :columns="[
-        { accessorKey: 'name', header: 'Document' },
-        { accessorKey: 'credibility', header: 'Type' },
-        { accessorKey: 'lastVerified', header: 'Last Verified' },
-      ]"
+  <div class="space-y-12">
+    <!-- ✅ Loop through each category -->
+    <div
+      v-for="category in allCategoryRefs"
+      :key="category.category"
+      class="space-y-4"
     >
-      <template #name-cell="{ row }">
-        <div class="flex flex-col gap-2">
-          <a
-            :href="row.original.pdf || row.original.url"
-            target="_blank"
-            class="text-primary hover:underline inline-flex items-center gap-1"
-          >
-            {{ row.original.name }}
-            <UIcon
-              name="i-heroicons-arrow-top-right-on-square-20-solid"
-              class="w-3 h-3"
-            />
-          </a>
-          {{ row.original.description }}
-        </div>
-      </template>
+      <h2 class="text-2xl font-bold">
+        {{ categoryLabels[category.category] || category.category }}
+      </h2>
 
-      <template #credibility-cell="{ row }">
-        <UBadge
-          :label="row.original.credibility"
-          :color="
-            credibilityColor[String(row.original.credibility)] ?? 'neutral'
-          "
-          variant="soft"
-          size="xs"
-        />
-      </template>
+      <UTable
+        :data="category.sources"
+        :columns="[
+          { accessorKey: 'title', header: 'Document' },
+          { accessorKey: 'credibility', header: 'Type' },
+          { accessorKey: 'date', header: 'Date' },
+        ]"
+      >
+        <template #title-cell="{ row }">
+          <div class="flex flex-col gap-2">
+            <a
+              :href="row.original.pdf || row.original.url"
+              target="_blank"
+              class="text-primary hover:underline inline-flex items-center gap-1"
+            >
+              {{ row.original.title }}
+              <UIcon
+                name="i-heroicons-arrow-top-right-on-square-20-solid"
+                class="w-3 h-3"
+              />
+            </a>
+            <span class="text-sm text-gray-600 dark:text-gray-400">
+              {{ row.original.description }}
+            </span>
+          </div>
+        </template>
 
-      <template #lastVerified-cell="{ row }">
-        <span class="text-sm text-gray-600 dark:text-gray-400">
-          {{ row.original.lastVerified }}
-        </span>
-      </template>
-    </UTable>
+        <template #credibility-cell="{ row }">
+          <UBadge
+            :label="row.original.credibility"
+            :color="credibilityColor[row.original.credibility] ?? 'neutral'"
+            variant="soft"
+            size="xs"
+          />
+        </template>
+
+        <template #date-cell="{ row }">
+          <span class="text-sm text-gray-600 dark:text-gray-400">
+            {{ row.original.date }}
+          </span>
+        </template>
+      </UTable>
+    </div>
   </div>
 </template>

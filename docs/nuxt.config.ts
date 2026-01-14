@@ -1,28 +1,29 @@
+import { useNuxt } from '@nuxt/kit';
 import { fileURLToPath } from 'node:url';
 import { dirname } from 'node:path';
-
 const currentDir = dirname(fileURLToPath(import.meta.url));
+
+console.log('currentDir', currentDir);
 
 export default defineNuxtConfig({
   extends: ['docus'],
-  modules: ['@vueuse/nuxt', 'nuxt-studio'],
+  modules: ['@vueuse/nuxt', 'nuxt-studio', '@nuxtjs/i18n'],
+
+  experimental: {
+    asyncContext: true,
+  },
 
   site: {
     name: 'Dark Sky Maharashtra',
     url: 'https://content.astronera.org',
   },
 
-  hooks: {
-    'content:file:beforeParse'(ctx) {
-      const { file } = ctx;
-      // Auto-append bibliography to all docs pages (only markdown files in docs/)
-      if (file.id.startsWith('docs/') && file.id.endsWith('.md')) {
-        // Check if bibliography not already present
-        if (!file.body.includes('::bibliography')) {
-          file.body = file.body + '\n\n## References\n\n::bibliography\n::';
-        }
-      }
-    },
+  i18n: {
+    defaultLocale: 'en',
+    locales: [
+      { code: 'en', name: 'English' },
+      { code: 'mr', name: 'मराठी' },
+    ],
   },
 
   llms: {
@@ -46,8 +47,31 @@ export default defineNuxtConfig({
       owner: 'incubrain', // your GitHub username or organization
       repo: 'founder-funnel', // your repository name
       branch: 'main', // the branch to commit to (default: main)
-      rootDir: currentDir,
+      rootDir: 'docs',
       private: false,
+    },
+  },
+
+  hooks: {
+    'nitro:config'(nitroConfig) {
+      const nuxt = useNuxt();
+
+      const i18nOptions = nuxt.options.i18n;
+
+      const routes: string[] = [];
+      if (!i18nOptions) {
+        routes.push('/');
+      } else {
+        routes.push(
+          ...(i18nOptions.locales?.map((locale) =>
+            typeof locale === 'string' ? `/${locale}` : `/${locale.code}`,
+          ) || []),
+        );
+      }
+
+      nitroConfig.prerender = nitroConfig.prerender || {};
+      nitroConfig.prerender.routes = nitroConfig.prerender.routes || [];
+      nitroConfig.prerender.routes.push(...(routes || []));
     },
   },
 
