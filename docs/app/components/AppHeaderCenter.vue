@@ -5,8 +5,8 @@ const links = computed(() => [
   {
     label: 'Policy',
     icon: 'i-lucide-book-open',
-    to: '/policy',
-    active: route.path.startsWith('/policy'),
+    to: '/docs/policy',
+    active: route.path.startsWith('/docs/policy'),
   },
   {
     label: 'Sources',

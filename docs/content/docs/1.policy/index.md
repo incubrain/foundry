@@ -1,18 +1,18 @@
 ---
 title: Policy
 description: Comprehensive guidelines for protecting wildlife and ecosystems from light pollution.
+navigation: false
 ---
-
 
 ## Overview
 
-Light pollution affects biodiversity, :any{id="science-biodiversity"} human health :any{id="pmc-health-impacts"}, and ecosystem health :any{id="darksky-wildlife"}. This policy framework establishes comprehensive guidelines for protection.
+Light pollution affects biodiversity, human health, and ecosystem health. This policy framework establishes comprehensive guidelines for protection.
 
 ## Environmental Impacts
 
 ### Wildlife & Ecosystems
 
-Artificial light at night disrupts wildlife behavior :any{id="pmc-ecological-impacts"} and ecosystem functions. Studies show significant impacts on:
+Artificial light at night disrupts [wildlife behavior](cite\:pmc-ecological-impacts) and ecosystem functions. Studies show significant impacts on:
 
 - **Nocturnal Species**: Altered foraging and predation patterns
 - **Migration**: Disorientation of birds and insects
@@ -21,7 +21,7 @@ Artificial light at night disrupts wildlife behavior :any{id="pmc-ecological-imp
 
 ### Human Health Effects
 
-Research demonstrates health consequences :any{id="pmc-health-impacts"} including:
+Research demonstrates [health consequences](cite\:pmc-health-impacts) including:
 
 - Circadian rhythm disruption
 - Sleep quality degradation
@@ -30,13 +30,13 @@ Research demonstrates health consequences :any{id="pmc-health-impacts"} includin
 
 ## Education & Awareness
 
-Educational resources :any{id="natgeo-light-pollution"} are essential for public understanding and engagement with dark sky protection initiatives.
+[Educational resources](cite\:natgeo-light-pollution) are essential for public understanding and engagement with dark sky protection initiatives.
 
 ## Policy Recommendations
 
 ### Protected Zone Designation
 
-Based on ecological research :any{id="pmc-ecological-impacts"} and biodiversity studies :any{id="science-biodiversity"}, we recommend:
+Based on [ecological research](cite\:pmc-ecological-impacts) and [biodiversity studies](cite\:science-biodiversity), we recommend:
 
 1. **Core Zones**: Pristine areas with minimal artificial light
 2. **Buffer Zones**: Transitional areas with regulated lighting
@@ -51,7 +51,7 @@ Based on ecological research :any{id="pmc-ecological-impacts"} and biodiversity 
 
 ### Community Engagement
 
-Public education :any{id="natgeo-light-pollution"} programs focusing on:
+[Public education](cite\:natgeo-light-pollution) programs focusing on:
 
 - Light pollution awareness
 - Wildlife protection benefits
@@ -61,16 +61,19 @@ Public education :any{id="natgeo-light-pollution"} programs focusing on:
 ## Implementation Framework
 
 ### Phase 1: Assessment
+
 - Sky quality measurements
-- Wildlife impact studies :any{id="darksky-wildlife"}
+- [Wildlife impact studies](cite\:darksky-wildlife)
 - Public lighting inventory
 
 ### Phase 2: Standards Development
+
 - Technical lighting requirements
 - Enforcement mechanisms
 - Compliance incentives
 
 ### Phase 3: Execution
+
 - Retrofit programs
 - New development guidelines
 - Ongoing monitoring
@@ -83,5 +86,10 @@ Public education :any{id="natgeo-light-pollution"} programs focusing on:
 - Public awareness levels
 - Compliance rates
 
-::bibliography
-::
+## References
+
+:bibliography
+
+## References
+
+:bibliography

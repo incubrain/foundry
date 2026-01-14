@@ -1,0 +1,12 @@
+category: astronera
+sources:
+  - id: ae-dsp-overview
+    title: Dark Sky Policy Overview
+    author: Astronera
+    pdf: /pdfs/Dark-Sky-Policy-Maharashtra-Overview.pdf
+    credibility: ngo
+    date: '2026'
+    description: Overview of the Dark Sky Policy in Maharashtra
+    topics:
+      - policy
+      - overview

@@ -12,6 +12,19 @@ export default defineNuxtConfig({
     url: 'https://content.astronera.org',
   },
 
+  hooks: {
+    'content:file:beforeParse'(ctx) {
+      const { file } = ctx;
+      // Auto-append bibliography to all docs pages (only markdown files in docs/)
+      if (file.id.startsWith('docs/') && file.id.endsWith('.md')) {
+        // Check if bibliography not already present
+        if (!file.body.includes('::bibliography')) {
+          file.body = file.body + '\n\n## References\n\n::bibliography\n::';
+        }
+      }
+    },
+  },
+
   llms: {
     domain: 'https://content.astronera.org',
     title: 'Dark Sky Conservation in Maharashtra',

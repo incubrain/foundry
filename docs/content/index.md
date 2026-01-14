@@ -1,26 +1,16 @@
 ---
-prose: true
-seo:
-  title: Dark Sky Conservation in Maharashtra
-  description: Authoritative resource on light pollution policy and dark sky preservation in Maharashtra, India
-  ogImage: /social-card.png
+prose: false
+title: Dark Sky Conservation in Maharashtra
+description: Authoritative resource on light pollution policy and dark sky preservation in Maharashtra, India
 ---
 
 ::u-page-hero
 ---
-orientation: horizontal
+orientation: vertical
 ---
+
 #headline
-  :::u-button
-  ---
-  size: sm
-  to: /policy
-  variant: outline
-  trailing-icon: i-lucide-arrow-right
-  class: mb-3 rounded-full
-  ---
-  New 2024 Guidelines
-  :::
+New 2026 Guidelines
 
 #title
 Dark Sky Conservation :br in [Maharashtra]{.text-primary}
@@ -34,7 +24,7 @@ Maharashtra is at the forefront of India's dark sky conservation efforts, with p
   label: Policy Framework
   size: lg
   to: /policy
-  trailingIcon: i-lucide-arrow-right
+  trailing-icon: i-lucide-arrow-right
   ---
   :::
 
@@ -43,177 +33,39 @@ Maharashtra is at the forefront of India's dark sky conservation efforts, with p
   label: View Sources
   size: lg
   to: /sources
-  variant: ghost
-  trailingIcon: i-lucide-file-text
+  variant: outline
+  trailing-icon: i-lucide-file-text
   ---
   :::
 ::
 
-::u-container{class="pb-12 xl:pb-24"}
+::u-container
   :::u-page-grid
-    :::u-page-feature
+    ::::u-page-card
     ---
-    icon: i-heroicons-document-text
+    title: Policy & Regulations
+    description: Explore government policies, MPCB guidelines, and enforcement mechanisms.
+    icon: i-lucide-book-open
     to: /policy
     ---
-    #title{unwrap="p"}
-    Policy & Regulations
+    ::::
 
-    #description{unwrap="p"}
-    Explore government policies, MPCB guidelines, and enforcement mechanisms :any{id="mpcb-2024"}.
-    :::
-
-    :::u-page-feature
+    ::::u-page-card
     ---
-    icon: i-heroicons-beaker
+    title: Research & Data
+    description: Scientific studies, sky quality measurements, and impact assessments.
+    icon: i-lucide-microscope
     to: /research
     ---
-    #title{unwrap="p"}
-    Research & Data
+    ::::
 
-    #description{unwrap="p"}
-    Scientific studies, sky quality measurements, and impact assessments.
-    :::
-
-    :::u-page-feature
+    ::::u-page-card
     ---
-    icon: i-heroicons-wrench-screwdriver
+    title: Implementation
+    description: Municipal lighting ordinances, community education, and best practices.
+    icon: i-lucide-wrench
     to: /implementation
     ---
-    #title{unwrap="p"}
-    Implementation
-
-    #description{unwrap="p"}
-    Municipal lighting ordinances, community education, and best practices.
-    :::
-  :::
-::
-
-::u-page-section
----
-orientation: horizontal
-reverse: true
----
-#title
-Why Conservation Matters
-
-#description
-Light pollution affects more than just our view of the stars. It has tangible impacts on research, biodiversity, and human health.
-
-#features
-  :::u-page-feature
-  ---
-  icon: i-lucide-telescope
-  ---
-  #title{unwrap="p"}
-  Astronomical Research
-  :::
-
-  :::u-page-feature
-  ---
-  icon: i-lucide-leaf
-  ---
-  #title{unwrap="p"}
-  Biodiversity & Wildlife
-  :::
-
-  :::u-page-feature
-  ---
-  icon: i-lucide-heart-pulse
-  ---
-  #title{unwrap="p"}
-  Human Health
-  :::
-
-#links
-  :::u-button
-  ---
-  color: neutral
-  label: Read Impact Studies
-  to: /research
-  trailingIcon: i-lucide-arrow-right
-  variant: subtle
-  ---
-  :::
-::
-
-::u-page-section
-#title
-Protected Dark Sky Zones
-
-#description
-Twelve critical zones identified by the expert committee :any{id="expert-committee"} to monitor and preserve night sky quality.
-
-  :::u-page-grid
-    :::u-page-feature
-    ---
-    icon: i-heroicons-map
-    ---
-    #title{unwrap="p"}
-    Lonar Crater Region
-
-    #description{unwrap="p"}
-    Primary designation target for International Dark Sky Sanctuary status.
-    :::
-
-    :::u-page-feature
-    ---
-    icon: i-heroicons-building-library
-    ---
-    #title{unwrap="p"}
-    Rural Observatories
-
-    #description{unwrap="p"}
-    Sites surrounding IUCAA and partner institution observatories.
-    :::
-
-    :::u-page-feature
-    ---
-    icon: i-heroicons-globe-asia-australia
-    ---
-    #title{unwrap="p"}
-    Eco-Sensitive Areas
-
-    #description{unwrap="p"}
-    Western Ghats biodiversity zones and protected forest buffers.
-    :::
-  :::
-::
-
-::u-page-section
----
-reverse: true
-orientation: horizontal
----
-#title
-Verified Information
-
-#description
-All content in this documentation is derived from verified government and academic sources, fully accessible to AI tools via our MCP server.
-
-#features
-  :::u-page-feature
-  ---
-  icon: i-lucide-check-circle
-  ---
-  #title{unwrap="p"}
-  Quarterly Source Verification
-  :::
-
-  :::u-page-feature
-  ---
-  icon: i-lucide-database
-  ---
-  #title{unwrap="p"}
-  AI-Ready Context Protocol
-  :::
-
-#links
-  :::u-button
-  ---
-  label: Browse Source Documents
-  to: /sources
-  trailingIcon: i-lucide-arrow-right
-  ---
+    ::::
   :::
 ::

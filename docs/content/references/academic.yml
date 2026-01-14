@@ -1,0 +1,37 @@
+category: academic
+sources:
+  - id: pmc-ecological-impacts
+    title: Ecological Light Pollution
+    author: Longcore T, Rich C
+    url: https://pmc.ncbi.nlm.nih.gov/articles/PMC2627884/
+    credibility: academic
+    date: '2004'
+    description: Foundational research on ecological consequences of artificial night lighting
+    topics:
+      - ecology
+      - wildlife
+      - conservation
+
+  - id: pmc-health-impacts
+    title: Health and Environmental Effects of Light Pollution
+    author: Hölker F, et al.
+    url: https://pmc.ncbi.nlm.nih.gov/articles/PMC10447180/
+    credibility: academic
+    date: '2023'
+    description: Scientific review of health and environmental impacts of artificial light at night
+    topics:
+      - health
+      - environment
+      - research
+
+  - id: science-biodiversity
+    title: Biological Impacts of Artificial Light at Night
+    author: Sanders D, Gaston KJ
+    url: https://www.science.org/doi/10.1126/science.adg0269
+    credibility: academic
+    date: '2023'
+    description: Comprehensive study on biodiversity impacts from artificial lighting
+    topics:
+      - biodiversity
+      - wildlife
+      - research

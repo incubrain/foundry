@@ -1,0 +1,13 @@
+category: educational
+sources:
+  - id: natgeo-light-pollution
+    title: Light Pollution
+    author: National Geographic Education
+    url: https://education.nationalgeographic.org/resource/light-pollution/
+    credibility: educational
+    date: '2024'
+    description: Educational resource on light pollution causes, effects, and solutions
+    topics:
+      - education
+      - overview
+      - impacts
