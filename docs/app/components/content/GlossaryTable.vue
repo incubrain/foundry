@@ -58,8 +58,8 @@ const filteredTerms = computed(() => {
   return terms;
 });
 
-const getTermId = (term: string) => {
-  return `term-${term.toLowerCase().replace(/\s+/g, '-')}`;
+const getTermId = (termId: string) => {
+  return `term-${termId}`;
 };
 
 // Anchor highlighting
@@ -133,11 +133,10 @@ watch(
       <template #term-cell="{ row }">
         <div
           class="font-semibold transition-colors duration-300"
-          :id="getTermId(row.original.abbreviation ?? row.original.term)"
+          :id="getTermId(row.original.id)"
           :class="{
             'bg-primary-100 dark:bg-primary-900/30 px-2 py-1 rounded':
-              highlightedTermId ===
-              getTermId(row.original.abbreviation ?? row.original.term),
+              highlightedTermId === getTermId(row.original.id),
           }"
         >
           {{ row.original.term }}

@@ -36,15 +36,23 @@ const isGlossaryTerm = computed(() => props.href?.startsWith('term:'));
 const internalHref = computed(() => {
   if (!isInternalLink.value) return props.href;
   const path = props.href.replace('internal:', '');
-  return `/${path}`;
+  // Clean up any double slashes if path already had one, though usually internal: touches matching name
+  return path.startsWith('/') ? path : `/${path}`;
+});
+
+const { getPageMetadata } = useDocsMetadata();
+
+const internalPageData = computed(() => {
+  if (!isInternalLink.value) return null;
+  // internalHref is already normalized with leading slash
+  return getPageMetadata(internalHref.value);
 });
 
 // Convert term: prefix to /glossary#term-id anchor
 const glossaryHref = computed(() => {
   if (!isGlossaryTerm.value) return props.href;
-  const term = props.href.replace('term:', '');
-  const anchorId = term.toLowerCase().replace(/\s+/g, '-');
-  return `/glossary#term-${anchorId}`;
+  const termId = props.href.replace('term:', '').toLowerCase();
+  return `/glossary#term-${termId}`;
 });
 
 // Fetch glossary term data for tooltips
@@ -59,11 +67,8 @@ const allGlossaryTerms = computed(() => {
 
 const glossaryTermData = computed(() => {
   if (!isGlossaryTerm.value) return null;
-  const termName = props.href.replace('term:', '');
-  return allGlossaryTerms.value.find(
-    (t) => t.term.toLowerCase() === termName.toLowerCase() ||
-           t.abbreviation?.toLowerCase() === termName.toLowerCase(),
-  );
+  const termId = props.href.replace('term:', '').toLowerCase();
+  return allGlossaryTerms.value.find((t) => t.id === termId);
 });
 
 const glossaryTooltipText = computed(() => {
@@ -147,7 +152,18 @@ const extractRootDomain = (url: string | null) => {
     </NuxtLink>
 
     <template #content>
-      <div class="text-gray-700 dark:text-gray-300">
+      <div
+        v-if="internalPageData"
+        class="text-gray-700 dark:text-gray-300 space-y-1"
+      >
+        <div class="font-semibold text-gray-900 dark:text-gray-100">
+          {{ internalPageData.title }}
+        </div>
+        <div v-if="internalPageData.description" class="text-xs">
+          {{ internalPageData.description }}
+        </div>
+      </div>
+      <div v-else class="text-gray-700 dark:text-gray-300">
         Internal link to: <span class="font-semibold">{{ internalHref }}</span>
       </div>
     </template>

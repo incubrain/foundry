@@ -1,49 +1,232 @@
 terms:
-  - term: Artificial Light at Night
+  - id: alan
+    term: Artificial Light at Night
     abbreviation: ALAN
-    definition: Light emitted outdoors during nighttime hours from artificial sources, disrupting natural darkness and ecological processes.
+    definition:
+      Light emitted outdoors during nighttime hours from artificial sources,
+      disrupting natural darkness and ecological processes.
     category: technical
-  - term: Light Pollution
-    definition: Excessive, misdirected, or obtrusive artificial light that alters natural light levels in outdoor environments.
+  - id: light-pollution
+    term: Light Pollution
+    definition:
+      Excessive, misdirected, or obtrusive artificial light that alters natural
+      light levels in outdoor environments.
     category: technical
-  - term: Sky Glow
-    definition: Brightening of the night sky over inhabited areas caused by artificial light scattering in the atmosphere.
+  - id: sky-glow
+    term: Sky Glow
+    definition:
+      Brightening of the night sky over inhabited areas caused by artificial
+      light scattering in the atmosphere.
     category: technical
-  - term: Circadian Rhythm
-    definition: The natural 24-hour biological cycle regulating sleep-wake patterns, hormone production, and physiological processes in living organisms.
+  - id: circadian-rhythm
+    term: Circadian Rhythm
+    definition:
+      The natural 24-hour biological cycle regulating sleep-wake patterns,
+      hormone production, and physiological processes in living organisms.
     category: ecological
-  - term: Dark Sky Certification
-    definition: Official designation by DarkSky International recognizing locations that demonstrate exceptional starry skies and commitment to dark sky protection.
+  - id: dark-sky-certification
+    term: Dark Sky Certification
+    definition:
+      Official designation by DarkSky International recognizing locations that
+      demonstrate exceptional starry skies and commitment to dark sky
+      protection.
     category: regulatory
-  - term: Correlated Color Temperature
+  - id: cct
+    term: Correlated Color Temperature
     abbreviation: CCT
-    definition: Measurement of light source color appearance in Kelvin (K), indicating whether light appears warm (2700K-3000K) or cool (4000K-6500K).
+    definition:
+      Measurement of light source color appearance in Kelvin (K), indicating
+      whether light appears warm (2700K-3000K) or cool (4000K-6500K).
     category: technical
-  - term: Lumen
-    definition: Unit of measurement for total quantity of visible light emitted by a source.
+  - id: lumen
+    term: Lumen
+    definition:
+      Unit of measurement for total quantity of visible light emitted by a
+      source.
     category: technical
-  - term: Lux
-    definition: Unit of measurement for illuminance, representing one lumen per square meter at a surface.
+  - id: lux
+    term: Lux
+    definition:
+      Unit of measurement for illuminance, representing one lumen per square
+      meter at a surface.
     category: technical
-  - term: Light Trespass
-    definition: Unwanted light falling on properties or areas where it is not needed or intended.
+  - id: light-trespass
+    term: Light Trespass
+    definition:
+      Unwanted light falling on properties or areas where it is not needed or
+      intended.
     category: general
-  - term: Glare
-    definition: Excessive brightness that causes visual discomfort or reduces visibility.
+  - id: glare
+    term: Glare
+    definition:
+      Excessive brightness that causes visual discomfort or reduces visibility.
     category: general
-  - term: Uplight
-    definition: Light emitted above the horizontal plane of a luminaire, contributing directly to sky glow.
+  - id: uplight
+    term: Uplight
+    definition:
+      Light emitted above the horizontal plane of a luminaire, contributing
+      directly to sky glow.
     category: technical
-  - term: Full Cutoff Fixture
-    definition: Lighting fixture designed to emit zero light above 90 degrees from vertical, minimizing upward light spill and sky glow.
+  - id: full-cutoff-fixture
+    term: Full Cutoff Fixture
+    definition:
+      Lighting fixture designed to emit zero light above 90 degrees from
+      vertical, minimizing upward light spill and sky glow.
     category: technical
-  - term: Coastal Regulation Zone
+  - id: crz
+    term: Coastal Regulation Zone
     abbreviation: CRZ
-    definition: India's regulatory framework governing development activities in coastal areas, including lighting restrictions to protect marine ecosystems.
+    definition:
+      India's regulatory framework governing development activities in coastal
+      areas, including lighting restrictions to protect marine ecosystems.
     category: regulatory
-  - term: Astrotourism
-    definition: Tourism activity centered on observing celestial objects and phenomena in areas with dark, unpolluted night skies.
+  - id: astrotourism
+    term: Astrotourism
+    definition:
+      Tourism activity centered on observing celestial objects and phenomena in
+      areas with dark, unpolluted night skies.
     category: general
-  - term: Melatonin Suppression
-    definition: Reduction in melatonin hormone production caused by nighttime light exposure, disrupting circadian rhythms and sleep patterns.
+  - id: melatonin-suppression
+    term: Melatonin Suppression
+    definition:
+      Reduction in melatonin hormone production caused by nighttime light
+      exposure, disrupting circadian rhythms and sleep patterns.
     category: ecological
+  - id: shielded-lighting
+    term: Shielded Lighting
+    definition:
+      Lighting fixtures designed to prevent light emission above the horizontal
+      plane.
+    category: technical
+  - id: lighting-curfew
+    term: Lighting Curfew
+    definition:
+      Time-based restriction requiring dimming or switch-off of non-essential
+      outdoor lighting.
+    category: regulatory
+  - id: core-dark-area
+    term: Core Dark Area
+    definition:
+      Areas requiring highest level of night-sky protection with lighting
+      restricted to essential safety needs.
+    category: regulatory
+  - id: buffer-area
+    term: Buffer Area
+    definition:
+      Transition areas surrounding Core Dark Areas with controlled lighting
+      intensity, spectrum, shielding, and curfew.
+    category: regulatory
+  - id: regulated-urban-area
+    term: Regulated Urban Area
+    definition:
+      Built-up areas where lighting is regulated primarily for efficiency,
+      shielding, and spectral control.
+    category: regulatory
+  - id: lmp
+    term: Lighting Management Plan
+    abbreviation: LMP
+    definition:
+      Site or area-specific plan defining lighting design, operation, and
+      mitigation measures.
+    category: regulatory
+  - id: sqm
+    term: Sky Quality Meter
+    abbreviation: SQM
+    definition:
+      Instrument for measuring night-sky brightness in magnitudes per square
+      arcsecond.
+    category: technical
+  - id: mpcb
+    term: Maharashtra Pollution Control Board
+    abbreviation: MPCB
+    definition:
+      Statutory organization responsible for implementing environmental laws and
+      rules within the state of Maharashtra.
+    category: organizations
+  - id: dgca
+    term: Directorate General of Civil Aviation
+    abbreviation: DGCA
+    definition:
+      Statutory body of the Government of India to regulate civil aviation in
+      India.
+    category: organizations
+  - id: meda
+    term: Maharashtra Energy Development Agency
+    abbreviation: MEDA
+    definition:
+      State nodal agency for collecting data and implementing renewable energy
+      and energy conservation programs.
+    category: organizations
+  - id: mtdc
+    term: Maharashtra Tourism Development Corporation
+    abbreviation: MTDC
+    definition:
+      Government body responsible for development and promotion of tourism in
+      Maharashtra.
+    category: organizations
+  - id: ngt
+    term: National Green Tribunal
+    abbreviation: NGT
+    definition:
+      Specialized body equipped with the necessary expertise to handle
+      environmental disputes involving multi-disciplinary issues.
+    category: organizations
+  - id: cms
+    term: Convention on Migratory Species
+    abbreviation: CMS
+    definition:
+      Environmental treaty of the United Nations that provides a global platform
+      for the conservation and sustainable use of migratory animals and their
+      habitats.
+    category: organizations
+  - id: iau
+    term: International Astronomical Union
+    abbreviation: IAU
+    definition:
+      International association of professional astronomers active in
+      professional research and education in astronomy.
+    category: organizations
+  - id: dsi
+    term: DarkSky International
+    abbreviation: DSI
+    definition:
+      The recognized authority on light pollution and the leading organization
+      combating light pollution worldwide.
+    category: organizations
+  - id: eia
+    term: Environmental Impact Assessment
+    abbreviation: EIA
+    definition:
+      Process of evaluating the likely environmental impacts of a proposed
+      project or development, taking into account inter-related socio-economic,
+      cultural and human-health impacts.
+    category: regulatory
+  - id: mlo
+    term: Model Lighting Ordinance
+    abbreviation: MLO
+    definition:
+      Template for an outdoor lighting ordinance that can be adopted by
+      municipalities to regulate outdoor lighting.
+    category: regulatory
+  - id: sapcchh
+    term: State Action Plan on Climate Change and Human Health
+    abbreviation: SAPCCHH
+    definition:
+      State-level policy framework addressing the health impacts of climate
+      change.
+    category: regulatory
+  - id: astroguide
+    term: AstroGuide
+    definition:
+      Specialized training program for guides to interpret the night sky and
+      dark sky conservation for tourists.
+    category: general
+  - id: protected-area
+    term: Protected Area
+    abbreviation: PA
+    definition:
+       A clearly defined geographical space, recognized, dedicated and managed,
+       through legal or other effective means, to achieve the long term
+       conservation of nature with associated ecosystem services and cultural
+       values.
+    category: regulatory

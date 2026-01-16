@@ -8,6 +8,9 @@ const cwd = joinURL(options.rootDir, 'content');
 const pageSchema = z.object({
   title: z.string(),
   description: z.string().optional(),
+  label: z.string().optional(),
+  departments: z.array(z.string()).optional(),
+  department_summary: z.string().optional(),
   navigation: z.boolean().optional(),
   layout: z.string().optional(),
   links: z
@@ -47,12 +50,14 @@ const glossarySchema = z.object({
       term: z.string(),
       abbreviation: z.string().optional(),
       definition: z.string(),
-      category: z.enum(['technical', 'regulatory', 'ecological', 'general']).optional(),
+      category: z
+        .enum(['technical', 'regulatory', 'ecological', 'general'])
+        .optional(),
     }),
   ),
 });
 
-export default defineContentConfig({ 
+export default defineContentConfig({
   collections: {
     landing: defineCollection({
       type: 'page',
@@ -90,5 +95,5 @@ export default defineContentConfig({
       source: { cwd, include: 'glossary/*.yml', prefix: '/' },
       schema: glossarySchema,
     }),
-  }
- });
+  },
+});

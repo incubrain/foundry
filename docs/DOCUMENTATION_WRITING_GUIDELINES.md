@@ -44,13 +44,13 @@ Colors: `info`, `success`, `warning`, `danger`
 ```
 
 ### Other Docus Components
-- **Accordion**: `::accordion` + `::accordion-item{label="..."}`
-- **Badge**: `::badge{color="primary"}`
-- **Collapsible**: `::collapsible{label="..."}`
-- **Icon**: `::icon{name="i-heroicons-beaker"}`
-- **Kbd**: `::kbd{value="Ctrl+C"}`
-- **Steps**: `::steps` with H3 for each step
-- **Tabs**: `::tabs` with `::div{label="..."}`
+  - **Accordion**: `::accordion` + `::accordion-item{label="..."}`
+  - **Badge**: `::badge{color="primary"}`
+  - **Collapsible**: `::collapsible{label="..."}`
+  - **Icon**: `::icon{name="i-heroicons-beaker"}`
+  - **Kbd**: `::kbd{value="Ctrl+C"}`
+  - **Steps**: `::steps` with H3 for each step
+  - **Tabs**: `::tabs` with `::div{label="..."}`
 
 ---
 
@@ -80,9 +80,9 @@ Colors: `info`, `success`, `warning`, `danger`
 
 ## 4. Data Integrity
 
-**ALL data must come from Master Key document**: `/Users/mac/Development/incubrain/product-validator/docs/MASTER_KEY.md`
+  **ALL data must come from Master Key document**: `/Users/mac/Development/incubrain/product-validator/docs/MASTER_KEY.md`
 
-Never invent statistics or extrapolate data not in Master Key.
+  Never invent statistics or extrapolate data not in Master Key.
 
 ---
 
@@ -117,7 +117,7 @@ Main sections (H2) need overview text before subsections. Citations belong in su
 [Policy Framework](internal:policy)
 [Ecology](internal:research/ecology)
 ```
-ProseA.vue maps `internal:` → `/` paths.
+  ProseA.vue maps `internal:` → `/` paths.
 
 ### Glossary Term Links
 ```markdown
@@ -125,7 +125,7 @@ ProseA.vue maps `internal:` → `/` paths.
 [light pollution](term:light pollution)
 [dark sky certification](term:dark sky certification)
 ```
-ProseA.vue maps `term:` → `/glossary#term-id` anchors with dotted underline styling.
+  ProseA.vue maps `term:` → `/glossary#term-id` anchors with dotted underline styling.
 
 ---
 
@@ -148,24 +148,35 @@ Multi-word names: `01.economic-impacts.md`
 
 ```markdown
 ---
-title: Page Title
+title: Page Title (Full H1)
 description: One-sentence summary
+label: Sidebar Label (Short)
+departments: [Dept1, Dept2]
+department_summary: Brief context for specific departments
 ---
 ```
 
-**DO NOT duplicate H1 title in markdown body** (Docus auto-renders frontmatter title).
+  **DO NOT duplicate H1 title in markdown body** (Docus auto-renders frontmatter title).
 
-**✅ Correct:**
+  **✅ Correct:**
 ```markdown
 ---
 title: Ecology & Biodiversity
+label: Ecology (Short name for Nav)
+navigation:
+  title: Ecology
+description: Scientific evidence documenting ALAN impacts on biodiversity...
+departments:
+  - Environment
+  - Agriculture
+department_summary: Light pollution is now recognized as a significant biodiversity threat...
 ---
 
 ## Overview
 Text here...
 ```
 
-**❌ Incorrect:**
+  **❌ Incorrect:**
 ```markdown
 ---
 title: Ecology & Biodiversity
@@ -195,18 +206,18 @@ $$
 
 ## 10. Quality Checklist
 
-- [ ] Citations after punctuation
-- [ ] Citations after document names or at sentence end
-- [ ] Component syntax correct (`color=`, `card-group`)
-- [ ] No em-dashes (—)
-- [ ] No H1 title duplication
-- [ ] File naming uses 00-99 system
-- [ ] Main sections have overview before subsections
-- [ ] Citations in subsections, not overviews
-- [ ] No policy content in Research section
-- [ ] All data from Master Key
-- [ ] Maharashtra context in info callouts only (Research)
-- [ ] Internal links use `internal:` prefix
+  - [ ] Citations after punctuation
+  - [ ] Citations after document names or at sentence end
+  - [ ] Component syntax correct (`color=`, `card-group`)
+  - [ ] No em-dashes (—)
+  - [ ] No H1 title duplication
+  - [ ] File naming uses 00-99 system
+  - [ ] Main sections have overview before subsections
+  - [ ] Citations in subsections, not overviews
+  - [ ] No policy content in Research section
+  - [ ] All data from Master Key
+  - [ ] Maharashtra context in info callouts only (Research)
+  - [ ] Internal links use `internal:` prefix
 
 ---
 
@@ -228,6 +239,6 @@ $$
 
 ## Revision History
 
-- **2026-01-15**: Initial guidelines
-- **2026-01-15**: Added 8 rules (internal links, em-dash, frontmatter, 00-99, overviews, citations, math, components)
-- **2026-01-15**: Condensed to 50% length for readability
+  - **2026-01-15**: Initial guidelines
+  - **2026-01-15**: Added 8 rules (internal links, em-dash, frontmatter, 00-99, overviews, citations, math, components)
+  - **2026-01-15**: Condensed to 50% length for readability

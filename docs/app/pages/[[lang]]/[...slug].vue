@@ -117,6 +117,38 @@ const editLink = computed(() => {
       </template>
     </UPageHeader>
 
+    <div
+      v-if="page.departments?.length"
+      class="mt-6 mb-8 p-4 border rounded-lg bg-blue-50/50 dark:bg-blue-950/20 border-blue-100 dark:border-blue-900/50"
+    >
+      <div class="flex flex-wrap items-center gap-3 mb-2">
+        <span
+          class="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400"
+          >Department Validity:</span
+        >
+        <div class="flex flex-wrap gap-1.5">
+          <UBadge
+            v-for="dept in page.departments"
+            :key="dept"
+            :label="dept"
+            color="white"
+            variant="solid"
+            class="shadow-sm"
+          />
+        </div>
+      </div>
+      <div
+        v-if="page.department_summary"
+        class="text-sm text-gray-700 dark:text-gray-200 leading-relaxed"
+      >
+        <UIcon
+          name="i-heroicons-information-circle"
+          class="w-4 h-4 inline-block mr-1 text-blue-500 relative -top-[1px]"
+        />
+        {{ page.department_summary }}
+      </div>
+    </div>
+
     <UPageBody>
       <ContentRenderer v-if="page" :value="page" />
       <div v-if="citations.length" class="mt-12">

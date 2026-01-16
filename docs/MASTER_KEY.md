@@ -34,7 +34,7 @@ These steps enable Maharashtra to meet its legal obligations, prevent irreversib
 
 [*References	13*](#references)
 
-## **Widespread Harm From Unregulated Light** {#widespread-harm-from-unregulated-light}
+## **Widespread Harm From Unregulated Light**
 
 Global night sky brightness is increasing 9.6% annually \[[2](%20https://doi.org/10.1126/science.abq7781)\], with 93.9% of India's population living under light-polluted skies \[[3](https://doi.org/10.1126/sciadv.1600377)\]. **Maharashtra has no legal framework to address ALAN**. The evidence below establishes the scope and scale of impact, providing the evidentiary foundation for regulatory intervention and fiscal prioritisation.
 
@@ -47,7 +47,7 @@ Global night sky brightness is increasing 9.6% annually \[[2](%20https://doi.org
 
 These impacts compound over time and across systems. Maharashtra's current regulatory gap exposes the State to ongoing fiscal leakage, preventable health burdens, and ecosystem degradation with irreversible thresholds. The global policy frameworks that follow demonstrate proven administrative pathways to abate these costs while generating positive economic returns.
 
-## **Established Global Legal Frameworks** {#established-global-legal-frameworks}
+## **Established Global Legal Frameworks**
 
 ALAN regulation is an established global practice. Over forty countries across five continents have formally recognised ALAN in law and implemented enforceable controls through planning, environmental, and sectoral frameworks. In parallel, more than 250 regulated dark-sky sites operating across multiple jurisdictions demonstrate that such controls are practical, scalable, and routine.
 
@@ -82,7 +82,7 @@ Relevant approaches that can be adapted to Maharashtra’s regulatory and govern
 
 These precedents eliminate implementation risk. Maharashtra can adopt tested frameworks, adapt proven standards, and leverage two decades of international regulatory experience. Beyond compliance, these frameworks demonstrate low-risk, high-return governance intervention.
 
-## **Observed Economic Returns** {#observed-economic-returns}
+## **Observed Economic Returns** 
 
 Dark sky policy delivers quantifiable returns through tourism revenue, energy efficiency, and long-term asset protection. Conservative projections from comparable sites establish the fiscal basis for investment.
 
@@ -102,7 +102,7 @@ These returns scale with ambition. Maharashtra's ALAN regulation would position 
 
 ##
 
-## **Department-Specific Actions** {#department-specific-actions}
+## **Department-Specific Actions**
 
 Effective regulation of ALAN requires coordinated, cross-departmental action, with each department addressing distinct but interconnected aspects of governance.
 
@@ -120,7 +120,7 @@ The measures below assign clear responsibility, define actionable scope, and lin
 
 By grounding action in this framework, the State is positioned to meet its regulatory and climate commitments while leveraging proven global practices.
 
-## **Obligations and Alignment** {#obligations-and-alignment}
+## **Obligations and Alignment** 
 
 Maharashtra’s current approach to ALAN lacks regulatory oversight, leaving it unaddressed despite enforceable national/international commitments and climate/sustainability objectives.
 
@@ -148,7 +148,7 @@ These obligations and objectives carry legal, financial, and institutional signi
 
 ##
 
-## **Three-Phase Implementation Pathway** {#three-phase-implementation-pathway}
+## **Three-Phase Implementation Pathway**
 
 This pathway sequences actions across pilot validation (2026–2029), statewide scaling (2029–2035), and consolidation phases (2035–2047), managing implementation risk while establishing early proof points for administrative and fiscal performance.
 
@@ -162,7 +162,7 @@ This pathway sequences actions across pilot validation (2026–2029), statewide 
 
 This phased structure enables risk-managed deployment with defined decision gates. Pilot phase delivers certification-driven revenue and technical validation by 2029; scaling phase operationalises statewide compliance and energy savings by 2035; consolidation phase positions Maharashtra as a national reference model. The pathway delivers early returns while building institutional capacity systematically.
 
-## **AstronEra as Technical Secretariat** {#astronera-as-technical-secretariat}
+## **AstronEra as Technical Secretariat**
 
 International experience demonstrates that successful ALAN governance depends on a dedicated entity capable of standards interpretation, inter-departmental coordination, scientific dataset management, and long-term certification oversight.
 
@@ -192,7 +192,7 @@ AstronEra partner capacity to government will align policy expertise, interdepar
 
 *DarkSky International (DSI) is a United States–based, non-governmental, non-profit organisation that functions as a global technical and standards reference body for responsible outdoor lighting and night-sky protection. Its role in this framework is limited to providing internationally recognised technical criteria, certification protocols, and best-practice guidance. Engagement with DSI does not entail policy delegation, regulatory authority, or funding dependency; all policy decisions, enforcement powers, and institutional control remain exclusively with the Government of Maharashtra.*
 
-## **Recommendations** {#recommendations}
+## **Recommendations**
 
 Based on the phased roadmap outlined in the previous section, the following immediate actions are required to establish Maharashtra as India's leader in ALAN regulation for dark sky conservation and astrotourism development.
 
@@ -228,11 +228,11 @@ This document outlines the proposed dark-sky policy framework. Further commissio
 
 These actions are required to establish legal, technical, and operational structure. They can be executed within existing departmental authority, deliver measurable outputs, and position Maharashtra to capture first-mover advantage in India, while meeting binding environmental compliance requirements.
 
-## **Dark Skies: A Right, Not A Privilege** {#dark-skies:-a-right,-not-a-privilege}
+## **Dark Skies: A Right, Not A Privilege**
 
 The night sky is not a lost heritage; it is a recoverable public asset. With focused executive action, Maharashtra transforms lighting from an unmanaged liability into a governed resource, meeting legal obligations while capturing economic opportunity. The state that acts first establishes the regulatory standard, captures the tourism market, and positions itself as India's reference model for sustainable governance. **The decision point is now.**
 
-## **References** {#references}
+## **References**
 
 **\[1\]** Science Magazine. (2025). *Unlock the secrets of the night sky: How dark skies boost tourism and the environment.* [https://darksky.org/app/uploads/2025/06/ALAN-State-of-the-Science-2025-EN-2.pdf](https://darksky.org/app/uploads/2025/06/ALAN-State-of-the-Science-2025-EN-2.pdf)
 Note: State-of-the-science report on artificial light at night (ALAN) and its environmental, tourism, and energy impacts.
