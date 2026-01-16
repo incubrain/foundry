@@ -1,7 +1,5 @@
 <script setup lang="ts">
 const route = useRoute();
-const localePath = useLocalePath()
-
 </script>
 
 <template>
@@ -10,26 +8,32 @@ const localePath = useLocalePath()
       {
         label: 'Research',
         icon: 'i-lucide-flask-conical',
-        to: localePath('/research'),
+        to: '/research',
         active: route.path.startsWith('/research'),
       },
       {
         label: 'Policy',
         icon: 'i-lucide-book-open',
-        to: localePath('/policy'),
+        to: '/policy',
         active: route.path.startsWith('/policy'),
       },
       {
         label: 'Pilots',
         icon: 'i-lucide-sprout',
-        to: localePath('/pilots'),
+        to: '/pilots',
         active: route.path.startsWith('/pilots'),
       },
       {
         label: 'Sources',
         icon: 'i-lucide-file-pen-line',
-        to: localePath('/sources'),
+        to: '/sources',
         active: route.path.startsWith('/sources'),
+      },
+      {
+        label: 'Glossary',
+        icon: 'i-lucide-library',
+        to: '/glossary',
+        active: route.path.startsWith('/glossary'),
       },
     ]"
     variant="link"

@@ -1,0 +1,25 @@
+category: astronomy
+sources:
+  - id: kyba-2023-globe-at-night
+    title: "Citizen scientists report global rapid reductions in the visibility of stars from 2011 to 2022"
+    author: "Kyba, C. C. M., et al."
+    url: "https://doi.org/10.1126/science.abq7781"
+    credibility: academic
+    date: "2023"
+    description: "Science journal study documenting 9.6% annual increase in night sky brightness globally using citizen science data."
+
+  - id: falchi-2016-world-atlas
+    title: "The new world atlas of artificial night sky brightness"
+    author: "Falchi, F., et al."
+    url: "https://doi.org/10.1126/sciadv.1600377"
+    credibility: academic
+    date: "2016"
+    description: "Science Advances study mapping global artificial night sky brightness."
+
+  - id: gmt-2023-site-protection
+    title: "Giant Magellan Telescope construction and site protection framework"
+    author: "Giant Magellan Telescope Organization"
+    url: "https://giantmagellan.org/wp-content/uploads/2023/04/SPIE22.pdf"
+    credibility: academic
+    date: "2023"
+    description: "Site protection framework for Chilean astronomical observatory."

@@ -5,11 +5,14 @@ import type { BadgeProps } from '@nuxt/ui';
 const { allCategoryRefs } = useCitations();
 
 const categoryLabels: Record<string, string> = {
-  academic: 'Academic Sources',
-  ngo: 'NGO & Advocacy Organizations',
-  educational: 'Educational Resources',
-  government: 'Government Sources',
-  media: 'Media & Publications',
+  ecology: 'Ecology & Biodiversity',
+  health: 'Human Health',
+  climate: 'Climate & Energy',
+  tourism: 'Tourism & Economy',
+  policy: 'Policy & Legal Frameworks',
+  standards: 'Standards & Implementation',
+  astronomy: 'Astronomy & Sky Quality',
+  internal: 'Internal Research',
 };
 
 const credibilityColor: Record<string, BadgeProps['color']> = {

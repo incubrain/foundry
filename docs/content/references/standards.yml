@@ -1,0 +1,60 @@
+category: standards
+sources:
+  # Comprehensive Framework
+  - id: darksky-2025-alan-state-of-science
+    title: "Unlock the secrets of the night sky: How dark skies boost tourism and the environment"
+    author: "Science Magazine (DarkSky International)"
+    url: "https://darksky.org/app/uploads/2025/06/ALAN-State-of-the-Science-2025-EN-2.pdf"
+    credibility: ngo
+    date: "2025"
+    description: "State-of-the-science report on artificial light at night (ALAN) and its environmental, tourism, and energy impacts."
+
+  # Certification Standards
+  - id: darksky-2020-niue-first-country
+    title: "Niue is the world's first country to become a Dark Sky Place"
+    author: "International Dark-Sky Association"
+    url: "https://darksky.org/news/niue-is-worlds-first-country-to-become-a-dark-sky-place/"
+    credibility: ngo
+    date: "2020"
+    description: "Press release on Niue becoming first dark sky certified country."
+
+  - id: darksky-2024-places-impact
+    title: "International Dark Sky Places program: Impact and advocacy update"
+    author: "DarkSky International"
+    url: "https://darksky.org/news/international-dark-sky-places-program-advocacy-2024/"
+    credibility: ngo
+    date: "2024"
+    description: "Advocacy update on Dark Sky Places program impacts."
+
+  # Capacity Building Organizations
+  - id: astronera-2025-dsi-endorsement
+    title: "Endorsement of AstronEra as a partner"
+    author: "DarkSky International (DSI)"
+    url: "https://astronera.org/doi/dsi-acknowledgement"
+    credibility: ngo
+    date: "2025"
+    description: "DSI endorsement of AstronEra as partner organization."
+
+  - id: astronera-2023-idspac
+    title: "International Dark Sky Preservation & Astrotourism Conference (IDSPAC 2023)"
+    author: "AstronEra"
+    url: "https://astronera.org/doi/idspac-2023"
+    credibility: ngo
+    date: "2023"
+    description: "Conference organized by AstronEra on dark sky preservation."
+
+  - id: astro4dev-2022-guide-training
+    title: "Guide training workshop for tribal students: Astronomy-based capacity-building initiative"
+    author: "Astro4Dev"
+    url: "https://astro4dev.org/guide-training-workshop-for-tribal-students/"
+    credibility: ngo
+    date: "2022"
+    description: "AstroGuide training workshop for tribal students."
+
+  - id: astro4dev-2023-advanced-guide
+    title: "Advanced guide training programme for tribal students in astronomy and astrotourism"
+    author: "Astro4Dev"
+    url: "https://astro4dev.org/guide-training-for-the-tribal-students/"
+    credibility: ngo
+    date: "2023"
+    description: "Advanced AstroGuide training for tribal students."

@@ -1,6 +1,9 @@
-
-
-
+1. Term anchors not working as expected, nor is highlighting
+2. cross linking popover is not displaying correct data, should fetch this from the pages, maybe a centralised composable to store all titles and descriptions for pages
+3. We need to create a 'preface' of sorts to define light pollution clearly and establish the problem up front, this should include 'Blue Light Hazard' as we will need to compare white/blue LEDs agains warm LEDs, maybe we need a detailed section on 'lights' to explain the different types of LEDs and their properties
+4. References is not included in ToC
+5. The 'For Energy & Environment Departments' etc sections should not be included like this, we need a way to search by department keyword, maybe this could be included in frontmatter or even better per subheading, maybe 'badges' could be used
+6. frontmatter should have 'label' and 'title', use the 'label' for the nav menue and 'title' for better SEO and displaying on the page
 
 8. adding cites using [](cite:cite-id) works, but is buggy when editing with nuxt-studio, it seems to delete them since there is nothing inside of [here](cite:cite-id), we need to brainstorm how we would handle this, maybe we could add everything that is related to the cite inside of [here](cite:cite-id), then we could easily compile fact checkable statements and claims
 9. when copying the markdown page the <bibliography> tag contains none of the actual references, we need to think how we can resolve this; it would probably need to be done inside of the beforeParse hook

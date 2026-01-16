@@ -1,11 +1,5 @@
-import type { Collections, ReferencesEnCollectionItem } from '@nuxt/content';
-
 export const useCitations = () => {
   const route = useRoute();
-  const { locale, isEnabled } = useDocusI18n();
-  const collectionName = computed(() =>
-    isEnabled.value ? `references_${locale.value}` : 'references',
-  );
 
   // Stable key per route - state persists per route
   const key = computed(() => `citations-${route.path}`);
@@ -13,7 +7,7 @@ export const useCitations = () => {
 
   // ✅ Fetch references ONCE and cache globally with key 'references'
   const { data: allCategoryRefs } = useAsyncData('references', () =>
-    queryCollection(collectionName.value as keyof Collections).all(),
+    queryCollection('references').all(),
   );
 
   // ✅ Flatten references for easy lookup

@@ -10,24 +10,16 @@ layout:
 main:
   - label: About
     to: /about
-  - label: Documents
-    to: /documents
-  - label: Dark Sky Certification
-    to: /offers/certification
+  - label: Content
+    to: https://content.astronera.org
 
 footerLinks:
   - label: About
     children:
       - label: Our Story
         to: /about
-      - label: Documents & Research
-        to: /documents
-  - label: Services
-    children:
-      - label: Dark Sky Certification
-        to: /offers/certification
-      - label: Policy Consulting
-        to: /about#partners
+      - label: Content
+        to: https://content.astronera.org
   - label: Resources
     children:
       - label: FAQ

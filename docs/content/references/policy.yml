@@ -1,0 +1,220 @@
+category: policy
+sources:
+  # International Legal Frameworks
+  - id: croatia-2019-light-pollution-law
+    title: "Law on protection against light pollution"
+    author: "Croatia"
+    url: "https://leap.unep.org/en/countries/hr/national-legislation/law-protection-against-light-pollution"
+    credibility: government
+    date: "2019"
+    description: "Croatia's national law on light pollution protection."
+
+  - id: france-2018-light-nuisance-decree
+    title: "Arrêté du 27 décembre 2018 relatif à la prévention, à la réduction et à la limitation des nuisances lumineuses"
+    author: "France"
+    url: "https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000037864375"
+    credibility: government
+    date: "2018"
+    description: "France decree on prevention and reduction of light pollution."
+
+  - id: slovenia-2007-light-limitation
+    title: "Decree on the limitation of light pollution"
+    author: "Slovenia"
+    url: "https://www.uradni-list.si/glasilo-uradni-list-rs/vsebina?urlid=200781&stevilka=4162"
+    credibility: government
+    date: "2007"
+    description: "Slovenia's decree limiting light pollution."
+
+  - id: korea-2012-light-pollution-act
+    title: "Act on the prevention of light pollution and management of good lighting environment"
+    author: "South Korea"
+    url: "https://elaw.klri.re.kr/eng_mobile/viewer.do?hseq=52771&type=part&key=39"
+    credibility: government
+    date: "2012"
+    description: "South Korea's comprehensive light pollution prevention act."
+
+  - id: chile-2022-light-emission-standard
+    title: "Norma de emisión para la regulación de la contaminación lumínica"
+    author: "Chile"
+    url: "https://www.bcn.cl/leychile/navegar?idNorma=1197027"
+    credibility: government
+    date: "2022"
+    description: "Chile's light pollution emission standards."
+
+  - id: mexico-2021-lgeepa-amendment
+    title: "Ley General del Equilibrio Ecológico y la Protección al Ambiente (LGEEPA): Amendment on light pollution"
+    author: "Mexico"
+    url: "https://darksky.org/news/mexico-light-pollution-law/"
+    credibility: government
+    date: "2021"
+    description: "Mexico's environmental law amendment addressing light pollution."
+
+  - id: pakistan-1997-pepa
+    title: "Pakistan Environmental Protection Act (PEPA)"
+    author: "Pakistan"
+    url: "https://elaw.org/wp-content/uploads/archive/Law-PEPA-1997.pdf"
+    credibility: government
+    date: "1997"
+    description: "Pakistan's environmental protection act with implicit light pollution coverage."
+
+  - id: switzerland-1983-environment-act
+    title: "Federal Act on the protection of the environment (LPE/USG)"
+    author: "Switzerland"
+    url: "https://www.bafu.admin.ch/de/vollzugshilfen-licht"
+    credibility: government
+    date: "1983"
+    description: "Switzerland's federal environmental act with light pollution guidance."
+
+  - id: italy-2000-regional-laws
+    title: "Regional light-pollution laws; UNI 10819:2021 national standard"
+    author: "Italy"
+    url: "http://www.lightpollution.it/cinzano/en/page95en.html"
+    credibility: government
+    date: "2000"
+    description: "Italy's regional light pollution laws and national lighting standard."
+
+  - id: austria-2024-landscape-act
+    title: "Landscape Protection Act: Amendments related to light pollution"
+    author: "Austria (Upper Austria)"
+    url: "https://www.hellenot.org/en/topics/legislation-standards-and-guidelines/"
+    credibility: government
+    date: "2024"
+    description: "Austria's Upper Austria landscape protection act amendments for light pollution."
+
+  - id: newzealand-2023-mackenzie-starlight
+    title: "Mackenzie District Plan Change 22: Starlight protection"
+    author: "New Zealand"
+    url: "https://www.mackenzie.govt.nz/__data/assets/pdf_file/0007/730852/PC22-Decision-Report-3-April-2023.pdf"
+    credibility: government
+    date: "2023"
+    description: "New Zealand's Mackenzie District starlight protection planning regulations."
+
+  - id: spain-1988-observatory-protection
+    title: "Ley 31/1988 sobre protección de la calidad astronómica de los observatorios del IAC"
+    author: "Spain"
+    url: "https://www.boe.es/eli/es/l/1988/10/31/31"
+    credibility: government
+    date: "1988"
+    description: "Spain's law protecting astronomical observatory quality."
+
+  - id: newyork-2014-darksky-compliant
+    title: "Public Buildings Law, Article 5, Section 143: Dark sky-compliant outdoor lighting"
+    author: "United States (New York State)"
+    url: "https://law.justia.com/codes/new-york/pbb/article-5/143/"
+    credibility: government
+    date: "2014"
+    description: "New York State law requiring dark sky-compliant lighting in public buildings."
+
+  - id: bavaria-2021-light-protection
+    title: "Bavarian law on protection from harmful environmental effects through light (BayImSchG)"
+    author: "Germany (Bavaria)"
+    url: "https://www.gesetze-bayern.de/Content/Document/BayImSchG/true"
+    credibility: government
+    date: "2021"
+    description: "Bavaria's law on protection from light pollution."
+
+  - id: uk-2005-statutory-nuisance
+    title: "Clean Neighbourhoods and Environment Act 2005, Section 102: Artificial light as a statutory nuisance"
+    author: "United Kingdom"
+    url: "https://www.legislation.gov.uk/ukpga/2005/16/section/102"
+    credibility: government
+    date: "2005"
+    description: "UK law recognizing artificial light as statutory nuisance."
+
+  - id: malta-2016-light-regulations
+    title: "Environment and Resources Authority regulations on light pollution and ecosystem protection"
+    author: "Malta"
+    url: "https://era.org.mt/topic/public-consultation-guidelines-for-the-reduction-of-light-pollution-in-the-maltese-islands/"
+    credibility: government
+    date: "2016"
+    description: "Malta's light pollution regulations and guidelines."
+
+  - id: netherlands-2024-environment-act
+    title: "Omgevingswet (Environment and Planning Act): Duty of care provisions"
+    author: "Netherlands"
+    url: "https://iplo.nl/publish/pages/195438/the-environment-decree-ob-2020.pdf"
+    credibility: government
+    date: "2024"
+    description: "Netherlands environmental act with duty of care for light pollution."
+
+  - id: darksky-2019-france-policy
+    title: "France light pollution policy: National adoption and implementation overview"
+    author: "International Dark-Sky Association (France)"
+    url: "https://darksky.org/news/france-light-pollution-law-2018/"
+    credibility: ngo
+    date: "2019"
+    description: "Overview of France's light pollution policy implementation."
+
+  # International Treaties & Commitments
+  - id: cms-2024-light-guidelines
+    title: "CMS International Light Pollution Guidelines"
+    author: "Convention on the Conservation of Migratory Species of Wild Animals (CMS)"
+    url: "https://www.cms.int/sites/default/files/document/cms_cop14_res.13.5_rev.cop14_annex_cms-international-light-pollution-guidelines_e_0.pdf"
+    credibility: government
+    date: "2024"
+    description: "CMS international guidelines for light pollution (India is party)."
+
+  - id: cms-2024-strategic-plan
+    title: "Samarkand Strategic Plan for Migratory Species 2024-2032"
+    author: "Convention on Migratory Species"
+    url: "https://www.cms.int/en/documents/resolution-141-samarkand-strategic-plan-migratory-species-2024-2032"
+    credibility: government
+    date: "2024"
+    description: "CMS strategic plan adopted at COP14."
+
+  - id: india-caf-nap
+    title: "CMS CAF Initiative (India)"
+    author: "India Ministry of Environment, Forest and Climate Change"
+    url: "https://moef.gov.in/uploads/2018/03/CAF_NAP_Final-with-CL.pdf"
+    credibility: government
+    date: "2018"
+    description: "India's National Action Plan under CMS Central Asian Flyway."
+
+  # India National & State Policy
+  - id: india-1972-wildlife-act
+    title: "Wildlife (Protection) Act, 1972"
+    author: "Government of India"
+    url: "https://www.indiacode.nic.in/bitstream/123456789/6198/1/the_wild_life_%28protection%29_act%2C_1972.pdf"
+    credibility: government
+    date: "1972"
+    description: "India's foundational wildlife protection law."
+
+  - id: ngt-2024-alan-case
+    title: "OA 1380/2024 (ALAN)"
+    author: "National Green Tribunal (NGT)"
+    url: "https://www.greentribunal.gov.in/sites/default/files/news_updates/Affidavit%20on%20behalf%20of%20MoEF&CC%20in%20OA%20No%201380%20of%202024%20(Panchtattva%20Foundation%20Vs.%20MoEF&CC).pdf"
+    credibility: government
+    date: "2024"
+    description: "NGT case on ALAN (ongoing as of Jan 2026)."
+
+  - id: maharashtra-2024-amrut-gr
+    title: "Government Resolution on AMRUT Climate Action Cells"
+    author: "Government of Maharashtra (Environment Dept.)"
+    url: "https://gr.maharashtra.gov.in/Site/Upload/Government%20Resolutions/Marathi/202407251203498304.pdf"
+    credibility: government
+    date: "2024"
+    description: "Maharashtra GR on AMRUT city climate action cells."
+
+  - id: india-2022-net-zero
+    title: "LT-LEDS / India Net Zero by 2070"
+    author: "Government of India (MoEFCC)"
+    url: "https://unfccc.int/documents/623511"
+    credibility: government
+    date: "2022"
+    description: "India's long-term low emission development strategy to achieve net zero by 2070."
+
+  - id: maharashtra-under2-coalition
+    title: "Maharashtra joins Under2Coalition"
+    author: "The Climate Group"
+    url: "https://www.theclimategroup.org/our-work/news/maharashtra-joins-global-under2-coalition-strengthen-its-climate-action-plan"
+    credibility: ngo
+    date: "2023"
+    description: "Announcement of Maharashtra joining Under2 Coalition for climate action."
+
+  - id: sapcchh-2024-maharashtra
+    title: "SAPCCHH Maharashtra"
+    author: "NCDC / MoHFW"
+    url: "https://ncdc.mohfw.gov.in/wp-content/uploads/2025/01/17_SAPCCHH_Maharashtra_21-10-24.pdf"
+    credibility: government
+    date: "2024"
+    description: "Maharashtra State Action Plan on Climate Change and Human Health (SAPCCHH)."

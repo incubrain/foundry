@@ -43,28 +43,26 @@ Maharashtra is at the forefront of India's dark sky conservation efforts, with p
   :::u-page-grid
     ::::u-page-card
     ---
-    title: Policy & Regulations
-    description: Explore government policies, MPCB guidelines, and enforcement mechanisms.
-    icon: i-lucide-book-open
-    to: /policy
-    ---
-    ::::
-
-    ::::u-page-card
-    ---
     title: Research & Data
     description: Scientific studies, sky quality measurements, and impact assessments.
     icon: i-lucide-microscope
     to: /research
     ---
     ::::
-
     ::::u-page-card
     ---
-    title: Implementation
-    description: Municipal lighting ordinances, community education, and best practices.
-    icon: i-lucide-wrench
-    to: /implementation
+    title: Policy & Regulations
+    description: Explore government policies, MPCB guidelines, and enforcement mechanisms.
+    icon: i-lucide-book-open
+    to: /policy
+    ---
+    ::::
+    ::::u-page-card
+    ---
+    title: Pilot Projects
+    description: Maharashtra's pioneering dark sky conservation initiatives.
+    icon: i-lucide-sprout
+    to: /pilots
     ---
     ::::
   :::

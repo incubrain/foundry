@@ -1,0 +1,49 @@
+terms:
+  - term: Artificial Light at Night
+    abbreviation: ALAN
+    definition: Light emitted outdoors during nighttime hours from artificial sources, disrupting natural darkness and ecological processes.
+    category: technical
+  - term: Light Pollution
+    definition: Excessive, misdirected, or obtrusive artificial light that alters natural light levels in outdoor environments.
+    category: technical
+  - term: Sky Glow
+    definition: Brightening of the night sky over inhabited areas caused by artificial light scattering in the atmosphere.
+    category: technical
+  - term: Circadian Rhythm
+    definition: The natural 24-hour biological cycle regulating sleep-wake patterns, hormone production, and physiological processes in living organisms.
+    category: ecological
+  - term: Dark Sky Certification
+    definition: Official designation by DarkSky International recognizing locations that demonstrate exceptional starry skies and commitment to dark sky protection.
+    category: regulatory
+  - term: Correlated Color Temperature
+    abbreviation: CCT
+    definition: Measurement of light source color appearance in Kelvin (K), indicating whether light appears warm (2700K-3000K) or cool (4000K-6500K).
+    category: technical
+  - term: Lumen
+    definition: Unit of measurement for total quantity of visible light emitted by a source.
+    category: technical
+  - term: Lux
+    definition: Unit of measurement for illuminance, representing one lumen per square meter at a surface.
+    category: technical
+  - term: Light Trespass
+    definition: Unwanted light falling on properties or areas where it is not needed or intended.
+    category: general
+  - term: Glare
+    definition: Excessive brightness that causes visual discomfort or reduces visibility.
+    category: general
+  - term: Uplight
+    definition: Light emitted above the horizontal plane of a luminaire, contributing directly to sky glow.
+    category: technical
+  - term: Full Cutoff Fixture
+    definition: Lighting fixture designed to emit zero light above 90 degrees from vertical, minimizing upward light spill and sky glow.
+    category: technical
+  - term: Coastal Regulation Zone
+    abbreviation: CRZ
+    definition: India's regulatory framework governing development activities in coastal areas, including lighting restrictions to protect marine ecosystems.
+    category: regulatory
+  - term: Astrotourism
+    definition: Tourism activity centered on observing celestial objects and phenomena in areas with dark, unpolluted night skies.
+    category: general
+  - term: Melatonin Suppression
+    definition: Reduction in melatonin hormone production caused by nighttime light exposure, disrupting circadian rhythms and sleep patterns.
+    category: ecological

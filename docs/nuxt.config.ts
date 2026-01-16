@@ -7,7 +7,7 @@ console.log('currentDir', currentDir);
 
 export default defineNuxtConfig({
   extends: ['docus'],
-  modules: ['@vueuse/nuxt', 'nuxt-studio', '@nuxtjs/i18n'],
+  modules: ['@vueuse/nuxt', 'nuxt-studio'],
 
   experimental: {
     asyncContext: true,
@@ -18,12 +18,17 @@ export default defineNuxtConfig({
     url: 'https://content.astronera.org',
   },
 
-  i18n: {
-    defaultLocale: 'en',
-    locales: [
-      { code: 'en', name: 'English' },
-      { code: 'mr', name: 'मराठी' },
-    ],
+  content: {
+    build: {
+      markdown: {
+        remarkPlugins: {
+          'remark-math': {}, // Parse LaTeX syntax
+        },
+        rehypePlugins: {
+          'rehype-katex': {}, // Render with KaTeX (swap to 'rehype-mathjax' if preferred)
+        },
+      },
+    },
   },
 
   llms: {
@@ -49,29 +54,6 @@ export default defineNuxtConfig({
       branch: 'main', // the branch to commit to (default: main)
       rootDir: 'docs',
       private: false,
-    },
-  },
-
-  hooks: {
-    'nitro:config'(nitroConfig) {
-      const nuxt = useNuxt();
-
-      const i18nOptions = nuxt.options.i18n;
-
-      const routes: string[] = [];
-      if (!i18nOptions) {
-        routes.push('/');
-      } else {
-        routes.push(
-          ...(i18nOptions.locales?.map((locale) =>
-            typeof locale === 'string' ? `/${locale}` : `/${locale.code}`,
-          ) || []),
-        );
-      }
-
-      nitroConfig.prerender = nitroConfig.prerender || {};
-      nitroConfig.prerender.routes = nitroConfig.prerender.routes || [];
-      nitroConfig.prerender.routes.push(...(routes || []));
     },
   },
 

@@ -5,8 +5,8 @@ definePageMeta({
   layout: 'default',
 });
 
-const { data: page } = await useAsyncData('sources-landing', () =>
-  queryCollection('landing').path('/sources').first(),
+const { data: page } = await useAsyncData('glossary-landing', () =>
+  queryCollection('landing').path('/glossary').first(),
 );
 
 if (!page.value) {
@@ -33,6 +33,7 @@ useSeoMeta({
     <UPageBody>
       <UContainer>
         <ContentRenderer v-if="page" :value="page" />
+        <GlossaryTable />
       </UContainer>
     </UPageBody>
   </UPage>

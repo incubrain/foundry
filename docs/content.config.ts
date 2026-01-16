@@ -1,11 +1,9 @@
-import type { DefinedCollection } from '@nuxt/content';
 import { defineContentConfig, defineCollection, z } from '@nuxt/content';
 import { useNuxt } from '@nuxt/kit';
 import { joinURL } from 'ufo';
 
 const { options } = useNuxt();
 const cwd = joinURL(options.rootDir, 'content');
-const locales = options.i18n?.locales;
 
 const pageSchema = z.object({
   title: z.string(),
@@ -43,46 +41,19 @@ const referencesSchema = z.object({
   ),
 });
 
-let collections: Record<string, DefinedCollection>;
+const glossarySchema = z.object({
+  terms: z.array(
+    z.object({
+      term: z.string(),
+      abbreviation: z.string().optional(),
+      definition: z.string(),
+      category: z.enum(['technical', 'regulatory', 'ecological', 'general']).optional(),
+    }),
+  ),
+});
 
-if (locales && Array.isArray(locales)) {
-  collections = {};
-
-  for (const locale of locales) {
-    const code = (typeof locale === 'string' ? locale : locale.code).replace(
-      '-',
-      '_',
-    );
-
-    collections[`landing_${code}`] = defineCollection({
-      type: 'page',
-      source: [
-        {
-          cwd,
-          include: `${code}/index.md`,
-        },
-        {
-          cwd,
-          include: `${code}/sources.md`,
-        },
-      ],
-      schema: pageSchema,
-    });
-
-    collections[`docs_${code}`] = defineCollection({
-      type: 'page',
-      source: { cwd, include: `${code}/docs/**/*.md`, prefix: `/${code}` },
-      schema: pageSchema,
-    });
-
-    collections[`references_${code}`] = defineCollection({
-      type: 'data',
-      source: { cwd, include: `${code}/references/*.yml`, prefix: `/${code}` },
-      schema: referencesSchema,
-    });
-  }
-} else {
-  collections = {
+export default defineContentConfig({ 
+  collections: {
     landing: defineCollection({
       type: 'page',
       source: [
@@ -93,6 +64,10 @@ if (locales && Array.isArray(locales)) {
         {
           cwd,
           include: 'sources.md',
+        },
+        {
+          cwd,
+          include: 'glossary.md',
         },
       ],
       schema: pageSchema,
@@ -109,7 +84,11 @@ if (locales && Array.isArray(locales)) {
       source: { cwd, include: 'references/*.yml', prefix: '/' },
       schema: referencesSchema,
     }),
-  };
-}
 
-export default defineContentConfig({ collections });
+    glossary: defineCollection({
+      type: 'data',
+      source: { cwd, include: 'glossary/*.yml', prefix: '/' },
+      schema: glossarySchema,
+    }),
+  }
+ });
