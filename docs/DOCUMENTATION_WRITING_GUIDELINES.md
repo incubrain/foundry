@@ -121,9 +121,9 @@ Main sections (H2) need overview text before subsections. Citations belong in su
 
 ### Glossary Term Links
 ```markdown
-[ALAN](term:ALAN)
-[light pollution](term:light pollution)
-[dark sky certification](term:dark sky certification)
+[ALAN](term:alan)
+[light pollution](term:light-pollution)
+[dark sky certification](term:dark-sky-certification)
 ```
   ProseA.vue maps `term:` → `/glossary#term-id` anchors with dotted underline styling.
 

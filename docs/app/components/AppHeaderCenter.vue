@@ -35,6 +35,12 @@ const route = useRoute();
         to: '/glossary',
         active: route.path.startsWith('/glossary'),
       },
+      {
+        label: 'Visual',
+        icon: 'i-lucide-eye',
+        to: '/visual',
+        active: route.path.startsWith('/visual'),
+      },
     ]"
     variant="link"
   />
