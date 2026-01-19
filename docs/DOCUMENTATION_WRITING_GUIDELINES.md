@@ -191,16 +191,96 @@ title: Ecology & Biodiversity
 
 ## 9. Math Notation
 
-LaTeX support via `remark-math` and `rehype-katex`:
+LaTeX support via `remark-math` and `rehype-katex`.
 
-**Inline**: `$E = mc^2$`
+### Basic Syntax
 
-**Display**:
+**Inline math**: `$expression$` (single dollar signs)
+```markdown
+The emission factor is $0.757\,\mathrm{tCO_2/MWh}$.
+```
+
+**Display math**: `$$expression$$` (double dollar signs)
 ```markdown
 $$
-\int_0^\infty e^{-x^2} dx = \frac{\sqrt{\pi}}{2}
+E = mc^2
 $$
 ```
+
+### Critical Rules
+
+1. **Escape literal dollar signs**: Use `\$` for currency
+   ```markdown
+   ✅ The project costs \$4.32 trillion globally.
+   ❌ The project costs $4.32 trillion globally.
+   ```
+
+2. **DO NOT use MathJax syntax**: Only use `$...$` and `$$...$$`
+   ```markdown
+   ✅ $E = mc^2$
+   ❌ \(E = mc^2\)
+   ❌ \[E = mc^2\]
+   ```
+
+3. **Other currency symbols** (£, €, ₹) don't need escaping
+
+### Units and Formatting
+
+**Chemical formulas** (subscripts):
+```markdown
+$\mathrm{CO_2}$ or $\text{CO}_2$
+```
+
+**Emission factors** (with spacing):
+```markdown
+$0.757\,\mathrm{tCO_2/MWh}$
+```
+
+**Scientific units** (with superscripts):
+```markdown
+$400\,\mathrm{cd/m^2}$
+$2200\,\mathrm{K}$
+$10\,\mathrm{lux}$
+```
+
+**Large numbers** (comma formatting):
+```markdown
+$>10{,}000\,\mathrm{lumens}$
+```
+
+### Domain-Specific Examples
+
+**Astronomy/Light Pollution**:
+- Sky brightness: `$21.6\,\mathrm{mag/arcsec^2}$`
+- Bortle scale: `$\mathrm{Bortle\,4}$`
+- Naked eye stars: `$m_v < 6$`
+
+**Photometry/Lighting**:
+- Luminous intensity: `$I\,(\mathrm{cd})$`
+- Illuminance: `$E\,(\mathrm{lux})$`
+- Luminance: `$L\,(\mathrm{cd/m^2})$`
+- CCT: `$2700\,\mathrm{K}$` to `$6500\,\mathrm{K}$`
+
+**Energy/Climate**:
+- Emission rates: `$\mathrm{CO_2}$ equivalent`
+- Energy: `$\mathrm{kWh}$`, `$\mathrm{TWh}$`
+- Power: `$P = IV$`
+
+**Statistics**:
+- Percentages: Keep plain text (93.9%, 40%)
+- Multipliers: `$2.5\times$` increase
+- Ranges: `$20$–$25$ million`
+
+### Quick Reference
+
+| Type | Example | Rendered |
+|------|---------|----------|
+| Chemical | `$\mathrm{CO_2}$` | CO₂ |
+| Unit with space | `$400\,\mathrm{cd/m^2}$` | 400 cd/m² |
+| Temperature | `$2200\,\mathrm{K}$` | 2200 K |
+| Emission factor | `$0.757\,\mathrm{tCO_2/MWh}$` | 0.757 tCO₂/MWh |
+| Range | `$20$–$25$ million` | 20–25 million |
+| Currency | `\$4.32 trillion` | $4.32 trillion |
 
 ---
 
@@ -218,6 +298,9 @@ $$
   - [ ] All data from Master Key
   - [ ] Maharashtra context in info callouts only (Research)
   - [ ] Internal links use `internal:` prefix
+  - [ ] Math uses `$...$` syntax (not `\(...\)`)
+  - [ ] Dollar signs escaped (`\$`) for currency
+  - [ ] Units formatted with `\mathrm{}` and proper spacing (`\,`)
 
 ---
 
@@ -234,6 +317,9 @@ $$
 8. Add policy to Research section
 9. Invent data not in Master Key
 10. Mix `internal:` and `/` link formats
+11. Use MathJax syntax (`\(` or `\[`) for math
+12. Forget to escape dollar signs in currency values
+13. Omit `\,` spacing between numbers and units
 
 ---
 
@@ -242,3 +328,4 @@ $$
   - **2026-01-15**: Initial guidelines
   - **2026-01-15**: Added 8 rules (internal links, em-dash, frontmatter, 00-99, overviews, citations, math, components)
   - **2026-01-15**: Condensed to 50% length for readability
+  - **2026-01-19**: Expanded math notation section with domain-specific examples, LaTeX formatting rules, and currency escaping guidelines
