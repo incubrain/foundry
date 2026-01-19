@@ -17,7 +17,9 @@ export default defineNuxtConfig({
     name: 'Dark Sky Maharashtra',
     url: 'https://content.astronera.org',
   },
-
+  css: [
+    'katex/dist/katex.min.css', // Import the KaTeX CSS
+  ],
   content: {
     build: {
       markdown: {

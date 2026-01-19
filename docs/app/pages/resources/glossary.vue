@@ -6,7 +6,7 @@ definePageMeta({
 });
 
 const { data: page } = await useAsyncData('glossary-landing', () =>
-  queryCollection('landing').path('/glossary').first(),
+  queryCollection('landing').path('/resources/glossary').first(),
 );
 
 if (!page.value) {

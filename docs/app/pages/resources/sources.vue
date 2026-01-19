@@ -6,7 +6,7 @@ definePageMeta({
 });
 
 const { data: page } = await useAsyncData('sources-landing', () =>
-  queryCollection('landing').path('/sources').first(),
+  queryCollection('landing').path('/resources/sources').first(),
 );
 
 if (!page.value) {

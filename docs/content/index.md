@@ -32,7 +32,7 @@ Maharashtra is at the forefront of India's dark sky conservation efforts, with p
   ---
   label: View Sources
   size: lg
-  to: /sources
+  to: /resources/sources
   variant: outline
   trailing-icon: i-lucide-file-text
   ---

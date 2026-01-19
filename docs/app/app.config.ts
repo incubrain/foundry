@@ -29,7 +29,7 @@ export default defineAppConfig({
     textLinks: [
       {
         text: 'Sources',
-        href: '/sources',
+        href: '/resources/sources',
       },
     ],
   },

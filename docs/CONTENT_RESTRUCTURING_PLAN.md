@@ -497,7 +497,7 @@ description: Detailed roles and responsibilities for each Maharashtra government
 # Department-Specific Actions
 
 ::callout{type="info"}
-**For Department Heads**: This table outlines your department's specific responsibilities, actions, and deliverables for Dark Sky Conservation implementation.
+This table outlines department's specific responsibilities, actions, and deliverables for Dark Sky Conservation implementation.
 ::
 
 ## Responsibility Matrix

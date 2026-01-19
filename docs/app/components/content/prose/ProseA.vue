@@ -48,11 +48,11 @@ const internalPageData = computed(() => {
   return getPageMetadata(internalHref.value);
 });
 
-// Convert term: prefix to /glossary#term-id anchor
+// Convert term: prefix to /resources/glossary#term-id anchor
 const glossaryHref = computed(() => {
   if (!isGlossaryTerm.value) return props.href;
   const termId = props.href.replace('term:', '').toLowerCase();
-  return `/glossary#term-${termId}`;
+  return `/resources/glossary#term-${termId}`;
 });
 
 // Fetch glossary term data for tooltips
@@ -112,7 +112,9 @@ const extractRootDomain = (url: string | null) => {
   <!-- Citation link with tooltip + external link -->
   <span v-if="isCitation">
     <slot />
-    <sup class="citation-mark tracking-tight inline-block">
+    <sup
+      class="text-[0.75em] ms-1 me-0 align-super leading-none tracking-tight inline-block"
+    >
       <template v-for="(id, index) in citationIds" :key="id">
         <UTooltip
           v-if="citationRefs[index]"
@@ -128,7 +130,7 @@ const extractRootDomain = (url: string | null) => {
             :href="citationRefs[index].pdf || citationRefs[index].url || '#'"
             target="_blank"
             rel="noopener noreferrer"
-            class="no-underline text-primary hover:underline"
+            class="no-underline text-primary-500 hover:underline hover:text-primary-600 font-medium transition-colors"
           >
             [{{ getCitationIndex(id).value }}]
           </a>
@@ -147,7 +149,14 @@ const extractRootDomain = (url: string | null) => {
     :content="{ side: 'top', align: 'center' }"
     :ui="{ content: 'p-2 text-sm max-w-xs' }"
   >
-    <NuxtLink :to="internalHref" class="internal-link">
+    <NuxtLink
+      :to="internalHref"
+      class="no-underline text-primary-600 dark:text-primary-400 font-medium hover:text-primary-700 dark:hover:text-primary-300 transition-all duration-200"
+    >
+      <UIcon
+        name="i-lucide-file-text"
+        class="mr-1 inline-block size-3.5 align-baseline"
+      />
       <slot />
     </NuxtLink>
 
@@ -178,7 +187,10 @@ const extractRootDomain = (url: string | null) => {
     :content="{ side: 'top', align: 'center' }"
     :ui="{ content: 'p-3 text-sm max-w-md' }"
   >
-    <NuxtLink :to="glossaryHref" class="glossary-term">
+    <NuxtLink
+      :to="glossaryHref"
+      class="underline decoration-dotted decoration-neutral-400 dark:decoration-neutral-500 underline-offset-[3px] font-medium hover:decoration-solid hover:decoration-neutral-500 dark:hover:decoration-neutral-400 hover:text-neutral-700 dark:hover:text-neutral-300 transition-all"
+    >
       <slot />
     </NuxtLink>
 
@@ -217,7 +229,11 @@ const extractRootDomain = (url: string | null) => {
   </UPopover>
 
   <!-- Fallback for glossary terms without data -->
-  <NuxtLink v-else-if="isGlossaryTerm" :to="glossaryHref" class="glossary-term">
+  <NuxtLink
+    v-else-if="isGlossaryTerm"
+    :to="glossaryHref"
+    class="underline decoration-dotted decoration-primary-400 dark:decoration-primary-500 underline-offset-[3px] text-primary-600 dark:text-primary-400 font-medium hover:decoration-solid hover:decoration-primary-500 dark:hover:decoration-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-all"
+  >
     <slot />
   </NuxtLink>
 
@@ -226,34 +242,3 @@ const extractRootDomain = (url: string | null) => {
     <slot />
   </NuxtLink>
 </template>
-
-<style scoped>
-.citation-mark {
-  font-size: 0.75em;
-  margin-inline-start: 0.25em;
-  margin-inline-end: 0em;
-  vertical-align: super;
-  line-height: 0;
-}
-
-.glossary-term {
-  text-decoration: underline dotted;
-  text-decoration-color: currentColor;
-  text-underline-offset: 3px;
-}
-
-.glossary-term:hover {
-  text-decoration-style: solid;
-}
-
-.internal-link {
-  text-decoration: underline;
-  text-decoration-style: dashed;
-  text-decoration-color: currentColor;
-  text-underline-offset: 3px;
-}
-
-.internal-link:hover {
-  text-decoration-style: solid;
-}
-</style>

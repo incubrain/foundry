@@ -9,8 +9,6 @@ const pageSchema = z.object({
   title: z.string(),
   description: z.string().optional(),
   label: z.string().optional(),
-  departments: z.array(z.string()).optional(),
-  department_summary: z.string().optional(),
   navigation: z.boolean().optional(),
   layout: z.string().optional(),
   links: z
@@ -68,11 +66,7 @@ export default defineContentConfig({
         },
         {
           cwd,
-          include: 'sources.md',
-        },
-        {
-          cwd,
-          include: 'glossary.md',
+          include: 'resources/*.md',
         },
       ],
       schema: pageSchema,

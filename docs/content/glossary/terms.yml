@@ -230,3 +230,148 @@ terms:
        conservation of nature with associated ecosystem services and cultural
        values.
     category: regulatory
+  - id: moefcc
+    term: Ministry of Environment, Forest and Climate Change
+    abbreviation: MoEFCC
+    definition:
+      India's apex body in the administrative structure for planning, promotion,
+      coordination and oversight of environmental and forestry programs.
+    category: organizations
+  - id: cpcb
+    term: Central Pollution Control Board
+    abbreviation: CPCB
+    definition:
+      Statutory organization under the Ministry of Environment, Forest and
+      Climate Change to promote cleanliness of streams and wells in different
+      areas of India.
+    category: organizations
+  - id: gr
+    term: Government Resolution
+    abbreviation: GR
+    definition:
+      Official administrative decision or directive issued by a state government
+      in India.
+    category: regulatory
+  - id: mou
+    term: Memorandum of Understanding
+    abbreviation: MoU
+    definition:
+      Formal agreement between two or more parties outlining the terms and
+      details of a mutual understanding.
+    category: general
+  - id: iit
+    term: Indian Institute of Technology
+    abbreviation: IIT
+    definition:
+      Autonomous public technical universities located across India, known for
+      engineering and technology research.
+    category: organizations
+  - id: iiser
+    term: Indian Institute of Science Education and Research
+    abbreviation: IISER
+    definition:
+      Group of premier science education and research institutes in India.
+    category: organizations
+  - id: tifr
+    term: Tata Institute of Fundamental Research
+    abbreviation: TIFR
+    definition:
+      Public research institution in Mumbai conducting fundamental research in
+      physics, chemistry, biology, mathematics, and computer science.
+    category: organizations
+  - id: teri
+    term: The Energy and Resources Institute
+    abbreviation: TERI
+    definition:
+      Research institute focused on energy, environment, and sustainable
+      development.
+    category: organizations
+  - id: wri
+    term: World Resources Institute
+    abbreviation: WRI
+    definition:
+      Global research organization working on issues at the intersection of
+      environment and socio-economic development.
+    category: organizations
+  - id: lt-leds
+    term: Long-Term Low Emissions Development Strategy
+    abbreviation: LT-LEDS
+    definition:
+      India's framework for achieving net-zero greenhouse gas emissions by 2070.
+    category: regulatory
+  - id: amrut
+    term: Atal Mission for Rejuvenation and Urban Transformation
+    abbreviation: AMRUT
+    definition:
+      Central government scheme for urban infrastructure improvement and climate
+      action in Indian cities.
+    category: regulatory
+  - id: ulb
+    term: Urban Local Bodies
+    abbreviation: ULB
+    definition:
+      Municipal corporations, municipalities, and nagar panchayats responsible
+      for local governance in urban areas.
+    category: organizations
+  - id: led
+    term: Light Emitting Diode
+    abbreviation: LED
+    definition:
+      Semiconductor light source that emits light when current flows through it,
+      widely used in energy-efficient lighting.
+    category: technical
+  - id: ghg
+    term: Greenhouse Gas
+    abbreviation: GHG
+    definition:
+      Gases that trap heat in the atmosphere, contributing to global warming and
+      climate change.
+    category: general
+  - id: roi
+    term: Return on Investment
+    abbreviation: ROI
+    definition:
+      Measure of the profitability of an investment, calculated as net benefit
+      divided by cost.
+    category: general
+  - id: iea
+    term: International Energy Agency
+    abbreviation: IEA
+    definition:
+      Intergovernmental organization providing information, analysis, and
+      recommendations on global energy issues.
+    category: organizations
+  - id: unfccc
+    term: United Nations Framework Convention on Climate Change
+    abbreviation: UNFCCC
+    definition:
+      International environmental treaty addressing climate change, adopted at
+      the Earth Summit in 1992.
+    category: organizations
+  - id: cea
+    term: Central Electricity Authority
+    abbreviation: CEA
+    definition:
+      Statutory organization in India responsible for national electricity
+      policy, planning and coordination.
+    category: organizations
+  - id: cie
+    term: Commission Internationale de l'Éclairage
+    abbreviation: CIE
+    definition:
+      International Commission on Illumination, the global authority on light,
+      lighting, color, and color spaces.
+    category: organizations
+  - id: who
+    term: World Health Organization
+    abbreviation: WHO
+    definition:
+      United Nations agency responsible for international public health.
+    category: organizations
+  - id: iarc
+    term: International Agency for Research on Cancer
+    abbreviation: IARC
+    definition:
+      Specialized cancer agency of the World Health Organization conducting and
+      coordinating research on cancer causes.
+    category: organizations

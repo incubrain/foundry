@@ -4,6 +4,7 @@ const route = useRoute();
 
 <template>
   <UNavigationMenu
+    content-orientation="vertical"
     :items="[
       {
         label: 'Research',
@@ -24,22 +25,21 @@ const route = useRoute();
         active: route.path.startsWith('/pilots'),
       },
       {
-        label: 'Sources',
-        icon: 'i-lucide-file-pen-line',
-        to: '/sources',
-        active: route.path.startsWith('/sources'),
-      },
-      {
-        label: 'Glossary',
-        icon: 'i-lucide-library',
-        to: '/glossary',
-        active: route.path.startsWith('/glossary'),
-      },
-      {
-        label: 'Visual',
-        icon: 'i-lucide-eye',
-        to: '/visual',
-        active: route.path.startsWith('/visual'),
+        label: 'Resources',
+        icon: 'i-lucide-book-key',
+        active: route.path.startsWith('/resources'),
+        children: [
+          {
+            label: 'Sources',
+            icon: 'i-lucide-file-pen-line',
+            to: '/resources/sources',
+          },
+          {
+            label: 'Glossary',
+            icon: 'i-lucide-library',
+            to: '/resources/glossary',
+          },
+        ],
       },
     ]"
     variant="link"
