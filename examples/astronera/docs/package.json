@@ -1,0 +1,14 @@
+{
+  "name": "@astronera/docs",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "prepare": "nuxt prepare",
+    "build": "nuxt build",
+    "dev": "nuxt dev --port 3003",
+    "preview": "nuxt preview"
+  },
+  "dependencies": {
+    "@incubrain/docs": "workspace:*"
+  }
+}

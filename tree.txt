@@ -1,138 +1,395 @@
 .
 ├── AGENTS.md
 ├── README.md
-├── deploy
-│   ├── Dockerfile
-│   └── vercel.json
-├── docs
-│   ├── README.md
-│   ├── app
-│   │   ├── layouts
-│   │   │   ├── default.vue
-│   │   │   └── docs.vue
-│   │   └── pages
-│   │       └── [...slug].vue
-│   ├── app.config.ts
-│   ├── app.vue
-│   ├── components
-│   │   └── content
-│   │       ├── BackLinks.vue
-│   │       ├── Reference.vue
-│   │       ├── References.vue
-│   │       ├── RelatedContent.vue
-│   │       ├── SmartLink.vue
-│   │       └── SourcesTable.vue
-│   ├── content
-│   │   ├── 1.policy
-│   │   │   ├── enforcement.md
-│   │   │   ├── index.md
-│   │   │   └── maharashtra-guidelines.md
-│   │   ├── 2.research
-│   │   │   ├── index.md
-│   │   │   └── lonar-crater.md
-│   │   ├── 3.implementation
-│   │   │   ├── index.md
-│   │   │   └── municipal-lighting.md
-│   │   ├── index.md
-│   │   └── sources.md
-│   ├── content.config.ts
-│   ├── nuxt.config.ts
-│   ├── package.json
-│   ├── public
-│   │   └── sources
-│   │       └── README.md
-│   ├── repo-sync-testing.md
-│   ├── server
-│   │   ├── api
-│   │   │   └── mcp
-│   │   │       ├── index.get.ts
-│   │   │       ├── resources
-│   │   │       │   └── list.get.ts
-│   │   │       └── resources.get.ts
-│   │   └── mcp
-│   │       └── resources
-│   ├── template-updates.md
-│   ├── transformers
-│   │   ├── cross-links.ts
-│   │   └── references.ts
-│   └── tsconfig.json
-├── eslint.config.mjs
-├── layers
-│   └── base
+├── apps
+│   ├── base
+│   │   ├── app
+│   │   │   ├── components
+│   │   │   │   ├── VideoHtml.vue
+│   │   │   │   ├── VideoIframe.vue
+│   │   │   │   └── section
+│   │   │   │       ├── SectionHeader.vue
+│   │   │   │       └── SectionWrapper.vue
+│   │   │   └── composables
+│   │   │       ├── useAppStorage.ts
+│   │   │       ├── useContentCache.ts
+│   │   │       └── useDevConfig.ts
+│   │   ├── nuxt.config.ts
+│   │   ├── package.json
+│   │   └── shared
+│   │       ├── config-resolver.ts
+│   │       ├── constants.ts
+│   │       └── navigation.ts
+│   ├── docs
+│   │   ├── README.md
+│   │   ├── app
+│   │   │   ├── app.vue
+│   │   │   ├── components
+│   │   │   │   ├── IconMenuToggle.vue
+│   │   │   │   ├── OgImage
+│   │   │   │   │   ├── OgImageDocs.vue
+│   │   │   │   │   └── OgImageLanding.vue
+│   │   │   │   ├── app
+│   │   │   │   │   ├── AppBanner.vue
+│   │   │   │   │   ├── AppLogo.vue
+│   │   │   │   │   ├── footer
+│   │   │   │   │   │   ├── AppFooter.vue
+│   │   │   │   │   │   ├── AppFooterBottom.vue
+│   │   │   │   │   │   ├── AppFooterCenter.vue
+│   │   │   │   │   │   ├── AppFooterLeft.vue
+│   │   │   │   │   │   └── AppFooterRight.vue
+│   │   │   │   │   └── header
+│   │   │   │   │       ├── AppHeader.vue
+│   │   │   │   │       ├── AppHeaderBody.vue
+│   │   │   │   │       ├── AppHeaderCTA.vue
+│   │   │   │   │       └── AppHeaderCenter.vue
+│   │   │   │   ├── content
+│   │   │   │   │   ├── Bibliography.vue
+│   │   │   │   │   ├── CaseStudy.vue
+│   │   │   │   │   ├── Changelog.vue
+│   │   │   │   │   ├── ComparisonList.vue
+│   │   │   │   │   ├── FaqAccordion.vue
+│   │   │   │   │   ├── FeatureGrid.vue
+│   │   │   │   │   ├── FounderBio.vue
+│   │   │   │   │   ├── GlossaryTable.vue
+│   │   │   │   │   ├── SourcesTable.vue
+│   │   │   │   │   └── prose
+│   │   │   │   │       └── ProseA.vue
+│   │   │   │   ├── convert
+│   │   │   │   │   ├── External.vue
+│   │   │   │   │   ├── Form.vue
+│   │   │   │   │   ├── Internal.vue
+│   │   │   │   │   ├── Pricing.vue
+│   │   │   │   │   ├── Rss.vue
+│   │   │   │   │   └── Social.vue
+│   │   │   │   ├── docs
+│   │   │   │   │   ├── DocsAsideLeftBody.vue
+│   │   │   │   │   ├── DocsAsideLeftTop.vue
+│   │   │   │   │   ├── DocsAsideRightBottom.vue
+│   │   │   │   │   └── DocsPageHeaderLinks.vue
+│   │   │   │   └── nav
+│   │   │   │       ├── Anchor.vue
+│   │   │   │       └── Cta.vue
+│   │   │   ├── composables
+│   │   │   │   ├── useCitations.ts
+│   │   │   │   └── useDocsMetadata.ts
+│   │   │   ├── error.vue
+│   │   │   ├── layouts
+│   │   │   │   ├── article.vue
+│   │   │   │   ├── conversion.vue
+│   │   │   │   ├── default.vue
+│   │   │   │   └── docs.vue
+│   │   │   ├── middleware
+│   │   │   │   └── page-metadata.global.ts
+│   │   │   ├── pages
+│   │   │   │   └── [...slug].vue
+│   │   │   └── utils
+│   │   │       ├── navigation.ts
+│   │   │       └── prerender.ts
+│   │   ├── content.collections.ts
+│   │   ├── issues.md
+│   │   ├── modules
+│   │   │   ├── config.ts
+│   │   │   └── css.ts
+│   │   ├── nuxt.config.ts
+│   │   ├── nuxt.schema.ts
+│   │   ├── package.json
+│   │   ├── repo-sync-testing.md
+│   │   ├── server
+│   │   │   ├── mcp
+│   │   │   │   └── tools
+│   │   │   │       ├── get-tools.ts
+│   │   │   │       └── list-pages.ts
+│   │   │   ├── routes
+│   │   │   │   └── rss
+│   │   │   │       └── [collection].ts
+│   │   │   └── utils
+│   │   │       ├── cache.ts
+│   │   │       ├── logger.ts
+│   │   │       ├── rss
+│   │   │       │   ├── decisions.ts
+│   │   │       │   └── shared.ts
+│   │   │       └── rss.handler.ts
+│   │   ├── shared
+│   │   │   ├── types
+│   │   │   │   ├── config.d.ts
+│   │   │   │   └── docus.d.ts
+│   │   │   └── utils
+│   │   │       └── meta.ts
+│   │   ├── template-updates.md
+│   │   └── tsconfig.json
+│   └── theme
 │       ├── app
 │       │   ├── app.config.ts
-│       │   ├── app.vue
-│       │   ├── assets
-│       │   │   └── css
-│       │   │       ├── main.css
-│       │   │       └── tokens
-│       │   │           ├── colors.css
-│       │   │           ├── layout.css
-│       │   │           └── typography.css
-│       │   ├── components
-│       │   │   ├── Logo.vue
-│       │   │   ├── VideoHtml.vue
-│       │   │   ├── VideoIframe.vue
-│       │   │   ├── content
-│       │   │   │   ├── CaseStudy.vue
-│       │   │   │   ├── Changelog.vue
-│       │   │   │   ├── ComparisonList.vue
-│       │   │   │   ├── DocumentsTable.vue
-│       │   │   │   ├── FaqAccordion.vue
-│       │   │   │   ├── FeatureGrid.vue
-│       │   │   │   └── FounderBio.vue
-│       │   │   ├── convert
-│       │   │   │   ├── External.vue
-│       │   │   │   ├── Form.vue
-│       │   │   │   ├── Internal.vue
-│       │   │   │   ├── Pricing.vue
-│       │   │   │   ├── Rss.vue
-│       │   │   │   └── Social.vue
-│       │   │   ├── nav
-│       │   │   │   ├── Anchor.vue
-│       │   │   │   ├── Banner.vue
-│       │   │   │   ├── Cta.vue
-│       │   │   │   ├── Footer.vue
-│       │   │   │   ├── Header.vue
-│       │   │   │   └── Mobile.vue
-│       │   │   └── section
-│       │   │       ├── Benefits.vue
-│       │   │       ├── Faq.vue
-│       │   │       ├── Hero.vue
-│       │   │       ├── Offer.vue
-│       │   │       ├── Outcome.vue
-│       │   │       ├── Results.vue
-│       │   │       ├── SectionHeader.vue
-│       │   │       └── SectionWrapper.vue
-│       │   ├── composables
-│       │   │   ├── useAppStorage.ts
-│       │   │   ├── useContentCache.ts
-│       │   │   └── useDevConfig.ts
-│       │   ├── error.vue
-│       │   ├── layouts
-│       │   │   ├── article.vue
-│       │   │   ├── default.vue
-│       │   │   └── offer.vue
-│       │   ├── middleware
-│       │   │   └── dynamic-layout.global.ts
-│       │   └── pages
-│       │       └── [...slug].vue
-│       ├── content.collections.ts
+│       │   └── assets
+│       │       └── main.css
 │       ├── nuxt.config.ts
-│       └── server
-│           ├── routes
-│           │   └── rss
-│           │       └── [collection].ts
-│           └── utils
-│               ├── cache.ts
-│               ├── logger.ts
-│               ├── rss
-│               │   ├── decisions.ts
-│               │   └── shared.ts
-│               └── rss.handler.ts
+│       └── package.json
+├── deploy
+│   ├── Dockerfile.web
+│   ├── Dockerfile.website
+│   └── vercel.website.json
+├── eslint.config.mjs
+├── examples
+│   ├── astronera
+│   │   ├── docs
+│   │   │   ├── REF_DOCS.md
+│   │   │   ├── app
+│   │   │   │   └── app.config.ts
+│   │   │   ├── content.config.ts
+│   │   │   ├── nuxt.config.ts
+│   │   │   ├── package.json
+│   │   │   └── tsconfig.json
+│   │   ├── shared
+│   │   │   ├── assets
+│   │   │   │   └── css
+│   │   │   │       ├── main.css
+│   │   │   │       └── starfield.css
+│   │   │   ├── content
+│   │   │   │   ├── docs
+│   │   │   │   │   ├── config
+│   │   │   │   │   │   ├── navigation.yml
+│   │   │   │   │   │   └── site.yml
+│   │   │   │   │   ├── docs
+│   │   │   │   │   │   ├── 1.research
+│   │   │   │   │   │   │   ├── 00.index.md
+│   │   │   │   │   │   │   ├── 01.ecology.md
+│   │   │   │   │   │   │   ├── 02.health.md
+│   │   │   │   │   │   │   ├── 03.climate.md
+│   │   │   │   │   │   │   └── 04.tourism.md
+│   │   │   │   │   │   ├── 2.policy
+│   │   │   │   │   │   │   ├── 00.index.md
+│   │   │   │   │   │   │   ├── 01.global-precedents.md
+│   │   │   │   │   │   │   ├── 02.legal-obligations.md
+│   │   │   │   │   │   │   ├── 03.department-actions.md
+│   │   │   │   │   │   │   ├── 04.regulatory-framework.md
+│   │   │   │   │   │   │   ├── 05.recommendations.md
+│   │   │   │   │   │   │   └── 06.astronera-secretariat.md
+│   │   │   │   │   │   └── 3.pilots
+│   │   │   │   │   │       └── 00.index.md
+│   │   │   │   │   ├── glossary
+│   │   │   │   │   │   ├── ecological.yml
+│   │   │   │   │   │   ├── general.yml
+│   │   │   │   │   │   ├── organizations.yml
+│   │   │   │   │   │   ├── regulatory.yml
+│   │   │   │   │   │   └── technical.yml
+│   │   │   │   │   ├── pages
+│   │   │   │   │   │   ├── index.md
+│   │   │   │   │   │   └── resources
+│   │   │   │   │   │       ├── glossary.md
+│   │   │   │   │   │       └── sources.md
+│   │   │   │   │   └── references
+│   │   │   │   │       ├── astronomy.yml
+│   │   │   │   │       ├── climate.yml
+│   │   │   │   │       ├── ecology.yml
+│   │   │   │   │       ├── health.yml
+│   │   │   │   │       ├── internal.yml
+│   │   │   │   │       ├── policy.yml
+│   │   │   │   │       ├── standards.yml
+│   │   │   │   │       └── tourism.yml
+│   │   │   │   └── web
+│   │   │   │       ├── config
+│   │   │   │       │   ├── navigation.yml
+│   │   │   │       │   └── site.yml
+│   │   │   │       ├── faq
+│   │   │   │       │   ├── certification.yml
+│   │   │   │       │   ├── policy.yml
+│   │   │   │       │   └── technical.yml
+│   │   │   │       ├── pages
+│   │   │   │       │   ├── about.md
+│   │   │   │       │   ├── index.md
+│   │   │   │       │   ├── offers
+│   │   │   │       │   │   └── certification.md
+│   │   │   │       │   └── success
+│   │   │   │       │       └── certification.md
+│   │   │   │       └── team
+│   │   │   │           ├── drew-macgibbon.yml
+│   │   │   │           └── shweta-kulkarni.yml
+│   │   │   └── public
+│   │   │       ├── about
+│   │   │       │   ├── 00.about-cover-shweta-kulkarni-painting-common-man-looking-at-universe.jpg
+│   │   │       │   ├── 00.about-hero.png
+│   │   │       │   ├── 01.tara-comic-timeline-1.jpg
+│   │   │       │   ├── 02.tara-comic-timeline-2.jpg
+│   │   │       │   ├── 03.tara-comic-timeline-3.jpg
+│   │   │       │   ├── 04.tara-comic-timeline-4.jpg
+│   │   │       │   ├── 05.tara-comic-timeline-5.jpg
+│   │   │       │   ├── 06.tara-comic-timeline-6.jpg
+│   │   │       │   ├── 07.tara-comic-timeline-7.jpg
+│   │   │       │   ├── 08.tara-comic-timeline-8.jpg
+│   │   │       │   └── 09.tara-comic-timeline-9.jpg
+│   │   │       ├── darksky
+│   │   │       │   ├── better-way.jpg
+│   │   │       │   ├── circadian-rhythm.jpg
+│   │   │       │   ├── cultural-heritage.jpg
+│   │   │       │   ├── dark-sky-comparrison.jpg
+│   │   │       │   ├── light-tresspass.jpg
+│   │   │       │   ├── wasted-energy.jpg
+│   │   │       │   └── wildlife-impact.jpg
+│   │   │       ├── favicon.ico
+│   │   │       ├── favicon.svg
+│   │   │       ├── glossary
+│   │   │       │   └── 00.five-lighting-principles.webp
+│   │   │       ├── icon-192x192.png
+│   │   │       ├── icon-512x512.png
+│   │   │       ├── icon-96x96.png
+│   │   │       ├── logos
+│   │   │       │   ├── dst.png
+│   │   │       │   ├── iau-oad.png
+│   │   │       │   ├── iau.png
+│   │   │       │   ├── iimb-nsrcel.png
+│   │   │       │   └── in-fed.png
+│   │   │       ├── pdfs
+│   │   │       │   ├── Dark-Sky-Policy-Maharashtra-Overview.pdf
+│   │   │       │   ├── darksky-international-acknowledgement-certificate.png
+│   │   │       │   └── dsi-endorsement-2025.pdf
+│   │   │       ├── tara
+│   │   │       │   ├── 00.tara-astronaut.png
+│   │   │       │   └── 00.tara-cheerful.png
+│   │   │       └── team
+│   │   │           ├── 00.team-hero.png
+│   │   │           ├── drew-macgibbon.jpg
+│   │   │           └── shweta-kulkarni.jpg
+│   │   └── web
+│   │       ├── app
+│   │       │   ├── app.config.ts
+│   │       │   ├── components
+│   │       │   │   └── section
+│   │       │   │       ├── Benefits.vue
+│   │       │   │       ├── Faq.vue
+│   │       │   │       └── Hero.vue
+│   │       │   ├── composables
+│   │       │   │   └── useStarfield.ts
+│   │       │   └── pages
+│   │       │       └── success
+│   │       │           └── [...slug].vue
+│   │       ├── content.config.ts
+│   │       ├── nuxt.config.ts
+│   │       ├── package.json
+│   │       └── tsconfig.json
+│   ├── founder-funnel
+│   │   ├── docs
+│   │   │   ├── content
+│   │   │   │   └── docs
+│   │   │   ├── content.config.ts
+│   │   │   ├── nuxt.config.ts
+│   │   │   ├── package.json
+│   │   │   └── tsconfig.json
+│   │   ├── shared
+│   │   │   ├── assets
+│   │   │   ├── content
+│   │   │   │   ├── docs
+│   │   │   │   │   ├── config
+│   │   │   │   │   └── decisions
+│   │   │   │   │       ├── 00.index.md
+│   │   │   │   │       ├── 01.template-first-launch.md
+│   │   │   │   │       ├── 02.validation-system-pivot.md
+│   │   │   │   │       ├── 03.ruthless-focus.md
+│   │   │   │   │       ├── 04.removing-developer-friction.md
+│   │   │   │   │       ├── 05.ai-conversations.md
+│   │   │   │   │       ├── 06.minimum-viable-idea.md
+│   │   │   │   │       ├── 07.attention-to-build-framework.md
+│   │   │   │   │       ├── 08.fail-fast-dx-revolution.md
+│   │   │   │   │       ├── 09.signal-over-systems.md
+│   │   │   │   │       └── 10.authority-documentation.md
+│   │   │   │   └── web
+│   │   │   │       ├── config
+│   │   │   │       │   ├── navigation.yml
+│   │   │   │       │   └── site.yml
+│   │   │   │       ├── faq
+│   │   │   │       │   ├── 1.technical.yml
+│   │   │   │       │   ├── 2.general.yml
+│   │   │   │       │   ├── 3.mentorship.yml
+│   │   │   │       │   └── 4.values.yml
+│   │   │   │       ├── pages
+│   │   │   │       │   ├── about.md
+│   │   │   │       │   ├── index.md
+│   │   │   │       │   ├── offers
+│   │   │   │       │   │   └── mentorship.md
+│   │   │   │       │   └── success
+│   │   │   │       │       ├── index.md
+│   │   │   │       │       └── mentorship.md
+│   │   │   │       └── team
+│   │   │   │           └── drew-macgibbon.yml
+│   │   │   └── public
+│   │   │       ├── favicon-96x96.png
+│   │   │       ├── favicon.ico
+│   │   │       ├── favicon.svg
+│   │   │       ├── team
+│   │   │       │   └── founder-avatar.png
+│   │   │       └── updates
+│   │   │           ├── magnet-v0.3.0.png
+│   │   │           ├── magnet-v0.3.1.jpg
+│   │   │           ├── v0.2.1.lighthouse.pdf
+│   │   │           ├── v0.2.2.lighthouse.pdf
+│   │   │           ├── validator-v0.1.0.jpg
+│   │   │           ├── validator-v0.2.0.jpg
+│   │   │           ├── validator-v0.2.1.jpg
+│   │   │           ├── validator-v0.3.0.jpg
+│   │   │           └── validator-v0.3.1.jpg
+│   │   └── web
+│   │       ├── app
+│   │       │   ├── app.config.ts
+│   │       │   └── components
+│   │       │       └── section
+│   │       │           ├── Benefits.vue
+│   │       │           ├── Faq.vue
+│   │       │           ├── Hero.vue
+│   │       │           ├── Offer.vue
+│   │       │           ├── Outcome.vue
+│   │       │           └── Results.vue
+│   │       ├── content.config.ts
+│   │       ├── nuxt.config.ts
+│   │       ├── package.json
+│   │       └── tsconfig.json
+│   └── starter
+│       ├── docs
+│       │   └── tsconfig.json
+│       ├── shared
+│       │   ├── content
+│       │   │   ├── docs
+│       │   │   │   ├── config
+│       │   │   │   └── decisions
+│       │   │   │       ├── 00.index.md
+│       │   │   │       └── 01.launch.md
+│       │   │   └── web
+│       │   │       ├── config
+│       │   │       │   ├── navigation.yml
+│       │   │       │   └── site.yml
+│       │   │       ├── faq
+│       │   │       │   ├── 1.warning.yml
+│       │   │       │   ├── 2.objection.yml
+│       │   │       │   ├── 3.support.yml
+│       │   │       │   └── 4.values.yml
+│       │   │       └── pages
+│       │   │           ├── about.md
+│       │   │           ├── index.md
+│       │   │           ├── offers
+│       │   │           │   └── service.md
+│       │   │           └── success
+│       │   │               └── index.md
+│       │   └── public
+│       │       ├── _robots.txt
+│       │       ├── favicon-96x96.png
+│       │       ├── favicon.ico
+│       │       ├── favicon.svg
+│       │       ├── images
+│       │       │   ├── product
+│       │       │   └── team
+│       │       │       └── founder-avatar.jpeg
+│       │       └── videos
+│       │           └── example.mp4
+│       └── web
+│           ├── content.config.ts
+│           ├── nuxt.config.ts
+│           ├── package.json
+│           └── tsconfig.json
+├── ideas.md
+├── issues.md
 ├── modules
 │   └── events
 │       ├── index.ts
+│       ├── package.json
 │       ├── runtime
 │       │   ├── components
 │       │   │   └── DevEvents.vue
@@ -160,171 +417,9 @@
 │           └── utils
 │               ├── anti-spam.test.ts
 │               └── anti-spam.ts
-├── my-docs
-│   ├── README.md
-│   ├── content
-│   │   ├── 1.getting-started
-│   │   │   ├── 2.introduction.md
-│   │   │   ├── 3.installation.md
-│   │   │   ├── 4.project-structure.md
-│   │   │   ├── 5.studio.md
-│   │   │   ├── 6.migration.md
-│   │   │   └── 7.troubleshooting.md
-│   │   ├── 2.essentials
-│   │   │   ├── 1.markdown-syntax.md
-│   │   │   ├── 2.code-blocks.md
-│   │   │   ├── 3.components.md
-│   │   │   └── 4.images-embeds.md
-│   │   └── index.md
-│   └── public
-│       ├── favicon.ico
-│       └── mountains.webp
-├── nuxt.config.ts
 ├── package.json
 ├── pnpm-lock.yaml
 ├── pnpm-workspace.yaml
-├── shared
-│   ├── constants.ts
-│   ├── navigation.ts
-│   └── utils
-│       └── config-resolver.ts
-├── templates
-│   ├── astronera
-│   │   ├── app
-│   │   │   ├── assets
-│   │   │   │   └── css
-│   │   │   │       ├── main.css
-│   │   │   │       └── starfield.css
-│   │   │   ├── composables
-│   │   │   │   └── useStarfield.ts
-│   │   │   └── layouts
-│   │   │       └── documents.vue
-│   │   ├── content
-│   │   │   ├── config
-│   │   │   │   ├── navigation.yml
-│   │   │   │   └── site.yml
-│   │   │   ├── faq
-│   │   │   │   ├── certification.yml
-│   │   │   │   ├── policy.yml
-│   │   │   │   └── technical.yml
-│   │   │   └── pages
-│   │   │       ├── about.md
-│   │   │       ├── documents.md
-│   │   │       ├── index.md
-│   │   │       ├── offers
-│   │   │       │   └── certification.md
-│   │   │       └── success
-│   │   │           └── certification.md
-│   │   ├── content.config.ts
-│   │   ├── nuxt.config.ts
-│   │   └── public
-│   │       ├── images
-│   │       │   ├── about
-│   │       │   │   ├── shweta-kulkarni.jpg
-│   │       │   │   ├── tara-cover.jpg
-│   │       │   │   ├── timeline-comic-1.jpg
-│   │       │   │   ├── timeline-comic-2.jpg
-│   │       │   │   ├── timeline-comic-3.jpg
-│   │       │   │   ├── timeline-comic-4.jpg
-│   │       │   │   ├── timeline-comic-5.jpg
-│   │       │   │   ├── timeline-comic-6.jpg
-│   │       │   │   ├── timeline-comic-7.jpg
-│   │       │   │   └── timeline-comic-8.jpg
-│   │       │   └── logos
-│   │       │       ├── astronera-logo.svg
-│   │       │       └── dsi-logo.svg
-│   │       └── pdfs
-│   │           ├── dark-sky-policy-roadmap-2025.pdf
-│   │           ├── dsi-acknowledgement.pdf
-│   │           ├── dsi-endorsement-2025.pdf
-│   │           └── dsi-endorsement.pdf
-│   ├── founder-funnel
-│   │   ├── content
-│   │   │   ├── config
-│   │   │   │   ├── navigation.yml
-│   │   │   │   └── site.yml
-│   │   │   ├── faq
-│   │   │   │   ├── 1.technical.yml
-│   │   │   │   ├── 2.general.yml
-│   │   │   │   ├── 3.mentorship.yml
-│   │   │   │   └── 4.values.yml
-│   │   │   └── pages
-│   │   │       ├── about.md
-│   │   │       ├── decisions
-│   │   │       │   ├── 00.index.md
-│   │   │       │   ├── 01.template-first-launch.md
-│   │   │       │   ├── 02.validation-system-pivot.md
-│   │   │       │   ├── 03.ruthless-focus.md
-│   │   │       │   ├── 04.removing-developer-friction.md
-│   │   │       │   ├── 05.ai-conversations.md
-│   │   │       │   ├── 06.minimum-viable-idea.md
-│   │   │       │   ├── 07.attention-to-build-framework.md
-│   │   │       │   ├── 08.fail-fast-dx-revolution.md
-│   │   │       │   ├── 09.signal-over-systems.md
-│   │   │       │   └── 10.authority-documentation.md
-│   │   │       ├── index.md
-│   │   │       ├── offers
-│   │   │       │   └── mentorship.md
-│   │   │       └── success
-│   │   │           ├── index.md
-│   │   │           └── mentorship.md
-│   │   ├── content.config.ts
-│   │   ├── nuxt.config.ts
-│   │   └── public
-│   │       ├── favicon-96x96.png
-│   │       ├── favicon.ico
-│   │       ├── favicon.svg
-│   │       ├── ideas.md
-│   │       ├── product
-│   │       │   └── gated-dashboard.png
-│   │       ├── team
-│   │       │   └── founder-avatar.png
-│   │       ├── versions
-│   │       │   ├── magnet-v0.3.0.png
-│   │       │   ├── magnet-v0.3.1.jpg
-│   │       │   ├── v0.2.1.lighthouse.pdf
-│   │       │   ├── v0.2.2.lighthouse.pdf
-│   │       │   ├── validator-v0.1.0.jpg
-│   │       │   ├── validator-v0.2.0.jpg
-│   │       │   ├── validator-v0.2.1.jpg
-│   │       │   ├── validator-v0.3.0.jpg
-│   │       │   └── validator-v0.3.1.jpg
-│   │       └── videos
-│   │           └── example.mp4
-│   └── temp
-│       ├── content
-│       │   ├── config
-│       │   │   ├── navigation.yml
-│       │   │   └── site.yml
-│       │   ├── faq
-│       │   │   ├── 1.warning.yml
-│       │   │   ├── 2.objection.yml
-│       │   │   ├── 3.support.yml
-│       │   │   └── 4.values.yml
-│       │   └── pages
-│       │       ├── about.md
-│       │       ├── decisions
-│       │       │   ├── 00.index.md
-│       │       │   └── 01.launch.md
-│       │       ├── index.md
-│       │       ├── offers
-│       │       │   └── service.md
-│       │       └── success
-│       │           └── index.md
-│       ├── content.config.ts
-│       ├── nuxt.config.ts
-│       └── public
-│           ├── _robots.txt
-│           ├── favicon-96x96.png
-│           ├── favicon.ico
-│           ├── favicon.svg
-│           ├── images
-│           │   ├── product
-│           │   └── team
-│           │       └── founder-avatar.jpeg
-│           └── videos
-│               └── example.mp4
-├── tree.txt
-└── tsconfig.json
+└── tree.txt
 
-105 directories, 223 files
+136 directories, 287 files

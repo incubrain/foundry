@@ -1,0 +1,64 @@
+category:
+  id: tourism
+  label: Tourism & Economy
+sources:
+  - id: futuredata-2025-darksky-market
+    title: 'Dark sky stargazing tours market size & industry growth 2030'
+    author: 'Future Data Stats'
+    url: 'https://www.futuredatastats.com/dark-sky-stargazing-tours-market'
+    affiliation: media
+    credibilityScore: 5
+    date: '2025'
+    description: 'Market forecast for dark sky tourism industry growth.'
+
+  - id: southafrica-2024-astrotourism-strategy
+    title: 'National astro-tourism strategy 2024–2034'
+    author: 'South Africa'
+    url: 'https://www.gov.za/documents/notices/national-astro-tourism-strategy-national-astro-tourism-strategy-and'
+    affiliation: government
+    credibilityScore: 9
+    date: '2024'
+    description: "South Africa's 10-year national astrotourism strategy."
+
+  - id: mitchell-2019-colorado-plateau
+    title:
+      'Economic impact analysis of dark sky tourism in the Colorado Plateau
+      region'
+    author: 'Mitchell, D., & Gallaway, T.'
+    url: 'https://www.nmdarksky.org/economicimpact/ColoradoPlateauEconomicImpact.pdf'
+    affiliation: academic
+    credibilityScore: 8
+    date: '2019'
+    description:
+      'Economic impact study of dark sky tourism in Colorado Plateau (Utah
+      region).'
+
+  - id: thesill-2023-northumberland-10th
+    title:
+      'Northumberland International Dark Sky Park: 10th anniversary performance
+      report'
+    author: 'The Sill'
+    url: 'https://www.northumberlandnationalpark.org.uk/wp-content/uploads/2024/07/Report-2-Appendix-1-202324-Performance-report.pdf'
+    affiliation: government
+    credibilityScore: 9
+    date: '2023'
+    description:
+      'Performance report for Northumberland Dark Sky Park 10th anniversary.'
+
+  - id: northumberland-2024-steam-report
+    title: 'Northumberland tourism economic impact report (STEAM)'
+    author: 'Northumberland County Council'
+    url: 'https://www.visitnorthumberland.org.uk/research-insights/regional-national/tourism-economic-impact-report'
+    affiliation: government
+    credibilityScore: 9
+    date: '2024'
+    description: 'Tourism economic impact assessment for Northumberland.'
+
+  - id: southafrica-2023-astrotourism-detailed
+    title: 'National astro-tourism strategy (detailed document)'
+    author: 'Government of South Africa'
+    url: 'https://www.tourism.gov.za/CurrentProjects/National_Astro_Tourism_Strategy/Documents/National%20Astro%20Tourism%20Strategy%20August%202023.pdf'
+    affiliation: government
+    credibilityScore: 9
+    date: '2023'
+    description: 'Detailed South Africa astrotourism strategy document.'

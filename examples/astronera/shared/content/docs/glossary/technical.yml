@@ -1,0 +1,65 @@
+category:
+  id: technical
+  label: Technical
+  color: primary
+
+terms:
+  - id: alan
+    term: Artificial Light at Night
+    abbreviation: ALAN
+    definition:
+      Light emitted outdoors during nighttime hours from artificial sources,
+      disrupting natural darkness and ecological processes.
+  - id: light-pollution
+    term: Light Pollution
+    definition:
+      Excessive, misdirected, or obtrusive artificial light that alters natural
+      light levels in outdoor environments.
+  - id: sky-glow
+    term: Sky Glow
+    definition:
+      Brightening of the night sky over inhabited areas caused by artificial
+      light scattering in the atmosphere.
+  - id: cct
+    term: Correlated Color Temperature
+    abbreviation: CCT
+    definition:
+      Measurement of light source color appearance in Kelvin (K), indicating
+      whether light appears warm (2700K-3000K) or cool (4000K-6500K).
+  - id: lumen
+    term: Lumen
+    definition:
+      Unit of measurement for total quantity of visible light emitted by a
+      source.
+  - id: lux
+    term: Lux
+    definition:
+      Unit of measurement for illuminance, representing one lumen per square
+      meter at a surface.
+  - id: uplight
+    term: Uplight
+    definition:
+      Light emitted above the horizontal plane of a luminaire, contributing
+      directly to sky glow.
+  - id: full-cutoff-fixture
+    term: Full Cutoff Fixture
+    definition:
+      Lighting fixture designed to emit zero light above 90 degrees from
+      vertical, minimizing upward light spill and sky glow.
+  - id: shielded-lighting
+    term: Shielded Lighting
+    definition:
+      Lighting fixtures designed to prevent light emission above the horizontal
+      plane.
+  - id: sqm
+    term: Sky Quality Meter
+    abbreviation: SQM
+    definition:
+      Instrument for measuring night-sky brightness in magnitudes per square
+      arcsecond.
+  - id: led
+    term: Light Emitting Diode
+    abbreviation: LED
+    definition:
+      Semiconductor light source that emits light when current flows through it,
+      widely used in energy-efficient lighting.

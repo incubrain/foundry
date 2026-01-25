@@ -1,0 +1,84 @@
+{
+  "name": "@incubrain/docs",
+  "description": "Nuxt layer for Founder Funnel documentation",
+  "version": "0.4.0",
+  "type": "module",
+  "main": "./nuxt.config.ts",
+  "license": "MIT",
+  "author": "IncubBrain",
+  
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/incubrain/founder-funnel.git",
+    "directory": "apps/docs"
+  },
+  
+  "files": [
+    "app",
+    "modules",
+    "server",
+    "shared",
+    "content.collections.ts",
+    "nuxt.config.ts",
+    "nuxt.schema.ts",
+    "README.md"
+  ],
+  
+  "scripts": {
+    "dev": "nuxt dev",
+    "build": "nuxt build",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "prepare": "nuxt prepare"
+  },
+  
+  "dependencies": {
+    "@iconify/json": "^2.2.421",
+    "@nuxt/content": "^3.11.0",
+    "@nuxt/image": "^2.0.0",
+    "@nuxt/kit": "^4.2.2",
+    "@nuxt/scripts": "^0.13.2",
+    "@nuxt/ui": "^4.3.0",
+    "@nuxtjs/mcp-toolkit": "^0.6.2",
+    "@nuxtjs/mdc": "^0.20.0",
+    "@nuxtjs/robots": "^5.6.7",
+    "@nuxtjs/seo": "^3.3.0",
+    "@vueuse/core": "^14.1.0",
+    "@vueuse/nuxt": "^14.1.0",
+    "canvas-confetti": "^1.9.4",
+    "defu": "^6.1.4",
+    "exsolve": "^1.0.8",
+    "katex": "^0.16.27",
+    "minimark": "^0.2.0",
+    "motion-v": "^1.9.0",
+    "nuxt-llms": "^0.2.0",
+    "nuxt-og-image": "^5.1.13",
+    "nuxt-studio": "^1.1.1",
+    "rehype-katex": "^7.0.1",
+    "remark-math": "^6.0.0",
+    "tailwindcss": "^4.1.18",
+    "ufo": "^1.6.3",
+    "zod": "^4.3.5",
+    "zod-to-json-schema": "^3.25.1"
+  },
+  
+  "peerDependencies": {
+    "better-sqlite3": "12.x",
+    "nuxt": "4.x"
+  },
+  
+  "peerDependenciesMeta": {
+    "better-sqlite3": {
+      "optional": true
+    }
+  },
+  
+  "keywords": [
+    "nuxt",
+    "nuxt-layer",
+    "documentation",
+    "founder-funnel",
+    "content",
+    "markdown"
+  ]
+}

@@ -318,7 +318,7 @@ export default defineNuxtConfig({
 ```ts
 // nuxt.config.ts
 export default defineNuxtConfig({
-  extends: ['../base-layer'],
+  extends: ['../base'],
   disabledModules: ['@nuxt/image', '@sentry/nuxt/module']
 })
 ```

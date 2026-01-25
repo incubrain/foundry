@@ -1,0 +1,20 @@
+slug: shweta-kulkarni
+given_name: Shweta
+surname: Kulkarni
+role: CEO & Founder | Dark Sky Defender Asia 2024
+bio:
+  Shweta Kulkarni is a space enthusiast with a background in Aerospace Engineering. She is also an
+  Analog Astronaut and has been involved in analog space missions.
+avatar:
+  src: /team/shweta-kulkarni.jpg
+  alt: Shweta Kulkarni, FRAS
+links:
+  - label: LinkedIn
+    url: https://linkedin.com/in/shweta-kulkarni
+    icon: i-lucide-linkedin
+  - label: X
+    url: https://x.com/AstronEra
+    icon: i-lucide-x
+  - label: Email
+    url: mailto:connectus@astronera.org
+    icon: i-lucide-mail

@@ -1,0 +1,43 @@
+category:
+  id: general
+  label: General
+  color: neutral
+
+terms:
+  - id: light-trespass
+    term: Light Trespass
+    definition:
+      Unwanted light falling on properties or areas where it is not needed or
+      intended.
+  - id: glare
+    term: Glare
+    definition:
+      Excessive brightness that causes visual discomfort or reduces visibility.
+  - id: astrotourism
+    term: Astrotourism
+    definition:
+      Tourism activity centered on observing celestial objects and phenomena in
+      areas with dark, unpolluted night skies.
+  - id: astroguide
+    term: AstroGuide
+    definition:
+      Specialized training program for guides to interpret the night sky and
+      dark sky conservation for tourists.
+  - id: mou
+    term: Memorandum of Understanding
+    abbreviation: MoU
+    definition:
+      Formal agreement between two or more parties outlining the terms and
+      details of a mutual understanding.
+  - id: ghg
+    term: Greenhouse Gas
+    abbreviation: GHG
+    definition:
+      Gases that trap heat in the atmosphere, contributing to global warming and
+      climate change.
+  - id: roi
+    term: Return on Investment
+    abbreviation: ROI
+    definition:
+      Measure of the profitability of an investment, calculated as net benefit
+      divided by cost.

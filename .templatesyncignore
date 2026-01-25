@@ -76,5 +76,5 @@ Thumbs.db
 # Common patterns:
 #   *.log          # All log files
 #   test/          # Entire directory
-#   **/temp/*      # temp folder anywhere in tree
+#   **/starter/*      # temp folder anywhere in tree
 #   !important.md  # KEEP this file (exception)

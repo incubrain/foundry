@@ -1,0 +1,28 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "nuxt.config.ts",
+      "use": "@vercel/nuxt"
+    }
+  ],
+  "env": {
+    "NUXT_PUBLIC_SCRIPTS_UMAMI_ANALYTICS_SCRIPT_INPUT_SRC": "https://your-umami-instance.com/script.js",
+    "NUXT_PUBLIC_SCRIPTS_UMAMI_ANALYTICS_WEBSITE_ID": "your-website-id-here",
+    "PROVIDER": "node_server",
+    "PORT": "3000",
+    "HOST": "0.0.0.0",
+    "NUXT_PUBLIC_CONFIG_SOURCE": "root"
+  },
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    }
+  ]
+}

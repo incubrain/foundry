@@ -1,0 +1,64 @@
+category:
+  id: climate
+  label: Climate & Energy
+sources:
+  - id: iea-2006-lights-labour-lost
+    title: "Light's labour's lost: Policies for energy-efficient lighting"
+    author: 'International Energy Agency'
+    url: 'https://www.iea.org/reports/lights-labours-lost'
+    affiliation: government
+    credibilityScore: 9
+    date: '2006'
+    description: 'IEA report on energy waste from outdoor lighting.'
+
+  - id: djuretic-2018-led-savings
+    title:
+      'Actual energy savings when replacing high-pressure sodium with LED
+      luminaires in street lighting'
+    author: 'Djuretic, A., & Kostic, M.'
+    url: 'https://doi.org/10.1016/j.energy.2018.05.179'
+    affiliation: academic
+    credibilityScore: 8
+    date: '2018'
+    description: 'Energy journal study on LED retrofit efficiency gains.'
+
+  - id: unfccc-2023-enlighten
+    title: 'Momentum for Change: en.lighten initiative'
+    author: 'UNFCCC en.lighten Initiative'
+    url: 'https://unfccc.int/climate-action/momentum-for-change/activity-database/momentum-for-change-enlighten-initiative'
+    affiliation: government
+    credibilityScore: 9
+    date: '2023'
+    description:
+      'UNFCCC initiative on energy-efficient lighting for climate action.'
+
+  - id: cea-2023-co2-baseline
+    title: 'CO₂ baseline database for the Indian power sector: User guide'
+    author: 'Central Electricity Authority'
+    url: 'https://cea.nic.in/cdm-co2-baseline-database/?lang=en'
+    affiliation: government
+    credibilityScore: 9
+    date: '2023'
+    description: "India's official CO₂ emission factors for electricity sector."
+
+  - id: ucr-2025-india-grid-emission
+    title: '2024 vintage UCR Indian grid emission factor announced'
+    author: 'Universal Carbon Registry'
+    url: 'https://medium.com/@UniversalCarbonRegistry/ucr-cou-standard-update-2024-vintage-ucr-indian-grid-emission-factor-announced-ddb790cdc603'
+    affiliation: academic
+    credibilityScore: 7
+    date: '2025'
+    description: 'Updated India grid emission factor for carbon accounting.'
+
+  - id: noaa-2023-urban-heat
+    title:
+      'Nighttime lights and urban heat: A six-year assessment of major U.S.
+      cities using multi-satellite observations'
+    author:
+      'NOAA National Environmental Satellite, Data, and Information Service'
+    url: 'https://www.nesdis.noaa.gov/events/leo-science-seminar-nighttime-lights-and-urban-heat-six-yearassessment-of-major-us-cities-using-multi-satellite-observations'
+    affiliation: government
+    credibilityScore: 9
+    date: '2023'
+    description:
+      'NOAA study linking nighttime lights to urban heat island effect.'

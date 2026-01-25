@@ -1,0 +1,11 @@
+{
+  "name": "@astronera/web",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "prepare": "nuxt prepare",
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "preview": "nuxt preview"
+  }
+}

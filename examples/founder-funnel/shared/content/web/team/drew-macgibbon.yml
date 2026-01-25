@@ -1,0 +1,21 @@
+slug: drew-macgibbon
+given_name: Drew
+surname: MacGibbon
+email: mac@incubrain.org
+role: IncuBrain Founder
+avatar:
+  src: /team/founder-avatar.png
+  alt: Drew MacGibbon
+bio:
+  'My mission for the Founder Funnel is to help 100 struggling founders achieve
+  financial freedom.'
+links:
+  - label: 'X'
+    url: 'https://x.com/DrewMacGibbon'
+    icon: 'i-simple-icons-x'
+  - label: 'YouTube'
+    url: 'https://www.youtube.com/@DrewMacGibbon'
+    icon: 'i-simple-icons-youtube'
+  - label: 'GitHub'
+    url: 'https://github.com/Drew-Macgibbon'
+    icon: 'i-simple-icons-github'

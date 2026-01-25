@@ -1,0 +1,88 @@
+category:
+  id: regulatory
+  label: Regulatory
+  color: warning
+
+terms:
+  - id: dark-sky-certification
+    term: Dark Sky Certification
+    definition:
+      Official designation by DarkSky International recognizing locations that
+      demonstrate exceptional starry skies and commitment to dark sky
+      protection.
+  - id: crz
+    term: Coastal Regulation Zone
+    abbreviation: CRZ
+    definition:
+      India's regulatory framework governing development activities in coastal
+      areas, including lighting restrictions to protect marine ecosystems.
+  - id: lighting-curfew
+    term: Lighting Curfew
+    definition:
+      Time-based restriction requiring dimming or switch-off of non-essential
+      outdoor lighting.
+  - id: core-dark-area
+    term: Core Dark Area
+    definition:
+      Areas requiring highest level of night-sky protection with lighting
+      restricted to essential safety needs.
+  - id: buffer-area
+    term: Buffer Area
+    definition:
+      Transition areas surrounding Core Dark Areas with controlled lighting
+      intensity, spectrum, shielding, and curfew.
+  - id: regulated-urban-area
+    term: Regulated Urban Area
+    definition:
+      Built-up areas where lighting is regulated primarily for efficiency,
+      shielding, and spectral control.
+  - id: lmp
+    term: Lighting Management Plan
+    abbreviation: LMP
+    definition:
+      Site or area-specific plan defining lighting design, operation, and
+      mitigation measures.
+  - id: eia
+    term: Environmental Impact Assessment
+    abbreviation: EIA
+    definition:
+      Process of evaluating the likely environmental impacts of a proposed
+      project or development, taking into account inter-related socio-economic,
+      cultural and human-health impacts.
+  - id: mlo
+    term: Model Lighting Ordinance
+    abbreviation: MLO
+    definition:
+      Template for an outdoor lighting ordinance that can be adopted by
+      municipalities to regulate outdoor lighting.
+  - id: sapcchh
+    term: State Action Plan on Climate Change and Human Health
+    abbreviation: SAPCCHH
+    definition:
+      State-level policy framework addressing the health impacts of climate
+      change.
+  - id: protected-area
+    term: Protected Area
+    abbreviation: PA
+    definition:
+      A clearly defined geographical space, recognized, dedicated and managed,
+      through legal or other effective means, to achieve the long term
+      conservation of nature with associated ecosystem services and cultural
+      values.
+  - id: gr
+    term: Government Resolution
+    abbreviation: GR
+    definition:
+      Official administrative decision or directive issued by a state government
+      in India.
+  - id: lt-leds
+    term: Long-Term Low Emissions Development Strategy
+    abbreviation: LT-LEDS
+    definition:
+      India's framework for achieving net-zero greenhouse gas emissions by 2070.
+  - id: amrut
+    term: Atal Mission for Rejuvenation and Urban Transformation
+    abbreviation: AMRUT
+    definition:
+      Central government scheme for urban infrastructure improvement and climate
+      action in Indian cities.

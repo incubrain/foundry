@@ -1,0 +1,149 @@
+/* ============================================================================
+   ASTRONERA - BRAND IDENTITY
+   Dark sky conservation visual language
+   Blue (celestial/night sky) + Red (action/urgency)
+   ============================================================================ */
+
+/* Import base design system */
+@import '@incubrain/docs/app/assets/main.css';
+
+/* ============================================================================
+   BRAND COLORS - Astronera Dark Sky Theme
+   ============================================================================ */
+
+@theme static {
+  /* ──────────────────────────────────────────────────────────────────────
+     PRIMARY - Deep Sky Blue (night sky/celestial observation)
+     Dark sky preservation, astronomical clarity, professionalism
+     ────────────────────────────────────────────────────────────────────── */
+  --color-primary-50: oklch(97% 0.01 250);
+  --color-primary-100: oklch(94% 0.02 250);
+  --color-primary-200: oklch(88% 0.04 250);
+  --color-primary-300: oklch(78% 0.08 250);
+  --color-primary-400: oklch(68% 0.12 250);
+  --color-primary-500: oklch(58% 0.15 250);
+  --color-primary-600: oklch(52% 0.14 250);
+  --color-primary-700: oklch(46% 0.13 250);
+  --color-primary-800: oklch(38% 0.11 250);
+  --color-primary-900: oklch(32% 0.09 250);
+  --color-primary-950: oklch(22% 0.06 250);
+
+  /* ──────────────────────────────────────────────────────────────────────
+     SECONDARY - Vibrant Red (action/urgency/CTA highlight)
+     Light pollution alert, call-to-action, important notices
+     High contrast for accessibility and attention-grabbing
+     ────────────────────────────────────────────────────────────────────── */
+  --color-secondary-50: oklch(97% 0.01 25);
+  --color-secondary-100: oklch(94% 0.03 25);
+  --color-secondary-200: oklch(88% 0.06 25);
+  --color-secondary-300: oklch(82% 0.1 25);
+  --color-secondary-400: oklch(72% 0.16 25);
+  --color-secondary-500: oklch(62% 0.2 25);
+  --color-secondary-600: oklch(56% 0.19 25);
+  --color-secondary-700: oklch(48% 0.17 25);
+  --color-secondary-800: oklch(40% 0.14 25);
+  --color-secondary-900: oklch(32% 0.11 25);
+  --color-secondary-950: oklch(22% 0.08 25);
+
+  /* ──────────────────────────────────────────────────────────────────────
+     SUCCESS - Teal/Cyan (positive outcomes/clear skies)
+     Successful conservation, dark sky certification, positive metrics
+     ────────────────────────────────────────────────────────────────────── */
+  --color-success-50: oklch(97% 0.01 180);
+  --color-success-100: oklch(93% 0.03 180);
+  --color-success-200: oklch(86% 0.06 180);
+  --color-success-300: oklch(78% 0.1 180);
+  --color-success-400: oklch(68% 0.13 180);
+  --color-success-500: oklch(58% 0.14 180);
+  --color-success-600: oklch(52% 0.13 180);
+  --color-success-700: oklch(46% 0.12 180);
+  --color-success-800: oklch(38% 0.1 180);
+  --color-success-900: oklch(32% 0.08 180);
+  --color-success-950: oklch(22% 0.05 180);
+
+  /* ──────────────────────────────────────────────────────────────────────
+     WARNING - Amber/Orange (moderate alerts/informational)
+     Increasing light pollution, policy attention needed, monitoring zones
+     ────────────────────────────────────────────────────────────────────── */
+  --color-warning-50: oklch(97% 0.01 70);
+  --color-warning-100: oklch(94% 0.03 70);
+  --color-warning-200: oklch(88% 0.07 70);
+  --color-warning-300: oklch(82% 0.12 70);
+  --color-warning-400: oklch(75% 0.16 70);
+  --color-warning-500: oklch(68% 0.17 70);
+  --color-warning-600: oklch(62% 0.16 70);
+  --color-warning-700: oklch(54% 0.14 70);
+  --color-warning-800: oklch(46% 0.12 70);
+  --color-warning-900: oklch(38% 0.09 70);
+  --color-warning-950: oklch(26% 0.06 70);
+
+  /* ──────────────────────────────────────────────────────────────────────
+     ERROR - Deep Red (critical issues/violations)
+     Severe light pollution, policy violations, system errors
+     Darker than secondary red for semantic differentiation
+     ────────────────────────────────────────────────────────────────────── */
+  --color-error-50: oklch(97% 0.01 15);
+  --color-error-100: oklch(94% 0.03 15);
+  --color-error-200: oklch(88% 0.06 15);
+  --color-error-300: oklch(80% 0.11 15);
+  --color-error-400: oklch(70% 0.16 15);
+  --color-error-500: oklch(58% 0.19 15);
+  --color-error-600: oklch(52% 0.18 15);
+  --color-error-700: oklch(44% 0.16 15);
+  --color-error-800: oklch(36% 0.13 15);
+  --color-error-900: oklch(28% 0.1 15);
+  --color-error-950: oklch(20% 0.07 15);
+
+  /* ──────────────────────────────────────────────────────────────────────
+     TYPOGRAPHY - Astronera Brand Fonts
+     ────────────────────────────────────────────────────────────────────── */
+
+  /* Headings: Technical/futuristic (astronomical instruments) */
+  --font-family-heading: 'Orbitron', var(--font-sans);
+
+  /* Handwritten: Personal/human touch (field notes) */
+  --font-family-written: 'Fuzzy Bubbles', cursive;
+
+  /* Body: Classic/readable (research papers) */
+  --font-family-body: 'Georgia', var(--font-serif);
+
+  /* Code: Technical specs (data logging) */
+  --font-family-code: 'JetBrains Mono', var(--font-mono);
+}
+
+/* ============================================================================
+   TYPOGRAPHY UTILITIES - Astronera
+   ============================================================================ */
+
+@layer utilities {
+  .font-written {
+    font-family: var(--font-family-written) !important;
+  }
+
+  .font-heading {
+    font-family: var(--font-family-heading) !important;
+  }
+
+  .font-code {
+    font-family: var(--font-family-code) !important;
+  }
+}
+
+/* ============================================================================
+   ASTRONERA-SPECIFIC OVERRIDES
+   Ensure red secondary is used for CTAs and important actions
+   ============================================================================ */
+
+:root {
+  /* Ensure links use red for action/urgency */
+  --ui-link-default: var(--ui-color-secondary-600);
+  --ui-link-hover: var(--ui-color-secondary-700);
+  --ui-link-active: var(--ui-color-secondary-500);
+}
+
+.dark {
+  /* Red links in dark mode for visibility */
+  --ui-link-default: var(--ui-color-secondary-400);
+  --ui-link-hover: var(--ui-color-secondary-300);
+  --ui-link-active: var(--ui-color-secondary-500);
+}

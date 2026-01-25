@@ -1,0 +1,62 @@
+# Navigation Configuration
+# Full control over header/footer navigation - define all links manually
+
+banner:
+  id: 'hiring-2026'
+  icon: i-lucide-info
+  title: "We're hiring! Check out our open positions at Astronera."
+  actions:
+    - label: Careers
+      to: https://careers.astronera.org
+      target: _blank
+      trailingIcon: i-lucide-arrow-right
+      color: primary
+      variant: solid
+      size: xs
+  close: true
+  color: primary
+
+header:
+  title: AstronEra
+  socials:
+    x: https://x.com/AstronEra
+  navigation:
+    - label: Research
+      icon: i-lucide-flask-conical
+      to: /research
+    - label: Policy
+      icon: i-lucide-book-open
+      to: /policy
+    - label: Pilots
+      icon: i-lucide-sprout
+      to: /pilots
+    - label: Resources
+      icon: i-lucide-book-key
+      to: /resources
+  showSearch: true
+  showColorMode: true
+
+footer:
+  columns:
+    - label: Research
+      icon: i-lucide-flask-conical
+      to: /research
+      children:
+        - label: Overview
+          to: /research
+    - label: Policy
+      icon: i-lucide-book-open
+      to: /policy
+      children:
+        - label: Overview
+          to: /policy
+    - label: Resources
+      icon: i-lucide-book-key
+      to: /resources
+      children:
+        - label: Sources
+          icon: i-lucide-file-pen-line
+          to: /resources/sources
+        - label: Glossary
+          icon: i-lucide-library
+          to: /resources/glossary

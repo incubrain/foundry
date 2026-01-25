@@ -1,0 +1,125 @@
+category:
+  id: health
+  label: Human Health
+sources:
+  - id: uk-parliament-2023-light-noise-health
+    title: 'The effects of artificial light and noise on human health'
+    author: 'UK Parliament, Science and Technology Committee'
+    url: 'https://committees.parliament.uk/work/7256/the-effects-of-artificial-light-and-noise-on-human-health'
+    affiliation: government
+    credibilityScore: 9
+    date: '2023'
+    description: 'UK Parliament committee report on ALAN health impacts.'
+
+  - id: hafner-2023-insomnia-burden
+    title:
+      'The societal and economic burden of insomnia in adults: An international
+      study'
+    author: 'Hafner, M., Romanelli, R. J., Yerushalmi, E., & Troxel, W. M.'
+    url: 'https://www.rand.org/pubs/research_reports/RRA2166-1.html'
+    affiliation: academic
+    credibilityScore: 8
+    date: '2023'
+    description: 'RAND Europe study on economic burden of insomnia.'
+
+  - id: who-2023-obesity-atlas
+    title: 'World obesity atlas 2023'
+    author: 'World Obesity Federation'
+    url: 'https://www.worldobesity.org/resources/resource-library/world-obesity-atlas-2023'
+    affiliation: academic
+    credibilityScore: 7
+    date: '2023'
+    description: 'Global obesity data and ALAN correlation evidence.'
+
+  - id: yates-2018-newborn-circadian
+    title:
+      'The long-term effects of light exposure on establishment of newborn
+      circadian rhythm'
+    author: 'Yates, J.'
+    url: 'https://jcsm.aasm.org/doi/abs/10.5664/jcsm.7426'
+    affiliation: academic
+    credibilityScore: 8
+    date: '2018'
+    description:
+      'Journal of Clinical Sleep Medicine on newborn circadian rhythm impacts.'
+
+  - id: bonilla-2024-adolescent-circadian
+    title:
+      'Effects of chronic light cycle disruption during adolescence on circadian
+      clock, neuronal activity rhythms, and behaviour in mice'
+    author: 'Bonilla, P., et al.'
+    url: 'https://www.frontiersin.org/journals/neuroscience/articles/10.3389/fnins.2024.1418694/full'
+    affiliation: academic
+    credibilityScore: 8
+    date: '2024'
+    description:
+      'Frontiers in Neuroscience study on adolescent circadian disruption.'
+
+  - id: voigt-2024-alzheimers
+    title:
+      "Outdoor nighttime light exposure is associated with Alzheimer's disease"
+    author: 'Voigt, R. M., et al.'
+    url: 'https://www.frontiersin.org/journals/neuroscience/articles/10.3389/fnins.2024.1378498/full'
+    affiliation: academic
+    credibilityScore: 8
+    date: '2024'
+    description:
+      "Frontiers in Neuroscience linking outdoor ALAN to Alzheimer's risk."
+
+  - id: aan-2025-dementia-body-clock
+    title: 'Do our body clocks influence our risk of dementia?'
+    author: 'American Academy of Neurology'
+    url: 'https://www.aan.com/PressRoom/home/PressRelease/5306'
+    affiliation: academic
+    credibilityScore: 8
+    date: '2025'
+    description: 'Press release on circadian disruption and dementia risk.'
+
+  - id: cai-2019-pregnancy-shift-work
+    title:
+      'The impact of occupational shift work and working hours during pregnancy
+      on health outcomes: A systematic review and meta-analysis'
+    author: 'Cai, C., et al.'
+    url: 'https://pubmed.ncbi.nlm.nih.gov/31276631'
+    affiliation: academic
+    credibilityScore: 8
+    date: '2019'
+    description:
+      'American Journal of Obstetrics and Gynaecology meta-analysis on pregnancy
+      and shift work.'
+
+  - id: tain-2020-pregnancy-light
+    title:
+      'Light and circadian signalling pathway in pregnancy: Programming of adult
+      health and disease'
+    author: 'Tain, Y.-L., & Hsu, C.-N.'
+    url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC7139376'
+    affiliation: academic
+    credibilityScore: 8
+    date: '2020'
+    description:
+      'International Journal of Molecular Sciences on light exposure during
+      pregnancy.'
+
+  - id: torquati-2018-shift-cardiovascular
+    title:
+      'Shift work and the risk of cardiovascular disease: A systematic review
+      and meta-analysis including dose–response relationship'
+    author: 'Torquati, L., et al.'
+    url: 'https://pubmed.ncbi.nlm.nih.gov/29247501'
+    affiliation: academic
+    credibilityScore: 8
+    date: '2018'
+    description:
+      'Scandinavian Journal of Work, Environment & Health on shift work
+      cardiovascular risks.'
+
+  - id: iarc-2019-night-shift
+    title: 'IARC monographs volume 124: Night shift work'
+    author: 'International Agency for Research on Cancer'
+    url: 'https://www.iarc.who.int/news-events/iarc-monographs-volume-124-night-shift-work'
+    affiliation: academic
+    credibilityScore: 9
+    date: '2019'
+    description:
+      'WHO IARC assessment of night shift work as probable carcinogen.'

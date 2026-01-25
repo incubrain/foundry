@@ -1,0 +1,16 @@
+category:
+  id: ecological
+  label: Ecological
+  color: success
+
+terms:
+  - id: circadian-rhythm
+    term: Circadian Rhythm
+    definition:
+      The natural 24-hour biological cycle regulating sleep-wake patterns,
+      hormone production, and physiological processes in living organisms.
+  - id: melatonin-suppression
+    term: Melatonin Suppression
+    definition:
+      Reduction in melatonin hormone production caused by nighttime light
+      exposure, disrupting circadian rhythms and sleep patterns.

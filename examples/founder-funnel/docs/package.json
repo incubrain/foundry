@@ -1,0 +1,11 @@
+{
+  "name": "@ff/docs",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "prepare": "nuxt prepare",
+    "build": "nuxt build",
+    "dev": "nuxt dev --port 3001",
+    "preview": "nuxt preview"
+  }
+}

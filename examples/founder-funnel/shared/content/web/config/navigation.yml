@@ -1,0 +1,63 @@
+# Navigation Configuration
+# Full control over header/footer navigation - define all links manually
+
+banner:
+  id: 'mentorship-2026'
+  icon: i-lucide-users
+  title: "1-on-1 mentorship available. Limited spots for founders."
+  actions:
+    - label: Learn More
+      to: /offers/mentorship
+      trailingIcon: i-lucide-arrow-right
+      color: primary
+      variant: solid
+      size: xs
+  close: true
+  color: primary
+
+header:
+  title: Founder Funnel
+  socials:
+    x: https://x.com/DrewMacGibbon
+    github: https://github.com/Drew-Macgibbon
+  navigation:
+    - label: About
+      icon: i-lucide-info
+      to: /about
+    - label: Decisions
+      icon: i-lucide-lightbulb
+      to: /decisions
+    - label: Mentorship
+      icon: i-lucide-users
+      to: /offers/mentorship
+  showSearch: true
+  showColorMode: true
+
+footer:
+  columns:
+    - label: About
+      icon: i-lucide-info
+      to: /about
+      children:
+        - label: Our Story
+          icon: i-lucide-book-open
+          to: /about
+        - label: Decisions
+          icon: i-lucide-lightbulb
+          to: /decisions
+        - label: Roadmap
+          icon: i-lucide-map
+          to: https://github.com/incubrain/founder-funnel/discussions/133
+          target: _blank
+    - label: Offers
+      icon: i-lucide-gift
+      to: /offers/mentorship
+      children:
+        - label: Mentorship
+          icon: i-lucide-users
+          to: /offers/mentorship
+  bottom:
+    - label: Privacy
+      to: /privacy
+    - label: Terms
+      to: /terms

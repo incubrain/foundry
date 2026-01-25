@@ -1,0 +1,11 @@
+{
+  "name": "@ff/web",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "prepare": "nuxt prepare",
+    "build": "nuxt build",
+    "dev": "nuxt dev --port 3000",
+    "preview": "nuxt preview"
+  }
+}
