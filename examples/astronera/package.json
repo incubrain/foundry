@@ -9,6 +9,6 @@
     "preview": "nuxt preview"
   },
   "dependencies": {
-    "@incubrain/docs": "workspace:*"
+    "@incubrain/founder-funnel": "workspace:*"
   }
 }

@@ -1,16 +1,12 @@
 import { defineContentConfig, defineCollection } from '@nuxt/content';
-import { createResolver } from '@nuxt/kit';
 import {
   basePageSchema,
   baseGlossarySchema,
   baseReferencesSchema,
   baseNavigationSchema,
   baseConfigSchema,
-} from '../../../apps/docs/content.collections';
-import { getActiveConfigSource } from '../../../apps/docs/shared/config-resolver';
-
-const { resolve } = createResolver(import.meta.url);
-const { contentDir: cwd } = getActiveConfigSource(resolve, 'docs');
+  baseFaqSchema,
+} from '../../layer/content.collections';
 
 export default defineContentConfig({
   collections: {
@@ -18,7 +14,6 @@ export default defineContentConfig({
       type: 'page',
       source: [
         {
-          cwd,
           include: 'pages/**/*.md',
           prefix: '/',
         },
@@ -29,9 +24,8 @@ export default defineContentConfig({
     docs: defineCollection({
       type: 'page',
       source: {
-        cwd,
         include: 'docs/**/*.md',
-        prefix: '/',
+        prefix: '/darksky',
       },
       schema: basePageSchema,
     }),
@@ -39,7 +33,6 @@ export default defineContentConfig({
     references: defineCollection({
       type: 'data',
       source: {
-        cwd,
         include: 'references/*.yml',
       },
       schema: baseReferencesSchema,
@@ -48,17 +41,24 @@ export default defineContentConfig({
     glossary: defineCollection({
       type: 'data',
       source: {
-        cwd,
         include: 'glossary/*.yml',
       },
       schema: baseGlossarySchema,
+    }),
+
+    // FAQ data
+    faq: defineCollection({
+      type: 'data',
+      source: {
+        include: 'faq/*.yml',
+      },
+      schema: baseFaqSchema,
     }),
 
     // Site configuration
     config: defineCollection({
       type: 'data',
       source: {
-        cwd,
         include: 'config/site.yml',
       },
       schema: baseConfigSchema,
@@ -67,7 +67,6 @@ export default defineContentConfig({
     navigation: defineCollection({
       type: 'data',
       source: {
-        cwd,
         include: 'config/navigation.yml',
       },
       schema: baseNavigationSchema,

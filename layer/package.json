@@ -1,5 +1,5 @@
 {
-  "name": "@incubrain/docs",
+  "name": "@incubrain/founder-funnel",
   "description": "Nuxt layer for Founder Funnel documentation",
   "version": "0.4.0",
   "type": "module",
@@ -10,7 +10,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/incubrain/founder-funnel.git",
-    "directory": "apps/docs"
+    "directory": "layer"
   },
   
   "files": [

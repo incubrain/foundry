@@ -2,13 +2,13 @@ import { createResolver } from '@nuxt/kit';
 import { getActiveConfigSource } from '../../../apps/docs/shared/config-resolver';
 
 const { resolve } = createResolver(import.meta.url);
-const { resolveApp, contentRoot, publicDir, envDir } = getActiveConfigSource(
+const { resolveLayer, contentRoot, publicDir, envDir } = getActiveConfigSource(
   resolve,
   'web',
 );
 
 export default defineNuxtConfig({
-  extends: [resolveApp('docs')],
+  extends: [resolveLayer('docs')],
 
   dir: {
     public: publicDir,

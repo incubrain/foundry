@@ -8,7 +8,7 @@ export const getActiveConfigSource = (
 ) => {
   return {
     rootDir,
-    resolveApp: (app: string) => resolve(rootDir, 'apps', app),
+    resolveLayer: (app: string = 'layer') => resolve(rootDir, app),
     srcDir: resolve(''),
     contentRoot: resolve('../shared/content'),
     contentDir: resolve('../shared/content', type),

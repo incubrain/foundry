@@ -1,12 +1,11 @@
 # pnpm-workspace.yaml
 packages:
   # Core apps
-  - 'apps/docs'
+  - 'layer'
 
   # Only include specific examples we're building
   - 'examples/founder-funnel/web'
   - 'examples/founder-funnel/docs'
-  - 'examples/astronera/web'
   - 'examples/astronera/docs'
   - 'examples/starter/web'
   - 'examples/starter/docs'

@@ -1,37 +1,41 @@
 import { createResolver } from '@nuxt/kit';
-import { getActiveConfigSource } from '../../../apps/docs/shared/config-resolver';
+import { getActiveConfigSource } from '../../layer/shared/config-resolver';
 
 const { resolve } = createResolver(import.meta.url);
-const { resolveApp, contentRoot, publicDir, envDir } = getActiveConfigSource(
+const { resolveLayer, contentRoot } = getActiveConfigSource(
   resolve,
-  'web',
+  'docs',
 );
 
-const SITE_URL = process.env.NUXT_SITE_URL || 'https://astronera.org';
-
 export default defineNuxtConfig({
-  extends: [resolveApp('docs')],
+  extends: [resolveLayer()],
 
   site: {
-    name: 'AstronEra',
-    description:
-      'Dark Sky Policy & DarkSky International Certification Partner for Maharashtra',
-    url: SITE_URL,
+    name: 'Dark Sky Maharashtra',
+    url: 'https://content.astronera.org',
   },
 
-  dir: {
-    public: publicDir,
+  css: [resolve('./app/assets/theme.css')],
+
+  llms: {
+    domain: 'https://content.astronera.org',
+    title: 'Dark Sky Conservation in Maharashtra',
+    description: 'Dark Sky Conservation in Maharashtra',
+    notes: [
+      'The documentation only includes Dark Sky Conservation in Maharashtra docs.',
+      'The content is automatically generated from the same source as the official documentation.',
+    ],
+    full: {
+      title: 'Complete Documentation',
+      description: 'The complete documentation including all content',
+    },
   },
 
-  alias: {
-    public: publicDir,
+  routeRules: {
+    '/darksky/**': {
+      appLayout: 'docs',
+    },
   },
-
-  vite: {
-    envDir: envDir,
-  },
-
-  compatibilityDate: '2026-01-20',
 
   nitro: {
     routeRules: {
