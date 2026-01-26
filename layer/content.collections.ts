@@ -1,8 +1,5 @@
 import { z, property } from '@nuxt/content';
-import { createResolver } from '@nuxt/kit';
 import { ICON_LIBRARIES } from './shared/constants';
-
-const { resolve } = createResolver(import.meta.url);
 
 export const baseConfigSchema = z.object({
   business: z.object({

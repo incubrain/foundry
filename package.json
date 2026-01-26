@@ -26,7 +26,8 @@
     "verify": "pnpm run dev:prepare && pnpm run lint && pnpm run typecheck",
     "layer:release": "release-it --config .release-it.layer.json",
     "layer:publish": "cd layer && npm publish --access public",
-    "release": "pnpm run layer:release && pnpm run layer:publish"
+    "release": "pnpm run layer:release && pnpm run layer:publish",
+    "kanban": "npx vibe-kanban"
   },
   "dependencies": {
     "@iconify/json": "^2.2.421",
