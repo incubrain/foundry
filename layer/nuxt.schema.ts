@@ -2,6 +2,104 @@ import { field, group } from '@nuxt/content/preview';
 
 export default defineNuxtSchema({
   appConfig: {
+    content: group({
+      title: 'Content',
+      description: 'Content routing and collection configuration.',
+      icon: 'i-lucide-file-text',
+      fields: {
+        routing: group({
+          title: 'Routing',
+          description: 'URL paths for content sections.',
+          icon: 'i-lucide-route',
+          fields: {
+            articles: group({
+              title: 'Articles',
+              description: 'Article section routing.',
+              icon: 'i-lucide-newspaper',
+              fields: {
+                basePath: field({
+                  type: 'string',
+                  title: 'Base Path',
+                  description: 'URL path for articles section.',
+                  icon: 'i-lucide-link',
+                  default: '/articles',
+                }),
+                backLabel: field({
+                  type: 'string',
+                  title: 'Back Label',
+                  description: 'Label for back navigation button.',
+                  icon: 'i-lucide-arrow-left',
+                  default: 'Back to Articles',
+                }),
+              },
+            }),
+            offers: field({
+              type: 'string',
+              title: 'Offers Path',
+              description: 'URL path for offers section.',
+              icon: 'i-lucide-tag',
+              default: '/offers',
+            }),
+            success: field({
+              type: 'string',
+              title: 'Success Path',
+              description: 'URL path for success pages.',
+              icon: 'i-lucide-check-circle',
+              default: '/success',
+            }),
+          },
+        }),
+        collections: group({
+          title: 'Collections',
+          description: 'Content collection name mappings.',
+          icon: 'i-lucide-database',
+          fields: {
+            docs: field({
+              type: 'string',
+              title: 'Docs Collection',
+              description: 'Collection name for documentation.',
+              icon: 'i-lucide-book',
+              default: 'docs',
+            }),
+            pages: field({
+              type: 'string',
+              title: 'Pages Collection',
+              description: 'Collection name for pages.',
+              icon: 'i-lucide-file',
+              default: 'pages',
+            }),
+            references: field({
+              type: 'string',
+              title: 'References Collection',
+              description: 'Collection name for references/citations.',
+              icon: 'i-lucide-quote',
+              default: 'references',
+            }),
+            faq: field({
+              type: 'string',
+              title: 'FAQ Collection',
+              description: 'Collection name for FAQs.',
+              icon: 'i-lucide-help-circle',
+              default: 'faq',
+            }),
+            config: field({
+              type: 'string',
+              title: 'Config Collection',
+              description: 'Collection name for site configuration.',
+              icon: 'i-lucide-settings',
+              default: 'config',
+            }),
+            navigation: field({
+              type: 'string',
+              title: 'Navigation Collection',
+              description: 'Collection name for navigation.',
+              icon: 'i-lucide-menu',
+              default: 'navigation',
+            }),
+          },
+        }),
+      },
+    }),
     ui: group({
       title: 'UI',
       description: 'UI Customization.',

@@ -1,5 +1,10 @@
 export const useCitations = () => {
   const route = useRoute();
+  const appConfig = useAppConfig();
+
+  // Get references collection name from config
+  const referencesCollection =
+    appConfig.content?.collections?.references || 'references';
 
   // Stable key per route - state persists per route
   const key = computed(() => `citations-${route.path}`);
@@ -7,7 +12,7 @@ export const useCitations = () => {
 
   // ✅ Fetch references ONCE and cache globally with key 'references'
   const { data: allCategoryRefs } = useAsyncData('references', () =>
-    queryCollection('references').all(),
+    queryCollection(referencesCollection).all(),
   );
 
   // ✅ Flatten references for easy lookup

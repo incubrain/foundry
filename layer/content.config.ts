@@ -31,7 +31,7 @@ export default defineContentConfig({
       type: 'page',
       source: {
         include: 'docs/**/*.md',
-        prefix: '/darksky',
+        prefix: '/docs',
       },
       schema: basePageSchema,
     }),

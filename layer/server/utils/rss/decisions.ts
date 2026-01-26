@@ -1,5 +1,10 @@
 import type { H3Event } from 'h3';
-import { buildRSSFeed, getAuthorName, type RSSItem } from './shared';
+import {
+  buildRSSFeed,
+  getAuthorName,
+  getBusinessName,
+  type RSSItem,
+} from './shared';
 import { getSiteConfig } from '#site-config/server/composables';
 
 // Export as named function (not default export)
@@ -7,18 +12,24 @@ export async function generateDecisionsFeed(event: H3Event): Promise<string> {
   const siteConfig = getSiteConfig(event);
 
   const authorName = await getAuthorName(event);
+  const businessName = await getBusinessName(event);
 
-  // Fetch decisions
-  const decisions = await queryCollection(event, 'pages')
+  // Get articles config from appConfig (with fallback)
+  const appConfig = useAppConfig();
+  const articlesBasePath =
+    appConfig.content?.routing?.articles?.basePath || '/articles';
+
+  // Fetch articles
+  const articles = await queryCollection(event, 'pages')
     .select('path', 'title', 'description', 'date', 'label')
-    .where('path', 'LIKE', '/decisions/%')
+    .where('path', 'LIKE', `${articlesBasePath}/%`)
     .where('date', 'IS NOT NULL')
     .order('date', 'DESC')
     .limit(50)
     .all();
 
   // Transform to RSS items
-  const items: RSSItem[] = decisions.map((d: any) => ({
+  const items: RSSItem[] = articles.map((d: any) => ({
     title: d.title,
     link: `${siteConfig.url}${d.path}`,
     guid: `${siteConfig.url}${d.path}`,
@@ -31,10 +42,9 @@ export async function generateDecisionsFeed(event: H3Event): Promise<string> {
   // Build RSS feed
   return buildRSSFeed(
     {
-      title: 'Founder Funnel Decisions',
-      link: `${siteConfig.url}/decisions`,
-      description:
-        'Strategic decisions and validation learnings from building Founder Funnel',
+      title: `${businessName} Articles`,
+      link: `${siteConfig.url}${articlesBasePath}`,
+      description: `Latest articles and updates from ${businessName}`,
       items,
     },
     siteConfig.url,

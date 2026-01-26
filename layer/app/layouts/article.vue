@@ -1,10 +1,22 @@
 <script setup lang="ts">
 const route = useRoute();
+const appConfig = useAppConfig();
+
+// Get collection and routing config
+const pagesCollection = computed(
+  () => appConfig.content?.collections?.pages || 'pages',
+);
+const articlesBasePath = computed(
+  () => appConfig.content?.routing?.articles?.basePath || '/articles',
+);
+const articlesBackLabel = computed(
+  () => appConfig.content?.routing?.articles?.backLabel || 'Back to Articles',
+);
 
 // ✅ Watch route for article data
 const { data: article } = await useAsyncData(
   () => `article${route.path}`,
-  () => queryCollection('pages').path(route.path).first(),
+  () => queryCollection(pagesCollection.value).path(route.path).first(),
   {
     watch: [() => route.path],
   },
@@ -14,7 +26,7 @@ const { data: article } = await useAsyncData(
 const { data: surround } = await useAsyncData(
   () => `article-surround${route.path}`,
   () =>
-    queryCollectionItemSurroundings('pages', route.path, {
+    queryCollectionItemSurroundings(pagesCollection.value, route.path, {
       fields: ['title', 'description', 'label'],
     }),
   {
@@ -44,12 +56,12 @@ watchEffect(() => {
       <UPageHeader>
         <template #headline>
           <UButton
-            to="/decisions"
+            :to="articlesBasePath"
             icon="i-lucide-arrow-left"
             color="neutral"
             variant="ghost"
             size="sm"
-            label="Back to Decisions"
+            :label="articlesBackLabel"
           />
         </template>
 
@@ -111,18 +123,6 @@ watchEffect(() => {
           <USeparator class="my-12" />
           <UContentSurround :surround="surround" />
         </template>
-
-        <div class="mt-12 pt-8 border-t">
-          <ConvertInternal
-            offer-slug="mentorship"
-            location="article-footer"
-            variant="card"
-            button-variant="solid"
-            color="primary"
-            size="lg"
-            block
-          />
-        </div>
       </UPageBody>
     </UPage>
   </UMain>

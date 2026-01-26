@@ -1,4 +1,26 @@
 export default defineAppConfig({
+  // Content configuration
+  content: {
+    // Routing paths for content sections
+    routing: {
+      articles: {
+        basePath: '/articles',
+        backLabel: 'Back to Articles',
+      },
+      offers: '/offers',
+      success: '/success',
+    },
+    // Collection name mappings (allows overriding collection names)
+    collections: {
+      docs: 'docs',
+      pages: 'pages',
+      references: 'references',
+      faq: 'faq',
+      config: 'config',
+      navigation: 'navigation',
+    },
+  },
+  // Legacy routing (docs-specific paths)
   routing: {
     docs: '',
     glossary: '/glossary',

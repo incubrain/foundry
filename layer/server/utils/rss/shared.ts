@@ -82,7 +82,18 @@ export async function getAuthorName(event: H3Event): Promise<string> {
     .where('stem', '=', 'config/site')
     .first();
 
-  return siteConfig?.founder?.given_name
-    ? `${siteConfig.founder.given_name} ${siteConfig.founder.surname}`
-    : 'Founder Funnel Team';
+  if (siteConfig?.founder?.given_name) {
+    return `${siteConfig.founder.given_name} ${siteConfig.founder.surname}`;
+  }
+
+  // Fallback to business name or generic
+  return siteConfig?.business?.name || 'Team';
+}
+
+export async function getBusinessName(event: H3Event): Promise<string> {
+  const siteConfig = await queryCollection(event, 'config')
+    .where('stem', '=', 'config/site')
+    .first();
+
+  return siteConfig?.business?.name || 'Site';
 }

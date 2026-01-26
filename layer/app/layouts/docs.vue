@@ -3,7 +3,8 @@
 import type { PageCollections, ContentNavigationItem } from '@nuxt/content';
 // Static data
 const appConfig = useAppConfig();
-const collection = 'docs' as keyof PageCollections;
+const collection = (appConfig.content?.collections?.docs ||
+  'docs') as keyof PageCollections;
 const route = useRoute();
 
 // 📚 DOCS NAVIGATION (for sidebar/components)

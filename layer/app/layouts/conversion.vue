@@ -2,12 +2,25 @@
 import confetti from 'canvas-confetti';
 
 const route = useRoute();
+const appConfig = useAppConfig();
 
-const PAGE_TITLE = 'Founder Funnel';
-const PAGE_COLLECTION = 'pages';
+// Get business name from site config
+const { getSiteConfig } = useContentCache();
+const { data: siteConfig } = await getSiteConfig();
+const pageTitle = computed(
+  () => siteConfig.value?.business?.name || 'Welcome',
+);
+
+// Get collection and success path from app config
+const pageCollection = computed(
+  () => appConfig.content?.collections?.pages || 'pages',
+);
+const successPath = computed(
+  () => appConfig.content?.routing?.success || '/success',
+);
 
 // 🎯 DETECT: Success page vs Offer page
-const isSuccessPage = computed(() => route.path.includes('/success'));
+const isSuccessPage = computed(() => route.path.includes(successPath.value));
 
 // 🎯 CONFETTI: Auto-trigger for success pages
 onMounted(() => {
@@ -23,7 +36,7 @@ onMounted(() => {
 // ✅ Watch route for page data
 const { data: page } = await useAsyncData(
   () => `conversion${route.path}`,
-  () => queryCollection(PAGE_COLLECTION).path(route.path).first(),
+  () => queryCollection(pageCollection.value).path(route.path).first(),
   {
     watch: [() => route.path],
   },
@@ -92,7 +105,7 @@ watch(
         ]"
       >
         <div :class="{ 'pointer-events-auto': !isSuccessPage }">
-          <NuxtLink to="/"><AppLogo :title="PAGE_TITLE" /></NuxtLink>
+          <NuxtLink to="/"><AppLogo :title="pageTitle" /></NuxtLink>
         </div>
       </div>
 
