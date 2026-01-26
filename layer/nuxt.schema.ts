@@ -4,69 +4,78 @@ export default defineNuxtSchema({
   appConfig: {
     content: group({
       title: 'Content',
-      description: 'Content routing and collection configuration.',
+      description: 'Content collection and routing configuration.',
       icon: 'i-lucide-file-text',
       fields: {
-        routing: group({
-          title: 'Routing',
-          description: 'URL paths for content sections.',
-          icon: 'i-lucide-route',
+        collections: group({
+          title: 'Collections',
+          description:
+            'Content collections. Each can be a string (name) or object { name, prefix?, backLabel? }.',
+          icon: 'i-lucide-database',
           fields: {
-            articles: group({
-              title: 'Articles',
-              description: 'Article section routing.',
-              icon: 'i-lucide-newspaper',
+            docs: group({
+              title: 'Docs',
+              description: 'Documentation collection configuration.',
+              icon: 'i-lucide-book',
               fields: {
-                basePath: field({
+                name: field({
                   type: 'string',
-                  title: 'Base Path',
-                  description: 'URL path for articles section.',
-                  icon: 'i-lucide-link',
+                  title: 'Collection Name',
+                  description: 'Name of the docs collection.',
+                  default: 'docs',
+                }),
+                prefix: field({
+                  type: 'string',
+                  title: 'URL Prefix',
+                  description:
+                    'URL prefix for docs (e.g., "" for /docs, "/api" for /api/docs).',
+                  default: '',
+                }),
+              },
+            }),
+            pages: group({
+              title: 'Pages',
+              description: 'Pages collection configuration (articles, etc.).',
+              icon: 'i-lucide-file',
+              fields: {
+                name: field({
+                  type: 'string',
+                  title: 'Collection Name',
+                  description: 'Name of the pages collection.',
+                  default: 'pages',
+                }),
+                prefix: field({
+                  type: 'string',
+                  title: 'URL Prefix',
+                  description: 'URL prefix for articles section.',
                   default: '/articles',
                 }),
                 backLabel: field({
                   type: 'string',
                   title: 'Back Label',
                   description: 'Label for back navigation button.',
-                  icon: 'i-lucide-arrow-left',
                   default: 'Back to Articles',
                 }),
               },
             }),
-            offers: field({
-              type: 'string',
-              title: 'Offers Path',
-              description: 'URL path for offers section.',
-              icon: 'i-lucide-tag',
-              default: '/offers',
-            }),
-            success: field({
-              type: 'string',
-              title: 'Success Path',
-              description: 'URL path for success pages.',
-              icon: 'i-lucide-check-circle',
-              default: '/success',
-            }),
-          },
-        }),
-        collections: group({
-          title: 'Collections',
-          description: 'Content collection name mappings.',
-          icon: 'i-lucide-database',
-          fields: {
-            docs: field({
-              type: 'string',
-              title: 'Docs Collection',
-              description: 'Collection name for documentation.',
-              icon: 'i-lucide-book',
-              default: 'docs',
-            }),
-            pages: field({
-              type: 'string',
-              title: 'Pages Collection',
-              description: 'Collection name for pages.',
-              icon: 'i-lucide-file',
-              default: 'pages',
+            glossary: group({
+              title: 'Glossary',
+              description: 'Glossary collection configuration.',
+              icon: 'i-lucide-book-open',
+              fields: {
+                name: field({
+                  type: 'string',
+                  title: 'Collection Name',
+                  description: 'Name of the glossary collection.',
+                  default: 'glossary',
+                }),
+                prefix: field({
+                  type: 'string',
+                  title: 'URL Prefix',
+                  description: 'URL path for glossary page.',
+                  default: '/glossary',
+                }),
+              },
             }),
             references: field({
               type: 'string',
@@ -95,6 +104,41 @@ export default defineNuxtSchema({
               description: 'Collection name for navigation.',
               icon: 'i-lucide-menu',
               default: 'navigation',
+            }),
+            searchable: field({
+              type: 'array',
+              title: 'Searchable Collections',
+              description: 'Collections to include in search results.',
+              icon: 'i-lucide-search',
+              default: ['docs'],
+            }),
+          },
+        }),
+        routing: group({
+          title: 'Routing',
+          description: 'Additional URL paths not tied to specific collections.',
+          icon: 'i-lucide-route',
+          fields: {
+            sources: field({
+              type: 'string',
+              title: 'Sources Path',
+              description: 'URL path for sources/references page.',
+              icon: 'i-lucide-library',
+              default: '/sources',
+            }),
+            offers: field({
+              type: 'string',
+              title: 'Offers Path',
+              description: 'URL path for offers section.',
+              icon: 'i-lucide-tag',
+              default: '/offers',
+            }),
+            success: field({
+              type: 'string',
+              title: 'Success Path',
+              description: 'URL path for success pages.',
+              icon: 'i-lucide-check-circle',
+              default: '/success',
             }),
           },
         }),

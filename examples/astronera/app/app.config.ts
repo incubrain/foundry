@@ -16,18 +16,20 @@ export default defineAppConfig({
     collapsed: false,
   },
 
-  searchableCollections: ['docs'],
-
-  routing: {
-    docs: '/darksky',
-    glossary: '/resources/glossary',
-    references: '/resources/references',
-  },
-
-  contentCollections: {
-    glossary: 'glossary',
-    references: 'references',
-    navigation: 'navigation',
-    config: 'config',
+  content: {
+    collections: {
+      // Docs with custom prefix
+      docs: { name: 'docs', prefix: '/darksky' },
+      // Glossary with custom prefix
+      glossary: { name: 'glossary', prefix: '/resources/glossary' },
+      // Simple string collections
+      references: 'references',
+      navigation: 'navigation',
+      config: 'config',
+      searchable: ['docs'],
+    },
+    routing: {
+      sources: '/resources/references',
+    },
   },
 });

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import confetti from 'canvas-confetti';
+import { getCollectionName } from '#content-config';
 
 const route = useRoute();
 const appConfig = useAppConfig();
@@ -12,9 +13,8 @@ const pageTitle = computed(
 );
 
 // Get collection and success path from app config
-const pageCollection = computed(
-  () => appConfig.content?.collections?.pages || 'pages',
-);
+const pagesConfig = appConfig.content?.collections?.pages;
+const pageCollection = computed(() => getCollectionName(pagesConfig, 'pages'));
 const successPath = computed(
   () => appConfig.content?.routing?.success || '/success',
 );

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { PropType } from 'vue';
+import { getCollectionName, getCollectionPrefix } from '#content-config';
 
 const props = defineProps({
   href: {
@@ -32,13 +33,16 @@ const isInternalLink = computed(() => props.href?.startsWith('internal:'));
 // Check if this is a glossary term link (href starts with "term:")
 const isGlossaryTerm = computed(() => props.href?.startsWith('term:'));
 
+// Get app config early for use in computed
+const appConfig = useAppConfig();
+
 // Convert internal
 const internalHref = computed(() => {
   if (!isInternalLink.value) return props.href;
   const path = props.href.replace('internal:', '');
   // Clean up any double slashes if path already had one, though usually internal: touches matching name
   // Prepend configured docs prefix
-  const prefix = appConfig.routing?.docs || '';
+  const prefix = getCollectionPrefix(appConfig.content?.collections?.docs, '');
   const normalizedPath = path.startsWith('/') ? path : `/${path}`;
   return `${prefix}${normalizedPath}`;
 });
@@ -52,8 +56,8 @@ const internalPageData = computed(() => {
 });
 
 // Convert term: prefix to glossary page anchor
-const appConfig = useAppConfig();
-const glossaryPath = appConfig.routing?.glossary || '/glossary';
+const glossaryConfig = appConfig.content?.collections?.glossary;
+const glossaryPath = getCollectionPrefix(glossaryConfig, '/glossary');
 
 const glossaryHref = computed(() => {
   if (!isGlossaryTerm.value) return props.href;
@@ -62,7 +66,7 @@ const glossaryHref = computed(() => {
 });
 
 // Fetch glossary term data for tooltips
-const glossaryCollection = appConfig.contentCollections?.glossary || 'glossary';
+const glossaryCollection = getCollectionName(glossaryConfig, 'glossary');
 const { data: glossaryData } = await useAsyncData('glossary-all', () =>
   queryCollection(glossaryCollection).all(),
 );

@@ -1,10 +1,14 @@
+import { getCollectionName } from '#content-config';
+
 export const useCitations = () => {
   const route = useRoute();
   const appConfig = useAppConfig();
 
   // Get references collection name from config
-  const referencesCollection =
-    appConfig.content?.collections?.references || 'references';
+  const referencesCollection = getCollectionName(
+    appConfig.content?.collections?.references,
+    'references',
+  );
 
   // Stable key per route - state persists per route
   const key = computed(() => `citations-${route.path}`);

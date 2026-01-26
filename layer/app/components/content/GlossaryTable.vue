@@ -1,8 +1,12 @@
 <script setup lang="ts">
 import type { BadgeProps } from '@nuxt/ui';
+import { getCollectionName } from '#content-config';
 
 const appConfig = useAppConfig();
-const glossaryCollection = appConfig.contentCollections?.glossary || 'glossary';
+const glossaryCollection = getCollectionName(
+  appConfig.content?.collections?.glossary,
+  'glossary',
+);
 
 // Fetch all glossary terms
 const { data: glossaryData } = await useAsyncData('glossary-terms', () =>

@@ -1,6 +1,7 @@
 import { inject, type Ref } from 'vue'
 import type { ContentNavigationItem } from '@nuxt/content'
 import { flattenNavigation } from '~/utils/navigation'
+import { getCollectionPrefix } from '#content-config'
 
 export const useDocsMetadata = () => {
   // Use the navigation data already provided globally by app.vue
@@ -16,7 +17,7 @@ export const useDocsMetadata = () => {
     // Normalize path: ensure leading slash
     // Also prepend configured docs prefix if present
     const appConfig = useAppConfig()
-    const prefix = appConfig.routing?.docs || ''
+    const prefix = getCollectionPrefix(appConfig.content?.collections?.docs, '')
     const normalizedPath = pathWithoutHash.startsWith('/')
       ? `${prefix}${pathWithoutHash}`
       : `${prefix}/${pathWithoutHash}`

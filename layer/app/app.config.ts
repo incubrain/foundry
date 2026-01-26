@@ -1,30 +1,27 @@
 export default defineAppConfig({
   // Content configuration
+  // Each collection can be a string (name only) or object { name, prefix?, backLabel? }
   content: {
-    // Routing paths for content sections
-    routing: {
-      articles: {
-        basePath: '/articles',
-        backLabel: 'Back to Articles',
-      },
-      offers: '/offers',
-      success: '/success',
-    },
-    // Collection name mappings (allows overriding collection names)
     collections: {
-      docs: 'docs',
-      pages: 'pages',
+      // Documentation - with URL prefix
+      docs: { name: 'docs', prefix: '' },
+      // Pages collection - with articles routing
+      pages: { name: 'pages', prefix: '/articles', backLabel: 'Back to Articles' },
+      // Data collections (string shorthand)
       references: 'references',
+      glossary: { name: 'glossary', prefix: '/glossary' },
       faq: 'faq',
       config: 'config',
       navigation: 'navigation',
+      // Collections to include in search
+      searchable: ['docs'],
     },
-  },
-  // Legacy routing (docs-specific paths)
-  routing: {
-    docs: '',
-    glossary: '/glossary',
-    sources: '/sources',
+    // Additional routing paths (not tied to a specific collection)
+    routing: {
+      sources: '/sources',
+      offers: '/offers',
+      success: '/success',
+    },
   },
   ui: {
     colors: {

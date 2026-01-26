@@ -1,16 +1,21 @@
 <script setup lang="ts">
+import {
+  getCollectionName,
+  getCollectionPrefix,
+  getCollectionBackLabel,
+} from '#content-config';
+
 const route = useRoute();
 const appConfig = useAppConfig();
 
-// Get collection and routing config
-const pagesCollection = computed(
-  () => appConfig.content?.collections?.pages || 'pages',
+// Get collection and routing config from pages collection
+const pagesConfig = appConfig.content?.collections?.pages;
+const pagesCollection = computed(() => getCollectionName(pagesConfig, 'pages'));
+const articlesBasePath = computed(() =>
+  getCollectionPrefix(pagesConfig, '/articles'),
 );
-const articlesBasePath = computed(
-  () => appConfig.content?.routing?.articles?.basePath || '/articles',
-);
-const articlesBackLabel = computed(
-  () => appConfig.content?.routing?.articles?.backLabel || 'Back to Articles',
+const articlesBackLabel = computed(() =>
+  getCollectionBackLabel(pagesConfig, 'Back to Articles'),
 );
 
 // ✅ Watch route for article data

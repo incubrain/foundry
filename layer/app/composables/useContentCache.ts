@@ -1,4 +1,5 @@
 // app/composables/useContentCache.ts
+import { getCollectionName } from '#content-config';
 
 /**
  * Centralized content queries with caching
@@ -9,9 +10,9 @@ export const useContentCache = () => {
 
   // Get collection names from config with fallbacks
   const collections = {
-    faq: appConfig.content?.collections?.faq || 'faq',
-    config: appConfig.content?.collections?.config || 'config',
-    pages: appConfig.content?.collections?.pages || 'pages',
+    faq: getCollectionName(appConfig.content?.collections?.faq, 'faq'),
+    config: getCollectionName(appConfig.content?.collections?.config, 'config'),
+    pages: getCollectionName(appConfig.content?.collections?.pages, 'pages'),
   };
 
   // Get routing config with fallbacks

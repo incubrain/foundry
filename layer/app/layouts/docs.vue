@@ -1,10 +1,12 @@
 <!-- layouts/docs.vue -->
 <script setup lang="ts">
 import type { PageCollections, ContentNavigationItem } from '@nuxt/content';
+import { getCollectionName } from '#content-config';
+
 // Static data
 const appConfig = useAppConfig();
-const collection = (appConfig.content?.collections?.docs ||
-  'docs') as keyof PageCollections;
+const docsConfig = appConfig.content?.collections?.docs;
+const collection = getCollectionName(docsConfig, 'docs') as keyof PageCollections;
 const route = useRoute();
 
 // 📚 DOCS NAVIGATION (for sidebar/components)

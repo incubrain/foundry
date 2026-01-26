@@ -16,15 +16,14 @@ export default defineAppConfig({
     alt: 'Founder Funnel Logo',
   },
 
-  searchableCollections: ['pages'],
-
-  routing: {
-    glossary: '/resources/glossary',
-  },
-
-  contentCollections: {
-    glossary: 'glossary',
-    references: 'references',
-    navigation: 'navigation',
+  content: {
+    collections: {
+      // Glossary with custom prefix
+      glossary: { name: 'glossary', prefix: '/resources/glossary' },
+      // Simple string collections
+      references: 'references',
+      navigation: 'navigation',
+      searchable: ['pages'],
+    },
   },
 });

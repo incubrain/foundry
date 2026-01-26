@@ -15,9 +15,11 @@ export async function generateDecisionsFeed(event: H3Event): Promise<string> {
   const businessName = await getBusinessName(event);
 
   // Get articles config from appConfig (with fallback)
+  // Pages collection can be string or { name, prefix, backLabel }
   const appConfig = useAppConfig();
+  const pagesConfig = appConfig.content?.collections?.pages;
   const articlesBasePath =
-    appConfig.content?.routing?.articles?.basePath || '/articles';
+    typeof pagesConfig === 'object' ? pagesConfig?.prefix || '/articles' : '/articles';
 
   // Fetch articles
   const articles = await queryCollection(event, 'pages')
