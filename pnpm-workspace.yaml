@@ -6,7 +6,7 @@ packages:
   # Only include specific examples we're building
   - 'examples/founder-funnel/web'
   - 'examples/founder-funnel/docs'
-  - 'examples/astronera/docs'
+  - 'examples/astronera'
   - 'examples/starter/web'
   - 'examples/starter/docs'
 

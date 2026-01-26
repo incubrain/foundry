@@ -5,4 +5,6 @@ navigation: false
 prose: true
 ---
 
+::section-wrapper
 :sources-table
+::

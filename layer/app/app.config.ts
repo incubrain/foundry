@@ -1,4 +1,9 @@
 export default defineAppConfig({
+  routing: {
+    docs: '',
+    glossary: '/glossary',
+    sources: '/sources',
+  },
   ui: {
     colors: {
       primary: 'primary',

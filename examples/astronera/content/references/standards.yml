@@ -2,7 +2,6 @@ category:
   id: standards
   label: Standards & Implementation
 sources:
-  # Comprehensive Framework
   - id: darksky-2025-alan-state-of-science
     title:
       'Unlock the secrets of the night sky: How dark skies boost tourism and the
@@ -16,7 +15,6 @@ sources:
       'State-of-the-science report on artificial light at night (ALAN) and its
       environmental, tourism, and energy impacts.'
 
-  # Certification Standards
   - id: darksky-2020-niue-first-country
     title: "Niue is the world's first country to become a Dark Sky Place"
     author: 'International Dark-Sky Association'
@@ -36,22 +34,32 @@ sources:
     date: '2024'
     description: 'Advocacy update on Dark Sky Places program impacts.'
 
-  # Capacity Building Organizations
-  - id: astronera-2025-dsi-endorsement
+  - id: ae-dsi-endorsement
     title: 'Endorsement of AstronEra as a partner'
     author: 'DarkSky International (DSI)'
-    url: 'https://astronera.org/doi/dsi-acknowledgement'
+    pdf: '/pdfs/darksky-international-endorsement-2025.pdf'
     affiliation: ngo
     credibilityScore: 7
     date: '2025'
     description: 'DSI endorsement of AstronEra as partner organization.'
 
-  - id: astronera-2023-idspac
+  - id: ae-dsi-acknowledgement
+    title: "DSI Acknowledges AstronEra's Work In India"
+    author: 'DarkSky International (DSI)'
+    pdf: '/pdfs/darksky-international-acknowledgement-certificate.pdf'
+    affiliation: ngo
+    credibilityScore: 7
+    date: '2025'
+    description:
+      'DSI acknowledgement of AstronEra contribution to dark sky preservation in
+      India.'
+
+  - id: ae-idspac
     title:
       'International Dark Sky Preservation & Astrotourism Conference (IDSPAC
       2023)'
     author: 'AstronEra'
-    url: 'https://astronera.org/doi/idspac-2023'
+    pdf: '/pdfs/idspac-2023.pdf'
     affiliation: ngo
     credibilityScore: 7
     date: '2023'

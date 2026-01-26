@@ -11,28 +11,17 @@ const sortedRefs = computed(() => {
     .map((id) => allRefs.value.find((r: any) => r.id === id))
     .filter(Boolean);
 });
-
-// ✅ Scroll to anchor on mount if hash present
-onMounted(() => {
-  const hash = window.location.hash;
-  if (hash) {
-    setTimeout(() => {
-      const el = document.querySelector(hash);
-      el?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }, 100);
-  }
-});
 </script>
 
 <template>
   <div
     v-if="sortedRefs.length"
-    class="bibliography mt-12 pt-8 border-t border-gray-200 dark:border-gray-800"
+    :key="`bibliography${route.path}`"
+    class="mt-12 pt-8 border-t border-gray-200 dark:border-gray-800"
   >
     <div class="space-y-4 lg:columns-2 lg:gap-8">
       <div
         v-for="(ref, idx) in sortedRefs"
-        :id="`ref-${ref.id}`"
         :key="ref.id"
         class="flex gap-3 break-inside-avoid scroll-mt-40 rounded p-2 -m-2 transition-colors target:bg-primary-50 dark:target:bg-primary-950/50"
       >

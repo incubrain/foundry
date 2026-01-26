@@ -32,10 +32,11 @@ const { stop } = useIntersectionObserver(
 </script>
 
 <template>
-  <UPageSection ref="sectionRef" v-bind="props">
-    <!-- Forward slots WITHOUT binding slot props -->
-    <template v-for="(_, name) in $slots" #[name]>
-      <slot :name="name" />
-    </template>
-  </UPageSection>
+  <div ref="sectionRef">
+    <UPageSection v-bind="props">
+      <template v-for="(_, name) in $slots" #[name]>
+        <slot :name="name" />
+      </template>
+    </UPageSection>
+  </div>
 </template>

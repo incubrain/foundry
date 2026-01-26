@@ -3,8 +3,8 @@ import { createResolver } from '@nuxt/kit';
 import {
   basePageSchema,
   baseNavigationSchema,
-} from '../../../apps/docs/content.collections';
-import { getActiveConfigSource } from '../../../apps/docs/shared/config-resolver';
+} from '../../../layer/content.collections';
+import { getActiveConfigSource } from '../../../layer/shared/config-resolver';
 
 const { resolve } = createResolver(import.meta.url);
 const { contentDir: cwd } = getActiveConfigSource(resolve, 'docs');

@@ -1,5 +1,5 @@
 export default defineAppConfig({
-  title: 'AstronEra - Dark Sky Maharashtra',
+  title: 'AstronEra',
   description:
     'Authoritative resource on light pollution policy and dark sky preservation in Maharashtra, India',
 
@@ -16,9 +16,10 @@ export default defineAppConfig({
     collapsed: false,
   },
 
-  searchableCollections: ['docs', 'landing'],
+  searchableCollections: ['docs'],
 
   routing: {
+    docs: '/darksky',
     glossary: '/resources/glossary',
     references: '/resources/references',
   },

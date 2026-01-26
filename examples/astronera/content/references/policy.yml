@@ -2,7 +2,6 @@ category:
   id: policy
   label: Policy & Legal Frameworks
 sources:
-  # International Legal Frameworks
   - id: croatia-2019-light-pollution-law
     title: 'Law on protection against light pollution'
     author: 'Croatia'
@@ -226,7 +225,6 @@ sources:
     date: '2018'
     description: "India's National Action Plan under CMS Central Asian Flyway."
 
-  # India National & State Policy
   - id: india-1972-wildlife-act
     title: 'Wildlife (Protection) Act, 1972'
     author: 'Government of India'
@@ -285,3 +283,15 @@ sources:
     description:
       'Maharashtra State Action Plan on Climate Change and Human Health
       (SAPCCHH).'
+
+  - id: kulkarni-2025-maharashtra-roadmap
+    title:
+      'Mitigating artificial light at night: A policy roadmap to preserve dark
+      skies in Maharashtra'
+    author: 'Kulkarni, S., Huchgol, R., & Yakushina, Y.'
+    url: 'https://doi.org/10.5281/zenodo.15860666'
+    affiliation: academic
+    credibilityScore: 8
+    date: '2025'
+    description:
+      'AstronEra policy roadmap paper for Maharashtra dark sky conservation.'

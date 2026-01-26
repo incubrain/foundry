@@ -2,10 +2,11 @@
 import { useNavigation } from '#navigation';
 import { useSearch } from '#search';
 
-const { getSiteConfig } = useContentCache();
-
 const { title, seo } = useAppConfig();
-const { data: site } = getSiteConfig();
+
+const { data: site } = useAsyncData('app-config', () =>
+  queryCollection('config').where('stem', '=', 'config/site').first(),
+);
 
 /* -------------------------------------------------------------------------- */
 /*                             LOAD COMPOSABLES                                */
@@ -38,20 +39,12 @@ useSeoMeta({
 /*                              GLOBAL PROVIDES                                */
 /* -------------------------------------------------------------------------- */
 
-// Canonical navigation graph (for search, docs sidebar, etc.)
-provide('navigation_all', navigationAll);
-
-// Header navigation data
-provide('navigation_header', navigationHeader);
-
-// Footer navigation data
-provide('navigation_footer', navigationFooter);
-
-// Banner configuration
-provide('banner_config', banner);
-
-// Site-wide metadata
-provide('site_config', site);
+// ✅ Provide with defensive fallbacks
+provide('navigation_all', navigationAll ?? ref([]));
+provide('navigation_header', navigationHeader ?? ref({}));
+provide('navigation_footer', navigationFooter ?? ref({}));
+provide('banner_config', banner ?? ref(undefined));
+provide('site_config', site ?? ref(null));
 </script>
 
 <template>

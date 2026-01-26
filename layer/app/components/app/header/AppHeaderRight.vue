@@ -10,7 +10,7 @@ const socialLinks = computed(() => {
   if (!headerData?.value?.socials) return [];
 
   return Object.entries(headerData.value.socials).map(([key, url]) => ({
-    'icon': `i-simple-icons-${key}`,
+    'icon': key === 'email' ? 'i-lucide-mail' : `i-simple-icons-${key}`,
     'to': url,
     'target': '_blank',
     'aria-label': key,

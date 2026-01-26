@@ -10,7 +10,7 @@ import {
 
 export default defineContentConfig({
   collections: {
-    landing: defineCollection({
+    pages: defineCollection({
       type: 'page',
       source: [
         {

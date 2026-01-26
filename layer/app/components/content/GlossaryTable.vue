@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import type { BadgeProps } from '@nuxt/ui';
-import type { Collection, PageCollections } from '@nuxt/content';
-import type { TableMeta, Row } from '@tanstack/vue-table';
 
 const appConfig = useAppConfig();
 const glossaryCollection = appConfig.contentCollections?.glossary || 'glossary';
@@ -31,22 +29,6 @@ const allTerms = computed(() => {
   );
 });
 
-// Filter state
-const searchQuery = ref('');
-const selectedCategory = ref<string>('all');
-
-// Build category options dynamically from content
-const categoryOptions = computed(() => {
-  if (!glossaryData.value) return [{ label: 'All Categories', value: 'all' }];
-
-  const categories = glossaryData.value.map((file: any) => ({
-    label: file.category.label,
-    value: file.category.id,
-  }));
-
-  return [{ label: 'All Categories', value: 'all' }, ...categories];
-});
-
 // Build category colors map from content
 const categoryColor = computed<Record<string, BadgeProps['color']>>(() => {
   if (!glossaryData.value) return {};
@@ -59,148 +41,119 @@ const categoryColor = computed<Record<string, BadgeProps['color']>>(() => {
   return colorMap;
 });
 
-// Filtered terms
-const filteredTerms = computed(() => {
-  let terms = allTerms.value;
-
-  // Filter by category
-  if (selectedCategory.value !== 'all') {
-    terms = terms.filter((term) => term.category === selectedCategory.value);
-  }
-
-  // Filter by search query
-  if (searchQuery.value) {
-    const query = searchQuery.value.toLowerCase();
-    terms = terms.filter(
-      (term) =>
-        term.term.toLowerCase().includes(query) ||
-        term.abbreviation?.toLowerCase().includes(query) ||
-        term.definition.toLowerCase().includes(query),
-    );
-  }
-
-  return terms;
-});
-
-const getTermId = (termId: string) => {
-  return `term-${termId}`;
-};
-
-// Anchor highlighting
-const route = useRoute();
-const highlightedTermId = computed(() => {
-  if (!route.hash) return null;
-  return route.hash.replace('#', '');
-});
-
-// Scroll to highlighted term on mount
-onMounted(() => {
-  if (highlightedTermId.value) {
-    nextTick(() => {
-      const element = document.getElementById(highlightedTermId.value!);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
-    });
-  }
-});
-
-const meta = computed<TableMeta<any>>(() => ({
-  class: {
-    tr: (row: Row<any>) => {
-      if (
-        highlightedTermId.value &&
-        highlightedTermId.value === getTermId(row.original.id)
-      ) {
-        return 'bg-primary/10';
-      }
-      return '';
-    },
-  },
-}));
-
 // Watch for hash changes
+const route = useRoute();
+const globalFilter = ref('' as string);
+
 watch(
-  () => route.hash,
-  (newHash) => {
-    if (newHash) {
+  () => route.query,
+  (newQuery) => {
+    if (newQuery) {
       nextTick(() => {
-        const element = document.getElementById(newHash.replace('#', ''));
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
+        globalFilter.value = String(newQuery.search ?? '');
       });
     }
+  },
+  {
+    immediate: true,
   },
 );
 </script>
 
 <template>
-  <div class="space-y-6">
+  <div class="space-y-6 w-full overflow-hidden">
     <!-- Filters -->
     <div class="flex flex-col sm:flex-row gap-4">
       <UInput
-        v-model="searchQuery"
+        v-model="globalFilter"
         placeholder="Search terms..."
         icon="i-heroicons-magnifying-glass"
         class="flex-1"
       />
-      <USelectMenu
-        v-model="selectedCategory"
-        :options="categoryOptions"
-        placeholder="Filter by category"
-        class="w-full sm:w-48"
-      />
     </div>
 
-    <!-- Results count -->
-    <div class="text-sm text-gray-500 dark:text-gray-400">
-      Showing {{ filteredTerms.length }} of {{ allTerms.length }} terms
+    <!-- ✅ PATTERN 1: Merged Term Column -->
+    <div class="overflow-x-auto">
+      <UTable
+        v-model:global-filter="globalFilter"
+        :data="allTerms"
+        :columns="[
+          {
+            accessorKey: 'id',
+            header: 'ID',
+            size: 100,
+            minSize: 100,
+            maxSize: 100,
+            meta: {
+              class: {
+                td: 'max-w-[100px] text-xs',
+                th: 'max-w-[100px]',
+              },
+            },
+          },
+          {
+            accessorKey: 'term',
+            header: 'Term',
+            size: 300,
+            minSize: 200,
+            maxSize: 400,
+            meta: {
+              class: {
+                td: 'max-w-[400px]',
+                th: 'max-w-[400px]',
+              },
+            },
+          },
+          {
+            accessorKey: 'definition',
+            header: 'Definition',
+            size: 600,
+            minSize: 300,
+            maxSize: 600,
+            meta: {
+              class: {
+                td: 'max-w-[600px]',
+                th: 'max-w-[600px]',
+              },
+            },
+          },
+        ]"
+        :ui="{
+          root: 'border border-default rounded-lg',
+          base: 'min-w-full',
+        }"
+      >
+        <!-- ✅ Merged Term Column: Term + Abbreviation + Category -->
+        <template #term-cell="{ row }">
+          <!-- Term + Abbreviation (inline) -->
+          <div class="font-semibold text-base text-highlighted text-balance">
+            {{ row.original.term }}
+            <span
+              v-if="row.original.abbreviation"
+              class="font-normal text-sm text-muted ml-1"
+            >
+              ({{ row.original.abbreviation }})
+            </span>
+          </div>
+
+          <!-- Category Badge -->
+          <div>
+            <UBadge
+              :label="row.original.categoryLabel"
+              :color="categoryColor[row.original.category] ?? 'neutral'"
+              variant="soft"
+              size="xs"
+            />
+          </div>
+        </template>
+
+        <!-- ✅ Definition Column: Full width, wraps naturally -->
+        <template #definition-cell="{ row }">
+          <div class="text-sm text-default leading-relaxed text-balance">
+            {{ row.original.definition }}
+          </div>
+        </template>
+      </UTable>
     </div>
-
-    <!-- Glossary Table -->
-    <UTable
-      :data="filteredTerms"
-      :columns="[
-        { accessorKey: 'term', header: 'Term' },
-        { accessorKey: 'abbreviation', header: 'Abbreviation' },
-        { accessorKey: 'definition', header: 'Definition' },
-        { accessorKey: 'category', header: 'Category' },
-      ]"
-      :meta="meta"
-    >
-      <template #term-cell="{ row }">
-        <div
-          class="font-semibold transition-colors duration-300"
-          :id="getTermId(row.original.id)"
-        >
-          {{ row.original.term }}
-        </div>
-      </template>
-
-      <template #abbreviation-cell="{ row }">
-        <div
-          v-if="row.original.abbreviation"
-          class="text-sm font-mono text-gray-600 dark:text-gray-400"
-        >
-          {{ row.original.abbreviation }}
-        </div>
-        <div v-else class="text-gray-400">—</div>
-      </template>
-
-      <template #definition-cell="{ row }">
-        <div class="text-sm">{{ row.original.definition }}</div>
-      </template>
-
-      <template #category-cell="{ row }">
-        <UBadge
-          v-if="row.original.category"
-          :label="row.original.category"
-          :color="categoryColor[row.original.category] ?? 'neutral'"
-          variant="soft"
-          size="xs"
-        />
-      </template>
-    </UTable>
   </div>
 </template>

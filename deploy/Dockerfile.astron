@@ -1,0 +1,97 @@
+# syntax=docker/dockerfile:1.4
+# deploy/Dockerfile.website
+
+# ============================================
+# STAGE 1: Dependencies
+# ============================================
+FROM node:22.21-bookworm AS deps
+
+# ⚡ Do corepack setup ONCE
+RUN corepack enable && corepack prepare pnpm@10.12.0 --activate
+
+ARG EXAMPLE_NAME="founder-funnel"
+ARG APP_TYPE="web"
+
+WORKDIR /app
+
+# Copy package files
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc ./
+COPY layer/package.json ./layer/
+COPY examples/${EXAMPLE_NAME}/${APP_TYPE}/package.json ./examples/${EXAMPLE_NAME}/${APP_TYPE}/
+
+# ⚡ CRITICAL: Mount pnpm store as cache
+# This persists downloaded packages across builds
+RUN --mount=type=cache,id=pnpm-store,target=/root/.local/share/pnpm/store \
+    echo "Installing dependencies with cache..." && \
+    pnpm install --frozen-lockfile --reporter=append-only && \
+    echo "Install complete! Reused packages from cache."
+
+# ============================================
+# STAGE 2: Builder
+# ============================================
+FROM node:22.21-bookworm AS builder
+
+ARG EXAMPLE_NAME="founder-funnel"
+ARG APP_TYPE="web"
+
+# Build-time env vars
+ARG NUXT_PUBLIC_SCRIPTS_UMAMI_ANALYTICS_WEBSITE_ID=""
+ARG NUXT_PUBLIC_SCRIPTS_UMAMI_ANALYTICS_SCRIPT_INPUT_SRC=""
+ARG NUXT_PUBLIC_SITE_URL=""
+
+ENV NODE_ENV="production"
+ENV NODE_OPTIONS="--max-old-space-size=3072"
+ENV NUXT_PUBLIC_SCRIPTS_UMAMI_ANALYTICS_WEBSITE_ID=$NUXT_PUBLIC_SCRIPTS_UMAMI_ANALYTICS_WEBSITE_ID
+ENV NUXT_PUBLIC_SCRIPTS_UMAMI_ANALYTICS_SCRIPT_INPUT_SRC=$NUXT_PUBLIC_SCRIPTS_UMAMI_ANALYTICS_SCRIPT_INPUT_SRC
+ENV NUXT_PUBLIC_SITE_URL=$NUXT_PUBLIC_SITE_URL
+
+WORKDIR /app
+
+# ⚡ REMOVED: Duplicate corepack setup (already in deps stage)
+# RUN corepack enable && corepack prepare pnpm@10.12.0 --activate
+
+# Copy node_modules from deps stage (already has pnpm)
+COPY --from=deps /app/node_modules ./node_modules
+
+# Copy source code
+COPY apps/docs ./apps/docs
+COPY examples/${EXAMPLE_NAME}/shared ./examples/${EXAMPLE_NAME}/shared
+COPY examples/${EXAMPLE_NAME}/${APP_TYPE} ./examples/${EXAMPLE_NAME}/${APP_TYPE}
+
+# Build the specific example
+WORKDIR /app/examples/${EXAMPLE_NAME}/${APP_TYPE}
+
+# ⚡ Use npx instead of pnpm (avoids needing pnpm in this stage)
+RUN echo "Building application..." && \
+    npx nuxi build && \
+    echo "Build complete!"
+
+# ============================================
+# STAGE 3: Production Runner
+# ============================================
+FROM node:22.21-bookworm-slim AS runner
+
+ARG EXAMPLE_NAME="founder-funnel"
+ARG APP_TYPE="web"
+ARG PORT=3000
+ARG HOST=0.0.0.0
+
+# Runtime env vars
+ARG WEBHOOK_URL=""
+ARG TELEGRAM_CHAT_ID=""
+
+ENV NODE_ENV="production"
+ENV NODE_OPTIONS="--max-old-space-size=512"
+ENV PORT=$PORT
+ENV HOST=$HOST
+ENV WEBHOOK_URL=$WEBHOOK_URL
+ENV TELEGRAM_CHAT_ID=$TELEGRAM_CHAT_ID
+
+WORKDIR /app
+
+# Copy ONLY the built output
+COPY --from=builder /app/examples/${EXAMPLE_NAME}/${APP_TYPE}/.output ./.output
+
+EXPOSE $PORT
+
+CMD ["node", ".output/server/index.mjs"]

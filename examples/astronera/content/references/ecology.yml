@@ -3,7 +3,6 @@ category:
   label: Ecology & Biodiversity
 
 sources:
-  # Biodiversity & Ecosystem Impacts
   - id: holker-2010-biodiversity-threat
     title: 'Light pollution as a biodiversity threat'
     author: 'Hölker, F., et al.'
@@ -73,7 +72,6 @@ sources:
     description:
       'Ecology and Evolution review on ALAN impacts on nocturnal insects.'
 
-  # Agriculture & Pollination
   - id: knop-2017-pollination-threat
     title: 'Artificial light at night as a new threat to pollination'
     author: 'Knop, E., et al.'

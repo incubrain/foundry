@@ -1,11 +1,11 @@
 <script setup lang="ts">
-const site = inject<any>('site_config');
+const site = inject<any>('site_config', ref(null));
 
 const socials = computed(() => site.value?.socials ?? {});
 
 const links = computed(() =>
   Object.entries(socials.value).map(([key, url]) => ({
-    'icon': `i-simple-icons-${key}`,
+    'icon': key === 'email' ? 'i-lucide-mail' : `i-simple-icons-${key}`,
     'to': url,
     'target': '_blank',
     'aria-label': `${key} social link`,

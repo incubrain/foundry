@@ -9,7 +9,7 @@ import { formatTelegramMessage } from '../formatters/telegram';
 import { RateLimiter, validateAntiSpam } from '../utils/anti-spam';
 
 const captureSchema = z.object({
-  formData: z.record(z.any()),
+  formData: z.record(z.string(), z.any()),
   antiSpam: z.any().optional(),
 });
 

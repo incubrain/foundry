@@ -6,7 +6,7 @@ import {
   queryCollection,
 } from '#imports';
 import type { ContentNavigationItem, PageCollections } from '@nuxt/content';
-import type { BannerProps, NavigationMenuItem } from '@nuxt/ui';
+import type { BannerProps } from '@nuxt/ui';
 
 /* -------------------------------------------------------------------------- */
 /*                                   TYPES                                    */
@@ -69,7 +69,12 @@ export const useNavigation = async () => {
 
       const collections = await Promise.all(
         searchableCollections.map((collection: keyof PageCollections) =>
-          queryCollectionNavigation(collection)
+          queryCollectionNavigation(collection, [
+            'path',
+            'title',
+            'description',
+            'label',
+          ])
             .where('path', '<>', '/')
             .catch(() => [] as ContentNavigationItem[]),
         ),

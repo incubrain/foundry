@@ -59,11 +59,6 @@ export const baseReferencesSchema = z.object({
     id: z.string(),
     label: z.string(),
   }),
-  affiliation: z.object({
-    id: z.string(),
-    label: z.string(),
-    color: z.string().optional(),
-  }),
   sources: z.array(
     z.object({
       id: z.string(),
@@ -72,6 +67,7 @@ export const baseReferencesSchema = z.object({
       date: z.string(),
       description: z.string().optional(),
       credibilityScore: z.number().min(1).max(10).optional(),
+      affiliation: z.string().optional(),
       pdf: z.string().optional(),
       url: z.string().optional(),
     }),

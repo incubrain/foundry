@@ -1,24 +1,21 @@
 import { createResolver } from '@nuxt/kit';
-import { getActiveConfigSource } from '../../layer/shared/config-resolver';
 
 const { resolve } = createResolver(import.meta.url);
-const { resolveLayer, contentRoot } = getActiveConfigSource(
-  resolve,
-  'docs',
-);
+
+const SITE_URL = 'https://astronera.org';
 
 export default defineNuxtConfig({
-  extends: [resolveLayer()],
+  extends: ['@incubrain/founder-funnel'],
 
   site: {
-    name: 'Dark Sky Maharashtra',
-    url: 'https://content.astronera.org',
+    name: 'AstronEra',
+    url: SITE_URL,
   },
 
   css: [resolve('./app/assets/theme.css')],
 
   llms: {
-    domain: 'https://content.astronera.org',
+    domain: SITE_URL,
     title: 'Dark Sky Conservation in Maharashtra',
     description: 'Dark Sky Conservation in Maharashtra',
     notes: [
@@ -41,17 +38,13 @@ export default defineNuxtConfig({
     routeRules: {
       // DOI links redirect to documents page with anchors
       '/doi/dsi-acknowledgement': {
-        redirect: '/documents#dsi-acknowledgement',
+        redirect: '/resources/sources',
       },
-      '/doi/dsi-endorsement': { redirect: '/documents#dsi-endorsement' },
-      '/doi/idspac-2023': { redirect: '/documents#idspac-2023' },
-      '/doi/symposium-2025': { redirect: '/documents#symposium-2025' },
-      '/doi/astrotribe-nashik-2023': {
-        redirect: '/documents#astrotribe-nashik',
-      },
-      '/doi/astrotribe-ladakh-2024': {
-        redirect: '/documents#astrotribe-ladakh',
-      },
+      '/doi/dsi-endorsement': { redirect: '/resources/sources' },
+      '/doi/idspac-2023': { redirect: '/resources/sources' },
+      '/doi/symposium-2025': { redirect: '/resources/sources' },
+      '/doi/astrotribe-nashik-2023': { redirect: '/resources/sources' },
+      '/doi/astrotribe-ladakh-2024': { redirect: '/resources/sources' },
     },
   },
 
@@ -62,7 +55,6 @@ export default defineNuxtConfig({
       owner: 'incubrain', // your GitHub username or organization
       repo: 'founder-funnel', // your repository name
       branch: 'main', // the branch to commit to (default: main)
-      rootDir: contentRoot,
       private: false,
     },
   },

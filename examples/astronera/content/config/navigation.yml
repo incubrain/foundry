@@ -21,18 +21,30 @@ header:
   socials:
     x: https://x.com/AstronEra
   navigation:
-    - label: Research
-      icon: i-lucide-flask-conical
-      to: /darksky/research
-    - label: Policy
-      icon: i-lucide-book-open
-      to: /darksky/policy
-    - label: Pilots
-      icon: i-lucide-sprout
-      to: /darksky/pilots
+    - label: Dark Sky
+      icon: i-lucide-moon
+      to: /darksky
+      children:
+        - label: Research
+          icon: i-lucide-flask-conical
+          to: /darksky/research
+          description: some information about dark sky research
+        - label: Policy
+          icon: i-lucide-book-open
+          to: /darksky/policy
+        - label: Pilots
+          icon: i-lucide-sprout
+          to: /darksky/pilots
     - label: Resources
       icon: i-lucide-book-key
       to: /resources
+      children:
+        - label: Sources
+          icon: i-lucide-file-pen-line
+          to: /resources/sources
+        - label: Glossary
+          icon: i-lucide-library
+          to: /resources/glossary
   showSearch: true
   showColorMode: true
 
@@ -40,16 +52,16 @@ footer:
   columns:
     - label: Research
       icon: i-lucide-flask-conical
-      to: /research
+      to: /darksky/research
       children:
         - label: Overview
-          to: /research
+          to: /darksky/research
     - label: Policy
       icon: i-lucide-book-open
-      to: /policy
+      to: /darksky/policy
       children:
         - label: Overview
-          to: /policy
+          to: /darksky/policy
     - label: Resources
       icon: i-lucide-book-key
       to: /resources

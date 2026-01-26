@@ -1,4 +1,9 @@
-<!-- pages/[...slug].vue -->
+<script setup lang="ts">
+// TODO: link to $attrs docs
+</script>
+
 <template>
-  <ContentRenderer v-if="$attrs.page" :value="$attrs.page" />
+  <div>
+    <ContentRenderer v-if="$attrs.page" :value="$attrs.page" />
+  </div>
 </template>

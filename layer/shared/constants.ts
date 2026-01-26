@@ -19,6 +19,7 @@ export const STATUS_ICONS: Record<string, IconProps & { class: string }> = {
  *      libraries are available in the Nuxt Studio icon picker
  */
 
+// Consider adding this as an ENV
 export const ICON_LIBRARIES = [
   'lucide',
   'mdi',

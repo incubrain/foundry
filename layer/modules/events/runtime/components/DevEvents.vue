@@ -1,7 +1,7 @@
 <!-- components/DevEvents.vue -->
 <script setup lang="ts">
-import type { EventInput, TrackedEvents } from '../types/events';
 import type { SelectMenuItem } from '@nuxt/ui';
+import type { EventInput, TrackedEvents } from '../types/events';
 import { EVENT_METADATA } from '../utils/locations';
 
 if (!import.meta.dev) {

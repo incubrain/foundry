@@ -6,8 +6,8 @@ import {
   baseFaqSchema,
   baseNavigationSchema,
   basePageSchema,
-} from '../../../apps/docs/content.collections';
-import { getActiveConfigSource } from '../../../apps/docs/shared/config-resolver';
+} from '../../../layer/content.collections';
+import { getActiveConfigSource } from '../../../layer/shared/config-resolver';
 
 const { resolve } = createResolver(import.meta.url);
 const { contentDir: cwd } = getActiveConfigSource(resolve, 'web');
@@ -28,7 +28,7 @@ const extendedPagesSchema = basePageSchema.merge(
 
 export default defineContentConfig({
   collections: {
-    landing: defineCollection({
+    pages: defineCollection({
       type: 'page',
       source: {
         cwd,

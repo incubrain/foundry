@@ -1,4 +1,4 @@
-import type { SpamFlags } from '~/server/utils/anti-spam';
+import type { SpamFlags } from '../../server/utils/anti-spam';
 
 export function formatDiscordMessage(data: {
   formData?: Record<string, any>;

@@ -1,4 +1,4 @@
-import { createResolver, useNuxt } from '@nuxt/kit';
+import { createResolver } from '@nuxt/kit';
 import { ICON_LIBRARIES } from './shared/constants';
 const { resolve } = createResolver(import.meta.url);
 
@@ -124,6 +124,8 @@ export default defineNuxtConfig({
       },
     },
   },
+
+  ssr: true,
   routeRules: {
     '/docs/**': {
       appLayout: 'docs',

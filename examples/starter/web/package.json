@@ -7,5 +7,8 @@
     "build": "nuxt build",
     "dev": "nuxt dev --port 3004",
     "preview": "nuxt preview"
+  },
+  "dependencies": {
+    "@incubrain/founder-funnel": "workspace:*"
   }
 }

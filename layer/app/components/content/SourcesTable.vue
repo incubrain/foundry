@@ -1,76 +1,282 @@
 <script setup lang="ts">
-import type { BadgeProps } from '@nuxt/ui';
+import type { TableColumn, BadgeProps } from '@nuxt/ui'
+import { getGroupedRowModel } from '@tanstack/vue-table'
 
-// ✅ Use cached references from useCitations
-const { allCategoryRefs } = useCitations();
+const route = useRoute()
+const { allCategoryRefs } = useCitations()
+const appConfig = useAppConfig()
 
-const appConfig = useAppConfig();
+// ✅ Global search with URL sync
+const globalFilter = ref('' as string)
 
-// Load credibility colors from config with fallbacks
-const credibilityColor = computed<Record<string, BadgeProps['color']>>(
-  () =>
-    appConfig.ui?.docs?.credibility?.colors || {
-      government: 'primary',
-      academic: 'secondary',
-      media: 'neutral',
-      ngo: 'warning',
-      educational: 'info',
+watch(
+  () => route.query,
+  (newQuery) => {
+    if (newQuery) {
+      nextTick(() => {
+        globalFilter.value = String(newQuery.search ?? '')
+      })
+    }
+  },
+  { immediate: true },
+)
+
+// ✅ Transform data: Flatten categories into a single sources array with category metadata
+const tableData = computed(() => {
+  if (!allCategoryRefs.value) return []
+
+  return allCategoryRefs.value.flatMap(categoryGroup =>
+    categoryGroup.sources.map((source: any) => ({
+      ...source,
+      categoryId: categoryGroup.category.id,
+      categoryLabel: categoryGroup.category.label,
+    })),
+  )
+})
+
+// ✅ Grouping Configuration
+const grouping = ref(['categoryLabel'])
+const expanded = ref(true) // Expand all by default
+
+// ✅ Affiliation colors
+const affiliationColor = computed<Record<string, BadgeProps['color']>>(() => ({
+  government: 'primary',
+  academic: 'secondary',
+  media: 'neutral',
+  ngo: 'warning',
+  educational: 'info',
+  industry: 'error',
+  ...appConfig.ui?.docs?.affiliation?.colors,
+}))
+
+// ✅ Helper to determine link type and icon
+const getLinkInfo = (source: any) => {
+  const hasUrl = !!source.url && !source.url.toLowerCase().endsWith('.pdf')
+
+  // If explicit PDF field exists, use it. If not, but URL ends in PDF, use URL as PDF link.
+  const pdfLink
+    = source.pdf
+      || (source.url && source.url.toLowerCase().endsWith('.pdf')
+        ? source.url
+        : null)
+  const webLink = hasUrl ? source.url : null
+
+  if (pdfLink && webLink) {
+    return {
+      primary: pdfLink,
+      secondary: webLink,
+      primaryIcon: 'i-heroicons-document-text',
+      secondaryIcon: 'i-heroicons-arrow-top-right-on-square-20-solid',
+      primaryLabel: 'PDF',
+      secondaryLabel: 'Website',
+    }
+  }
+  else if (pdfLink) {
+    return {
+      primary: pdfLink,
+      primaryIcon: 'i-heroicons-document-text',
+      primaryLabel: 'View PDF',
+    }
+  }
+  else if (webLink) {
+    return {
+      primary: webLink,
+      primaryIcon: 'i-heroicons-arrow-top-right-on-square-20-solid',
+      primaryLabel: 'Visit Website',
+    }
+  }
+
+  return null
+}
+
+const columns: TableColumn<any>[] = [
+  {
+    accessorKey: 'id',
+    header: 'ID',
+    size: 100,
+    minSize: 100,
+    maxSize: 100,
+    meta: {
+      class: {
+        td: 'max-w-[100px] text-xs font-mono text-muted',
+        th: 'max-w-[100px]',
+      },
     },
-);
+  },
+  {
+    accessorKey: 'categoryLabel',
+    header: 'Category',
+    enableHiding: true, // will be hidden by grouping logic usually, but we want to use it for grouping key
+  },
+  {
+    accessorKey: 'title',
+    header: 'Document',
+    size: 400,
+    minSize: 300,
+    meta: {
+      class: {
+        td: 'max-w-[500px] align-top whitespace-normal', // Ensure wrapping
+        th: 'max-w-[500px]',
+      },
+    },
+  },
+  {
+    accessorKey: 'description',
+    header: 'Description',
+    size: 300,
+    minSize: 200,
+    meta: {
+      class: {
+        td: 'max-w-[300px] align-top whitespace-normal text-pretty',
+        th: 'max-w-[300px]',
+      },
+    },
+  },
+  {
+    accessorKey: 'date',
+    header: 'Date',
+    size: 100,
+    minSize: 80,
+    maxSize: 100,
+    meta: {
+      class: {
+        td: 'max-w-[100px] align-top',
+        th: 'max-w-[100px]',
+      },
+    },
+  },
+]
 </script>
 
 <template>
-  <div class="space-y-12">
-    <!-- ✅ Loop through each category -->
-    <div
-      v-for="category in allCategoryRefs"
-      :key="category.category.id"
-      class="space-y-4"
-    >
-      <h2 class="text-2xl font-bold">
-        {{ category.category.label }}
-      </h2>
+  <div class="space-y-6 w-full">
+    <!-- ✅ Global Search -->
+    <div class="flex flex-col sm:flex-row gap-4">
+      <UInput
+        v-model="globalFilter"
+        placeholder="Search sources..."
+        icon="i-heroicons-magnifying-glass"
+        class="flex-1"
+      />
+    </div>
 
+    <!-- ✅ Single Unified Table with Grouping -->
+    <div class="overflow-x-auto">
       <UTable
-        :data="category.sources"
-        :columns="[
-          { accessorKey: 'title', header: 'Document' },
-          { accessorKey: 'credibility', header: 'Type' },
-          { accessorKey: 'date', header: 'Date' },
-        ]"
+        v-model:global-filter="globalFilter"
+        v-model:expanded="expanded"
+        :data="tableData"
+        :columns="columns"
+        :grouping="grouping"
+        :grouping-options="{
+          getGroupedRowModel: getGroupedRowModel(),
+          groupedColumnMode: 'remove',
+        }"
+        :ui="{
+          root: 'border border-default rounded-lg',
+          base: 'min-w-full',
+          td: 'p-4 text-sm text-muted whitespace-nowrap empty:p-0',
+        }"
       >
+        <!-- Document Cell (Title + Author + Type + Links) -->
         <template #title-cell="{ row }">
-          <div class="flex flex-col gap-2">
-            <a
-              :href="row.original.pdf || row.original.url"
-              target="_blank"
-              class="text-primary hover:underline inline-flex items-center gap-1"
+          <!-- If this is a Group Row -->
+          <div
+            v-if="row.getIsGrouped()"
+            class="flex items-center gap-2 py-1 cursor-pointer select-none"
+            @click="row.toggleExpanded()"
+          >
+            <UButton
+              color="neutral"
+              variant="ghost"
+              size="xs"
+              :icon="
+                row.getIsExpanded()
+                  ? 'i-lucide-chevron-down'
+                  : 'i-lucide-chevron-right'
+              "
+              class="-ml-2 pointer-events-none"
+            />
+            <span
+              class="text-lg font-bold text-highlighted uppercase tracking-wide"
             >
-              {{ row.original.title }}
-              <UIcon
-                name="i-heroicons-arrow-top-right-on-square-20-solid"
-                class="w-3 h-3"
-              />
-            </a>
-            <span class="text-sm text-gray-600 dark:text-gray-400">
-              {{ row.original.description }}
+              {{ row.getValue('categoryLabel') }}
             </span>
+            <span class="text-xs text-muted font-normal ml-2">({{ row.subRows.length }})</span>
+          </div>
+
+          <!-- If this is a Normal Source Row -->
+          <div
+            v-else
+            class="space-y-3 whitespace-normal"
+          >
+            <!-- Title -->
+            <div class="font-semibold text-base text-highlighted text-pretty">
+              {{ row.original.title }}
+            </div>
+
+            <!-- Author & Type Line -->
+            <div class="flex flex-wrap items-center gap-2 text-sm">
+              <span
+                v-if="row.original.author"
+                class="text-muted"
+              >
+                {{ row.original.author }}
+              </span>
+
+              <UBadge
+                v-if="row.original.affiliation"
+                :label="row.original.affiliation"
+                :color="affiliationColor[row.original.affiliation] ?? 'neutral'"
+                variant="soft"
+                size="xs"
+                class="capitalize"
+              />
+            </div>
+
+            <!-- Link Buttons -->
+            <div class="flex items-center gap-2 pt-1">
+              <template v-if="getLinkInfo(row.original)">
+                <UButton
+                  :to="getLinkInfo(row.original).primary"
+                  :icon="getLinkInfo(row.original).primaryIcon"
+                  :label="getLinkInfo(row.original).primaryLabel"
+                  size="xs"
+                  variant="soft"
+                  color="primary"
+                  target="_blank"
+                />
+
+                <UButton
+                  v-if="getLinkInfo(row.original).secondary"
+                  :to="getLinkInfo(row.original).secondary"
+                  :icon="getLinkInfo(row.original).secondaryIcon"
+                  :label="getLinkInfo(row.original).secondaryLabel"
+                  size="xs"
+                  variant="ghost"
+                  color="neutral"
+                  target="_blank"
+                />
+              </template>
+            </div>
           </div>
         </template>
 
-        <template #credibility-cell="{ row }">
-          <UBadge
-            :label="row.original.credibility"
-            :color="credibilityColor[row.original.credibility] ?? 'neutral'"
-            variant="soft"
-            size="xs"
-          />
+        <!-- Description Cell -->
+        <template #description-cell="{ row }">
+          <div
+            v-if="!row.getIsGrouped() && row.original.description"
+            class="text-sm text-muted leading-relaxed text-pretty"
+          >
+            {{ row.original.description }}
+          </div>
         </template>
 
+        <!-- Date Cell -->
         <template #date-cell="{ row }">
-          <span class="text-sm text-gray-600 dark:text-gray-400">
-            {{ row.original.date }}
-          </span>
+          <div v-if="!row.getIsGrouped()">
+            <span class="text-sm text-muted">{{ row.original.date }}</span>
+          </div>
         </template>
       </UTable>
     </div>

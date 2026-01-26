@@ -2,14 +2,14 @@ import { createResolver } from '@nuxt/kit';
 import { getActiveConfigSource } from '../../../layer/shared/config-resolver';
 
 const { resolve } = createResolver(import.meta.url);
-const { resolveLayer, contentRoot, publicDir, envDir } = getActiveConfigSource(
+const { contentRoot, publicDir } = getActiveConfigSource(
   resolve,
   'web',
 );
 const SITE_URL = process.env.NUXT_SITE_URL;
 
 export default defineNuxtConfig({
-  extends: [resolveLayer('docs')],
+  extends: ['@incubrain/founder-funnel'],
 
   site: {
     name: 'Founder Funnel',

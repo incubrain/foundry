@@ -2,10 +2,9 @@
 import confetti from 'canvas-confetti';
 
 const route = useRoute();
-const slug = route.path.split('/').pop();
 
 const PAGE_TITLE = 'Founder Funnel';
-const PAGE_COLLECTION = 'landing';
+const PAGE_COLLECTION = 'pages';
 
 // 🎯 DETECT: Success page vs Offer page
 const isSuccessPage = computed(() => route.path.includes('/success'));
@@ -21,32 +20,48 @@ onMounted(() => {
   }
 });
 
-// 🎯 SEO: Inject meta tags
-const { data: page } = await useAsyncData(`offer-${slug}`, () =>
-  queryCollection(PAGE_COLLECTION).path(route.path).first(),
+// ✅ Watch route for page data
+const { data: page } = await useAsyncData(
+  () => `conversion${route.path}`,
+  () => queryCollection(PAGE_COLLECTION).path(route.path).first(),
+  {
+    watch: [() => route.path],
+  },
 );
 
-useSeoMeta({
-  title: () => page.value?.title,
-  description: page.value?.description,
-  ogTitle: () => page.value?.title,
-  ogDescription: page.value?.description,
+// ✅ Make SEO reactive to page changes
+watchEffect(() => {
+  if (page.value) {
+    useSeoMeta({
+      title: page.value.title,
+      description: page.value.description,
+      ogTitle: page.value.title,
+      ogDescription: page.value.description,
+    });
+  }
 });
 
 // 🎯 OG IMAGE: Generate for offer pages only (not success)
-if (!isSuccessPage.value) {
-  const { getSiteConfig } = useContentCache();
-  const { data: config } = await getSiteConfig();
+// Note: OG image generation happens once, not reactive
+watch(
+  () => page.value,
+  async (newPage) => {
+    if (newPage && !isSuccessPage.value) {
+      const { getSiteConfig } = useContentCache();
+      const { data: config } = await getSiteConfig();
 
-  defineOgImage({
-    component: 'Frame',
-    props: {
-      title: page.value?.title,
-      description: page.value?.description,
-      image: config.value?.business?.logo,
-    },
-  });
-}
+      defineOgImage({
+        component: 'Frame',
+        props: {
+          title: newPage.title,
+          description: newPage.description,
+          image: config.value?.business?.logo,
+        },
+      });
+    }
+  },
+  { immediate: true },
+);
 </script>
 
 <template>

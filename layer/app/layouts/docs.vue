@@ -21,9 +21,13 @@ const { data: docsNavigation } = await useAsyncData(
   },
 );
 
-const { data: page } = await useAsyncData(`page-${route.path}`, () => {
-  return queryCollection(collection).path(route.path).first();
-});
+const { data: page } = await useAsyncData(
+  () => `docs${route.path}`,
+  () => queryCollection(collection).path(route.path).first(),
+  {
+    watch: [() => route.path],
+  },
+);
 
 if (!page.value) {
   throw createError({
@@ -34,11 +38,16 @@ if (!page.value) {
 }
 
 // Fetch surround
-const { data: surround } = await useAsyncData(`surround-${route.path}`, () => {
-  return queryCollectionItemSurroundings(collection, route.path, {
-    fields: ['description'],
-  });
-});
+const { data: surround } = await useAsyncData(
+  () => `surround-${route.path}`,
+  () =>
+    queryCollectionItemSurroundings(collection, route.path, {
+      fields: ['description'],
+    }),
+  {
+    watch: [() => route.path],
+  },
+);
 
 // SEO meta
 const title = page.value.seo?.title || page.value.title;
@@ -128,7 +137,7 @@ provide('navigation_docs', docsNavigation);
           </USeparator>
 
           <UContentSurround :surround="surround" />
-          <Bibliography :key="page.stem" />
+          <Bibliography />
         </UPageBody>
 
         <!-- RIGHT: Dynamic TOC -->

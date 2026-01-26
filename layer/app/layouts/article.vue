@@ -1,27 +1,40 @@
 <script setup lang="ts">
 const route = useRoute();
 
-const { data: article } = await useAsyncData(`article-${route.path}`, () =>
-  queryCollection('landing').path(route.path).first(),
+// ✅ Watch route for article data
+const { data: article } = await useAsyncData(
+  () => `article${route.path}`,
+  () => queryCollection('pages').path(route.path).first(),
+  {
+    watch: [() => route.path],
+  },
 );
 
-// Fetch surround data
+// ✅ Watch route for surround data
 const { data: surround } = await useAsyncData(
-  `article-${route.path}-surround`,
+  () => `article-surround${route.path}`,
   () =>
-    queryCollectionItemSurroundings('landing', route.path, {
+    queryCollectionItemSurroundings('pages', route.path, {
       fields: ['title', 'description', 'label'],
     }),
+  {
+    watch: [() => route.path],
+  },
 );
 
-useHead({
-  title: article.value?.title,
-  meta: [
-    {
-      name: 'description',
-      content: article.value?.description,
-    },
-  ],
+// ✅ Make head reactive to article changes
+watchEffect(() => {
+  if (article.value) {
+    useHead({
+      title: article.value.title,
+      meta: [
+        {
+          name: 'description',
+          content: article.value.description,
+        },
+      ],
+    });
+  }
 });
 </script>
 
@@ -57,12 +70,12 @@ useHead({
             </div>
 
             <div
-              v-if="article?.date"
+              v-if="article?.publishedAt"
               class="flex items-center gap-2 text-muted"
             >
               <UIcon name="i-lucide-calendar" class="size-4" />
               <NuxtTime
-                :datetime="article.date"
+                :datetime="article.publishedAt"
                 year="numeric"
                 month="long"
                 day="numeric"

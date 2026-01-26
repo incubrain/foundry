@@ -37,7 +37,10 @@ const internalHref = computed(() => {
   if (!isInternalLink.value) return props.href;
   const path = props.href.replace('internal:', '');
   // Clean up any double slashes if path already had one, though usually internal: touches matching name
-  return path.startsWith('/') ? path : `/${path}`;
+  // Prepend configured docs prefix
+  const prefix = appConfig.routing?.docs || '';
+  const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+  return `${prefix}${normalizedPath}`;
 });
 
 const { getPageMetadata } = useDocsMetadata();
@@ -55,7 +58,7 @@ const glossaryPath = appConfig.routing?.glossary || '/glossary';
 const glossaryHref = computed(() => {
   if (!isGlossaryTerm.value) return props.href;
   const termId = props.href.replace('term:', '').toLowerCase();
-  return `${glossaryPath}#term-${termId}`;
+  return `${glossaryPath}?search=${termId}`;
 });
 
 // Fetch glossary term data for tooltips
@@ -73,18 +76,6 @@ const glossaryTermData = computed(() => {
   if (!isGlossaryTerm.value) return null;
   const termId = props.href.replace('term:', '').toLowerCase();
   return allGlossaryTerms.value.find((t) => t.id === termId);
-});
-
-const glossaryTooltipText = computed(() => {
-  if (!glossaryTermData.value) return '';
-  const term = glossaryTermData.value.term;
-  const abbr = glossaryTermData.value.abbreviation;
-  const def = glossaryTermData.value.definition;
-
-  if (abbr) {
-    return `${term} (${abbr}): ${def}`;
-  }
-  return `${term}: ${def}`;
 });
 
 // Support multiple citations separated by commas: cite:id1,id2,id3

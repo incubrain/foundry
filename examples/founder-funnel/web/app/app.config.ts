@@ -16,7 +16,7 @@ export default defineAppConfig({
     alt: 'Founder Funnel Logo',
   },
 
-  searchableCollections: ['landing'],
+  searchableCollections: ['pages'],
 
   routing: {
     glossary: '/resources/glossary',

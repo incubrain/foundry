@@ -1,4 +1,20 @@
-// @ts-check
-import withNuxt from './.nuxt/eslint.config.mjs';
+import { createConfigForNuxt } from '@nuxt/eslint-config/flat'
 
-export default withNuxt();
+export default createConfigForNuxt({
+  dirs: {
+    src: [
+      './layer',
+      './examples',
+    ],
+  },
+  features: {
+    tooling: true,
+    stylistic: true,
+  },
+}).append(
+  {
+    rules: {
+      'vue/multi-word-component-names': 'off',
+    },
+  },
+)
