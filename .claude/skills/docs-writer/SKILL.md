@@ -283,7 +283,7 @@ When working on documentation:
    - Select appropriate callout type (tip/info/warning/important/success)
    - Card groups, accordions, etc.
    - Internal links: `[text](internal:path)`
-   - Glossary terms: `[term](term:term-id)`
+   - Glossary terms: `:dfn[term text]{#term-id}`
 
 4. **Math Phase** (refer to DOCUMENTATION_WRITING_GUIDELINES.md)
    - Inline: `$expression$`

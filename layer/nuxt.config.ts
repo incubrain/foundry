@@ -95,6 +95,7 @@ export default defineNuxtConfig({
     components: {
       map: {
         cite: 'ProseCite',
+        dfn: 'ProseDfn',
       },
     },
   },
