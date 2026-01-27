@@ -1,10 +1,7 @@
-# Navigation Configuration
-# Full control over header/footer navigation - define all links manually
-
 banner:
-  id: 'hiring-2026'
+  id: hiring-2026
   icon: i-lucide-info
-  title: "We're hiring! Check out our open positions at Astronera."
+  title: We're hiring! Check out our open positions at Astronera.
   actions:
     - label: Careers
       to: https://careers.astronera.org
@@ -15,7 +12,32 @@ banner:
       size: xs
   close: true
   color: primary
-
+  ui: {}
+footer:
+  columns:
+    - label: Research
+      icon: i-lucide-flask-conical
+      to: /darksky/research
+      children:
+        - label: Overview
+          to: /darksky/research
+    - label: Policy
+      icon: i-lucide-book-open
+      to: /darksky/policy
+      children:
+        - label: Overview
+          to: /darksky/policy
+    - label: Resources
+      icon: i-lucide-book-key
+      to: /resources
+      children:
+        - label: Sources
+          icon: i-lucide-file-pen-line
+          to: /resources/sources
+        - label: Glossary
+          icon: i-lucide-library
+          to: /resources/glossary
+  bottom: []
 header:
   title: AstronEra
   socials:
@@ -47,28 +69,3 @@ header:
           to: /resources/glossary
   showSearch: true
   showColorMode: true
-
-footer:
-  columns:
-    - label: Research
-      icon: i-lucide-flask-conical
-      to: /darksky/research
-      children:
-        - label: Overview
-          to: /darksky/research
-    - label: Policy
-      icon: i-lucide-book-open
-      to: /darksky/policy
-      children:
-        - label: Overview
-          to: /darksky/policy
-    - label: Resources
-      icon: i-lucide-book-key
-      to: /resources
-      children:
-        - label: Sources
-          icon: i-lucide-file-pen-line
-          to: /resources/sources
-        - label: Glossary
-          icon: i-lucide-library
-          to: /resources/glossary

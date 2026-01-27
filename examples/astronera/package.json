@@ -1,5 +1,5 @@
 {
-  "name": "@astronera/docs",
+  "name": "@astronera/web",
   "private": true,
   "type": "module",
   "scripts": {
