@@ -1,7 +1,3 @@
----
-trigger: always_on
----
-
 ## Current Boundaries
 
 **No email sequences:**

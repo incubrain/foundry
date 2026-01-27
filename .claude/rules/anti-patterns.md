@@ -1,7 +1,3 @@
----
-trigger: always_on
----
-
 ## Never Do This
 
 **Never add features "just in case":**
@@ -30,7 +26,7 @@ Component >50 lines → Refactor
 Props >5 → Config object
 Abstraction >2 layers → Too deep
 
-## Red Flags 🚩
+## Red Flags
 
 Before building, check for these:
 - "This would be nice to have"

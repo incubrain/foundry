@@ -27,6 +27,10 @@ repomix-changed.*
 .env.*
 !.env.example
 
+# Claude Code local overrides
+CLAUDE.local.md
+.claude/settings.local.json
+
 # Misc
 strategy
 ideas

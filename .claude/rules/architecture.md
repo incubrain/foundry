@@ -1,7 +1,3 @@
----
-trigger: always_on
----
-
 ## System Boundaries
 
 **In Scope (What We Build):**

@@ -1,7 +1,3 @@
----
-trigger: always_on
----
-
 ## Function Priority
 
 1. VueUse (if exists)
