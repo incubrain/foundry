@@ -4,12 +4,16 @@ export default defineAppConfig({
   content: {
     collections: {
       // Documentation - with URL prefix
-      docs: { name: 'docs', prefix: '' },
+      docs: { name: 'docs', prefix: '/docs' },
       // Pages collection - with articles routing
-      pages: { name: 'pages', prefix: '/articles', backLabel: 'Back to Articles' },
+      pages: {
+        name: 'pages',
+        prefix: '/articles',
+        backLabel: 'Back to Articles',
+      },
       // Data collections (string shorthand)
       references: 'references',
-      glossary: { name: 'glossary', prefix: '/glossary' },
+      glossary: 'glossary',
       faq: 'faq',
       config: 'config',
       navigation: 'navigation',

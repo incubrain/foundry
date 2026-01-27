@@ -45,7 +45,7 @@ export default defineNuxtConfig({
     },
   },
 
-  css: [resolve('./app/assets/main.css'), 'katex/dist/katex.min.css'],
+  css: [resolve('./app/assets/main.css')],
 
   dir: {
     assets: resolve('./app/assets'),

@@ -6,7 +6,10 @@ import { getCollectionName } from '#content-config';
 // Static data
 const appConfig = useAppConfig();
 const docsConfig = appConfig.content?.collections?.docs;
-const collection = getCollectionName(docsConfig, 'docs') as keyof PageCollections;
+const collection = getCollectionName(
+  docsConfig,
+  'docs',
+) as keyof PageCollections;
 const route = useRoute();
 
 // 📚 DOCS NAVIGATION (for sidebar/components)
@@ -78,6 +81,17 @@ const editLink = github
   : null;
 
 provide('navigation_docs', docsNavigation);
+
+useHead({
+  link: [
+    {
+      rel: 'stylesheet',
+      href: 'https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css',
+      integrity: 'sha384-n8MVd4RsNI8uYk8U+...snip...',
+      crossorigin: 'anonymous',
+    },
+  ],
+});
 </script>
 
 <template>
