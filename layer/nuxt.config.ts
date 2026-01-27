@@ -91,6 +91,14 @@ export default defineNuxtConfig({
     '#config-resolver': resolve('./shared/config-resolver.ts'),
   },
 
+  mdc: {
+    components: {
+      map: {
+        cite: 'ProseCite',
+      },
+    },
+  },
+
   content: {
     build: {
       markdown: {

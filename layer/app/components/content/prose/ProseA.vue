@@ -21,11 +21,9 @@ const props = defineProps({
   },
 });
 
-const { addCitation, getCitationIndex, getReference } = useCitations();
 const { getPageMetadata, resolveInternalPath } = useContentConfig();
 const { getTerm, resolveGlossaryPath } = useGlossary();
 
-const isCitation = computed(() => props.href?.startsWith('cite:'));
 const isInternalLink = computed(() => props.href?.startsWith('internal:'));
 const isGlossaryTerm = computed(() => props.href?.startsWith('term:'));
 
@@ -55,67 +53,12 @@ const glossaryTermData = computed(() => {
   if (!isGlossaryTerm.value) return null;
   return getTerm(glossaryTermId.value).value;
 });
-
-// Support multiple citations separated by commas: cite:id1,id2,id3
-const citationIds = computed(() => {
-  if (!isCitation.value) return [];
-  const idsString = props.href.replace('cite:', '');
-  return idsString.split(',').map((id) => id.trim());
-});
-
-// Register all citations
-citationIds.value.forEach((id) => {
-  if (id) addCitation(id);
-});
-
-// ✅ Get reference details for each citation (from cached data)
-const citationRefs = computed(() =>
-  citationIds.value.map((id) => getReference(id).value).filter(Boolean),
-);
-
-const extractRootDomain = (url: string | null) => {
-  if (!url) return 'NO URL';
-
-  const urlObj = new URL(url);
-  return urlObj.origin;
-};
 </script>
 
 <template>
-  <!-- Citation link with tooltip + external link -->
-  <span v-if="isCitation">
-    <slot />
-    <sup
-      class="text-[0.75em] ms-1 me-0 align-super leading-none tracking-tight inline-block"
-    >
-      <template v-for="(id, index) in citationIds" :key="id">
-        <UTooltip
-          v-if="citationRefs[index]"
-          :delay-duration="0"
-          :text="
-            extractRootDomain(
-              citationRefs[index].pdf || citationRefs[index].url || null,
-            )
-          "
-          :ui="{ content: 'max-w-xs' }"
-        >
-          <a
-            :href="citationRefs[index].pdf || citationRefs[index].url || '#'"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="no-underline text-primary font-medium"
-          >
-            [{{ getCitationIndex(id).value }}]
-          </a>
-        </UTooltip>
-        <span v-if="index < citationIds.length - 1" class="mr-0.5">,</span>
-      </template>
-    </sup>
-  </span>
-
   <!-- Internal documentation link with popover -->
   <UPopover
-    v-else-if="isInternalLink"
+    v-if="isInternalLink"
     mode="hover"
     :open-delay="300"
     :close-delay="100"

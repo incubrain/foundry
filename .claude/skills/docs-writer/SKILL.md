@@ -146,7 +146,7 @@ Overview text without citations explaining the category.
 
 ### 2.1 Pollination
 
-Light pollution disrupts nocturnal pollinator activity.[](cite:study-id) Research documents 62% reduction in pollinator visits under ALAN conditions.[](cite:another-study)
+:cite[Light pollution disrupts nocturnal pollinator activity]{#study-id}. Research documents :cite[62% reduction in pollinator visits under ALAN conditions]{#another-study}.
 
 ::callout{color="info"}
 Maharashtra's agricultural economy depends heavily on pollinator-dependent crops including cotton, pulses, and fruits.
@@ -219,7 +219,7 @@ Use the right component for the right purpose:
 
 | Need | Component | When to Use | Example Context |
 |------|-----------|-------------|-----------------|
-| Key statistics | `::tip` | Highlighting quantified findings | "**Key Statistic**: 62% reduction in pollinator visits[](cite:study)" |
+| Key statistics | `::tip` | Highlighting quantified findings | "**Key Statistic**: :cite[62% reduction in pollinator visits]{#study}" |
 | Maharashtra context | `::callout{color="info"}` | State-specific notes in Research | "**Maharashtra Context**: Western Ghats biodiversity hotspot..." |
 | Background info | `::note` | Supplementary context | Explaining technical terms or processes |
 | Best practice | `::tip` | Recommendations | Policy implementation guidance |
@@ -273,9 +273,11 @@ When working on documentation:
    - Keep paragraphs 2-4 sentences
 
 2. **Citation Phase** (refer to DOCUMENTATION_WRITING_GUIDELINES.md)
-   - Citations after punctuation
-   - Citations after document names or at sentence end
-   - Syntax: `[](cite:id)` or `[](cite:id1,id2)`
+   - Wrap the cited claim or source name inside the brackets: `:cite[cited text]{#id}`
+   - Multiple citations: `:cite[cited text]{#id1,id2}`
+   - The text inside `[...]` should be the fact, statistic, or source name the citation supports
+   - Example: `:cite[60% of invertebrates are nocturnal]{#holker-2010}`
+   - Example: `:cite[The 2023 RAND Europe study]{#hafner-2023-insomnia-burden}` quantifies...
 
 3. **Component Phase** (refer to DOCUMENTATION_WRITING_GUIDELINES.md)
    - Select appropriate callout type (tip/info/warning/important/success)
