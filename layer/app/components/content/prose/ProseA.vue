@@ -25,13 +25,8 @@ const { addCitation, getCitationIndex, getReference } = useCitations();
 const { getPageMetadata, resolveInternalPath } = useContentConfig();
 const { getTerm, resolveGlossaryPath } = useGlossary();
 
-// Check if this is a citation link (href starts with "cite:")
 const isCitation = computed(() => props.href?.startsWith('cite:'));
-
-// Check if this is an internal documentation link (href starts with "internal:")
 const isInternalLink = computed(() => props.href?.startsWith('internal:'));
-
-// Check if this is a glossary term link (href starts with "term:")
 const isGlossaryTerm = computed(() => props.href?.startsWith('term:'));
 
 // Convert internal: prefix to full path with docs prefix

@@ -16,8 +16,9 @@
 <template>
   <UFooter
     :ui="{
-      bottom: 'bg-muted',
-      container: 'lg:py-8',
+      root: 'bg-muted',
+      container: 'lg:py-16',
+      bottom: 'bg-default',
     }"
   >
     <template #left>

@@ -32,8 +32,8 @@ const sortedRefs = computed(() => {
         <div class="flex-1 text-sm">
           <div class="flex items-center gap-2 mb-1">
             <UBadge
-              v-if="ref.credibility"
-              :label="ref.credibility"
+              v-if="ref.credibilityScore"
+              :label="ref.credibilityScore"
               color="primary"
               variant="soft"
               size="xs"

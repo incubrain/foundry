@@ -1,3 +1,5 @@
+import type { GlossaryCollectionItem } from '@nuxt/content';
+
 export const useGlossary = () => {
   const { collections, getCollectionPrefix } = useContentConfig();
 
@@ -15,8 +17,8 @@ export const useGlossary = () => {
   // Terms with category metadata (for table display)
   const allTermsWithCategory = computed(() => {
     if (!glossaryData.value) return [];
-    return glossaryData.value.flatMap((file) =>
-      (file.terms || []).map((term: any) => ({
+    return glossaryData.value.flatMap((file: GlossaryCollectionItem) =>
+      (file.terms || []).map((term) => ({
         ...term,
         category: file.category.id,
         categoryLabel: file.category.label,
@@ -29,7 +31,7 @@ export const useGlossary = () => {
   const categoryColors = computed<Record<string, string>>(() => {
     if (!glossaryData.value) return {};
     const colorMap: Record<string, string> = {};
-    glossaryData.value.forEach((file: any) => {
+    glossaryData.value.forEach((file: GlossaryCollectionItem) => {
       colorMap[file.category.id] = file.category.color || 'neutral';
     });
     return colorMap;

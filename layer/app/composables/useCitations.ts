@@ -1,3 +1,5 @@
+import type { ReferencesCollectionItem } from "@nuxt/content";
+
 export const useCitations = () => {
   const route = useRoute();
   const { collections } = useContentConfig();
@@ -15,14 +17,14 @@ export const useCitations = () => {
   const allRefs = computed(() => {
     if (!allCategoryRefs.value) return [];
     return allCategoryRefs.value.flatMap((cat) =>
-      cat.sources.map((source) => ({
+      cat.sources.map((source: ReferencesCollectionItem['sources'][number]) => ({
         id: source.id,
         url: source.url,
         pdf: source.pdf,
         title: source.title,
         author: source.author,
         category: cat.category,
-        credibility: source.credibility,
+        credibilityScore: source.credibilityScore,
         date: source.date,
         description: source.description,
       })),

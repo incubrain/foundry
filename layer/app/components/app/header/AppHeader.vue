@@ -22,16 +22,16 @@ const site = useSiteConfig();
       <AppLogo :title="site.name" class="h-6 w-auto shrink-0" />
     </template>
 
+    <template #body>
+      <AppHeaderBody />
+    </template>
+
     <template #right>
       <AppHeaderRight />
     </template>
 
     <template #toggle="{ open, toggle }">
       <IconMenuToggle :open="open" class="lg:hidden" @click="toggle" />
-    </template>
-
-    <template #body>
-      <AppHeaderBody />
     </template>
   </UHeader>
 </template>

@@ -27,10 +27,12 @@ export const useContentConfig = () => {
    * Extract collection name from config (handles both string and object formats)
    */
   const getCollectionName = (
-    key: string,
+    key: keyof Collections,
     fallback?: string,
   ): keyof Collections => {
-    const config = appConfig.content?.collections?.[key] as CollectionConfig | undefined;
+    const config = appConfig.content?.collections?.[key] as
+      | CollectionConfig
+      | undefined;
     const defaultFallback = (fallback ?? key) as keyof Collections;
     if (!config) return defaultFallback;
     if (typeof config === 'string') return config;
@@ -41,10 +43,12 @@ export const useContentConfig = () => {
    * Extract collection URL prefix from config
    */
   const getCollectionPrefix = (
-    key: string,
+    key: keyof Collections,
     fallback = '',
   ): string => {
-    const config = appConfig.content?.collections?.[key] as CollectionConfig | undefined;
+    const config = appConfig.content?.collections?.[key] as
+      | CollectionConfig
+      | undefined;
     if (!config) return fallback;
     if (typeof config === 'string') return fallback;
     return config.prefix ?? fallback;
@@ -54,10 +58,12 @@ export const useContentConfig = () => {
    * Extract collection back label from config (for navigation)
    */
   const getCollectionBackLabel = (
-    key: string,
+    key: keyof Collections,
     fallback = 'Back',
   ): string => {
-    const config = appConfig.content?.collections?.[key] as CollectionConfig | undefined;
+    const config = appConfig.content?.collections?.[key] as
+      | CollectionConfig
+      | undefined;
     if (!config) return fallback;
     if (typeof config === 'string') return fallback;
     return config.backLabel ?? fallback;
@@ -66,10 +72,7 @@ export const useContentConfig = () => {
   /**
    * Get routing path from content.routing config
    */
-  const getRoutingPath = (
-    key: string,
-    fallback: string,
-  ): string => {
+  const getRoutingPath = (key: string, fallback: string): string => {
     return appConfig.content?.routing?.[key] || fallback;
   };
 
@@ -83,6 +86,15 @@ export const useContentConfig = () => {
   /* -------------------------------------------------------------------------- */
   /*                              PATH RESOLUTION                               */
   /* -------------------------------------------------------------------------- */
+
+  const seperatePathAndHash = (
+    path: string,
+  ): { path: string; hash: string } => {
+    const hashIndex = path.indexOf('#');
+    return hashIndex !== -1
+      ? { path: path.slice(0, hashIndex), hash: path.slice(hashIndex) }
+      : { path, hash: '' };
+  };
 
   /**
    * Resolve an internal path to include the docs prefix.
@@ -98,9 +110,7 @@ export const useContentConfig = () => {
     const prefix = getCollectionPrefix('docs', '');
 
     // Separate hash fragment if present
-    const hashIndex = path.indexOf('#');
-    const hash = hashIndex !== -1 ? path.slice(hashIndex) : '';
-    const pathWithoutHash = hashIndex !== -1 ? path.slice(0, hashIndex) : path;
+    const { path: pathWithoutHash, hash } = seperatePathAndHash(path);
 
     // Normalize path to have leading slash
     const normalizedPath = pathWithoutHash.startsWith('/')
@@ -143,22 +153,16 @@ export const useContentConfig = () => {
    * Uses injected navigation data from app.vue
    */
   const getPageMetadata = (path: string) => {
-    const navigationAll = inject<Ref<ContentNavigationItem[]>>('navigation_all');
+    const navigationAll =
+      inject<Ref<ContentNavigationItem[]>>('navigation_all');
     if (!navigationAll?.value) return null;
-
-    // Strip hash fragment if present
-    const pathWithoutHash = path.split('#')[0] ?? path;
-
-    // Normalize path with docs prefix
-    const prefix = getCollectionPrefix('docs', '');
-    const normalizedPath = pathWithoutHash.startsWith('/')
-      ? `${prefix}${pathWithoutHash}`
-      : `${prefix}/${pathWithoutHash}`;
-
     // Flatten and search
-    const flatNav = flattenNavigation(navigationAll.value);
+
+    const { path: pathWithoutHash } = seperatePathAndHash(path);
+    const normalizedPath = resolveInternalPath(pathWithoutHash);
 
     // Try exact match
+    const flatNav = flattenNavigation(navigationAll.value);
     const match = flatNav.find((item) => item.path === normalizedPath);
     if (match) return match;
 
