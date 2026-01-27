@@ -89,7 +89,6 @@ export default defineNuxtConfig({
     '#navigation': resolve('./shared/navigation.ts'),
     '#search': resolve('./shared/search.ts'),
     '#config-resolver': resolve('./shared/config-resolver.ts'),
-    '#content-config': resolve('./shared/content-config.ts'),
   },
 
   content: {

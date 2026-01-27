@@ -1,30 +1,7 @@
 <script setup lang="ts">
 import type { BadgeProps } from '@nuxt/ui';
-import { getCollectionName } from '#content-config';
 
-const appConfig = useAppConfig();
-const glossaryCollection = getCollectionName(
-  appConfig.content?.collections?.glossary,
-  'glossary',
-);
-
-// Fetch all glossary terms
-const { data: glossaryData } = await useAsyncData('glossary-terms', () =>
-  queryCollection(glossaryCollection).all(),
-);
-
-// Extract all terms with their category metadata
-const allTermsWithCategory = computed(() => {
-  if (!glossaryData.value) return [];
-  return glossaryData.value.flatMap((file) =>
-    (file.terms || []).map((term: any) => ({
-      ...term,
-      category: file.category.id,
-      categoryLabel: file.category.label,
-      categoryColor: file.category.color || 'neutral',
-    })),
-  );
-});
+const { allTermsWithCategory, categoryColors } = useGlossary();
 
 // Sort alphabetically
 const allTerms = computed(() => {
@@ -33,16 +10,9 @@ const allTerms = computed(() => {
   );
 });
 
-// Build category colors map from content
+// Cast to BadgeProps color type
 const categoryColor = computed<Record<string, BadgeProps['color']>>(() => {
-  if (!glossaryData.value) return {};
-
-  const colorMap: Record<string, BadgeProps['color']> = {};
-  glossaryData.value.forEach((file: any) => {
-    colorMap[file.category.id] = file.category.color || 'neutral';
-  });
-
-  return colorMap;
+  return categoryColors.value as Record<string, BadgeProps['color']>;
 });
 
 // Watch for hash changes

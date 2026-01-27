@@ -1,27 +1,11 @@
 <script setup lang="ts">
-import {
-  getCollectionName,
-  getCollectionPrefix,
-  getCollectionBackLabel,
-} from '#content-config';
-
 const route = useRoute();
-const appConfig = useAppConfig();
-
-// Get collection and routing config from pages collection
-const pagesConfig = appConfig.content?.collections?.pages;
-const pagesCollection = computed(() => getCollectionName(pagesConfig, 'pages'));
-const articlesBasePath = computed(() =>
-  getCollectionPrefix(pagesConfig, '/articles'),
-);
-const articlesBackLabel = computed(() =>
-  getCollectionBackLabel(pagesConfig, 'Back to Articles'),
-);
+const { collections, routing } = useContentConfig();
 
 // ✅ Watch route for article data
 const { data: article } = await useAsyncData(
   () => `article${route.path}`,
-  () => queryCollection(pagesCollection.value).path(route.path).first(),
+  () => queryCollection(collections.pages).path(route.path).first(),
   {
     watch: [() => route.path],
   },
@@ -31,7 +15,7 @@ const { data: article } = await useAsyncData(
 const { data: surround } = await useAsyncData(
   () => `article-surround${route.path}`,
   () =>
-    queryCollectionItemSurroundings(pagesCollection.value, route.path, {
+    queryCollectionItemSurroundings(collections.pages, route.path, {
       fields: ['title', 'description', 'label'],
     }),
   {
@@ -61,12 +45,12 @@ watchEffect(() => {
       <UPageHeader>
         <template #headline>
           <UButton
-            :to="articlesBasePath"
+            :to="routing.pagesPrefix"
             icon="i-lucide-arrow-left"
             color="neutral"
             variant="ghost"
             size="sm"
-            :label="articlesBackLabel"
+            :label="routing.pagesBackLabel"
           />
         </template>
 

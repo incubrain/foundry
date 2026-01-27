@@ -1,22 +1,14 @@
-import { getCollectionName } from '#content-config';
-
 export const useCitations = () => {
   const route = useRoute();
-  const appConfig = useAppConfig();
-
-  // Get references collection name from config
-  const referencesCollection = getCollectionName(
-    appConfig.content?.collections?.references,
-    'references',
-  );
+  const { collections } = useContentConfig();
 
   // Stable key per route - state persists per route
   const key = computed(() => `citations-${route.path}`);
   const citations = useState<string[]>(key.value, () => []);
 
-  // ✅ Fetch references ONCE and cache globally with key 'references'
+  // Fetch references ONCE and cache globally with key 'references'
   const { data: allCategoryRefs } = useAsyncData('references', () =>
-    queryCollection(referencesCollection).all(),
+    queryCollection(collections.references).all(),
   );
 
   // ✅ Flatten references for easy lookup

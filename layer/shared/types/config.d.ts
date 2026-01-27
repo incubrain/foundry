@@ -1,18 +1,13 @@
-// Collection config can be a string (name only) or object with routing info
+import type { Collections } from '@nuxt/content';
+
+// Collection config can be a string (collection name) or object with routing info
 type CollectionConfig =
-  | string
+  | keyof Collections
   | {
-      name: string;
+      name: keyof Collections;
       prefix?: string;
       backLabel?: string;
     };
-
-// Helper to extract collection name from config
-export function getCollectionName(config: CollectionConfig): string;
-// Helper to extract collection prefix from config
-export function getCollectionPrefix(config: CollectionConfig): string;
-// Helper to extract collection backLabel from config
-export function getCollectionBackLabel(config: CollectionConfig): string | undefined;
 
 declare module 'nuxt/schema' {
   interface AppConfig {

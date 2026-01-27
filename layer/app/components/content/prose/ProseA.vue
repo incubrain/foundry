@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { PropType } from 'vue';
-import { getCollectionName, getCollectionPrefix } from '#content-config';
 
 const props = defineProps({
   href: {
@@ -23,6 +22,8 @@ const props = defineProps({
 });
 
 const { addCitation, getCitationIndex, getReference } = useCitations();
+const { getPageMetadata, resolveInternalPath } = useContentConfig();
+const { getTerm, resolveGlossaryPath } = useGlossary();
 
 // Check if this is a citation link (href starts with "cite:")
 const isCitation = computed(() => props.href?.startsWith('cite:'));
@@ -33,53 +34,31 @@ const isInternalLink = computed(() => props.href?.startsWith('internal:'));
 // Check if this is a glossary term link (href starts with "term:")
 const isGlossaryTerm = computed(() => props.href?.startsWith('term:'));
 
-// Get app config early for use in computed
-const appConfig = useAppConfig();
-
-// Convert internal
+// Convert internal: prefix to full path with docs prefix
 const internalHref = computed(() => {
   if (!isInternalLink.value) return props.href;
   const path = props.href.replace('internal:', '');
-  // Clean up any double slashes if path already had one, though usually internal: touches matching name
-  // Prepend configured docs prefix
-  const prefix = getCollectionPrefix(appConfig.content?.collections?.docs, '');
-  const normalizedPath = path.startsWith('/') ? path : `/${path}`;
-  return `${prefix}${normalizedPath}`;
+  return resolveInternalPath(path);
 });
-
-const { getPageMetadata } = useDocsMetadata();
 
 const internalPageData = computed(() => {
   if (!isInternalLink.value) return null;
-  // internalHref is already normalized with leading slash
   return getPageMetadata(internalHref.value);
 });
 
-// Convert term: prefix to glossary page anchor
-const glossaryConfig = appConfig.content?.collections?.glossary;
-const glossaryPath = getCollectionPrefix(glossaryConfig, '/glossary');
+// Convert term: prefix to glossary page with search param
+const glossaryTermId = computed(() =>
+  isGlossaryTerm.value ? props.href.replace('term:', '') : '',
+);
 
 const glossaryHref = computed(() => {
   if (!isGlossaryTerm.value) return props.href;
-  const termId = props.href.replace('term:', '').toLowerCase();
-  return `${glossaryPath}?search=${termId}`;
-});
-
-// Fetch glossary term data for tooltips
-const glossaryCollection = getCollectionName(glossaryConfig, 'glossary');
-const { data: glossaryData } = await useAsyncData('glossary-all', () =>
-  queryCollection(glossaryCollection).all(),
-);
-
-const allGlossaryTerms = computed(() => {
-  if (!glossaryData.value) return [];
-  return glossaryData.value.flatMap((file) => file.terms || []);
+  return resolveGlossaryPath(glossaryTermId.value);
 });
 
 const glossaryTermData = computed(() => {
   if (!isGlossaryTerm.value) return null;
-  const termId = props.href.replace('term:', '').toLowerCase();
-  return allGlossaryTerms.value.find((t) => t.id === termId);
+  return getTerm(glossaryTermId.value).value;
 });
 
 // Support multiple citations separated by commas: cite:id1,id2,id3
