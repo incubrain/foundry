@@ -17,7 +17,7 @@ pnpm typecheck       # Nuxt typecheck (layer)
 pnpm verify          # dev:prepare + lint + typecheck
 ```
 
-Config source: set `NUXT_PUBLIC_CONFIG_SOURCE=root` or `founder-funnel`.
+Config source: set `NUXT_PUBLIC_CONFIG_SOURCE=root` or `foundry`.
 
 ## Critical Rules
 
@@ -44,7 +44,7 @@ Config source: set `NUXT_PUBLIC_CONFIG_SOURCE=root` or `founder-funnel`.
 
 ```bash
 layer/                         → Nuxt layer (core reusable code)
-examples/founder-funnel/       → Founder Funnel example app
+examples/foundry/       → Founder Funnel example app
 examples/astronera/            → Astronera example app
 examples/starter/              → Starter template
 shared/config/                 → Configuration files

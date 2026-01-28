@@ -4,7 +4,7 @@
 banner:
   id: 'mentorship-2026'
   icon: i-lucide-users
-  title: "1-on-1 mentorship available. Limited spots for founders."
+  title: '1-on-1 mentorship available. Limited spots for founders.'
   actions:
     - label: Learn More
       to: /offers/mentorship
@@ -47,7 +47,7 @@ footer:
           to: /decisions
         - label: Roadmap
           icon: i-lucide-map
-          to: https://github.com/incubrain/founder-funnel/discussions/133
+          to: https://github.com/incubrain/foundry/discussions/133
           target: _blank
     - label: Offers
       icon: i-lucide-gift

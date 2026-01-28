@@ -5,7 +5,7 @@ const { resolve } = createResolver(import.meta.url);
 const SITE_URL = 'https://astronera.org';
 
 export default defineNuxtConfig({
-  extends: ['@incubrain/founder-funnel'],
+  extends: ['@incubrain/foundry'],
 
   site: {
     name: 'AstronEra',
@@ -53,7 +53,7 @@ export default defineNuxtConfig({
     repository: {
       provider: 'github', // only GitHub is currently supported
       owner: 'incubrain', // your GitHub username or organization
-      repo: 'founder-funnel', // your repository name
+      repo: 'foundry', // your repository name
       branch: 'main', // the branch to commit to (default: main)
       private: false,
     },

@@ -1,7 +1,7 @@
 import { createResolver } from '@nuxt/kit';
 
 export default defineNuxtConfig({
-  extends: ['@incubrain/founder-funnel'],
+  extends: ['@incubrain/foundry'],
 
   site: {
     name: 'Founder Funnel Docs',

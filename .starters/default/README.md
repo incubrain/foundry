@@ -1,6 +1,6 @@
 # Founder Funnel Starter
 
-A minimal starter template for [Founder Funnel](https://github.com/incubrain/founder-funnel) — the validation tool for technical founders.
+A minimal starter template for [Founder Funnel](https://github.com/incubrain/foundry) — the validation tool for technical founders.
 
 ## Setup
 
@@ -54,7 +54,7 @@ content/
 app/
 ├── app.config.ts   App-level configuration
 ├── assets/         Custom theme CSS
-└── components/     Custom section components
+└── components/     Custom components and overrides
 public/             Static assets (favicons, images)
 ```
 
@@ -62,11 +62,11 @@ public/             Static assets (favicons, images)
 
 - **Content:** Edit YAML and Markdown files in `content/`
 - **Theme:** Override brand colors in `app/assets/theme.css`
-- **Components:** Add custom section components in `app/components/section/`
+- **Components:** Add custom components in `app/components/`
 - **Config:** Adjust app settings in `app/app.config.ts`
 
 ## Learn More
 
-- [Founder Funnel Layer](https://github.com/incubrain/founder-funnel)
+- [Founder Funnel Layer](https://github.com/incubrain/foundry)
 - [Nuxt Documentation](https://nuxt.com)
 - [Nuxt Content](https://content.nuxt.com)

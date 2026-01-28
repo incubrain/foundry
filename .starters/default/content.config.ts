@@ -4,7 +4,7 @@ import {
   baseFaqSchema,
   baseNavigationSchema,
   basePageSchema,
-} from '@incubrain/founder-funnel/content.collections';
+} from '@incubrain/foundry/content.collections';
 
 export default defineContentConfig({
   collections: {

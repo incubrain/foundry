@@ -24,7 +24,7 @@ Validation captures intent. Products deliver value. Mixing them creates scope cr
 - See: `templates/*/content/pages/index.md` for stage comments
 
 **Multi-Config System:**
-- `NUXT_PUBLIC_CONFIG_SOURCE` = `root` | `founder-funnel`
+- `NUXT_PUBLIC_CONFIG_SOURCE` = `root` | `foundry`
 - Showcase (`templates/`) ≠ User starting point (`root`)
 - See: `shared/utils/config-resolver.ts`
 

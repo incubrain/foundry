@@ -109,8 +109,8 @@ Sell consulting calls. Deliver service manually. Learn what clients actually nee
 
 1. **Clone & Install**
 ```bash
-git clone https://github.com/incubrain/founder-funnel.git
-cd founder-funnel
+git clone https://github.com/incubrain/foundry.git
+cd foundry
 pnpm install
 ```
 
@@ -287,7 +287,7 @@ git push
   - If needed, manually close old ones
 
   **Need help?**
-  - [GitHub Discussions](https://github.com/incubrain/founder-funnel/discussions)
+  - [GitHub Discussions](https://github.com/incubrain/foundry/discussions)
   - [Template Sync Docs](docs/template-updates.md)
 
 ---
@@ -359,11 +359,11 @@ See `/docs` for complete case study:
 
 ## Content Structure
 
-The template uses **progressive disclosure**—start minimal, expand as you validate.
+  The template uses **progressive disclosure**—start minimal, expand as you validate.
 
 ### Editing Content
 
-Open `content/pages/index.md` and follow the inline guides:
+  Open `content/pages/index.md` and follow the inline guides:
 ```markdown
 ::section-hero
 ---
@@ -375,38 +375,38 @@ data:
 ::
 ```
 
-Each section includes:
+  Each section includes:
 - **Decision guides** — When to use this section
 - **Anti-examples** — What NOT to write
 - **Structure templates** — How to organize your copy
 
-No config files. Just uncomment sections as you grow.
+  No config files. Just uncomment sections as you grow.
 
 ---
 
 ## Understanding the Codebase
 
-  No docs that go stale. Instead:
+No docs that go stale. Instead:
 
 ```bash
 pnpm repomix
 ```
 
-  This bundles your codebase context into a single file. Paste it into Claude or ChatGPT.
+This bundles your codebase context into a single file. Paste it into Claude or ChatGPT.
 
-  **Ask anything:**
-  - "How do I change the color scheme?"
-  - "Where do I configure email webhooks?"
-  - "How do I hide a section?"
-  - "How do I add a presales funnel?"
+**Ask anything:**
+- "How do I change the color scheme?"
+- "Where do I configure email webhooks?"
+- "How do I hide a section?"
+- "How do I add a presales funnel?"
 
-  The LLM explains the code directly. Always up-to-date. Zero maintenance.
+The LLM explains the code directly. Always up-to-date. Zero maintenance.
 
 ---
 
 ## What We Deliberately Cut
 
-This template does **not** include:
+  This template does **not** include:
 
 - ❌ Email sequence automation
 - ❌ User authentication systems
@@ -415,11 +415,11 @@ This template does **not** include:
 - ❌ Database management
 - ❌ Admin dashboards
 
-**Why?**
+  **Why?**
 
-These add complexity that distracts from validation. Once you prove demand, add them to your **actual product** codebase.
+  These add complexity that distracts from validation. Once you prove demand, add them to your **actual product** codebase.
 
-The template captures signal. Your product delivers value.
+  The template captures signal. Your product delivers value.
 
 ---
 
@@ -427,30 +427,30 @@ The template captures signal. Your product delivers value.
 
 ### Measure What Matters
 
-  Stop chasing traffic. Focus on **signal**:
+Stop chasing traffic. Focus on **signal**:
 
-  - **Email signups** — Are people interested enough to give you their contact?
-  - **Presale conversions** — Are people interested enough to pay before you build?
-  - **Service bookings** — Are people interested enough to pay for your time?
+- **Email signups** — Are people interested enough to give you their contact?
+- **Presale conversions** — Are people interested enough to pay before you build?
+- **Service bookings** — Are people interested enough to pay for your time?
 
-  Quality of signal matters more than quantity of visitors.
+Quality of signal matters more than quantity of visitors.
 
 ### Fail Fast, Fail Early
 
-  Weak signal? Your offer doesn't resonate. Pivot or kill the idea.
+Weak signal? Your offer doesn't resonate. Pivot or kill the idea.
 
-  This is success. You saved months of building something nobody wants.
+This is success. You saved months of building something nobody wants.
 
 ### Service-to-Product Path
 
-  Can't validate with a landing page? Sell service first:
+Can't validate with a landing page? Sell service first:
 
-  1. Offer paid consulting/implementation
-  2. Learn what clients actually need
-  3. Systematize your process
-  4. Build the product that solves it
+1. Offer paid consulting/implementation
+2. Learn what clients actually need
+3. Systematize your process
+4. Build the product that solves it
 
-  Your template supports this path. Service revenue funds validation. Client feedback guides product development.
+Your template supports this path. Service revenue funds validation. Client feedback guides product development.
 
 ---
 
@@ -458,56 +458,56 @@ The template captures signal. Your product delivers value.
 
 ## Decisions Log
 
-  We document every strategic decision, pivot, and learning in our public [Decisions Log](/decisions).
+We document every strategic decision, pivot, and learning in our public [Decisions Log](/decisions).
 
-  **Why?**
-  - **Transparency:** See how we think, not just what we ship
-  - **Learning:** Real validation decisions from real founders
-  - **Accountability:** Public decisions force clear reasoning
+**Why?**
+- **Transparency:** See how we think, not just what we ship
+- **Learning:** Real validation decisions from real founders
+- **Accountability:** Public decisions force clear reasoning
 
-  **Subscribe via RSS:** [/rss/decisions](/rss/decisions)
+**Subscribe via RSS:** [/rss/decisions](/rss/decisions)
 
-  Perfect for:
-  - Investors monitoring portfolio thinking
-  - Founders learning from validation experiments
-  - Mentors assessing decision quality
+Perfect for:
+- Investors monitoring portfolio thinking
+- Founders learning from validation experiments
+- Mentors assessing decision quality
 
 ---
 
 ## Contributing
 
-Found a bug? See a better way? Pull requests welcome for:
+  Found a bug? See a better way? Pull requests welcome for:
 
 - Bug fixes
 - Documentation improvements
 - New validation path examples
 - Performance optimizations
 
-**Not accepting:** Feature additions that violate "best part is no part" philosophy.
+  **Not accepting:** Feature additions that violate "best part is no part" philosophy.
 
 ---
 
 ## License
 
-  MIT — Use for personal or commercial projects.
+MIT — Use for personal or commercial projects.
 
-  **One restriction:** Don't clone this and sell it as a competing template product under a different name.
+**One restriction:** Don't clone this and sell it as a competing template product under a different name.
 
-  Everything else? Fair game.
+Everything else? Fair game.
 
 ---
 
 ## Support
 
-- **Issues:** [GitHub Issues](https://github.com/incubrain/founder-funnel/issues)
-- **Discussions:** [GitHub Discussions](https://github.com/incubrain/founder-funnel/discussions)
-- **Decisions Log:** [Strategic Decisions](https://founder-funnel.incubrain.org/decisions)
-- **RSS Feed:** [Subscribe](https://founder-funnel.incubrain.org/rss/decisions)
+- **Issues:** [GitHub Issues](https://github.com/incubrain/foundry/issues)
+- **Discussions:** [GitHub Discussions](https://github.com/incubrain/foundry/discussions)
+- **Decisions Log:** [Strategic Decisions](https://foundry.incubrain.org/decisions)
+- **RSS Feed:** [Subscribe](https://foundry.incubrain.org/rss/decisions)
 
 ---
 
-  **Stop overthinking. Start validating.**
+**Stop overthinking. Start validating.**
 
-  Deploy your landing page today. Measure real signal tomorrow. Build only when the evidence is clear.
+Deploy your landing page today. Measure real signal tomorrow. Build only when the evidence is clear.
 
-  Your future self will thank you.
+Your future self will thank you.

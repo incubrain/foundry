@@ -1,12 +1,12 @@
-# create-founder-funnel
+# create-foundry
 
-CLI tool to scaffold a new [Founder Funnel](https://github.com/incubrain/founder-funnel) project.
+CLI tool to scaffold a new [Founder Funnel](https://github.com/incubrain/foundry) project.
 
 ## Usage
 
 ```bash
 # Create a new project
-npx create-founder-funnel my-project
+npx create-foundry my-project
 
 # Navigate and start
 cd my-project

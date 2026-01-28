@@ -80,4 +80,4 @@ Study findings:reference{id="study-2024" source="Study Name" url="/sources/study
 
 - [Nuxt Content Docs](https://content.nuxt.com/)
 - [MCP Protocol](https://modelcontextprotocol.io/)
-- [Founder Funnel](https://github.com/incubrain/founder-funnel)
+- [Founder Funnel](https://github.com/incubrain/foundry)

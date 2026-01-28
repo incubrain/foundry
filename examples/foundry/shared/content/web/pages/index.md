@@ -8,7 +8,7 @@ description: Open-source landing page template for experienced technical founder
 badge:
   label: Open Source
   description: 74 ★
-  to: https://github.com/incubrain/founder-funnel
+  to: https://github.com/incubrain/foundry
   icon: i-simple-icons-github
 intro:
   title: Own Your Funnel
@@ -21,7 +21,7 @@ cta:
     offerSlug: booking
   secondary:
     label: View on GitHub
-    to: https://github.com/incubrain/founder-funnel
+    to: https://github.com/incubrain/foundry
     icon: i-simple-icons-github
 media:
   src: /product/gated-dashboard.png
@@ -152,7 +152,7 @@ cta:
   headline: Still have questions?
   message: Check the code or ask the community.
   label: GitHub Repo
-  to: https://github.com/incubrain/founder-funnel
+  to: https://github.com/incubrain/foundry
   icon: i-simple-icons-github
 ---
 ::

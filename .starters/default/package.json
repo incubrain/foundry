@@ -1,5 +1,5 @@
 {
-  "name": "founder-funnel-starter",
+  "name": "foundry-starter",
   "private": true,
   "type": "module",
   "scripts": {
@@ -9,7 +9,7 @@
     "prepare": "nuxt prepare"
   },
   "dependencies": {
-    "@incubrain/founder-funnel": "latest",
+    "@incubrain/foundry": "latest",
     "better-sqlite3": "^12.5.0",
     "nuxt": "^4.3.0"
   }

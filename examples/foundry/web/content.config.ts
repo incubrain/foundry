@@ -1,4 +1,4 @@
-// templates/founder-funnel/content.config.ts
+// templates/foundry/content.config.ts
 import { defineContentConfig, z, defineCollection } from '@nuxt/content';
 import { createResolver } from '@nuxt/kit';
 import {

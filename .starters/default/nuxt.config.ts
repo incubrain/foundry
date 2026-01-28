@@ -1,5 +1,5 @@
 export default defineNuxtConfig({
-  extends: ['@incubrain/founder-funnel'],
+  extends: ['@incubrain/foundry'],
 
   // Uncomment to configure for your project:
   // site: {

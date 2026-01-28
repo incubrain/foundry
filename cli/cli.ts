@@ -1,6 +1,6 @@
-import { resolve } from 'node:path'
-import { defineCommand, runMain } from 'citty'
-import type { CLIOptions } from './types'
+import { resolve } from 'node:path';
+import { defineCommand, runMain } from 'citty';
+import type { CLIOptions } from './types';
 
 export function createCLI(opts: CLIOptions) {
   const main = defineCommand({
@@ -24,19 +24,23 @@ export function createCLI(opts: CLIOptions) {
       },
     },
     async setup(context) {
-      const dir = resolve(context.args.dir as string)
-      const template = context.args.template as string
+      const dir = resolve(context.args.dir as string);
+      const template = context.args.template as string;
 
       if (!['default'].includes(template)) {
-        throw new Error(`Invalid template: ${template}. Available: default`)
+        throw new Error(`Invalid template: ${template}. Available: default`);
       }
 
-      const { runCommand } = await import('@nuxt/cli')
-      await runCommand('init', [dir, '-t', `gh:incubrain/founder-funnel/.starters/${template}`])
+      const { runCommand } = await import('@nuxt/cli');
+      await runCommand('init', [
+        dir,
+        '-t',
+        `gh:incubrain/foundry/.starters/${template}`,
+      ]);
     },
-  })
+  });
 
   return {
     runMain: () => runMain(main),
-  }
+  };
 }

@@ -2,14 +2,11 @@ import { createResolver } from '@nuxt/kit';
 import { getActiveConfigSource } from '../../../layer/shared/config-resolver';
 
 const { resolve } = createResolver(import.meta.url);
-const { contentRoot, publicDir } = getActiveConfigSource(
-  resolve,
-  'web',
-);
+const { contentRoot, publicDir } = getActiveConfigSource(resolve, 'web');
 const SITE_URL = process.env.NUXT_SITE_URL;
 
 export default defineNuxtConfig({
-  extends: ['@incubrain/founder-funnel'],
+  extends: ['@incubrain/foundry'],
 
   site: {
     name: 'Founder Funnel',
@@ -82,7 +79,7 @@ export default defineNuxtConfig({
     repository: {
       provider: 'github', // only GitHub is currently supported
       owner: 'incubrain', // your GitHub username or organization
-      repo: 'founder-funnel', // your repository name
+      repo: 'foundry', // your repository name
       branch: 'main', // the branch to commit to (default: main)
       rootDir: contentRoot,
       private: false,

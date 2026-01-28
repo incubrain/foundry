@@ -150,7 +150,7 @@ const displayDescription = computed(() => props.description);
         <div class="mt-4 flex flex-col gap-4 justify-center items-center">
           <UBadge variant="soft">OR</UBadge>
           <ConvertExternal
-            to="https://github.com/incubrain/founder-funnel"
+            to="https://github.com/incubrain/foundry"
             label="One Click Deploy"
             icon="i-lucide-rocket"
             location="product-section-alt"

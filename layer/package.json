@@ -1,21 +1,16 @@
 {
-  "name": "@incubrain/founder-funnel",
+  "name": "@incubrain/foundry",
   "description": "Nuxt layer for Founder Funnel documentation",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "type": "module",
   "main": "./nuxt.config.ts",
-
-  "exports": {
-    ".": "./nuxt.config.ts",
-    "./content.collections": "./content.collections.ts"
-  },
 
   "license": "MIT",
   "author": "IncuBrain",
   
   "repository": {
     "type": "git",
-    "url": "https://github.com/incubrain/founder-funnel.git",
+    "url": "https://github.com/incubrain/foundry.git",
     "directory": "layer"
   },
   
@@ -83,8 +78,10 @@
     "nuxt",
     "nuxt-layer",
     "documentation",
-    "founder-funnel",
+    "incubrain",
+    "foundry",
     "content",
+    "docus",
     "markdown"
   ]
 }
