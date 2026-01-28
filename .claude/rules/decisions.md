@@ -51,7 +51,7 @@ Why: Privacy-first, self-hosted, good enough
 Swap: Change scripts registry in `nuxt.config.ts`
 
 **Deployment: Railway/Vercel or other PAAS**
-Dockerfile + `vercel.json` configs included
+Dockerfile + `vercel.json` configs included in `deploy/`
 
 **Webhooks: Telegram/Discord/Slack**
 Why: Start simple, own your data

@@ -38,11 +38,11 @@ Config source: set `NUXT_PUBLIC_CONFIG_SOURCE=root` or `founder-funnel`.
 - Multi-config: `NUXT_PUBLIC_CONFIG_SOURCE` switches between configs. See `shared/utils/config-resolver.ts`.
 - Event-driven: action → `useEvents()` → handler → provider. Swap analytics without changing event code. See `modules/events/*`.
 - Webhook streaming: capture → encrypt → webhook → destination. No storage needed. See `modules/events/server/handlers/webhook.ts`.
-- SSR: Nuxt 4, use `import.meta.client` guards for client-only APIs.
+- SSR: Nuxt 4, use `import.meta.client` guards for client-only APIs or `.client.ts|.server.ts` file naming.
 
 ## File Locations
 
-```
+```bash
 layer/                         → Nuxt layer (core reusable code)
 examples/founder-funnel/       → Founder Funnel example app
 examples/astronera/            → Astronera example app

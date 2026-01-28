@@ -18,11 +18,11 @@ Product = delivers value
 Don't confuse the two
 
 **Never prop drill >2 levels:**
-Use composables instead
+Use composables instead or provide/inject
 See: `useContentCache()` vs passing props through SectionWrapper
 
 **Never ignore complexity budget:**
-Component >50 lines → Refactor
+Component >100 lines → Consider Refactor
 Props >5 → Config object
 Abstraction >2 layers → Too deep
 

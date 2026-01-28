@@ -114,6 +114,14 @@ cd founder-funnel
 pnpm install
 ```
 
+2. **Setup Claude Code**
+
+```bash
+# Install Plugins
+/plugin marketplace add onmax/nuxt-skills
+/plugin marketplace add vercel-labs/agent-browser
+```
+
 2. **Customize Content**
 
 Edit `content/pages/index.md` — uncomment sections as you need them:

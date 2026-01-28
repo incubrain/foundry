@@ -3,6 +3,7 @@
 **In Scope (What We Build):**
 - Landing pages (section driven)
 - Signal capture (email/presales/bookings)
+- Documentation (markdown|nuxt/content)
 - Event tracking (analytics-agnostic)
 - Webhook streaming (your data, your destination)
 

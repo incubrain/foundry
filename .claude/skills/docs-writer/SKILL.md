@@ -146,7 +146,7 @@ Overview text without citations explaining the category.
 
 ### 2.1 Pollination
 
-:cite[Light pollution disrupts nocturnal pollinator activity]{#study-id}. Research documents :cite[62% reduction in pollinator visits under ALAN conditions]{#another-study}.
+:cite[Light pollution disrupts nocturnal pollinator activity.]{#study-id} Research documents :cite[62% reduction in pollinator visits under ALAN conditions]{#another-study}.
 
 ::callout{color="info"}
 Maharashtra's agricultural economy depends heavily on pollinator-dependent crops including cotton, pulses, and fruits.
@@ -347,8 +347,5 @@ Before finalizing content:
 - [ ] Technical validation passes (citations, components, math) completed
 
 ## Related Guidelines
-
-For technical syntax details, always refer to:
-- `/Users/mac/Development/incubrain/product-validator/docs/DOCUMENTATION_WRITING_GUIDELINES.md`
 
 This skill focuses on **content strategy and audience**. The guidelines document handles **technical syntax**.
