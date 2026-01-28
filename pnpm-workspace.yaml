@@ -2,6 +2,7 @@
 packages:
   # Core apps
   - 'layer'
+  - 'cli'
 
   # Only include specific examples we're building
   - 'examples/founder-funnel/web'

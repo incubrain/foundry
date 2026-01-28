@@ -1,0 +1,11 @@
+business:
+  name: 'My Product'
+  legalName: 'My Company LLC'
+  foundingYear: 2026
+  logo: /favicon-96x96.png
+  mission: Your primary overarching mission.
+
+socials:
+  x: https://x.com/your-username
+  youtube: https://www.youtube.com/@your-channel
+  github: https://github.com/your-username

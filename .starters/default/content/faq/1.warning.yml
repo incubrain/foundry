@@ -1,0 +1,7 @@
+type: warning
+label: Warning
+icon: i-lucide-alert-triangle
+color: error
+items:
+  - label: 'Question about time commitment?'
+    content: 'Honest answer about effort required'

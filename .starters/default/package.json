@@ -1,0 +1,16 @@
+{
+  "name": "founder-funnel-starter",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "nuxt dev",
+    "build": "nuxt build",
+    "preview": "nuxt preview",
+    "prepare": "nuxt prepare"
+  },
+  "dependencies": {
+    "@incubrain/founder-funnel": "latest",
+    "better-sqlite3": "^12.5.0",
+    "nuxt": "^4.3.0"
+  }
+}

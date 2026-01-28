@@ -1,0 +1,7 @@
+type: support
+label: Support
+icon: i-lucide-life-buoy
+color: success
+items:
+  - label: 'What support is available?'
+    content: 'Your support channels and response times'

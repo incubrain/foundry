@@ -1,0 +1,43 @@
+/* ============================================================================
+   YOUR BRAND THEME
+   Override the base design system with your brand colors.
+   See: layer/app/assets/main.css for the full token reference.
+   ============================================================================ */
+
+/* Import base design system */
+@import '@incubrain/founder-funnel/app/assets/main.css';
+
+/* ============================================================================
+   BRAND COLORS
+   Replace these with your brand's color palette.
+   Uses oklch() for perceptual uniformity — adjust hue (last value) to shift.
+   Tool: https://oklch.com
+   ============================================================================ */
+
+@theme static {
+  /* Primary — Your main brand color (buttons, links, highlights) */
+  --color-primary-50: oklch(97% 0.01 250);
+  --color-primary-100: oklch(94% 0.02 250);
+  --color-primary-200: oklch(88% 0.04 250);
+  --color-primary-300: oklch(78% 0.08 250);
+  --color-primary-400: oklch(68% 0.12 250);
+  --color-primary-500: oklch(58% 0.15 250);
+  --color-primary-600: oklch(52% 0.14 250);
+  --color-primary-700: oklch(46% 0.13 250);
+  --color-primary-800: oklch(38% 0.11 250);
+  --color-primary-900: oklch(32% 0.09 250);
+  --color-primary-950: oklch(22% 0.06 250);
+
+  /* Secondary — Accent color (CTAs, highlights, badges) */
+  --color-secondary-50: oklch(97% 0.01 160);
+  --color-secondary-100: oklch(94% 0.03 160);
+  --color-secondary-200: oklch(88% 0.06 160);
+  --color-secondary-300: oklch(82% 0.1 160);
+  --color-secondary-400: oklch(72% 0.14 160);
+  --color-secondary-500: oklch(62% 0.15 160);
+  --color-secondary-600: oklch(56% 0.14 160);
+  --color-secondary-700: oklch(48% 0.12 160);
+  --color-secondary-800: oklch(40% 0.1 160);
+  --color-secondary-900: oklch(32% 0.08 160);
+  --color-secondary-950: oklch(22% 0.05 160);
+}

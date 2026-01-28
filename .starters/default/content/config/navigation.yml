@@ -1,0 +1,21 @@
+# Navigation Configuration
+# Full control over header/footer navigation - define all links manually
+
+header:
+  title: Starter Template
+  navigation:
+    - label: About
+      icon: i-lucide-info
+      to: /about
+  showSearch: true
+  showColorMode: true
+
+footer:
+  columns:
+    - label: About
+      icon: i-lucide-info
+      to: /about
+      children:
+        - label: Our Story
+          icon: i-lucide-book-open
+          to: /about

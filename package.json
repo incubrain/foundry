@@ -27,6 +27,8 @@
     "layer:release": "release-it --config .release-it.layer.json",
     "layer:publish": "cd layer && npm publish --access public",
     "release": "pnpm run layer:release && pnpm run layer:publish",
+    "cli:build": "pnpm --filter create-founder-funnel build",
+    "cli:publish": "cd cli && npm publish --access public",
     "kanban": "npx vibe-kanban"
   },
   "dependencies": {

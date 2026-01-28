@@ -4,8 +4,14 @@
   "version": "0.4.0",
   "type": "module",
   "main": "./nuxt.config.ts",
+
+  "exports": {
+    ".": "./nuxt.config.ts",
+    "./content.collections": "./content.collections.ts"
+  },
+
   "license": "MIT",
-  "author": "IncubBrain",
+  "author": "IncuBrain",
   
   "repository": {
     "type": "git",
