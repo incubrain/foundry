@@ -75,7 +75,8 @@ export default defineNuxtModule<ModuleOptions>({
       // @ts-ignore
       addServerHandler({
         route: '/api/v1/webhook',
-        handler: resolver.resolve('./server/handlers/webhook.ts'),
+        method: 'post',
+        handler: resolver.resolve('./server/handlers/webhook.post'),
       });
     }
   },
