@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useIntersectionObserver } from '@vueuse/core';
-import type { PageSectionProps } from '@nuxt/ui';
+import type { PageSectionProps, PageSectionSlots } from '@nuxt/ui';
 
 const props = defineProps<PageSectionProps>();
 const sectionRef = ref<HTMLElement | null>(null);
@@ -29,13 +29,16 @@ const { stop } = useIntersectionObserver(
   },
   { threshold: 0.2 },
 );
+
+defineSlots<PageSectionSlots>();
+
 </script>
 
 <template>
-  <div ref="sectionRef">
-    <UPageSection v-bind="props">
-      <template v-for="(_, name) in $slots" #[name]>
-        <slot :name="name" />
+  <div ref="sectionRef" :class="{ 'bg-primary/10': props.reverse }">
+    <UPageSection  v-bind="$props">
+      <template v-for="(_, slot) in $slots" #[slot]="scope">
+        <slot :name="(slot as keyof PageSectionSlots)" v-bind="scope || {}" />
       </template>
     </UPageSection>
   </div>
