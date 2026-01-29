@@ -9,14 +9,17 @@ interface Props {
   items?: CarouselItem[];
 }
 
-defineProps<Props>();
+const props = defineProps<Props>();
+
+// duplicate items
+const allItems = props.items?.length ? [...props.items, ...props.items] : [];
 </script>
 
 <template>
-  <div class="overflow-hidden">
+  <div class="overflow-hidden" v-if="allItems.length">
     <UCarousel
       v-slot="{ item }"
-      :items="items"
+      :items="allItems"
       arrows
       loop
       :prev="{
@@ -29,10 +32,9 @@ defineProps<Props>();
       }"
       :ui="{
         item: 'basis-[320px] px-2 h-[360px]',
-        viewport:
-          'overflow-hidden border-x border-8 border-secondary p-4 bg-primary/10',
+        viewport: 'overflow-hidden p-4',
         controls:
-          'relative mt-12 hidden md:flex justify-center max-w-container mx-auto',
+          'relative my-12 hidden md:flex justify-center max-w-container mx-auto',
         arrows: 'flex gap-4',
         prev: 'flex relative rounded-lg ring-default start-0 sm:start-0 top-0 translate-y-0',
         next: 'flex relative rounded-lg ring-default end-0 sm:end-0 top-0 translate-y-0',
@@ -40,7 +42,7 @@ defineProps<Props>();
     >
       <UCard
         :ui="{
-          root: 'bg-default hover:bg-muted/50 transition-colors h-full',
+          root: 'bg-muted hover:bg-muted/50 transition-colors h-full',
           body: 'space-y-4 p-0 sm:p-0 px-6 sm:px-4 items-start',
           header: 'space-y-2',
         }"
@@ -48,10 +50,10 @@ defineProps<Props>();
         <template #header>
           <div class="flex items-start gap-4">
             <div class="shrink-0">
-              <UIcon :name="item.icon" class="size-8 text-primary" />
+              <UIcon :name="item.icon" class="size-6 text-primary" />
             </div>
             <div class="flex-1">
-              <h3 class="text-xl font-bold text-highlighted">
+              <h3 class="text-lg font-bold text-highlighted">
                 {{ item.title }}
               </h3>
             </div>

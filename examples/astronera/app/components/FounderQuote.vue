@@ -21,6 +21,10 @@ const socialLinks = computed(() =>
     'aria-label': `${key} social link`,
   })),
 );
+
+defineSlots<{
+  default(props?: {}): any;
+}>();
 </script>
 
 <template>
@@ -53,9 +57,9 @@ const socialLinks = computed(() =>
       class="prose prose-lg md:prose-xl dark:prose-invert mx-auto mb-8 text-left"
     >
       <blockquote
-        class="border-l-4 border-primary pl-6 italic text-lg md:text-xl leading-relaxed"
+        class="border-l-4 border-primary p-6 italic text-lg md:text-xl leading-relaxed bg-primary/10"
       >
-        <MDC :value="quote" />
+        <slot />
       </blockquote>
     </div>
 
@@ -72,7 +76,7 @@ const socialLinks = computed(() =>
         :target="link.target"
         :aria-label="link['aria-label']"
         variant="outline"
-        size="sm"
+        size="lg"
       />
     </div>
   </div>

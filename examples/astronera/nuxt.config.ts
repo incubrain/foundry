@@ -55,6 +55,7 @@ export default defineNuxtConfig({
       owner: 'incubrain', // your GitHub username or organization
       repo: 'foundry', // your repository name
       branch: 'main', // the branch to commit to (default: main)
+      rootDir: resolve('./'),
       private: false,
     },
   },
