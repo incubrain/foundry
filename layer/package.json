@@ -54,7 +54,7 @@
     "motion-v": "^1.9.0",
     "nuxt-llms": "^0.2.0",
     "nuxt-og-image": "^5.1.13",
-    "nuxt-studio": "^1.1.1",
+    "nuxt-studio": "^1.2.0",
     "rehype-katex": "^7.0.1",
     "remark-math": "^6.0.0",
     "tailwindcss": "^4.1.18",
