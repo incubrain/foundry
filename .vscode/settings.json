@@ -11,6 +11,7 @@
   "editor.quickSuggestions": {
     "strings": "on"
   },
+  "prettier.prettierPath": "./node_modules/prettier/index.cjs",
   "files.associations": {
     "*.css": "tailwindcss",
     "*.md": "mdc"

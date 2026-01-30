@@ -2,6 +2,7 @@
   "recommendations": [
     "nuxt.mdc",
     "vue.volar",
-    "bradlc.vscode-tailwindcss"
+    "bradlc.vscode-tailwindcss",
+    "esbenp.prettier-vscode"
   ]
 }
