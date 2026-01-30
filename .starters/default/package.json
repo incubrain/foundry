@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@incubrain/foundry": "latest",
+    "nuxt-studio": "^1.2.0",
     "better-sqlite3": "^12.5.0",
     "nuxt": "^4.3.0"
   }

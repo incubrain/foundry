@@ -35,7 +35,7 @@ defineSlots<{
         v-if="avatar"
         :src="avatar"
         :alt="name"
-        class="rounded-full w-32 h-32 md:w-40 md:h-40 object-cover ring-4 ring-primary/20"
+        class="rounded-full w-32 h-32 md:w-48 md:h-48 object-cover ring-4 ring-primary/20"
       />
     </div>
 

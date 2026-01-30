@@ -35,7 +35,7 @@ defineSlots<PageSectionSlots>();
 </script>
 
 <template>
-  <div ref="sectionRef" :class="{ 'bg-primary/10': props.reverse }">
+  <div ref="sectionRef">
     <UPageSection  v-bind="$props">
       <template v-for="(_, slot) in $slots" #[slot]="scope">
         <slot :name="(slot as keyof PageSectionSlots)" v-bind="scope || {}" />

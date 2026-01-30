@@ -109,6 +109,12 @@ importers:
       '@incubrain/foundry':
         specifier: workspace:*
         version: link:../../layer
+      better-sqlite3:
+        specifier: ^12.5.0
+        version: 12.6.2
+      nuxt-studio:
+        specifier: ^1.2.0
+        version: 1.2.0(db0@0.3.4(better-sqlite3@12.6.2))(ioredis@5.9.2)(magicast@0.5.1)(vue@3.5.27(typescript@5.9.3))
 
   examples/foundry/docs:
     dependencies:

@@ -21,11 +21,14 @@
       bottom: 'bg-default',
     }"
   >
+    <template #top>
+      <AppFooterTop />
+    </template>
+
     <template #left>
       <AppFooterLeft />
     </template>
 
-    <AppFooterCenter />
 
     <template #right>
       <AppFooterRight />

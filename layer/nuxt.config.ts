@@ -3,6 +3,7 @@ import { ICON_LIBRARIES } from './shared/constants';
 const { resolve } = createResolver(import.meta.url);
 
 export default defineNuxtConfig({
+  debug: true,
   modules: [
     resolve('./modules/config'),
     resolve('./modules/css'),
@@ -15,7 +16,6 @@ export default defineNuxtConfig({
     'nuxt-og-image',
     'nuxt-llms',
     '@nuxtjs/seo',
-    'nuxt-studio',
     '@vueuse/nuxt',
     '@nuxt/scripts',
   ],
@@ -78,7 +78,7 @@ export default defineNuxtConfig({
   hooks: {
     'components:extend': (components) => {
       const globals = components.filter((c) =>
-        ['UButton', 'UIcon'].includes(c.pascalName),
+        ['UButton', 'UIcon', 'ProseDfn'].includes(c.pascalName),
       );
       globals.forEach((c) => (c.global = true));
     },
@@ -91,10 +91,12 @@ export default defineNuxtConfig({
     '#config-resolver': resolve('./shared/config-resolver.ts'),
   },
 
+  
+
   mdc: {
     components: {
       map: {
-        cite: 'ProseCite',
+        cite: 'Cite',
         dfn: 'ProseDfn',
       },
     },

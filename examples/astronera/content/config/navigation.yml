@@ -21,12 +21,38 @@ footer:
       children:
         - label: Overview
           to: /darksky/research
+        - label: Ecology & Biodiversity
+          to: /darksky/research/ecology
+        - label: Human Health
+          to: /darksky/research/health
+        - label: Climate Change
+          to: /darksky/research/climate
+        - label: Tourism
+          to: /darksky/research/tourism
     - label: Policy
       icon: i-lucide-book-open
       to: /darksky/policy
       children:
         - label: Overview
           to: /darksky/policy
+        - label: Global Presedents
+          to: /darksky/policy/global-presedents
+        - label: Legal Obligations
+          to: /darksky/policy/legal-obligations
+        - label: Departmental Actions
+          to: /darksky/policy/departmental-actions
+        - label: Regulatory Framework
+          to: /darksky/policy/regulatory-framework
+        - label: Recommendations
+          to: /darksky/policy/recommendations
+        - label: Technical Secretariat
+          to: /darksky/policy/technical-secretariat
+    - label: Pilots
+      icon: i-lucide-book-key
+      to: /darksky/pilots
+      children:
+        - label: Overview
+          to: /darksky/pilots
     - label: Resources
       icon: i-lucide-book-key
       to: /resources
@@ -50,7 +76,7 @@ header:
         - label: Research
           icon: i-lucide-flask-conical
           to: /darksky/research
-          description: some information about dark sky research
+          description: add more details
         - label: Policy
           icon: i-lucide-book-open
           to: /darksky/policy

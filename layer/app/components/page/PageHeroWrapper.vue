@@ -39,10 +39,14 @@ defineSlots<ExtendedSlots>();
   <div class="relative ">
     <!-- Fixed Hero Background -->
     <div 
-      class="sticky top-0 left-0 w-full h-screen -z-10"
+      class="sticky top-0 left-0 w-full h-screen z-0"
     >
-      <div ref="heroRef" class="h-full bg-[url(https://picsum.photos/640/728)] bg-top bg-left bg-cover">
-        <UPageHero v-bind="$props">
+      <div ref="heroRef" class="h-full bg-[url(/images/landing/hero.png)] bg-bottom bg-left bg-cover">
+        <UPageHero v-bind="$props" 
+        :ui="{
+            wrapper: 'bg-muted/20 p-4 rounded-md'
+        }"
+        >
           <template v-for="(_, slot) in $slots" #[slot]="scope">
             <slot 
               v-if="slot !== 'overlap'" 

@@ -18,18 +18,14 @@ links:
     to: /darksky/research
     variant: outline
     trailing-icon: i-lucide-database
-headline: Dark Sky Defender Asia 2024 | Technical Advisory
+headline: Dark Sky Policy and Implementation Initiative
 orientation: horizontal
 ---
 #title
-Maharashtra Dark Sky Policy
+Dark Sky Maharashtra
 
 #description
-AstronEra serves as technical secretariat for Maharashtra's Dark
-Sky Conservation policy development, coordinating pilot implementation and
-DarkSky International certification pathway. Delivering evidence-based
-regulatory frameworks for responsible outdoor lighting across India's
-second-largest state economy.
+Shaping light pollution policy landscape through research-led strategy, systems coordination, and DarkSky International certification, advancing dark sky protection across Maharashtra.
 
 #overlap
   :::section-wrapper
@@ -41,86 +37,109 @@ second-largest state economy.
   What is Light Pollution?
 
   #description
-  Artificial Light at Night (ALAN) is the human-made alteration of outdoor light levels. It's an established environmental pollutant with measurable consequences across public health, biodiversity, climate, and economic systems.
+  Light pollution, commonly referred to as Artificial Light at Night (ALAN), is the human-made alteration of natural nighttime lighting that disrupts the balance of the night environment. It is the excessive or misdirected use of artificial outdoor lighting that disrupts natural darkness through upward or outward light emission beyond what is necessary for human safety and functionality. Left unchecked, it affects [human health](internal\:research/health), [biodiversity](internal\:research/ecology), [energy systems](internal\:research/climate), and [climate](internal\:research/climate). It manifests in six distinct forms:
 
   #features
     ::::u-page-card
-    ![Illustration of sky glow over a city](https://picsum.photos/500/500)
+    ---
+    reverse: true
+    variant: subtle
+    ---
+    ![Illustration of sky glow over a city](/images/landing/def-skyglow.png){.w-64.h-64.mx-auto :zoom='false'}
 
     #title
     Sky Glow
 
     #description
-    The diffuse brightening of the night sky over urban areas from scattered artificial light, creating a luminous halo that reduces visibility of stars over tens of kilometers.
+    Brightening of the night sky over populated areas, washing out stars and obscuring celestial landmarks through atmospheric scattering of artificial light.
     ::::
 
     ::::u-page-card
-    ![Illustration of glare from bright lights](https://picsum.photos/500/500)
+    ---
+    reverse: true
+    variant: subtle
+    ---
+    ![Illustration of glare from bright lights](/images/landing/def-glare.png){.w-64.h-64.mx-auto :zoom='false'}
 
     #title
     Glare
 
     #description
-    Excessive brightness from unshielded lights causing visual discomfort or impairment, such as street lamps blinding drivers or pedestrians.
+    Excessive brightness causing visual discomfort, reducing visibility and straining the eyes, commonly from unshielded street lamps and security lights.
     ::::
 
     ::::u-page-card
-    ![Illustration of light trespass into a home](https://picsum.photos/500/500)
+    ---
+    reverse: true
+    variant: subtle
+    ---
+    ![Illustration of light trespass into a home](/images/landing/def-trespass.png){.w-64.h-64.mx-auto :zoom='false'}
 
     #title
     Light Trespass
 
     #description
-    Unwanted intrusion of artificial light into unintended areas, like security lights spilling into neighboring properties or natural habitats.
+    Illumination spilling into spaces where it is neither intended nor needed, disturbing homes, wildlife, and natural habitats.
     ::::
 
     ::::u-page-card
-    ![Illustration of light clutter in a city street](https://picsum.photos/500/500)
+    ---
+    reverse: true
+    variant: subtle
+    ---
+    ![Illustration of light clutter in a city street](/images/landing/def-clutter.png){.w-64.h-64.mx-auto :zoom='false'}
 
     #title
     Clutter
 
     #description
-    Overcrowding of bright light sources creating visual confusion and distraction, often seen in urban commercial districts with competing signs and displays.
+    Visual chaos through excessive groupings of lights, creating distraction in urban areas with competing signs and displays.
     ::::
 
     ::::u-page-card
-    ![Illustration of over-illuminated parking lot](https://picsum.photos/500/500)
+    ---
+    reverse: true
+    variant: subtle
+    ---
+    ![Illustration of over-illuminated parking lot](/images/landing/def-over-illumination.png){.w-64.h-64.mx-auto :zoom='false'}
 
     #title
     Over-illumination
 
     #description
-    Excessive lighting beyond what's needed for a task, wasting energy and amplifying other forms of light pollution in areas like parking lots.
+    Lighting beyond functional requirements, resulting in wasted energy and amplified pollution in areas like parking lots.
     ::::
 
     ::::u-page-card
-    ![Illustration of blue light impacting eyes and nature](https://picsum.photos/500/500)
+    ---
+    reverse: true
+    variant: subtle
+    ---
+    ![Illustration of blue light impacting eyes and nature](/images/landing/def-blue-light-hazard.png){.w-64.h-64.mx-auto :zoom='false'}
 
     #title
     Blue Light Hazard
 
     #description
-    The damaging effects of blue-rich artificial light on human health and wildlife, including circadian rhythm disruption, retinal damage, and increased risk of chronic diseases.
+    Damage from blue-rich artificial light, including circadian rhythm disruption, retinal stress, and increased chronic health risks, with documented wildlife impacts.
     ::::
   :::
 ::
 
 ::section-wrapper
 ---
+class: bg-primary/10
 headline: Economic Analysis
 id: economic
 orientation: horizontal
 ---
-![Economic modeling for dark sky tourism ROI](https://picsum.photos/500/500)
+![Economic modeling for dark sky tourism ROI](/images/landing/cost-economic.png)
 
 #title
-Converting Infrastructure Waste to Revenue
+The Cost of Unregulated Light
 
 #description
-Maharashtra's outdoor lighting represents both liability and opportunity. International precedent shows dark sky certification generates **$1-3B globally** in astrotourism revenue, with certified sites demonstrating **30-40% visitor increases**. Cost-benefit analysis: **₹1.93 ROI per rupee** invested in compliant infrastructure—proven returns for public capital expenditure.
-
-**AstronEra Role:** Economic modeling, cost-benefit frameworks, tourism infrastructure advisory for pilot site development.
+Maharashtra can convert wasted lighting into economic opportunity currently lost to inefficiency. **[Dark sky tourism](internal\:research/tourism)** **generates USD 1–3 billion globally**, with **certified regions reporting 30–40 % growth in visitors**. **International evidence shows dark sky-compliant lighting delivers returns of approximately 1.9×**, through energy savings, reduced maintenance, and sustained astrotourism value.
 ::
 
 ::section-wrapper
@@ -130,36 +149,29 @@ headline: Biodiversity Impact
 id: ecological
 orientation: horizontal
 ---
-![Western Ghats nocturnal ecology monitoring](https://picsum.photos/500/500)
+![Biodiversity impact on ecosystems](/images/landing/cost-ecosystems.png)
 
 #title
-Ecosystem-Scale Light Intrusion
+Ecosystems Under Artificial Light
 
 #description
-Western Ghats (UNESCO World Heritage Site) and Maharashtra's **720 km coastline** face unprecedented ALAN exposure. Documented impacts: Olive Ridley hatchling disorientation, nocturnal pollinator disruption critical to agricultural systems, migratory bird collision events along Central Asian Flyway.
-
-**Data Gap:** Maharashtra-specific biodiversity impact studies limited. Pilot projects prioritize baseline research and monitoring protocols.
-
-**AstronEra Role:** Research coordination, monitoring protocol development, ecological impact assessment for pilot sites.
+Artificial light at night is disrupting ecosystems across Maharashtra, from forests and farmlands to rivers and coastlines. **With over 60 % of species globally dependent on natural darkness**, skyglow, glare, and light trespass are accelerating biodiversity loss while **quietly undermining agriculture, fisheries, and long-term ecological resilience**. Learn more in our [Ecology & Biodiversity research](internal\:research/ecology).
 ::
 
 ::section-wrapper
 ---
+class: bg-primary/10
 headline: Health Systems Impact
 id: health
 orientation: horizontal
 ---
-![Circadian health research across populations](https://picsum.photos/500/500)
+![Circadian health research across populations](/images/landing/cost-health.png)
 
 #title
-Circadian Health Across Demographics
+Circadian Disruption at Scale
 
 #description
-ALAN suppresses melatonin production and disrupts sleep-wake cycles evolved over 3.5 billion years. Maharashtra's industrial workforce faces elevated exposure risk: **40% increased CVD** in shift workers. Pediatric sleep disruption affects cognitive development. Elderly populations show **2.5× dementia risk** correlation with chronic ALAN exposure.
-
-**Public Health Framework:** Light pollution as preventable environmental health risk—regulatory intervention enables population-level protection.
-
-**AstronEra Role:** Health impact literature synthesis, public health messaging frameworks, cross-departmental policy coordination.
+Artificial light at night suppresses melatonin and disrupts circadian rhythms essential to human health. **Chronic exposure is linked to elevated cardiovascular risk, metabolic disorders, and up to 2.5× higher dementia risk**, positioning light pollution as a **population-scale public health concern**, particularly in urban and industrial regions. Read our detailed [Human Health research](internal\:research/health).
 ::
 
 ::section-wrapper
@@ -169,29 +181,22 @@ headline: Climate Integration
 id: climate
 orientation: horizontal
 ---
-![Energy systems and carbon accounting](https://picsum.photos/500/500)
+![Energy systems and carbon accounting](/images/landing/cost-climate.png)
 
 #title
-Energy Infrastructure & Carbon Reduction
+Energy Waste and Emissions
 
 #description
-Maharashtra's outdoor lighting: preliminary estimate **20-25M tons CO₂ annually**. Regulatory reform potential: **1.7-4.7M tons reduction**—equivalent to removing 370,000-1,020,000 vehicles. Direct alignment with:
-
-- **Net Zero 2070** national commitment
-- **SAPCCHH** (State Action Plan on Climate Change)
-- **AMRUT** Climate Action Plans (43 cities)
-
-**Measurement:** Baseline energy audits, lighting retrofits, emissions accounting through pilot validation.
-
-**AstronEra Role:** Carbon accounting methodology, energy systems advisory, climate policy integration strategy.
+Outdoor lighting represents a significant and under-regulated source of energy waste. **Lighting contributes approximately 5 % of global** greenhouse gas **emissions**, while Maharashtra's extensive urban and industrial lighting footprint places **millions of tons of avoidable CO₂ emissions within direct public-infrastructure governance**. Explore our [Climate & Energy research](internal\:research/climate) for detailed analysis.
 ::
 
 ::section-wrapper
 ---
 class: text-left
-description: Light pollution is technically reversible through tested regulatory
-  frameworks. International precedent proves outdoor lighting can be governed
-  without compromising safety, development, or economic activity.
+description: Light pollution is **reversible** using tested regulatory
+  frameworks. International precedent confirms that outdoor lighting can be
+  governed without compromising public safety, economic activity, or urban
+  development.
 headline: Strategic Opportunity
 id: solution
 title: A Governable Problem
@@ -199,7 +204,7 @@ title: A Governable Problem
   :::page-split
   ---
   gap: 8
-  maxWidth: 7xl
+  maxWidth: 3xl
   ---
   #left
     ::::solution-card
@@ -218,7 +223,7 @@ title: A Governable Problem
     title: Proven Regulatory Tools
     ---
     #subtitle
-    40+ global jurisdictions use:
+    [Global Precedent](internal\:policy/global-precedents):
 
     #footer
       :::::u-alert
@@ -228,7 +233,7 @@ title: A Governable Problem
       variant: soft
       ---
       #description
-      Tested frameworks deliver measurable ALAN reduction while maintaining operational safety requirements.
+      Over **40 global jurisdictions** use these tools to achieve measurable ALAN reduction while maintaining operational safety requirements.
       :::::
     ::::
 
@@ -256,11 +261,8 @@ title: A Governable Problem
       icon: i-lucide-target
       variant: soft
       ---
-      #title
-      AstronEra's Mandate
-
       #description
-      Build coordinated framework applying proven models to Maharashtra's specific jurisdictional, ecological, and economic context.
+      Build a coordinated framework applying proven regulatory models to Maharashtra's specific jurisdictional, ecological, and economic context.
       :::::
     ::::
   :::
@@ -268,34 +270,18 @@ title: A Governable Problem
 
 ::section-wrapper
 ---
+class: bg-primary/10
 headline: Policy Architecture
 id: action-policy
 orientation: horizontal
 ---
-![Policy framework structure](https://picsum.photos/500/500)
+![Policy framework structure](/images/landing/solution-policy.png)
 
 #title
-Policy Architecture
+Policy and Pilot Implementation
 
 #description
-**Regulatory Foundation**
-
-Maharashtra leverages tested international frameworks:
-
-- **40+ jurisdictions** with enacted Dark Sky legislation
-- **CMS Light Pollution Guidelines** (India signatory)
-- **Wildlife Protection Act 1972** + **NGT Directive 2024**
-- **State climate commitments** (SAPCCHH, AMRUT)
-
-**Phased Pathway:**
-
-1. Steering Committee formation (cross-departmental coordination)
-2. Broader Guidelines development (stakeholder consultation)
-3. ALAN Notification (regulatory authority establishment)
-4. Pilot implementation (validation + data collection)
-5. Statewide rollout (scaling + enforcement)
-
-**AstronEra Role:** Technical secretariat, policy research, regulatory framework development, stakeholder coordination.
+AstronEra is designing a coordinated pathway to translate dark sky science into actionable governance, enabling light pollution management that is measurable, enforceable, and scalable within Maharashtra's administrative systems. Learn more about our [Policy Framework](internal\:policy/regulatory-framework).
 ::
 
 ::section-wrapper
@@ -305,93 +291,53 @@ headline: Pilot Implementation
 id: action-pilot
 orientation: horizontal
 ---
-![Pilot site locations](https://picsum.photos/500/500)
+![Pilot site locations](/images/landing/solution-pilots.png)
 
 #title
-Pilot Implementation
+Pilot Sites and Astrotourism
 
 #description
-**Pilot Validation Program**
+AstronEra is working with pilot sites across Maharashtra to test policy design and implementation under real-world conditions.
 
-**11 pilot sites** identified across Maharashtra zone types (urban, suburban, rural, protected areas) for regulatory model testing and DarkSky International certification pathway.
-
-**Phase I (2026-2029):**
-
-- Launch DSI-certified pilots
-- Publish Broader Guidelines
-- Amend Tourism Policy (astrotourism integration)
-
-**Phase II (2029-2035):**
-
-- Expand certification to all zone types
-- Statewide lighting retrofits
-- Enforcement mechanism strengthening
-
-**Phase III (2035-2047):**
-
-- Maharashtra shapes National ALAN Policy
-- Interstate knowledge transfer
-- International best practice contribution
-
-**AstronEra Role:** Site identification, certification coordination, monitoring protocol implementation, data analysis and reporting.
-
-Risk-managed implementation: pilot validation → data-driven scaling → statewide rollout → national policy influence. Evidence-based pathway from concept to systemic change.
+The pilots align with Dark Sky Place certification frameworks developed by DarkSky International and are designed to inform Policy Development by implementing dark sky conservation focused development. Explore our [Pilot Program](internal\:pilots).
 ::
 
 ::section-wrapper{#founder}
   :::founder-quote
   ---
-  avatar: /team/shweta-kulkarni.jpg
+  avatar: /images/team/shweta-kulkarni.png
   name: Shweta Kulkarni, FRAS
   subtitle: Technical Secretariat, Dark Sky Conservation Policy (Maharashtra)
   title: Founder, AstronEra | Dark Sky Defender Asia 2024
   ---
-  AstronEra coordinates technical advisory and DarkSky International certification for Maharashtra's policy framework. This is evidence-based regulatory development—protecting public health systems, biodiversity infrastructure, and climate commitments through responsible lighting governance.
+  AstronEra's work is grounded in the belief that dark skies are not a luxury or a nostalgia project, but a matter of public interest. Through research, policy design, and internationally benchmarked frameworks, we are working to support Maharashtra in addressing light pollution as a public health, biodiversity, and climate concern.
 
-  The night sky is not lost heritage. It is a recoverable environmental resource with measurable economic, ecological, and health returns. **Maharashtra has the opportunity to lead India's transition to evidence-based outdoor lighting policy.**
-
-  The decision architecture exists. Implementation timeline is defined. The question is execution velocity.
+  The night sky is not a lost heritage. It is a recoverable public asset. The opportunity lies in acting early, designing systems carefully, and ensuring that protection and development move forward together.
   :::
 ::
 
 ::section-wrapper{#cta}
   :::u-page-c-t-a
   ---
-  links:
-    - label: Policy Framework
-      to: /darksky/policy
-      size: xl
-      color: primary
-      trailingIcon: i-lucide-book-open
-    - label: Research Database
-      to: /darksky/research
-      size: xl
-      variant: outline
-      trailingIcon: i-lucide-database
-    - label: Pilot Sites
-      to: /darksky/pilots
-      size: xl
-      variant: outline
-      trailingIcon: i-lucide-map-pin
   orientation: horizontal
   variant: solid
   ---
     ::::div
     ---
-    class: bg-primary/10 rounded-md mx-auto h-full w-full flex items-center justify-center
+    class: bg-warning/10 rounded-md mx-auto h-full w-full flex flex-col items-center p-4
     ---
-    :nuxt-img{src="/tara/00.tara-cheerful.png"}
+    ![Hi, I'm TARA, the Dark Sky Maharashtra Mascot](tara/00.tara-cheerful.png){.w-64.aspect-auto :zoom='false'}
+    **Hi, I'm TARA**{.text-xl}
+    *Dark Sky Maharashtra Mascot*{.text-sm}
     ::::
 
   #title
-  Dark Skies: Governed Resource, Not Lost Heritage
-
-  #title
-  Maharashtra's Policy Pathway Is Defined
+  Dark Skies Are a Right, :br Not a Privilege
 
   #description
-  Responsible outdoor lighting governance delivers measurable returns across health systems, biodiversity conservation, climate mitigation, and economic infrastructure.
+  With focused action, Maharashtra can transform lighting from an unmanaged liability into a governed public resource—meeting legal obligations while capturing economic opportunity.
 
-  **AstronEra provides:** Technical advisory, research coordination, certification pathway management, and policy framework development for Maharashtra's transition to evidence-based lighting regulation.
+  #links
+  :convert-social-share{description="Shaping light pollution policy through research-led strategy and DarkSky International certification." label="Spread The Word" title="Dark Sky Maharashtra"}
   :::
 ::

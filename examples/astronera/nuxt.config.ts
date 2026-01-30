@@ -5,7 +5,10 @@ const { resolve } = createResolver(import.meta.url);
 const SITE_URL = 'https://astronera.org';
 
 export default defineNuxtConfig({
+  debug: true,
   extends: ['@incubrain/foundry'],
+
+  modules: ['nuxt-studio'],
 
   site: {
     name: 'AstronEra',
@@ -47,14 +50,22 @@ export default defineNuxtConfig({
       '/doi/astrotribe-ladakh-2024': { redirect: '/resources/sources' },
     },
   },
-
+  
   studio: {
+    meta: {
+      components: {
+        include: [
+          'Cite',
+          'ProseDfn',
+        ],
+      },
+    },
     route: '/admin',
     repository: {
-      provider: 'github', // only GitHub is currently supported
-      owner: 'incubrain', // your GitHub username or organization
-      repo: 'foundry', // your repository name
-      branch: 'main', // the branch to commit to (default: main)
+      provider: 'github',
+      owner: 'incubrain',
+      repo: 'foundry',
+      branch: 'main',
       rootDir: resolve('./'),
       private: false,
     },

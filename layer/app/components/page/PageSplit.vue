@@ -37,15 +37,15 @@ const gapClass = computed(() => `gap-${props.gap}`);
 </script>
 
 <template>
-  <div :class="['mx-auto w-full', maxWidthClass]">
+  <div :class="[maxWidthClass, 'mx-auto w-full']">
     <div :class="['grid lg:grid-cols-2 items-start', gapClass]">
       <!-- Left slot -->
-      <div v-if="$slots.left" class="w-full">
+      <div v-if="$slots.left" class="w-full h-full">
         <slot name="left" />
       </div>
 
       <!-- Right slot -->
-      <div v-if="$slots.right" class="w-full">
+      <div v-if="$slots.right" class="w-full h-full">
         <slot name="right" />
       </div>
     </div>

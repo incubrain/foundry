@@ -63,3 +63,21 @@ terms:
     definition:
       Semiconductor light source that emits light when current flows through it,
       widely used in energy-efficient lighting.
+  - id: clutter
+    term: Light Clutter
+    definition:
+      Excessive groupings of bright light sources creating visual confusion and
+      distraction, often in dense urban commercial districts with competing signs
+      and displays.
+  - id: over-illumination
+    term: Over-illumination
+    definition:
+      Lighting beyond what is functionally required, resulting in wasted energy
+      and amplification of other light pollution effects, commonly seen in
+      parking lots and large developments.
+  - id: blue-light-hazard
+    term: Blue Light Hazard
+    definition:
+      Damage caused by blue-rich artificial light, including circadian rhythm
+      disruption, retinal stress, and increased risk of chronic health
+      conditions, with documented impacts on wildlife behaviour and reproduction.

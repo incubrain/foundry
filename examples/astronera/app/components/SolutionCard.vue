@@ -17,7 +17,12 @@ const props = withDefaults(defineProps<Props>(), {
 </script>
 
 <template>
-  <UCard class="border-none shadow-lg text-left h-full">
+  <UCard 
+  :ui="{
+    root: 'h-full shadow-lg text-left flex flex-col bg-muted',
+    body: 'p-4 sm:p-6 grow',
+  }"
+  >
     <template #header>
       <div class="flex items-center gap-3">
         <UIcon 
@@ -48,8 +53,8 @@ const props = withDefaults(defineProps<Props>(), {
         <UBadge 
           :label="item.label" 
           :color="color" 
-          variant="subtle"
-          class="inline-block mr-2"
+          variant="soft"
+          class="inline-block mr-1"
         />
         {{ item.description }}
       </p>

@@ -1,10 +1,7 @@
 <script setup lang="ts">
-const props = defineProps({
-  id: {
-    type: String,
-    default: '',
-  },
-});
+const props = defineProps<{
+  id: string;
+}>();
 
 const { getTerm, resolveGlossaryPath } = useGlossary();
 
@@ -17,6 +14,10 @@ const glossaryHref = computed(() => {
   if (!props.id) return '';
   return resolveGlossaryPath(props.id);
 });
+
+defineSlots<{
+  default: () => {},
+}>();
 </script>
 
 <template>
