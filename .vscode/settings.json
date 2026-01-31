@@ -1,9 +1,26 @@
 {
+  "files.watcherExclude": {
+    "**/.git/**": true,
+    "**/node_modules/**": true,
+    "**/.nuxt/**": true,
+    "**/.output/**": true,
+    "**/dist/**": true,
+
+    "/private/var/folders/**": true,
+    "**/vibekanban-*": true
+  },
+
+  "files.exclude": {
+    "/private/var/folders/**": true,
+    "**/vibekanban-*": true
+  },
+  "git.autoRepositoryDetection": "openEditors",
+  "git.scanRepositories": [],
   "tailwindCSS.classAttributes": ["class", "ui"],
   "tailwindCSS.experimental.classRegex": [
     ["ui:\\s*{([^)]*)\\s*}", "(?:'|\"|`)([^']*)(?:'|\"|`)"],
   ],
-  "tailwindCSS.experimental.configFile": "app/assets/css/main.css",
+  "tailwindCSS.experimental.configFile": "layer/nuxt.config.ts",
   "tailwindCSS.suggestions": true,
   "tailwindCSS.hovers": true,
   "tailwindCSS.codeActions": true,
