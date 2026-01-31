@@ -63,7 +63,7 @@ ignores: ['apps/web/.nuxt/**', 'packages/**/dist/**']
     "dev": "nuxt dev",
     "build": "nuxt build",
     "preview": "nuxt preview",
-    "prepare": "nuxt prepare",
+    "postinstall": "nuxt prepare",
     "lint": "eslint . --cache",
     "lint:fix": "eslint . --fix --cache",
     "typecheck": "nuxt typecheck"

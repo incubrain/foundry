@@ -1,6 +1,7 @@
 # pnpm-workspace.yaml
 packages:
   # Core apps
+  - './'
   - 'layer'
   - 'cli'
 

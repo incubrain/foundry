@@ -29,17 +29,16 @@
     "dev": "nuxt dev",
     "build": "nuxt build",
     "generate": "nuxt generate",
-    "preview": "nuxt preview",
-    "prepare": "nuxt prepare"
+    "preview": "nuxt preview"
   },
   
   "dependencies": {
     "@iconify/json": "^2.2.421",
     "@nuxt/content": "^3.11.0",
     "@nuxt/image": "^2.0.0",
-    "@nuxt/kit": "^4.2.2",
+    "@nuxt/kit": "^4.3.0",
     "@nuxt/scripts": "^0.13.2",
-    "@nuxt/ui": "^4.3.0",
+    "@nuxt/ui": "^4.4.0",
     "@nuxtjs/mcp-toolkit": "^0.6.2",
     "@nuxtjs/mdc": "^0.20.0",
     "@nuxtjs/robots": "^5.6.7",
@@ -61,7 +60,15 @@
     "zod": "^4.3.5",
     "zod-to-json-schema": "^3.25.1"
   },
-  
+
+  "devDependencies": {
+    "@compodium/nuxt": "0.1.0-beta.12",
+    "@nuxt/eslint": "1.13.0",
+    "@nuxt/hints": "1.0.0-alpha.6",
+    "@types/node": "^22.19.3",
+    "vue-tsc": "^3.2.1"
+  },
+
   "peerDependencies": {
     "better-sqlite3": "12.x",
     "nuxt-studio": "^1.2.0",

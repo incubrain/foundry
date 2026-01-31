@@ -3,10 +3,10 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "postinstall": "nuxt prepare",
     "dev": "nuxt dev",
     "build": "nuxt build",
-    "preview": "nuxt preview",
-    "prepare": "nuxt prepare"
+    "preview": "nuxt preview"
   },
   "dependencies": {
     "@incubrain/foundry": "latest",
