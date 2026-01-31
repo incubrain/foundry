@@ -12,12 +12,9 @@ links:
     size: xl
     to: /darksky/policy
     trailing-icon: i-lucide-arrow-right
-    color: primary
-  - label: Research & Data
-    size: xl
-    to: /darksky/research
-    variant: outline
-    trailing-icon: i-lucide-database
+    variant: solid
+    color: neutral
+    class: text-inverted
 headline: Dark Sky Policy and ALAN Regulation
 orientation: horizontal
 ---
@@ -39,89 +36,91 @@ Shaping light pollution policy landscape through research-led strategy, systems 
   #description
   Light pollution, caused by excessive or misdirected Artificial Light at Night (ALAN) that spills upward or outward beyond what is needed for safety and functional use, disturbs the balance of the natural night environment. Left unchecked, it affects [human health](internal\:research/health), [biodiversity](internal\:research/ecology), [energy systems](internal\:research/climate), and [climate](internal\:research/climate). It manifests in six distinct forms:
 
-  #features
-    ::::u-page-card
-    ---
-    reverse: true
-    variant: subtle
-    ---
-    ![Illustration of sky glow over a city](/images/landing/def-skyglow.png){.w-64.h-64.mx-auto :zoom='false'}
+  #bottom
+    ::::carousel
+      :::::u-page-card
+      ---
+      reverse: true
+      variant: subtle
+      ---
+      ![Illustration of sky glow over a city](/images/landing/def-skyglow.png){.w-64.h-64.mx-auto :zoom='false'}
 
-    #title
-    Sky Glow
+      #title
+      Sky Glow
 
-    #description
-    The brightening of the night sky caused by artificial light scattered in the atmosphere, which reduces the visibility of stars
-    ::::
+      #description
+      The brightening of the night sky caused by artificial light scattered in the atmosphere, which reduces the visibility of stars
+      :::::
 
-    ::::u-page-card
-    ---
-    reverse: true
-    variant: subtle
-    ---
-    ![Illustration of glare from bright lights](/images/landing/def-glare.png){.w-64.h-64.mx-auto :zoom='false'}
+      :::::u-page-card
+      ---
+      reverse: true
+      variant: subtle
+      ---
+      ![Illustration of glare from bright lights](/images/landing/def-glare.png){.w-64.h-64.mx-auto :zoom='false'}
 
-    #title
-    Glare
+      #title
+      Glare
 
-    #description
-    Excessive brightness causing visual discomfort, reducing visibility and straining the eyes, commonly from unshielded lights.
-    ::::
+      #description
+      Excessive brightness causing visual discomfort, reducing visibility and straining the eyes, commonly from unshielded lights.
+      :::::
 
-    ::::u-page-card
-    ---
-    reverse: true
-    variant: subtle
-    ---
-    ![Illustration of light trespass into a home](/images/landing/def-trespass.png){.w-64.h-64.mx-auto :zoom='false'}
+      :::::u-page-card
+      ---
+      reverse: true
+      variant: subtle
+      ---
+      ![Illustration of light trespass into a home](/images/landing/def-trespass.png){.w-64.h-64.mx-auto :zoom='false'}
 
-    #title
-    Light Trespass
+      #title
+      Light Trespass
 
-    #description
-    Illumination spilling into spaces where it is neither intended nor needed, disturbing homes, wildlife, and natural habitats.
-    ::::
+      #description
+      Illumination spilling into spaces where it is neither intended nor needed, disturbing homes, wildlife, and natural habitats.
+      :::::
 
-    ::::u-page-card
-    ---
-    reverse: true
-    variant: subtle
-    ---
-    ![Illustration of light clutter in a city street](/images/landing/def-clutter.png){.w-64.h-64.mx-auto :zoom='false'}
+      :::::u-page-card
+      ---
+      reverse: true
+      variant: subtle
+      ---
+      ![Illustration of light clutter in a city street](/images/landing/def-clutter.png){.w-64.h-64.mx-auto :zoom='false'}
 
-    #title
-    Clutter
+      #title
+      Clutter
 
-    #description
-    Visual chaos caused by excessive clustering of lights, competing signs, and displays, creating distraction.
-    ::::
+      #description
+      Visual chaos caused by excessive clustering of lights, competing signs, and displays, creating distraction.
+      :::::
 
-    ::::u-page-card
-    ---
-    reverse: true
-    variant: subtle
-    ---
-    ![Illustration of over-illuminated parking lot](/images/landing/def-over-illumination.png){.w-64.h-64.mx-auto :zoom='false'}
+      :::::u-page-card
+      ---
+      reverse: true
+      variant: subtle
+      ---
+      ![Illustration of over-illuminated parking lot](/images/landing/def-over-illumination.png){.w-64.h-64.mx-auto :zoom='false'}
 
-    #title
-    Over-illumination
+      #title
+      Over-illumination
 
-    #description
-    Lighting well in excess of functional requirements, such as decorative lighting, resulting in wasted energy and amplified pollution
-    ::::
+      #description
+      Lighting well in excess of functional requirements, such as decorative lighting, resulting in wasted energy and amplified pollution
+      :::::
 
-    ::::u-page-card
-    ---
-    reverse: true
-    variant: subtle
-    ---
-    ![Illustration of blue light impacting eyes and nature](/images/landing/def-blue-light-hazard.png){.w-64.h-64.mx-auto :zoom='false'}
+      :::::u-page-card
+      ---
+      reverse: true
+      variant: subtle
+      ---
+      ![Illustration of blue light impacting eyes and nature](/images/landing/def-blue-light-hazard.png){.w-64.h-64.mx-auto :zoom='false'}
 
-    #title
-    Blue Light Hazard
+      #title
+      Blue Light Hazard
 
-    #description
-    Damage from blue-rich artificial lighting that intensifies light pollution harm, disrupting circadian rhythms, impacting ecosystems and the night environment.
+      #description
+      Damage from blue-rich artificial lighting that intensifies light pollution harm, disrupting circadian rhythms, impacting ecosystems and the night environment.
+      :::::
     ::::
   :::
 ::
@@ -310,10 +309,8 @@ These pilots align with **DarkSky International** certification frameworks.
   title: Founder, AstronEra | Dark Sky Defender Asia 2024
   ---
   The night sky connects science, culture, and the future of life on Earth.
-
   AstronEra's mission is to protect the night, not by resisting progress, but by designing it wisely.
-
-  When natural darkness is lost, we lose more than stars; we lose curiosity!
+  **When natural darkness is lost, we lose more than stars; we lose curiosity!**
   :::
 ::
 
@@ -321,14 +318,15 @@ These pilots align with **DarkSky International** certification frameworks.
   :::u-page-c-t-a
   ---
   orientation: horizontal
-  variant: solid
+  variant: soft
+  class: bg-primary/10
   ---
     ::::div
     ---
-    class: bg-warning/10 rounded-md mx-auto h-full w-full flex flex-col items-center p-4
+    class: mx-auto h-full w-full flex flex-col items-center p-4
     ---
-    ![Hi, I'm TARA, the Dark Sky Maharashtra Mascot](tara/00.tara-cheerful.png){.w-64.aspect-auto :zoom='false'}
-    **Hi, I'm TARA**{.text-xl}
+    ![Hi, I'm TARA, the Dark Sky Maharashtra Mascot](tara/01.tara-glow.png){.w-64.aspect-auto.rounded-full :zoom='false'}
+    **Hi, I'm TARA The Firefly**{.text-xl.mt-4.mb-1}
     *Dark Sky Maharashtra Mascot*{.text-sm}
     ::::
 

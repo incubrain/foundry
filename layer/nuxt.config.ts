@@ -91,16 +91,14 @@ export default defineNuxtConfig({
     '#config-resolver': resolve('./shared/config-resolver.ts'),
   },
 
-  
-
-  mdc: {
-    components: {
-      map: {
-        cite: 'Cite',
-        dfn: 'ProseDfn',
-      },
-    },
-  },
+  // mdc: {
+  //   components: {
+  //     map: {
+  //       cite: 'Cite',
+  //       dfn: 'ProseDfn',
+  //     },
+  //   },
+  // },
 
   content: {
     build: {

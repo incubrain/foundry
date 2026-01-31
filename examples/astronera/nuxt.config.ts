@@ -52,14 +52,14 @@ export default defineNuxtConfig({
   },
   
   studio: {
-    meta: {
-      components: {
-        include: [
-          'Cite',
-          'ProseDfn',
-        ],
-      },
-    },
+    // meta: {
+    //   components: {
+    //     include: [
+    //       'Cite',
+    //       'Defn',
+    //     ],
+    //   },
+    // },
     route: '/admin',
     repository: {
       provider: 'github',
@@ -68,6 +68,22 @@ export default defineNuxtConfig({
       branch: 'main',
       rootDir: resolve('./'),
       private: false,
+    },
+  },
+
+  vite: {
+    server: {
+      fs: {
+        allow: [
+          // pnpm workspace HRM fix
+          resolve('../../'),
+          resolve('../../layer'),
+        ],
+      },
+      watch: {
+        // critical for pnpm + symlinks
+        followSymlinks: true,
+      },
     },
   },
 });

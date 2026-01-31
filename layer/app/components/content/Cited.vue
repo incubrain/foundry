@@ -3,7 +3,7 @@ const props = defineProps<{ id: string }>();
 
 const { addCitation, getCitationIndex, getReference } = useCitations();
 
-// Support multiple citations separated by commas: :cite{#id1,id2,id3}
+// Support multiple citations separated by commas: :cited[text for cite]{#id1,id2,id3}
 const citationIds = computed(() => {
   if (!props.id) return [];
   return props.id.split(',').map((id) => id.trim());
