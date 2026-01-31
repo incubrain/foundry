@@ -1,5 +1,9 @@
 # Critical
 
+- [x] fix prettier issue, not working in some page
+- [ ] HMR not working locally, probably because we are using layers and pnpm workspace
+- [ ] tailwindcss HMR and intellisense not working
+- [ ] check linting in pnpm workspace, this will likely be broken
 - [ ] docs navigation is causing issues, <bibliography> is rendering at the top of the page, this happens when navigating from a non-docs page, if refreshed it loads in the correct place, however subsiquent docs navigation does not update the <bibliography> with new citations
   - check the new ProseCite component, this was working before - it is the likely culprite
   - check the useCitations composable - it is possible this needs to be SSR friendly, maybe moving the `queryCollection` call to a server route and using `useAsyncFetch` to call it would be better
