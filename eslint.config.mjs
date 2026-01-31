@@ -11,6 +11,10 @@ export default createConfigForNuxt({
     tooling: true,
     stylistic: true,
   },
+}, {
+  files: [
+    'cli/**/*.ts',
+  ],
 }).append(
   {
     rules: {
