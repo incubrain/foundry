@@ -103,8 +103,33 @@ const navigationColumnSchema = navigationLinkSchema.extend({
   children: z.array(navigationLinkSchema).optional(),
 });
 
+export const bannerSchema = z.object({
+  title: z.string().optional(),
+  icon: z.string().optional(),
+  color: z
+    .enum(['primary', 'neutral', 'success', 'warning', 'error'])
+    .optional(),
+  to: z.string().optional(),
+  target: z.string().optional(),
+  close: z.boolean().optional(),
+  actions: z
+    .array(
+      z.object({
+        label: z.string(),
+        to: z.string().optional(),
+        icon: z.string().optional(),
+        color: z.string().optional(),
+        size: z.string().optional(),
+        variant: z.string().optional(),
+      }),
+    )
+    .optional(),
+});
+
 export const baseNavigationSchema = z.object({
-  banner: property(z.object({})).inherit('@nuxt/ui/components/Banner.vue'),
+  // inherit broken for nuxt/ui pending fix: https://github.com/nuxt/ui/issues/5919
+  // banner: property(z.object({})).inherit('@nuxt/ui/components/Banner.vue'),
+  banner: property(bannerSchema),
   header: z.object({
     title: z.string().optional(),
     socials: z.record(z.string(), z.string()).optional(),
