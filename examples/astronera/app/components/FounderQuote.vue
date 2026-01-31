@@ -28,7 +28,7 @@ defineSlots<{
 </script>
 
 <template>
-  <div class="max-w-4xl mx-auto text-center">
+  <div class="max-w-3xl mx-auto text-center">
     <!-- Avatar -->
     <div class="flex justify-center mb-6">
       <NuxtImg
@@ -53,12 +53,12 @@ defineSlots<{
     </div>
 
     <!-- Quote -->
-    <div
-      class="prose prose-lg md:prose-xl dark:prose-invert mx-auto mb-8 text-left"
-    >
+    <div class="mx-auto mb-8 text-left">
       <blockquote
         class="border-l-4 border-primary p-6 italic text-lg md:text-xl leading-relaxed bg-primary/10"
       >
+      
+        <!-- Quote content -->
         <slot />
       </blockquote>
     </div>

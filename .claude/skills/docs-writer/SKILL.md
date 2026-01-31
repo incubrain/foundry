@@ -146,7 +146,7 @@ Overview text without citations explaining the category.
 
 ### 2.1 Pollination
 
-:cite[Light pollution disrupts nocturnal pollinator activity.]{#study-id} Research documents :cite[62% reduction in pollinator visits under ALAN conditions]{#another-study}.
+:cited[Light pollution disrupts nocturnal pollinator activity.]{#study-id} Research documents :cited[62% reduction in pollinator visits under ALAN conditions]{#another-study}.
 
 ::callout{color="info"}
 Maharashtra's agricultural economy depends heavily on pollinator-dependent crops including cotton, pulses, and fruits.
@@ -219,7 +219,7 @@ Use the right component for the right purpose:
 
 | Need | Component | When to Use | Example Context |
 |------|-----------|-------------|-----------------|
-| Key statistics | `::tip` | Highlighting quantified findings | "**Key Statistic**: :cite[62% reduction in pollinator visits]{#study}" |
+| Key statistics | `::tip` | Highlighting quantified findings | "**Key Statistic**: :cited[62% reduction in pollinator visits]{#study}" |
 | Maharashtra context | `::callout{color="info"}` | State-specific notes in Research | "**Maharashtra Context**: Western Ghats biodiversity hotspot..." |
 | Background info | `::note` | Supplementary context | Explaining technical terms or processes |
 | Best practice | `::tip` | Recommendations | Policy implementation guidance |
@@ -240,7 +240,7 @@ Always include file paths or context:
 ````md
 ```ts [nuxt.config.ts]
 export default defineNuxtConfig({
-  modules: ['@nuxt/content']
+modules: ['@nuxt/content']
 })
 ```
 
@@ -264,32 +264,32 @@ Use tables for quantified comparisons:
 When working on documentation:
 
 1. **Content Phase** (this skill - docs-writer)
-   - Determine section type (Research/Policy/Pilots)
-   - Apply audience-appropriate tone
-   - Follow section-specific rules
-   - Structure content logically
-   - Use active voice (85%+), present tense (90%)
-   - Apply modal verbs appropriately (can/should/may/must)
-   - Keep paragraphs 2-4 sentences
+  - Determine section type (Research/Policy/Pilots)
+  - Apply audience-appropriate tone
+  - Follow section-specific rules
+  - Structure content logically
+  - Use active voice (85%+), present tense (90%)
+  - Apply modal verbs appropriately (can/should/may/must)
+  - Keep paragraphs 2-4 sentences
 
 2. **Citation Phase** (refer to DOCUMENTATION_WRITING_GUIDELINES.md)
-   - Wrap the cited claim or source name inside the brackets: `:cite[cited text]{#id}`
-   - Multiple citations: `:cite[cited text]{#id1,id2}`
-   - The text inside `[...]` should be the fact, statistic, or source name the citation supports
-   - Example: `:cite[60% of invertebrates are nocturnal]{#holker-2010}`
-   - Example: `:cite[The 2023 RAND Europe study]{#hafner-2023-insomnia-burden}` quantifies...
+  - Wrap the cited claim or source name inside the brackets: `:cited[cited text]{#id}`
+  - Multiple citations: `:cited[cited text]{#id1,id2}`
+  - The text inside `[...]` should be the fact, statistic, or source name the citation supports
+  - Example: `:cited[60% of invertebrates are nocturnal]{#holker-2010}`
+  - Example: `:cited[The 2023 RAND Europe study]{#hafner-2023-insomnia-burden}` quantifies...
 
 3. **Component Phase** (refer to DOCUMENTATION_WRITING_GUIDELINES.md)
-   - Select appropriate callout type (tip/info/warning/important/success)
-   - Card groups, accordions, etc.
-   - Internal links: `[text](internal:path)`
-   - Glossary terms: `:dfn[term text]{#term-id}`
+  - Select appropriate callout type (tip/info/warning/important/success)
+  - Card groups, accordions, etc.
+  - Internal links: `[text](internal:path)`
+  - Glossary terms: `:defn[term text]{#term-id}`
 
 4. **Math Phase** (refer to DOCUMENTATION_WRITING_GUIDELINES.md)
-   - Inline: `$expression$`
-   - Display: `$$expression$$`
-   - Escape dollar signs: `\$4.32 trillion`
-   - Units: `$0.757\,\mathrm{tCO_2/MWh}$`
+  - Inline: `$expression$`
+  - Display: `$$expression$$`
+  - Escape dollar signs: `\$4.32 trillion`
+  - Units: `$0.757\,\mathrm{tCO_2/MWh}$`
 
 ## Data Source
 

@@ -11,12 +11,12 @@ interface Props {
    * Gap between columns
    * @default "8"
    */
-  gap?: string
+  gap?: number
 }
 
 const props = withDefaults(defineProps<Props>(), {
   maxWidth: '7xl',
-  gap: '8'
+  gap: 8
 });
 
 const maxWidthClass = computed(() => {

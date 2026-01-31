@@ -36,28 +36,32 @@ defineSlots<ExtendedSlots>();
 </script>
 
 <template>
-  <div class="relative ">
+  <div class="relative">
     <!-- Fixed Hero Background -->
-    <div 
-      class="sticky top-0 left-0 w-full h-screen z-0"
-    >
-      <div ref="heroRef" class="h-full bg-[url(/images/landing/hero.png)] bg-bottom bg-left bg-cover">
-        <UPageHero v-bind="$props" 
-        :ui="{
-            wrapper: 'bg-muted/20 p-4 rounded-md'
-        }"
+    <div class="sticky top-0 left-0 w-full h-screen aspect-video z-0">
+      <div
+        ref="heroRef"
+        class="h-full bg-[url(/images/landing/hero-mobile.png)] md:bg-[url(/images/landing/hero.jpg)] bg-top-right md:bg-top-left bg-contain md:bg-cover"
+      >
+        <UPageHero
+          v-bind="$props"
+          :ui="{
+            title: 'text-white',
+            description: 'text-white',
+            headline: 'text-secondary-300 font-bold',
+          }"
         >
           <template v-for="(_, slot) in $slots" #[slot]="scope">
-            <slot 
-              v-if="slot !== 'overlap'" 
-              :name="(slot as keyof PageHeroSlots)" 
-              v-bind="scope || {}" 
+            <slot
+              v-if="slot !== 'overlap'"
+              :name="slot as keyof PageHeroSlots"
+              v-bind="scope || {}"
             />
           </template>
         </UPageHero>
       </div>
     </div>
-    
+
     <!-- Content that scrolls over hero -->
     <div class="relative min-h-screen bg-default">
       <slot name="overlap" />
