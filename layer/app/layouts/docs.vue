@@ -1,7 +1,8 @@
-<!-- layouts/docs.vue -->
 <script setup lang="ts">
+import { useContentPage } from '~/composables/useContentPage';
 import type { PageCollections, ContentNavigationItem } from '@nuxt/content';
 
+console.log('[DocsLayout] Setup', useRoute().path);
 // Static data
 const appConfig = useAppConfig();
 const { collections } = useContentConfig();
@@ -31,7 +32,15 @@ const { data: page } = await useAsyncData(
   },
 );
 
+watch(page, (p) =>
+  console.log('[DocsLayout] Page updated:', p?.title, p?.path),
+);
+
 if (!page.value) {
+  console.log('[DocsLayout] Page not found (initial), clearing contentPage');
+  // IMPORTANT: clear state before throwing
+  useContentPage().value = null;
+
   throw createError({
     statusCode: 404,
     statusMessage: 'Page not found',
@@ -88,12 +97,60 @@ useHead({
     },
   ],
 });
+
+const contentReady = ref(false);
+
+watch(
+  () => page.value,
+  async (newPage) => {
+    // Reset immediately on any page change
+    contentReady.value = false;
+
+    if (newPage) {
+      // Wait for template to update with new page data
+      await nextTick();
+      // Extra tick for ContentRenderer and Cited components to mount
+      await nextTick();
+      // Now citations are populated, safe to show Bibliography/Surround
+      console.log('content loaded', contentReady.value);
+      contentReady.value = true;
+    }
+  },
+  { immediate: true },
+);
+
+/* -------------------------------------------------------------------------- */
+/*                           PUBLISH PAGE CONTEXT                              */
+/* -------------------------------------------------------------------------- */
+
+const contentPage = useContentPage();
+
+watchEffect(() => {
+  if (!page.value) return;
+
+  // Prevent stale updates during navigation
+  if (page.value.path !== route.path) return;
+
+  contentPage.value = {
+    collection: 'docs',
+    page: page.value,
+    navigation: docsNavigation.value,
+    surround: surround.value,
+    seo: {
+      title: page.value.seo?.title || page.value.title,
+      description: page.value.seo?.description || page.value.description,
+    },
+    meta: {
+      editPath: route.path,
+    },
+  };
+});
 </script>
 
 <template>
   <UMain>
     <UContainer>
-      <UPage v-if="page">
+      <UPage v-if="page" :key="route.path">
         <!-- LEFT: Static navigation -->
         <template #left>
           <UPageAside>
@@ -120,37 +177,44 @@ useHead({
         </UPageHeader>
 
         <UPageBody>
-          <slot :page />
+          <div>
+            <slot />
+          </div>
 
-          <USeparator>
-            <div
-              v-if="github"
-              class="flex items-center gap-2 text-sm text-muted"
-            >
-              <UButton
-                variant="link"
-                color="neutral"
-                :to="editLink!"
-                target="_blank"
-                icon="i-lucide-pen"
+          <template v-if="contentReady">
+            <USeparator>
+              <div
+                v-if="github"
+                class="flex items-center gap-2 text-sm text-muted"
               >
-                Edit
-              </UButton>
-              <span>or</span>
-              <UButton
-                variant="link"
-                color="neutral"
-                :to="`${github.url}/issues/new/choose`"
-                target="_blank"
-                icon="i-lucide-alert-circle"
-              >
-                Report
-              </UButton>
-            </div>
-          </USeparator>
+                <UButton
+                  variant="link"
+                  color="neutral"
+                  :to="editLink!"
+                  target="_blank"
+                  icon="i-lucide-pen"
+                >
+                  Edit
+                </UButton>
+                <span>or</span>
+                <UButton
+                  variant="link"
+                  color="neutral"
+                  :to="`${github.url}/issues/new/choose`"
+                  target="_blank"
+                  icon="i-lucide-alert-circle"
+                >
+                  Report
+                </UButton>
+              </div>
+            </USeparator>
 
-          <UContentSurround :surround="surround" />
-          <Bibliography />
+            <UContentSurround
+              :surround="surround"
+              :key="`surround-${route.path}`"
+            />
+            <Bibliography :key="`bibliography-${route.path}`" />
+          </template>
         </UPageBody>
 
         <!-- RIGHT: Dynamic TOC -->
@@ -159,6 +223,7 @@ useHead({
             highlight
             :title="appConfig.toc?.title || 'Table of Contents'"
             :links="page.body.toc.links"
+            :key="`toc-${route.path}`"
           >
             <template #bottom>
               <DocsAsideRightBottom />

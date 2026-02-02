@@ -3,9 +3,10 @@
 const route = useRoute();
 const { citations, allRefs } = useCitations();
 
-// ✅ Filter and sort based on citations order
 const sortedRefs = computed(() => {
-  if (!allRefs.value?.length || !citations.value.length) return [];
+  if (!allRefs.value?.length || !citations.value.length) {
+    return [];
+  }
 
   return citations.value
     .map((id) => allRefs.value.find((r: any) => r.id === id))
