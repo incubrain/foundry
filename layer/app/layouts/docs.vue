@@ -1,46 +1,16 @@
 <script setup lang="ts">
-import { useContentPage } from '~/composables/useContentPage';
-import type { PageCollections, ContentNavigationItem } from '@nuxt/content';
+import type { ContentNavigationItem } from '@nuxt/content';
 
-console.log('[DocsLayout] Setup', useRoute().path);
-// Static data
 const appConfig = useAppConfig();
-const { collections } = useContentConfig();
-const collection = collections.docs as keyof PageCollections;
 const route = useRoute();
 
-// 📚 DOCS NAVIGATION (for sidebar/components)
-const { data: docsNavigation } = await useAsyncData(
-  'navigation_docs',
-  () => queryCollectionNavigation(collection),
-  {
-    transform: (data: ContentNavigationItem[]) => {
-      const rootResult =
-        data.find((item) => item.path === `${collection}`)?.children ||
-        data ||
-        [];
-      return rootResult;
-    },
-  },
-);
+// Use unified content page composable
+const { collection, getPage, setContext } = useContentPage();
 
-const { data: page } = await useAsyncData(
-  () => `docs${route.path}`,
-  () => queryCollection(collection).path(route.path).first(),
-  {
-    watch: [() => route.path],
-  },
-);
-
-watch(page, (p) =>
-  console.log('[DocsLayout] Page updated:', p?.title, p?.path),
-);
+// Fetch page data
+const { data: page } = await getPage();
 
 if (!page.value) {
-  console.log('[DocsLayout] Page not found (initial), clearing contentPage');
-  // IMPORTANT: clear state before throwing
-  useContentPage().value = null;
-
   throw createError({
     statusCode: 404,
     statusMessage: 'Page not found',
@@ -48,42 +18,61 @@ if (!page.value) {
   });
 }
 
-// Fetch surround
-const { data: surround } = await useAsyncData(
-  () => `surround-${route.path}`,
-  () =>
-    queryCollectionItemSurroundings(collection, route.path, {
-      fields: ['description'],
-    }),
+// Fetch navigation for sidebar
+const { data: docsNavigation } = await useAsyncData(
+  () => `navigation_${collection.value}`,
+  () => queryCollectionNavigation(collection.value),
   {
-    watch: [() => route.path],
+    watch: [collection],
+    transform: (data: ContentNavigationItem[]) => {
+      return (
+        data.find((item) => item.path === `${collection.value}`)?.children ||
+        data ||
+        []
+      );
+    },
   },
 );
 
-// SEO meta
-const title = page.value.seo?.title || page.value.title;
-const description = page.value.seo?.description || page.value.description;
+// Fetch surround (prev/next)
+const { data: surround } = await useAsyncData(
+  () => `surround-${collection.value}-${route.path}`,
+  () =>
+    queryCollectionItemSurroundings(collection.value, route.path, {
+      fields: ['description'],
+    }),
+  {
+    watch: [() => route.path, collection],
+  },
+);
 
-useSeoMeta({
-  title,
-  ogTitle: title,
-  description,
-  ogDescription: description,
+// Publish context for components
+watchEffect(() => {
+  if (!page.value || page.value.path !== route.path) return;
+  setContext(page.value, {
+    navigation: docsNavigation.value,
+    surround: surround.value,
+    meta: { editPath: route.path },
+  });
 });
 
+// SEO
+watchEffect(() => {
+  if (!page.value) return;
+  const title = page.value.seo?.title || page.value.title;
+  const description = page.value.seo?.description || page.value.description;
+  useSeoMeta({ title, ogTitle: title, description, ogDescription: description });
+});
+
+// GitHub edit link
 const github = appConfig.github;
-const editLink = github
-  ? [
-      github.url,
-      'edit',
-      github.branch,
-      github.rootDir,
-      'content',
-      `${route.path}`,
-    ]
-      .filter(Boolean)
-      .join('/')
-  : null;
+const editLink = computed(() =>
+  github
+    ? [github.url, 'edit', github.branch, github.rootDir, 'content', route.path]
+        .filter(Boolean)
+        .join('/')
+    : null,
+);
 
 provide('navigation_docs', docsNavigation);
 
@@ -98,53 +87,21 @@ useHead({
   ],
 });
 
+// Content ready state (for citations/bibliography)
 const contentReady = ref(false);
 
 watch(
-  () => page.value,
+  page,
   async (newPage) => {
-    // Reset immediately on any page change
     contentReady.value = false;
-
     if (newPage) {
-      // Wait for template to update with new page data
       await nextTick();
-      // Extra tick for ContentRenderer and Cited components to mount
       await nextTick();
-      // Now citations are populated, safe to show Bibliography/Surround
-      console.log('content loaded', contentReady.value);
       contentReady.value = true;
     }
   },
   { immediate: true },
 );
-
-/* -------------------------------------------------------------------------- */
-/*                           PUBLISH PAGE CONTEXT                              */
-/* -------------------------------------------------------------------------- */
-
-const contentPage = useContentPage();
-
-watchEffect(() => {
-  if (!page.value) return;
-
-  // Prevent stale updates during navigation
-  if (page.value.path !== route.path) return;
-
-  contentPage.value = {
-    collection: 'docs',
-    page: page.value,
-    navigation: docsNavigation.value,
-    surround: surround.value,
-    seo: {
-      title: page.value.seo?.title || page.value.title,
-      description: page.value.seo?.description || page.value.description,
-    },
-    meta: {
-      editPath: route.path,
-    },
-  };
-});
 </script>
 
 <template>

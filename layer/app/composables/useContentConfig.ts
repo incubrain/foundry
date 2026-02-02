@@ -13,6 +13,14 @@ type CollectionConfig =
     };
 
 /**
+ * Route pattern config for mapping routes to collections
+ */
+interface RoutePatternConfig {
+  pattern: string;
+  collection: keyof Collections;
+}
+
+/**
  * Centralized composable for content configuration and path resolution.
  * All collection name/prefix/routing logic lives here.
  */
@@ -81,6 +89,74 @@ export const useContentConfig = () => {
    */
   const getSearchableCollections = (): string[] => {
     return appConfig.content?.collections?.searchable || ['docs'];
+  };
+
+  /* -------------------------------------------------------------------------- */
+  /*                          ROUTE → COLLECTION MAPPING                        */
+  /* -------------------------------------------------------------------------- */
+
+  /**
+   * Build route patterns from collection prefixes in app.config.ts
+   * Returns patterns sorted by specificity (longest prefix first)
+   */
+  const getRoutePatterns = (): RoutePatternConfig[] => {
+    const collectionsConfig = appConfig.content?.collections;
+    if (!collectionsConfig) return [];
+
+    const patterns: RoutePatternConfig[] = [];
+
+    // Extract patterns from collection configs
+    for (const [key, config] of Object.entries(collectionsConfig)) {
+      // Skip non-collection entries like 'searchable'
+      if (key === 'searchable') continue;
+
+      if (typeof config === 'object' && config !== null && 'prefix' in config) {
+        const prefix = config.prefix as string;
+        if (prefix) {
+          patterns.push({
+            pattern: prefix,
+            collection: (config.name || key) as keyof Collections,
+          });
+        }
+      }
+    }
+
+    // Sort by prefix length descending (more specific patterns first)
+    return patterns.sort((a, b) => b.pattern.length - a.pattern.length);
+  };
+
+  /**
+   * Determine which collection a route belongs to based on path patterns.
+   * Uses collection prefixes from app.config.ts to match routes dynamically.
+   *
+   * @param path - The route path to match (e.g., '/darksky/intro')
+   * @returns The collection key that should be queried
+   */
+  const getCollectionForRoute = (path: string): keyof Collections => {
+    const patterns = getRoutePatterns();
+
+    // Match against configured prefixes
+    for (const { pattern, collection } of patterns) {
+      // Pattern match: exact prefix or prefix followed by /
+      if (path === pattern || path.startsWith(`${pattern}/`)) {
+        return collection;
+      }
+    }
+
+    // Fallback: check content.routing for special routes
+    const routingConfig = appConfig.content?.routing;
+    if (routingConfig) {
+      for (const [, routePath] of Object.entries(routingConfig)) {
+        if (typeof routePath === 'string') {
+          if (path === routePath || path.startsWith(`${routePath}/`)) {
+            return 'pages' as keyof Collections;
+          }
+        }
+      }
+    }
+
+    // Default fallback to pages collection
+    return 'pages' as keyof Collections;
   };
 
   /* -------------------------------------------------------------------------- */
@@ -206,6 +282,10 @@ export const useContentConfig = () => {
     getCollectionBackLabel,
     getRoutingPath,
     getSearchableCollections,
+
+    // Route → Collection mapping
+    getRoutePatterns,
+    getCollectionForRoute,
 
     // Path resolution
     resolveInternalPath,

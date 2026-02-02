@@ -1,23 +1,14 @@
 <script setup lang="ts">
-import { useContentPage } from '~/composables/useContentPage';
-
-const contentPage = useContentPage();
-
-watch(
-  contentPage,
-  (v) => {
-    console.log('[SlugPage] contentPage updated:', v?.page?.path);
-  },
-  { deep: true, immediate: true },
-);
+// Use unified content page composable - layout already fetched data
+const { context } = useContentPage();
 </script>
 
 <template>
   <div>
     <ContentRenderer
-      v-if="contentPage?.page"
-      :value="contentPage.page"
-      :key="contentPage.page.path"
+      v-if="context?.page"
+      :value="context.page"
+      :key="context.page.path"
     />
   </div>
 </template>

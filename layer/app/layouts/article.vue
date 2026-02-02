@@ -1,22 +1,14 @@
 <script setup lang="ts">
-import { useContentPage } from '~/composables/useContentPage';
-
 const route = useRoute();
-const { collections, routing } = useContentConfig();
+const { routing } = useContentConfig();
 
-// ✅ Watch route for article data
-const { data: article } = await useAsyncData(
-  () => `article${route.path}`,
-  () => queryCollection(collections.pages).path(route.path).first(),
-  {
-    watch: [() => route.path],
-  },
-);
+// Use unified content page composable
+const { collection, getPage, setContext } = useContentPage();
+
+// Fetch article data
+const { data: article } = await getPage();
 
 if (!article.value) {
-  // IMPORTANT: clear state before throwing
-  useContentPage().value = null;
-
   throw createError({
     statusCode: 404,
     statusMessage: 'Page not found',
@@ -24,57 +16,32 @@ if (!article.value) {
   });
 }
 
-// ✅ Watch route for surround data
+// Fetch surround (prev/next)
 const { data: surround } = await useAsyncData(
-  () => `article-surround${route.path}`,
+  () => `article-surround-${collection.value}-${route.path}`,
   () =>
-    queryCollectionItemSurroundings(collections.pages, route.path, {
+    queryCollectionItemSurroundings(collection.value, route.path, {
       fields: ['title', 'description', 'label'],
     }),
   {
-    watch: [() => route.path],
+    watch: [() => route.path, collection],
   },
 );
 
-// ✅ Make head reactive to article changes
+// Publish context for components
 watchEffect(() => {
-  if (article.value) {
-    useHead({
-      title: article.value.title,
-      meta: [
-        {
-          name: 'description',
-          content: article.value.description,
-        },
-      ],
-    });
-  }
+  if (!article.value || article.value.path !== route.path) return;
+  setContext(article.value, { surround: surround.value });
 });
 
-/* -------------------------------------------------------------------------- */
-/*                           PUBLISH PAGE CONTEXT                              */
-/* -------------------------------------------------------------------------- */
-
-const contentPage = useContentPage();
-
+// SEO
 watchEffect(() => {
   if (!article.value) return;
-
-  // Prevent stale updates during navigation
-  if (article.value.path !== route.path) return;
-
-  contentPage.value = {
-    collection: 'pages',
-    page: article.value,
-    surround: surround.value,
-    seo: {
-      title: article.value.title,
-      description: article.value.description,
-    },
-  };
+  useHead({
+    title: article.value.title,
+    meta: [{ name: 'description', content: article.value.description }],
+  });
 });
-
-provide(`page${route.path}`, article);
 </script>
 
 <template>

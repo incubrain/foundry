@@ -1,27 +1,18 @@
 <script setup lang="ts">
-import { useContentPage } from '~/composables/useContentPage';
-
 const route = useRoute();
-const { collections } = useContentConfig();
+
+// Use unified content page composable
+const { getPage, setContext } = useContentPage();
 
 // Get business name from site config
 const { getSiteConfig } = useContentCache();
 const { data: siteConfig } = await getSiteConfig();
 const pageTitle = computed(() => siteConfig.value?.business?.name || 'Welcome');
 
-// Watch route for page data
-const { data: page } = await useAsyncData(
-  () => `conversion${route.path}`,
-  () => queryCollection(collections.pages).path(route.path).first(),
-  {
-    watch: [() => route.path],
-  },
-);
+// Fetch page data
+const { data: page } = await getPage();
 
 if (!page.value) {
-  // IMPORTANT: clear state before throwing
-  useContentPage().value = null;
-
   throw createError({
     statusCode: 404,
     statusMessage: 'Page not found',
@@ -29,62 +20,40 @@ if (!page.value) {
   });
 }
 
-// Make SEO reactive to page changes
+// Publish context for components
 watchEffect(() => {
-  if (page.value) {
-    useSeoMeta({
-      title: page.value.title,
-      description: page.value.description,
-      ogTitle: page.value.title,
-      ogDescription: page.value.description,
-    });
-  }
+  if (!page.value || page.value.path !== route.path) return;
+  setContext(page.value);
+});
+
+// SEO
+watchEffect(() => {
+  if (!page.value) return;
+  useSeoMeta({
+    title: page.value.title,
+    description: page.value.description,
+    ogTitle: page.value.title,
+    ogDescription: page.value.description,
+  });
 });
 
 // OG Image generation
 watch(
-  () => page.value,
+  page,
   async (newPage) => {
     if (newPage) {
-      const { getSiteConfig } = useContentCache();
-      const { data: config } = await getSiteConfig();
-
       defineOgImage({
         component: 'Frame',
         props: {
           title: newPage.title,
           description: newPage.description,
-          image: config.value?.business?.logo,
+          image: siteConfig.value?.business?.logo,
         },
       });
     }
   },
   { immediate: true },
 );
-
-/* -------------------------------------------------------------------------- */
-/*                           PUBLISH PAGE CONTEXT                              */
-/* -------------------------------------------------------------------------- */
-
-const contentPage = useContentPage();
-
-watchEffect(() => {
-  if (!page.value) return;
-
-  // Prevent stale updates during navigation
-  if (page.value.path !== route.path) return;
-
-  contentPage.value = {
-    collection: 'pages',
-    page: page.value,
-    seo: {
-      title: page.value.title,
-      description: page.value.description,
-    },
-  };
-});
-
-provide(`page${route.path}`, page);
 </script>
 
 <template>
