@@ -15,21 +15,26 @@
   },
   
   "files": [
-    "app",
-    "modules",
-    "server",
-    "shared",
     "content.collections.ts",
     "nuxt.config.ts",
     "nuxt.schema.ts",
-    "README.md"
+    "README.md",
+    "app",
+    "modules/config.ts",
+    "modules/css.ts",
+    "modules/events/index.ts",
+    "modules/events/runtime",
+    "modules/events/server",
+    "server",
+    "shared"
   ],
   
   "scripts": {
     "dev": "nuxt dev",
     "build": "nuxt build",
     "generate": "nuxt generate",
-    "preview": "nuxt preview"
+    "preview": "nuxt preview",
+    "prepack": "rm -rf modules/**/node_modules"
   },
   
   "dependencies": {

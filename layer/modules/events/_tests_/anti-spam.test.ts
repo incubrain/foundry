@@ -1,6 +1,6 @@
 // server/utils/anti-spam.test.ts
 import { describe, it, expect, beforeEach } from 'vitest';
-import { isValidUUID, validateAntiSpam, RateLimiter, type AntiSpamData } from './anti-spam';
+import { isValidUUID, validateAntiSpam, RateLimiter, type AntiSpamData } from '../server/utils/anti-spam';
 
 describe('isValidUUID', () => {
   it('should validate correct UUID v4', () => {

@@ -1,11 +1,11 @@
+@import 'tailwindcss';
+@import '@nuxt/ui';
+
 /* ============================================================================
    ASTRONERA - BRAND IDENTITY
    Dark sky conservation visual language
    Blue (celestial/night sky) + Red (action/urgency)
    ============================================================================ */
-
-/* Import base design system */
-@import '@incubrain/foundry/app/assets/main.css';
 
 /* ============================================================================
    BRAND COLORS - Astronera Dark Sky Theme
