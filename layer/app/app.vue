@@ -55,8 +55,8 @@ provide('site_config', site ?? ref(null));
 
     <AppHeader v-if="$route.meta.header !== false" />
 
-    <NuxtLayout v-slot="{ page }">
-      <NuxtPage :page />
+    <NuxtLayout>
+      <NuxtPage />
     </NuxtLayout>
 
     <AppFooter v-if="$route.meta.footer !== false" />

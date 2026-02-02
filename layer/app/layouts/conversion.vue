@@ -1,13 +1,13 @@
 <script setup lang="ts">
+import { useContentPage } from '~/composables/useContentPage';
+
 const route = useRoute();
 const { collections } = useContentConfig();
 
 // Get business name from site config
 const { getSiteConfig } = useContentCache();
 const { data: siteConfig } = await getSiteConfig();
-const pageTitle = computed(
-  () => siteConfig.value?.business?.name || 'Welcome',
-);
+const pageTitle = computed(() => siteConfig.value?.business?.name || 'Welcome');
 
 // Watch route for page data
 const { data: page } = await useAsyncData(
@@ -17,6 +17,17 @@ const { data: page } = await useAsyncData(
     watch: [() => route.path],
   },
 );
+
+if (!page.value) {
+  // IMPORTANT: clear state before throwing
+  useContentPage().value = null;
+
+  throw createError({
+    statusCode: 404,
+    statusMessage: 'Page not found',
+    fatal: true,
+  });
+}
 
 // Make SEO reactive to page changes
 watchEffect(() => {
@@ -50,6 +61,30 @@ watch(
   },
   { immediate: true },
 );
+
+/* -------------------------------------------------------------------------- */
+/*                           PUBLISH PAGE CONTEXT                              */
+/* -------------------------------------------------------------------------- */
+
+const contentPage = useContentPage();
+
+watchEffect(() => {
+  if (!page.value) return;
+
+  // Prevent stale updates during navigation
+  if (page.value.path !== route.path) return;
+
+  contentPage.value = {
+    collection: 'pages',
+    page: page.value,
+    seo: {
+      title: page.value.title,
+      description: page.value.description,
+    },
+  };
+});
+
+provide(`page${route.path}`, page);
 </script>
 
 <template>
@@ -78,7 +113,7 @@ watch(
       <UContainer class="relative z-10">
         <div class="max-w-3xl mx-auto">
           <UPageHero :title="page?.title" :description="page?.description" />
-          <slot :page="page" />
+          <slot />
         </div>
       </UContainer>
     </div>

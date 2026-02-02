@@ -3,7 +3,6 @@ import { ICON_LIBRARIES } from './shared/constants';
 const { resolve } = createResolver(import.meta.url);
 
 export default defineNuxtConfig({
-  debug: true,
   modules: [
     resolve('./modules/config'),
     resolve('./modules/css'),
@@ -91,15 +90,6 @@ export default defineNuxtConfig({
     '#config-resolver': resolve('./shared/config-resolver.ts'),
   },
 
-  // mdc: {
-  //   components: {
-  //     map: {
-  //       cite: 'Cite',
-  //       dfn: 'ProseDfn',
-  //     },
-  //   },
-  // },
-
   content: {
     build: {
       markdown: {
@@ -135,28 +125,6 @@ export default defineNuxtConfig({
   },
 
   ssr: true,
-  routeRules: {
-    '/docs/**': {
-      appLayout: 'docs',
-    },
-    '/rss/**': {
-      swr: 3600,
-      headers: {
-        'Content-Type': 'application/xml; charset=utf-8',
-        'Cache-Control': 'public, max-age=3600',
-      },
-    },
-    // Landing pages
-    '/': { appLayout: 'default', ssr: true, prerender: false },
-    '/about': { appLayout: 'default', ssr: true, prerender: false },
-    '/offers/**': { appLayout: 'conversion', ssr: true, prerender: false },
-    '/success': { appLayout: 'conversion', ssr: true, prerender: false },
-    '/success/**': { appLayout: 'conversion', ssr: true, prerender: false },
-
-    // Documentation
-    '/decisions': { appLayout: 'default', swr: 3600 },
-    '/decisions/**': { appLayout: 'article', swr: 3600 },
-  },
 
   nitro: {
     prerender: {

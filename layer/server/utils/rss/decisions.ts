@@ -5,10 +5,11 @@ import {
   getBusinessName,
   type RSSItem,
 } from './shared';
-import { getSiteConfig } from '#site-config/server/composables';
 
 // Export as named function (not default export)
 export async function generateDecisionsFeed(event: H3Event): Promise<string> {
+  const { getSiteConfig } = await import('#site-config/server/composables');
+
   const siteConfig = getSiteConfig(event);
 
   const authorName = await getAuthorName(event);
@@ -19,7 +20,9 @@ export async function generateDecisionsFeed(event: H3Event): Promise<string> {
   const appConfig = useAppConfig();
   const pagesConfig = appConfig.content?.collections?.pages;
   const articlesBasePath =
-    typeof pagesConfig === 'object' ? pagesConfig?.prefix || '/articles' : '/articles';
+    typeof pagesConfig === 'object'
+      ? pagesConfig?.prefix || '/articles'
+      : '/articles';
 
   // Fetch articles
   const articles = await queryCollection(event, 'pages')

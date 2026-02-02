@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useContentPage } from '~/composables/useContentPage';
+
 const route = useRoute();
 const { collections, routing } = useContentConfig();
 
@@ -10,6 +12,17 @@ const { data: article } = await useAsyncData(
     watch: [() => route.path],
   },
 );
+
+if (!article.value) {
+  // IMPORTANT: clear state before throwing
+  useContentPage().value = null;
+
+  throw createError({
+    statusCode: 404,
+    statusMessage: 'Page not found',
+    fatal: true,
+  });
+}
 
 // ✅ Watch route for surround data
 const { data: surround } = await useAsyncData(
@@ -37,6 +50,31 @@ watchEffect(() => {
     });
   }
 });
+
+/* -------------------------------------------------------------------------- */
+/*                           PUBLISH PAGE CONTEXT                              */
+/* -------------------------------------------------------------------------- */
+
+const contentPage = useContentPage();
+
+watchEffect(() => {
+  if (!article.value) return;
+
+  // Prevent stale updates during navigation
+  if (article.value.path !== route.path) return;
+
+  contentPage.value = {
+    collection: 'pages',
+    page: article.value,
+    surround: surround.value,
+    seo: {
+      title: article.value.title,
+      description: article.value.description,
+    },
+  };
+});
+
+provide(`page${route.path}`, article);
 </script>
 
 <template>

@@ -1,13 +1,13 @@
 banner:
   id: hiring-2026
   icon: i-lucide-info
-  title: We're hiring! Check out our open positions at Astronera.
+  title: We're hiring! Contact us to find out more.
   actions:
-    - label: Careers
-      to: https://careers.astronera.org
+    - label: Send Email
+      to: mailto:connectus@astronera.org
       target: _blank
-      trailingIcon: i-lucide-arrow-right
-      color: primary
+      trailingIcon: i-lucide-mail
+      color: neutral
       variant: solid
       size: xs
   close: true
@@ -76,7 +76,6 @@ header:
         - label: Research
           icon: i-lucide-flask-conical
           to: /darksky/research
-          description: add more details
         - label: Policy
           icon: i-lucide-book-open
           to: /darksky/policy

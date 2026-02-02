@@ -1,5 +1,3 @@
-import { createResolver } from '@nuxt/kit';
-
 export default defineNuxtConfig({
   extends: ['@incubrain/foundry'],
 

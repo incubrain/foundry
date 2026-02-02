@@ -5,7 +5,6 @@ const { resolve } = createResolver(import.meta.url);
 const SITE_URL = 'https://astronera.org';
 
 export default defineNuxtConfig({
-  debug: true,
   extends: ['@incubrain/foundry'],
 
   modules: ['nuxt-studio'],
@@ -13,6 +12,15 @@ export default defineNuxtConfig({
   site: {
     name: 'AstronEra',
     url: SITE_URL,
+  },
+
+  mdc: {
+    components: {
+      map: {
+        cited: 'Cited',
+        defn: 'Defn',
+      },
+    },
   },
 
   css: [resolve('./app/assets/theme.css')],
@@ -32,8 +40,14 @@ export default defineNuxtConfig({
   },
 
   routeRules: {
+    '/': {
+      appLayout: 'default',
+    },
     '/darksky/**': {
       appLayout: 'docs',
+    },
+    '/resources/**': {
+      appLayout: 'default',
     },
   },
 
@@ -50,16 +64,13 @@ export default defineNuxtConfig({
       '/doi/astrotribe-ladakh-2024': { redirect: '/resources/sources' },
     },
   },
-  
+
   studio: {
-    // meta: {
-    //   components: {
-    //     include: [
-    //       'Cite',
-    //       'Defn',
-    //     ],
-    //   },
-    // },
+    meta: {
+      components: {
+        include: ['Cited', 'Defn'],
+      },
+    },
     route: '/admin',
     repository: {
       provider: 'github',

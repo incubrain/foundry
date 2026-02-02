@@ -13,6 +13,29 @@ export default defineNuxtConfig({
     description: 'Open-source funnel for technical founders',
   },
 
+  routeRules: {
+    '/docs/**': {
+      appLayout: 'docs',
+    },
+    '/rss/**': {
+      swr: 3600,
+      headers: {
+        'Content-Type': 'application/xml; charset=utf-8',
+        'Cache-Control': 'public, max-age=3600',
+      },
+    },
+    // Landing pages
+    '/': { appLayout: 'default', ssr: true, prerender: false },
+    '/about': { appLayout: 'default', ssr: true, prerender: false },
+    '/offers/**': { appLayout: 'conversion', ssr: true, prerender: false },
+    '/success': { appLayout: 'conversion', ssr: true, prerender: false },
+    '/success/**': { appLayout: 'conversion', ssr: true, prerender: false },
+
+    // Documentation
+    '/decisions': { appLayout: 'default', swr: 3600 },
+    '/decisions/**': { appLayout: 'article', swr: 3600 },
+  },
+
   dir: {
     public: publicDir,
   },
