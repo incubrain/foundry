@@ -5,7 +5,6 @@
   "type": "module",
   "scripts": {
     "dev": "pnpm run --filter @incubrain/foundry dev",
-    "prepare": "nuxt prepare layer && pnpm -r --filter=!@incubrain/foundry run postinstall",    
     "build": "pnpm run --filter @incubrain/foundry build",
     "dev:web": "nuxt dev examples/starter/web",
     "dev:docs": "nuxt dev examples/starter/docs",
@@ -32,12 +31,12 @@
     "kanban": "npx vibe-kanban"
   },
   "dependencies": {
-     "@nuxt/eslint": "^1.12.1",
+    "@nuxt/eslint": "^1.12.1",
     "@nuxt/eslint-config": "^1.12.1",
+    "eslint": "^9.39.2",
     "@release-it/bumper": "^7.0.5",
     "@release-it/conventional-changelog": "^10.0.4",
-    "eslint": "^9.39.2",
-    "nuxt": "4.2.2",
+    "nuxt": "4.3.0",
     "release-it": "^19.2.3",
     "typescript": "^5.9.3",
     "vue-tsc": "^3.2.2"
