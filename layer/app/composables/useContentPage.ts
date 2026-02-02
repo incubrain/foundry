@@ -48,6 +48,14 @@ export const useContentPage = () => {
     () => getCollectionForRoute(route.path) as keyof PageCollections,
   );
 
+  // Clear context immediately when route changes (before new data loads)
+  watch(
+    () => route.path,
+    () => {
+      context.value = null;
+    },
+  );
+
   /**
    * Fetch page data for the current route.
    * Wraps useAsyncData with automatic collection resolution.
