@@ -1,24 +1,24 @@
 # Fixed or Pending Review
 - [x] fix prettier issue, not working in some page
-- [ ] HMR not working locally, probably because we are using layers and pnpm workspace
-- [ ] tailwindcss HMR and intellisense not working
-- [ ] docs navigation is causing issues, <bibliography> is rendering at the top of the page, this happens when navigating from a non-docs page, if refreshed it loads in the correct place, however subsiquent docs navigation does not update the <bibliography> with new citations
+- [x] HMR not working locally, probably because we are using layers and pnpm workspace
+- [x] tailwindcss HMR and intellisense not working
+- [x] docs navigation is causing issues, <bibliography> is rendering at the top of the page, this happens when navigating from a non-docs page, if refreshed it loads in the correct place, however subsiquent docs navigation does not update the <bibliography> with new citations
   - check the new ProseCite component, this was working before - it is the likely culprite
   - check the useCitations composable - it is possible this needs to be SSR friendly, maybe moving the `queryCollection` call to a server route and using `useAsyncFetch` to call it would be better
-- [ ] inline `MDC` components are being overwritten by `nuxt-studio` when we edit the file in the GUI
+- [x] inline `MDC` components are being overwritten by `nuxt-studio` when we edit the file in the GUI
+- [x] replace all `heroicons` usage with `lucide` icon equivalents
+- [x] check linting in pnpm workspace, this will likely be broken
+- [x] add built with `@incubrain/foundry` to footer - this should also contain the version number which should be extracted from the package.json
+  - To enhance this, add basic telemetry piped to the incubrain server for understanding usage, and listing their website on our docs page
+  - for further enhancement we could also add event anonomization to the server and pipe events to a data warehouse for analysis, this could feed into our SaaS version of the template
+- [x] citations need to handle ids that do not exist gracefully, and provide developer feedback, ideally we would want some kind of auto complete or pattern matchiing that would return similar results for ids that do not exist
+- [x] Internal linking is currently prefixing the `docs` path prefix to ALL links including pages
 
 
 # Critical
 
-
-- [x] replace all `heroicons` usage with `lucide` icon equivalents
-- [ ] check linting in pnpm workspace, this will likely be broken
-- [ ] add built with `@incubrain/foundry` to footer - this should also contain the version number which should be extracted from the package.json
-  - To enhance this, add basic telemetry piped to the incubrain server for understanding usage, and listing their website on our docs page
-  - for further enhancement we could also add event anonomization to the server and pipe events to a data warehouse for analysis, this could feed into our SaaS version of the template
-- [ ] citations need to handle ids that do not exist gracefully, and provide developer feedback, ideally we would want some kind of auto complete or pattern matchiing that would return similar results for ids that do not exist
-  - [ ] editing inline components with a span passed inside [here] is not possible inside of nuxt studio as far as I can tell
-- [ ] Internal linking is currently prefixing the `docs` path prefix to ALL links including pages
+- [ ] flickering of layout in between layout navigation, use transitions, but this is likely a bandaid to a larger issue with how we are using layouts and a catchall page
+- [ ] editing inline components with a span passed inside [here] is not possible inside of nuxt studio as far as I can tell
 
 # General
 
@@ -33,16 +33,3 @@
   - https://ui.nuxt.com/docs/typography/images-and-embeds#iframes & https://github.com/nuxt-content/nuxt-studio/releases/tag/v1.2.0 & https://docus.dev/en/essentials/images-embeds#videos
   - it is possible we could keep it and overrite the `<video>` tag with our own custom prose component
 
-# AstronEra
-
-- [x] remove ALAN card, add this to the #description slot instead, split 'Clutter & Over-illumination' into two cards
-- [x] challenge cards should be carousel to save space on the screen and make it interactable/trackable
-- [x] share dropdown should be a button, looks odd as a select dropdown
-- [ ] create about page
-- [ ] create team collection
-  - [ ] create team page, no team members page yet
-  - [ ] add section on team page for 'careers' and 'join us', start with simple email button
-- [ ] section stacking when reveresed is not having ideal layout, images should be on top always if possible
-- [ ] add starfield to dark mode of website, probably just the homepage
-- [ ] add ae logo with 'astronera' in footer, also mention our partnership with DarkSky International here (site.business.mission)
-  - "Through research, policy design, and internationally benchmarked frameworks, we are working to support Maharashtra in addressing light pollution as a public health, biodiversity, and climate concern."

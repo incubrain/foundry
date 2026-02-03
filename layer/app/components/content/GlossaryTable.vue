@@ -53,19 +53,6 @@ watch(
         :data="allTerms"
         :columns="[
           {
-            accessorKey: 'id',
-            header: 'ID',
-            size: 100,
-            minSize: 100,
-            maxSize: 100,
-            meta: {
-              class: {
-                td: 'max-w-[100px] text-xs',
-                th: 'max-w-[100px]',
-              },
-            },
-          },
-          {
             accessorKey: 'term',
             header: 'Term',
             size: 300,

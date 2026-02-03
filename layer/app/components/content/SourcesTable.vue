@@ -91,19 +91,6 @@ const getLinkInfo = (source: any) => {
 
 const columns: TableColumn<any>[] = [
   {
-    accessorKey: 'id',
-    header: 'ID',
-    size: 100,
-    minSize: 100,
-    maxSize: 100,
-    meta: {
-      class: {
-        td: 'max-w-[100px] text-xs font-mono text-muted',
-        th: 'max-w-[100px]',
-      },
-    },
-  },
-  {
     accessorKey: 'categoryLabel',
     header: 'Category',
     enableHiding: true, // will be hidden by grouping logic usually, but we want to use it for grouping key

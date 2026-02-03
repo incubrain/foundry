@@ -36,11 +36,11 @@ footer:
         - label: Overview
           to: /darksky/policy
         - label: Global Presedents
-          to: /darksky/policy/global-presedents
+          to: /darksky/policy/global-precedents
         - label: Legal Obligations
           to: /darksky/policy/legal-obligations
         - label: Departmental Actions
-          to: /darksky/policy/departmental-actions
+          to: /darksky/policy/department-actions
         - label: Regulatory Framework
           to: /darksky/policy/regulatory-framework
         - label: Recommendations

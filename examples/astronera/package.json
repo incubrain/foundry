@@ -9,7 +9,7 @@
     "preview": "nuxt preview"
   },
   "dependencies": {
-    "@incubrain/foundry": "workspace:*",
+    "@incubrain/foundry": "^0.5.1",
     "better-sqlite3": "^12.5.0",
     "nuxt": "^4.3.0",
     "nuxt-llms": "^0.2.0",
