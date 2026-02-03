@@ -21,6 +21,21 @@ const copyrightYear = computed(() => {
     ? `${currentYear}`
     : `${foundingYear.value} - ${currentYear}`;
 });
+
+// Foundry branding
+const appConfig = useAppConfig();
+const foundry = computed(() => appConfig.foundry as { version: string; url: string } | undefined);
+
+const { trackEvent } = useEvents();
+const handleFoundryClick = () => {
+  trackEvent({
+    id: 'foundry_click',
+    type: 'offer_click',
+    action: 'click',
+    location: 'footer',
+    target: 'foundry_external',
+  });
+};
 </script>
 
 <template>
@@ -47,5 +62,16 @@ const copyrightYear = computed(() => {
         {{ link.label }}
       </UButton>
     </div>
+
+    <NuxtLink
+      v-if="foundry"
+      :to="foundry.url"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="text-xs text-muted hover:text-default transition-colors"
+      @click="handleFoundryClick"
+    >
+      Built with @incubrain/foundry{{ foundry.version ? ` v${foundry.version}` : '' }}
+    </NuxtLink>
   </UContainer>
 </template>
