@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { PropType } from 'vue';
+import type { PropType } from 'vue'
 
 const props = defineProps({
   href: {
@@ -19,23 +19,28 @@ const props = defineProps({
     default: undefined,
     required: false,
   },
-});
+})
 
-const { getPageMetadata, resolveInternalPath } = useContentConfig();
+const route = useRoute()
+const { getPageMetadata, resolveInternalPath, getCollectionForRoute }
+  = useContentConfig()
 
-const isInternalLink = computed(() => props.href?.startsWith('internal:'));
+const isInternalLink = computed(() => props.href?.startsWith('internal:'))
 
-// Convert internal: prefix to full path with docs prefix
+// Get the current page's collection to use as context for internal links
+const currentCollection = computed(() => getCollectionForRoute(route.path))
+
+// Convert internal: prefix to full path with correct collection prefix
 const internalHref = computed(() => {
-  if (!isInternalLink.value) return props.href;
-  const path = props.href.replace('internal:', '');
-  return resolveInternalPath(path);
-});
+  if (!isInternalLink.value) return props.href
+  const path = props.href.replace('internal:', '')
+  return resolveInternalPath(path, currentCollection.value)
+})
 
 const internalPageData = computed(() => {
-  if (!isInternalLink.value) return null;
-  return getPageMetadata(internalHref.value);
-});
+  if (!isInternalLink.value) return null
+  return getPageMetadata(internalHref.value)
+})
 </script>
 
 <template>
@@ -67,18 +72,28 @@ const internalPageData = computed(() => {
         <div class="font-semibold text-gray-900 dark:text-gray-100">
           {{ internalPageData.title }}
         </div>
-        <div v-if="internalPageData.description" class="text-xs">
+        <div
+          v-if="internalPageData.description"
+          class="text-xs"
+        >
           {{ internalPageData.description }}
         </div>
       </div>
-      <div v-else class="text-gray-700 dark:text-gray-300">
+      <div
+        v-else
+        class="text-gray-700 dark:text-gray-300"
+      >
         Internal link to: <span class="font-semibold">{{ internalHref }}</span>
       </div>
     </template>
   </UPopover>
 
   <!-- Regular link: render as normal -->
-  <NuxtLink v-else :href="props.href" :target="props.target">
+  <NuxtLink
+    v-else
+    :href="props.href"
+    :target="props.target"
+  >
     <slot />
   </NuxtLink>
 </template>
