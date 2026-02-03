@@ -1,19 +1,16 @@
 {
   "name": "@incubrain/foundry",
   "description": "Nuxt layer for Founder Funnel documentation",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "type": "module",
   "main": "./nuxt.config.ts",
-
   "license": "MIT",
   "author": "IncuBrain",
-  
   "repository": {
     "type": "git",
     "url": "https://github.com/incubrain/foundry.git",
     "directory": "layer"
   },
-  
   "files": [
     "content.collections.ts",
     "nuxt.config.ts",
@@ -28,7 +25,6 @@
     "server",
     "shared"
   ],
-  
   "scripts": {
     "dev": "nuxt dev",
     "build": "nuxt build",
@@ -36,7 +32,6 @@
     "preview": "nuxt preview",
     "prepack": "rm -rf modules/**/node_modules"
   },
-  
   "dependencies": {
     "@iconify/json": "^2.2.421",
     "@nuxt/content": "^3.11.0",
@@ -66,7 +61,6 @@
     "zod": "^4.3.5",
     "zod-to-json-schema": "^3.25.1"
   },
-
   "devDependencies": {
     "@compodium/nuxt": "0.1.0-beta.12",
     "@nuxt/eslint": "1.13.0",
@@ -74,14 +68,12 @@
     "@types/node": "^22.19.3",
     "vue-tsc": "^3.2.1"
   },
-
   "peerDependencies": {
     "better-sqlite3": "12.x",
     "nuxt-studio": "^1.2.0",
     "nuxt-llms": "^0.2.0",
     "nuxt": "4.x"
   },
-  
   "peerDependenciesMeta": {
     "better-sqlite3": {
       "optional": true
@@ -93,7 +85,6 @@
       "optional": true
     }
   },
-  
   "keywords": [
     "nuxt",
     "nuxt-layer",

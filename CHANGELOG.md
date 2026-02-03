@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [0.5.1] - Unreleased
+## [0.5.1] - 2026-02-03
 
 ### Fixed
 
@@ -21,7 +21,7 @@ All notable changes to this project will be documented in this file.
 - Bump Nuxt Studio to 1.2.0
 - Add "Built with @incubrain/foundry" to footer
 
-## [0.5.0] - 2025-01
+## [0.5.0] - 2026-01-31
 
 First npm release as `@incubrain/foundry`.
 
