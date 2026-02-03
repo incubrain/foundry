@@ -1,12 +1,11 @@
 <script setup lang="ts">
-
 defineSlots<{
-    default: () => {}
+  default: () => {}
 }>()
 </script>
 
 <template>
-    <span>
-        <slot />
-    </span>
+  <span>
+    <slot />
+  </span>
 </template>

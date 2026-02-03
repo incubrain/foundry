@@ -1,20 +1,20 @@
-import type { H3Event } from 'h3';
+import type { H3Event } from 'h3'
 
 export interface RSSItem {
-  title: string;
-  link: string;
-  guid: string;
-  pubDate: string;
-  description?: string;
-  category?: string;
-  author?: string;
+  title: string
+  link: string
+  guid: string
+  pubDate: string
+  description?: string
+  category?: string
+  author?: string
 }
 
 export interface RSSChannel {
-  title: string;
-  link: string;
-  description: string;
-  items: RSSItem[];
+  title: string
+  link: string
+  description: string
+  items: RSSItem[]
 }
 
 export function escapeXml(str: string): string {
@@ -23,7 +23,7 @@ export function escapeXml(str: string): string {
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
-    .replace(/'/g, '&apos;');
+    .replace(/'/g, '&apos;')
 }
 
 export function buildRSSFeed(channel: RSSChannel, siteUrl: string): string {
@@ -31,13 +31,13 @@ export function buildRSSFeed(channel: RSSChannel, siteUrl: string): string {
     .map((item) => {
       const category = item.category
         ? `<category>${escapeXml(item.category)}</category>`
-        : '';
+        : ''
       const author = item.author
         ? `<dc:creator>${escapeXml(item.author)}</dc:creator>`
-        : '';
+        : ''
       const description = item.description
         ? `<description>${escapeXml(item.description)}</description>`
-        : '';
+        : ''
 
       return `
     <item>
@@ -48,9 +48,9 @@ export function buildRSSFeed(channel: RSSChannel, siteUrl: string): string {
       ${description}
       ${category}
       ${author}
-    </item>`;
+    </item>`
     })
-    .join('');
+    .join('')
 
   return `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" 
@@ -74,26 +74,26 @@ export function buildRSSFeed(channel: RSSChannel, siteUrl: string): string {
     <atom:link href="${siteUrl}/rss/${channel.title.toLowerCase().replace(/\s+/g, '-')}" rel="self" type="application/rss+xml" />
     ${rssItems}
   </channel>
-</rss>`;
+</rss>`
 }
 
 export async function getAuthorName(event: H3Event): Promise<string> {
   const siteConfig = await queryCollection(event, 'config')
     .where('stem', '=', 'config/site')
-    .first();
+    .first()
 
   if (siteConfig?.founder?.given_name) {
-    return `${siteConfig.founder.given_name} ${siteConfig.founder.surname}`;
+    return `${siteConfig.founder.given_name} ${siteConfig.founder.surname}`
   }
 
   // Fallback to business name or generic
-  return siteConfig?.business?.name || 'Team';
+  return siteConfig?.business?.name || 'Team'
 }
 
 export async function getBusinessName(event: H3Event): Promise<string> {
   const siteConfig = await queryCollection(event, 'config')
     .where('stem', '=', 'config/site')
-    .first();
+    .first()
 
-  return siteConfig?.business?.name || 'Site';
+  return siteConfig?.business?.name || 'Site'
 }

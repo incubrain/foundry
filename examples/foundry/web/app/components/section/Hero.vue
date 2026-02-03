@@ -3,48 +3,48 @@
 // PRD: Flat props, explicit structure
 const props = defineProps<{
   badge?: {
-    label: string;
-    to: string;
-    description: string;
-    icon: string;
-  };
+    label: string
+    to: string
+    description: string
+    icon: string
+  }
   intro?: {
-    title: string;
-    highlight: string;
-    description: string;
-  };
+    title: string
+    highlight: string
+    description: string
+  }
   cta?: {
     primary?: {
-      label: string;
-      offerSlug?: string;
-      to?: string;
-      icon?: string;
-      size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-    };
+      label: string
+      offerSlug?: string
+      to?: string
+      icon?: string
+      size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+    }
     secondary?: {
-      label: string;
-      to: string;
-      icon?: string;
-      variant?: 'button' | 'link';
-      color?: string;
-      size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-    };
-  };
+      label: string
+      to: string
+      icon?: string
+      variant?: 'button' | 'link'
+      color?: string
+      size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+    }
+  }
   media?: {
-    src: string;
-    alt: string;
-  };
+    src: string
+    alt: string
+  }
   metric?: {
-    icon: string;
-    label: string;
-    value: string;
-    delta: string;
-  };
+    icon: string
+    label: string
+    value: string
+    delta: string
+  }
   trusted?: {
-    text: string;
-    icons: string[];
-  };
-}>();
+    text: string
+    icons: string[]
+  }
+}>()
 
 // Hero doesn't strictly follow the header/cta layout, so we implement custom structure
 // but avoid deprecated wrapper props.
@@ -71,7 +71,10 @@ const props = defineProps<{
         target="_blank"
         class="mb-6 inline-flex items-center gap-2 rounded-full border border-neutral-800 bg-neutral-900/50 px-3 py-1 text-sm text-neutral-300 transition-colors hover:border-neutral-700 hover:bg-neutral-800"
       >
-        <UIcon :name="badge.icon" class="h-4 w-4" />
+        <UIcon
+          :name="badge.icon"
+          class="h-4 w-4"
+        />
         <span class="font-medium text-white">{{ badge.label }}</span>
         <span>{{ badge.description }}</span>
       </a>
@@ -169,7 +172,10 @@ const props = defineProps<{
             <div
               class="h-10 w-10 rounded-full bg-green-500/10 flex items-center justify-center text-green-500"
             >
-              <UIcon :name="metric.icon" class="w-6 h-6" />
+              <UIcon
+                :name="metric.icon"
+                class="w-6 h-6"
+              />
             </div>
             <div>
               <div class="text-xs text-neutral-400">

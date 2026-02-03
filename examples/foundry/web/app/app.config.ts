@@ -25,4 +25,4 @@ export default defineAppConfig({
       searchable: ['pages'],
     },
   },
-});
+})

@@ -1,40 +1,46 @@
 <script setup lang="ts">
 const props = defineProps<{
-  title?: string;
-  description?: string;
+  title?: string
+  description?: string
   steps?: Array<{
-    id: string;
-    title: string;
-    icon: string;
-    description: string;
-    result: string;
-  }>;
+    id: string
+    title: string
+    icon: string
+    description: string
+    result: string
+  }>
   features?: Array<{
-    title: string;
-    description: string;
-    icon: string;
-  }>;
-}>();
+    title: string
+    description: string
+    icon: string
+  }>
+}>()
 
 const normalizedSteps = computed(() => {
-  const items = props.steps || [];
+  const items = props.steps || []
 
   if (items.length > 3) {
     console.error(
-      `[Outcome Section] Maximum 3 process steps allowed. Found ${items.length}.\n` +
-        `Edit content/pages/index.md to reduce steps.`,
-    );
+      `[Outcome Section] Maximum 3 process steps allowed. Found ${items.length}.\n`
+      + `Edit content/pages/index.md to reduce steps.`,
+    )
   }
 
-  return items.slice(0, 3);
-});
+  return items.slice(0, 3)
+})
 
-const normalizedFeatures = computed(() => props.features || []);
+const normalizedFeatures = computed(() => props.features || [])
 </script>
 
 <template>
-  <SectionWrapper id="outcome" has-bottom>
-    <SectionHeader :title="title" :description="description" />
+  <SectionWrapper
+    id="outcome"
+    has-bottom
+  >
+    <SectionHeader
+      :title="title"
+      :description="description"
+    />
     <div
       v-if="normalizedSteps.length"
       class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 mt-12 sm:mt-16"
@@ -50,11 +56,18 @@ const normalizedFeatures = computed(() => props.features || []);
           <span class="text-xl font-bold text-primary">{{ index + 1 }}</span>
         </div>
 
-        <UIcon :name="step.icon" class="size-8 text-secondary mb-4" />
+        <UIcon
+          :name="step.icon"
+          class="size-8 text-secondary mb-4"
+        />
 
-        <h3 class="text-lg font-heading font-bold mb-2">{{ step.title }}</h3>
+        <h3 class="text-lg font-heading font-bold mb-2">
+          {{ step.title }}
+        </h3>
 
-        <p class="text-sm text-muted">{{ step.result }}</p>
+        <p class="text-sm text-muted">
+          {{ step.result }}
+        </p>
       </div>
     </div>
 
@@ -124,7 +137,10 @@ const normalizedFeatures = computed(() => props.features || []);
                     <div
                       class="flex items-center justify-center size-8 rounded-lg bg-primary/10 ring-1 ring-primary/20 shrink-0"
                     >
-                      <UIcon :name="item.icon" class="size-4 text-secondary" />
+                      <UIcon
+                        :name="item.icon"
+                        class="size-4 text-secondary"
+                      />
                     </div>
                   </div>
 

@@ -29,7 +29,6 @@
       <AppFooterLeft />
     </template>
 
-
     <template #right>
       <AppFooterRight />
     </template>

@@ -1,22 +1,25 @@
 <script setup lang="ts">
 interface CarouselItem {
-  title: string;
-  description: string;
-  icon: string;
+  title: string
+  description: string
+  icon: string
 }
 
 interface Props {
-  items?: CarouselItem[];
+  items?: CarouselItem[]
 }
 
-const props = defineProps<Props>();
+const props = defineProps<Props>()
 
 // duplicate items
-const allItems = props.items?.length ? [...props.items, ...props.items] : [];
+const allItems = props.items?.length ? [...props.items, ...props.items] : []
 </script>
 
 <template>
-  <div class="overflow-hidden" v-if="allItems.length">
+  <div
+    v-if="allItems.length"
+    class="overflow-hidden"
+  >
     <UCarousel
       v-slot="{ item }"
       :items="allItems"
@@ -50,7 +53,10 @@ const allItems = props.items?.length ? [...props.items, ...props.items] : [];
         <template #header>
           <div class="flex items-start gap-4">
             <div class="shrink-0">
-              <UIcon :name="item.icon" class="size-6 text-primary" />
+              <UIcon
+                :name="item.icon"
+                class="size-6 text-primary"
+              />
             </div>
             <div class="flex-1">
               <h3 class="text-lg font-bold text-highlighted">

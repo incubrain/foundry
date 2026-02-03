@@ -1,25 +1,25 @@
 <script setup lang="ts">
-const route = useRoute();
+const route = useRoute()
 
 // Use unified content page composable
-const { getPage, setContext } = useContentPage();
+const { getPage, setContext } = useContentPage()
 
 // Fetch page data
-const { data: page } = await getPage();
+const { data: page } = await getPage()
 
 if (!page.value) {
   throw createError({
     statusCode: 404,
     statusMessage: 'Page not found',
     fatal: true,
-  });
+  })
 }
 
 // Publish context for components
 watchEffect(() => {
-  if (!page.value || page.value.path !== route.path) return;
-  setContext(page.value);
-});
+  if (!page.value || page.value.path !== route.path) return
+  setContext(page.value)
+})
 
 // RSS feed link
 watchEffect(() => {
@@ -33,9 +33,9 @@ watchEffect(() => {
           href: `/rss${route.path}`,
         },
       ],
-    });
+    })
   }
-});
+})
 </script>
 
 <template>

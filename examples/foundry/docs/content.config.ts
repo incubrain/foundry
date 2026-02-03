@@ -1,13 +1,13 @@
-import { defineContentConfig, defineCollection } from '@nuxt/content';
-import { createResolver } from '@nuxt/kit';
+import { defineContentConfig, defineCollection } from '@nuxt/content'
+import { createResolver } from '@nuxt/kit'
 import {
   basePageSchema,
   baseNavigationSchema,
-} from '../../../layer/content.collections';
-import { getActiveConfigSource } from '../../../layer/shared/config-resolver';
+} from '../../../layer/content.collections'
+import { getActiveConfigSource } from '../../../layer/shared/config-resolver'
 
-const { resolve } = createResolver(import.meta.url);
-const { contentDir: cwd } = getActiveConfigSource(resolve, 'docs');
+const { resolve } = createResolver(import.meta.url)
+const { contentDir: cwd } = getActiveConfigSource(resolve, 'docs')
 
 export default defineContentConfig({
   collections: {
@@ -29,4 +29,4 @@ export default defineContentConfig({
       schema: baseNavigationSchema,
     }),
   },
-});
+})

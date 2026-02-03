@@ -1,18 +1,18 @@
 <script setup lang="ts">
 interface Props {
-  id: string;
+  id: string
 }
 
-const props = defineProps<Props>();
+const props = defineProps<Props>()
 
-const anchorOffset = '--spacing(12)';
+const anchorOffset = '--spacing(12)'
 
 onMounted(() => {
-  const element = document.getElementById(props.id);
+  const element = document.getElementById(props.id)
   if (element) {
-    element.style.scrollMarginTop = anchorOffset;
+    element.style.scrollMarginTop = anchorOffset
   }
-});
+})
 </script>
 
 <template>

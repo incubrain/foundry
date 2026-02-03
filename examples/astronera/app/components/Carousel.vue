@@ -1,19 +1,22 @@
 <script setup lang="ts">
-import { useSlots, cloneVNode } from 'vue'; // For VNode handling
-import { computed } from 'vue';
+import { useSlots, cloneVNode } from 'vue' // For VNode handling
+import { computed } from 'vue'
 
-const slots = useSlots();
-const rawItems = computed(() => slots.default?.() || []); // Array of VNodes from slots
+const slots = useSlots()
+const rawItems = computed(() => slots.default?.() || []) // Array of VNodes from slots
 
 // Optional duplication (if loop prop isn't sufficient)
 const allItems = computed(() => {
-  const items = rawItems.value;
-  return [...items, ...items.map(vnode => cloneVNode(vnode))]; // Clone for uniqueness
-});
+  const items = rawItems.value
+  return [...items, ...items.map(vnode => cloneVNode(vnode))] // Clone for uniqueness
+})
 </script>
 
 <template>
-  <div class="overflow-hidden" v-if="allItems.length">
+  <div
+    v-if="allItems.length"
+    class="overflow-hidden"
+  >
     <UCarousel
       v-slot="{ item }"
       :items="allItems"
@@ -21,7 +24,7 @@ const allItems = computed(() => {
       loop
       :prev="{ size: 'xl', square: true }"
       :next="{ size: 'xl', square: true }"
-      :ui="{ 
+      :ui="{
         item: 'basis-[320px] px-2 min-h-[360px] h-full',
         viewport: 'overflow-hidden p-4',
         controls: 'relative my-12 hidden md:flex justify-center max-w-container mx-auto',

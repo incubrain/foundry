@@ -1,20 +1,20 @@
 <script setup lang="ts">
-import type { SelectMenuProps } from '@nuxt/ui';
+import type { SelectMenuProps } from '@nuxt/ui'
 
 interface Props {
   // Feed configuration
-  feedPath?: string; // e.g., 'decisions', 'blog', 'updates'
-  feedUrl?: string; // Full URL override (if not using feedPath)
+  feedPath?: string // e.g., 'decisions', 'blog', 'updates'
+  feedUrl?: string // Full URL override (if not using feedPath)
 
   // Tracking
-  location: string;
+  location: string
 
   // UI customization
-  size?: SelectMenuProps['size'];
-  variant?: SelectMenuProps['variant'];
-  color?: SelectMenuProps['color'];
-  showLabel?: boolean;
-  label?: string; // Custom label (default: 'RSS')
+  size?: SelectMenuProps['size']
+  variant?: SelectMenuProps['variant']
+  color?: SelectMenuProps['color']
+  showLabel?: boolean
+  label?: string // Custom label (default: 'RSS')
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -24,51 +24,51 @@ const props = withDefaults(defineProps<Props>(), {
   color: 'neutral',
   showLabel: true,
   label: 'RSS',
-});
+})
 
-const config = useRuntimeConfig();
-const { trackEvent } = useEvents();
-const { copy } = useClipboard();
-const toast = useToast();
+const config = useRuntimeConfig()
+const { trackEvent } = useEvents()
+const { copy } = useClipboard()
+const toast = useToast()
 
 // Compute final feed URL
 const feedUrl = computed(() => {
-  if (props.feedUrl) return props.feedUrl;
-  return `${config.public.siteUrl}/rss/${props.feedPath}`;
-});
+  if (props.feedUrl) return props.feedUrl
+  return `${config.public.siteUrl}/rss/${props.feedPath}`
+})
 
-type RSSType =
-  | 'feedly'
-  | 'inoreader'
-  | 'newsblur'
-  | 'oldreader'
-  | 'xml'
-  | 'copy';
+type RSSType
+  = | 'feedly'
+    | 'inoreader'
+    | 'newsblur'
+    | 'oldreader'
+    | 'xml'
+    | 'copy'
 
 const handleRSSClick = (target?: 'internal' | 'external', type?: RSSType) => {
   trackEvent({
     id: `offer_click_rss_${props.location}_${props.feedPath}_${type}`,
     type: 'offer_click',
     target: `rss_${target}`,
-  });
-};
+  })
+}
 
 const copyFeedUrl = async () => {
-  await copy(feedUrl.value);
-  handleRSSClick('internal', 'copy');
+  await copy(feedUrl.value)
+  handleRSSClick('internal', 'copy')
 
   toast.add({
     title: 'Feed URL Copied',
     description: 'Paste into your RSS reader',
     icon: 'i-lucide-check',
     color: 'success',
-  });
-};
+  })
+}
 
 const handleReaderClick = (url: string, type?: RSSType) => {
-  handleRSSClick('external', type);
-  window.open(url, '_blank');
-};
+  handleRSSClick('external', type)
+  window.open(url, '_blank')
+}
 
 const actions = computed(() => [
   {
@@ -80,8 +80,8 @@ const actions = computed(() => [
     label: 'Open Feed',
     icon: 'i-lucide-external-link',
     click: () => {
-      handleRSSClick('internal', 'xml');
-      window.open(feedUrl.value, '_blank');
+      handleRSSClick('internal', 'xml')
+      window.open(feedUrl.value, '_blank')
     },
   },
   {
@@ -120,14 +120,14 @@ const actions = computed(() => [
         'oldreader',
       ),
   },
-]);
+])
 
 // Handle selection from USelectMenu
 const handleSelect = (option: any) => {
   if (option?.click) {
-    option.click();
+    option.click()
   }
-};
+}
 </script>
 
 <template>
@@ -140,7 +140,6 @@ const handleSelect = (option: any) => {
       :color="color"
       :size="size"
       :trailing-icon="showLabel ? 'i-lucide-chevron-down' : ''"
-      @update:model-value="handleSelect"
       :ui="{
         base: showLabel
           ? ''
@@ -148,6 +147,7 @@ const handleSelect = (option: any) => {
         content: 'w-full',
         item: 'hover:bg-primary/10',
       }"
+      @update:model-value="handleSelect"
     >
       <template #default="{ open }">
         <span
@@ -155,13 +155,19 @@ const handleSelect = (option: any) => {
           :class="{ 'opacity-75': open }"
           class="w-full flex items-center gap-2"
         >
-          <UIcon name="i-lucide-rss" class="text-xl" />
+          <UIcon
+            name="i-lucide-rss"
+            class="text-xl"
+          />
           {{ showLabel ? label : undefined }}
         </span>
       </template>
 
       <template #item="{ item }">
-        <UIcon :name="item.icon" class="w-4 h-4 text-muted" />
+        <UIcon
+          :name="item.icon"
+          class="w-4 h-4 text-muted"
+        />
         <span class="truncate">{{ item.label }}</span>
       </template>
     </USelectMenu>

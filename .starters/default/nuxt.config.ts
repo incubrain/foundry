@@ -21,4 +21,4 @@ export default defineNuxtConfig({
       description: 'The complete documentation including all content',
     },
   },
-});
+})

@@ -1,34 +1,38 @@
 <script setup lang="ts">
-import { STATUS_ICONS } from '#constants';
+import { STATUS_ICONS } from '#constants'
 
 const props = defineProps<{
-  title?: string;
-  description?: string;
-  price?: string;
-  features?: Array<{ title: string; icon: string }>;
+  title?: string
+  description?: string
+  price?: string
+  features?: Array<{ title: string, icon: string }>
   cta?: {
-    label?: string;
-    to?: string;
-  };
-}>();
+    label?: string
+    to?: string
+  }
+}>()
 
-const { getFounder } = useContentCache();
-const { data: founder } = await getFounder();
+const { getFounder } = useContentCache()
+const { data: founder } = await getFounder()
 
 const transformedFeatures = computed(() => {
-  return (props.features || []).map((feature) => ({
+  return (props.features || []).map(feature => ({
     label: feature.title,
     icon:
       STATUS_ICONS[feature.icon as keyof typeof STATUS_ICONS] || feature.icon,
-  }));
-});
+  }))
+})
 
-const displayTitle = computed(() => props.title);
-const displayDescription = computed(() => props.description);
+const displayTitle = computed(() => props.title)
+const displayDescription = computed(() => props.description)
 </script>
 
 <template>
-  <SectionWrapper id="offer" has-bottom class="relative">
+  <SectionWrapper
+    id="offer"
+    has-bottom
+    class="relative"
+  >
     <div
       class="absolute top-0 inset-0 bg-grid-white/[0.02] pointer-events-none z-0"
     />
@@ -42,7 +46,10 @@ const displayDescription = computed(() => props.description);
       v-if="displayTitle || displayDescription"
       class="mb-12 text-center relative z-10"
     >
-      <SectionHeader :title="displayTitle" :description="displayDescription" />
+      <SectionHeader
+        :title="displayTitle"
+        :description="displayDescription"
+      />
     </div>
 
     <div
@@ -109,7 +116,10 @@ const displayDescription = computed(() => props.description);
         >
           <template #description>
             <!-- Hide default description slot to control layout manually if needed, or rely on prop -->
-            <p v-if="displayDescription" class="text-base text-toned">
+            <p
+              v-if="displayDescription"
+              class="text-base text-toned"
+            >
               {{ displayDescription }}
             </p>
           </template>
@@ -148,7 +158,9 @@ const displayDescription = computed(() => props.description);
         </UPricingPlan>
 
         <div class="mt-4 flex flex-col gap-4 justify-center items-center">
-          <UBadge variant="soft">OR</UBadge>
+          <UBadge variant="soft">
+            OR
+          </UBadge>
           <ConvertExternal
             to="https://github.com/incubrain/foundry"
             label="One Click Deploy"

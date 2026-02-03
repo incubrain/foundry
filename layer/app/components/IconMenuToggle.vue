@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { motion } from 'motion-v';
-import type { VariantType } from 'motion-v';
+import { motion } from 'motion-v'
+import type { VariantType } from 'motion-v'
 
 const props = defineProps<{
-  open: boolean;
-}>();
+  open: boolean
+}>()
 
 const variants: {
-  [k: string]: VariantType | ((custom: unknown) => VariantType);
+  [k: string]: VariantType | ((custom: unknown) => VariantType)
 } = {
   normal: {
     rotate: 0,
@@ -15,7 +15,7 @@ const variants: {
     opacity: 1,
   },
   close: (custom: unknown) => {
-    const c = custom as number;
+    const c = custom as number
     return {
       rotate: c === 1 ? 45 : c === 3 ? -45 : 0,
       y: c === 1 ? 6 : c === 3 ? -6 : 0,
@@ -25,15 +25,21 @@ const variants: {
         stiffness: 260,
         damping: 20,
       },
-    };
+    }
   },
-};
+}
 
-const state = computed(() => (props.open ? 'close' : 'normal'));
+const state = computed(() => (props.open ? 'close' : 'normal'))
 </script>
 
 <template>
-  <UButton size="sm" variant="ghost" color="neutral" class="-me-1.5" square>
+  <UButton
+    size="sm"
+    variant="ghost"
+    color="neutral"
+    class="-me-1.5"
+    square
+  >
     <svg
       xmlns="http://www.w3.org/2000/svg"
       class="size-5"

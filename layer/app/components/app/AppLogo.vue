@@ -1,11 +1,11 @@
 <script setup lang="ts">
 export interface AppLogoProps {
-  title?: string;
+  title?: string
 }
 
-const logo = useAppConfig().logo;
+const logo = useAppConfig().logo
 
-defineProps<AppLogoProps>();
+defineProps<AppLogoProps>()
 </script>
 
 <template>
@@ -17,7 +17,10 @@ defineProps<AppLogoProps>();
       :alt="logo?.alt || title"
       class="h-6 w-auto shrink-0 rounded-full"
     />
-    <span v-if="title" class="pl-1">
+    <span
+      v-if="title"
+      class="pl-1"
+    >
       {{ title }}
     </span>
   </div>

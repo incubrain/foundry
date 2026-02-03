@@ -11,15 +11,22 @@
  * - AppHeaderBody: Mobile navigation drawer
  */
 
-const site = useSiteConfig();
+const site = useSiteConfig()
 </script>
 
 <template>
-  <UHeader :ui="{ center: 'flex-1' }" :to="'/'" :title="site.name">
+  <UHeader
+    :ui="{ center: 'flex-1' }"
+    :to="'/'"
+    :title="site.name"
+  >
     <AppHeaderCenter />
 
     <template #title>
-      <AppLogo :title="site.name" class="h-6 w-auto shrink-0" />
+      <AppLogo
+        :title="site.name"
+        class="h-6 w-auto shrink-0"
+      />
     </template>
 
     <template #body>
@@ -31,7 +38,11 @@ const site = useSiteConfig();
     </template>
 
     <template #toggle="{ open, toggle }">
-      <IconMenuToggle :open="open" class="lg:hidden" @click="toggle" />
+      <IconMenuToggle
+        :open="open"
+        class="lg:hidden"
+        @click="toggle"
+      />
     </template>
   </UHeader>
 </template>

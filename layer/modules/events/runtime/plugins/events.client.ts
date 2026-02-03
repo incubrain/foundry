@@ -1,4 +1,4 @@
-import type { EventPayload } from '../types/events';
+import type { EventPayload } from '../types/events'
 
 export default defineNuxtPlugin({
   name: 'events-core',
@@ -11,10 +11,10 @@ export default defineNuxtPlugin({
       provide: {
         events: {
           track: async (payload: EventPayload) => {
-            await useNuxtApp().callHook('events:track', payload);
+            await useNuxtApp().callHook('events:track', payload)
           },
         },
       },
-    };
+    }
   },
-});
+})

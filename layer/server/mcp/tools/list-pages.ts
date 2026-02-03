@@ -1,6 +1,6 @@
-import { z } from 'zod';
-import { queryCollection } from '@nuxt/content/server';
-import type { Collections } from '@nuxt/content';
+import { z } from 'zod'
+import { queryCollection } from '@nuxt/content/server'
+import type { Collections } from '@nuxt/content'
 
 export default defineMcpTool({
   description: `Lists all available documentation pages with their categories and basic information.
@@ -26,12 +26,12 @@ OUTPUT: Returns a structured list with:
   },
   cache: '1h',
   handler: async () => {
-    const event = useEvent();
+    const event = useEvent()
 
     const siteUrl = import.meta.dev
       ? 'http://localhost:3000'
-      : getRequestURL(event).origin;
-    const collections = ['docs'];
+      : getRequestURL(event).origin
+    const collections = ['docs']
 
     try {
       const allPages = await Promise.all(
@@ -41,21 +41,22 @@ OUTPUT: Returns a structured list with:
             collectionName as keyof Collections,
           )
             .select('title', 'path', 'description')
-            .all();
+            .all()
 
-          return pages.map((page) => ({
+          return pages.map(page => ({
             title: page.title,
             path: page.path,
             description: page.description,
             locale: collectionName.replace('docs_', ''),
             url: `${siteUrl}${page.path}`,
-          }));
+          }))
         }),
-      );
+      )
 
-      return jsonResult(allPages.flat());
-    } catch {
-      return errorResult('Failed to list pages');
+      return jsonResult(allPages.flat())
+    }
+    catch {
+      return errorResult('Failed to list pages')
     }
   },
-});
+})

@@ -1,22 +1,22 @@
 <script setup lang="ts">
-import type { AccordionItem } from '@nuxt/ui';
+import type { AccordionItem } from '@nuxt/ui'
 
 interface AccordionItemData {
-  label: string;
-  content: string;
-  icon?: string;
-  color?: string;
-  slot?: string;
+  label: string
+  content: string
+  icon?: string
+  color?: string
+  slot?: string
 }
 
 interface Props {
   // Direct items to display (overrides fetching)
-  items?: AccordionItemData[];
+  items?: AccordionItemData[]
   // If items not provided, filter fetched FAQs by these types
-  types?: string[];
+  types?: string[]
 }
 
-const props = defineProps<Props>();
+const props = defineProps<Props>()
 
 // Fetch from collection if no items provided
 const { data: allFaqs } = await useAsyncData(
@@ -26,32 +26,32 @@ const { data: allFaqs } = await useAsyncData(
     watch: [() => props.items],
     immediate: !props.items?.length,
   },
-);
+)
 
 const displayItems = computed(() => {
   // 1. Use direct items if provided
   if (props.items?.length) {
-    return props.items;
+    return props.items
   }
 
   // 2. Or build from fetched content
-  if (!allFaqs.value) return [];
+  if (!allFaqs.value) return []
 
   // Filter by types if requested
   const filteredFiles = props.types?.length
-    ? allFaqs.value.filter((faq) => props.types!.includes(faq.type))
-    : allFaqs.value;
+    ? allFaqs.value.filter(faq => props.types!.includes(faq.type))
+    : allFaqs.value
 
   // Flatten all items from matched files into a single list
-  return filteredFiles.flatMap((file) =>
-    file.items.map((item) => ({
+  return filteredFiles.flatMap(file =>
+    file.items.map(item => ({
       label: item.label,
       content: item.content,
       icon: file.icon,
       color: file.color,
     })),
-  );
-});
+  )
+})
 
 // Build UI items for Nuxt UI Accordion
 const uiItems = computed<AccordionItem[]>(() =>
@@ -66,7 +66,7 @@ const uiItems = computed<AccordionItem[]>(() =>
       body: 'text-muted pb-4 pl-7',
     },
   })),
-);
+)
 </script>
 
 <template>

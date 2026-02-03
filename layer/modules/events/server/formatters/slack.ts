@@ -1,12 +1,12 @@
-import type { SpamFlags } from '../../server/utils/anti-spam';
+import type { SpamFlags } from '../../server/utils/anti-spam'
 
 export function formatSlackMessage(data: {
-  formData?: Record<string, any>;
-  flags: SpamFlags;
+  formData?: Record<string, any>
+  flags: SpamFlags
 }) {
-  const risk =
-    data.flags.score > 50 ? '⚠️' : data.flags.score > 20 ? '⚡' : '✅';
-  const primaryEmail = data.formData?.email || 'No Email';
+  const risk
+    = data.flags.score > 50 ? '⚠️' : data.flags.score > 20 ? '⚡' : '✅'
+  const primaryEmail = data.formData?.email || 'No Email'
 
   // Build fields block
   const slackFields = [
@@ -20,7 +20,7 @@ export function formatSlackMessage(data: {
         type: 'mrkdwn',
         text: `*${key.charAt(0).toUpperCase() + key.slice(1)}*\n${value}`,
       })),
-  ];
+  ]
 
   return {
     text: `${risk} New Lead: ${primaryEmail}`,
@@ -46,5 +46,5 @@ export function formatSlackMessage(data: {
         ],
       },
     ],
-  };
+  }
 }

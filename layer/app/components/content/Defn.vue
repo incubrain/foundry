@@ -1,23 +1,23 @@
 <script setup lang="ts">
 const props = defineProps<{
-  id: string;
-}>();
+  id: string
+}>()
 
-const { getTerm, resolveGlossaryPath } = useGlossary();
+const { getTerm, resolveGlossaryPath } = useGlossary()
 
 const termData = computed(() => {
-  if (!props.id) return null;
-  return getTerm(props.id).value;
-});
+  if (!props.id) return null
+  return getTerm(props.id).value
+})
 
 const glossaryHref = computed(() => {
-  if (!props.id) return '';
-  return resolveGlossaryPath(props.id);
-});
+  if (!props.id) return ''
+  return resolveGlossaryPath(props.id)
+})
 
 defineSlots<{
-  default: () => {},
-}>();
+  default: () => {}
+}>()
 </script>
 
 <template>
@@ -53,7 +53,10 @@ defineSlots<{
         <div class="text-gray-700 dark:text-gray-300">
           {{ termData.definition }}
         </div>
-        <div v-if="termData.category" class="pt-1">
+        <div
+          v-if="termData.category"
+          class="pt-1"
+        >
           <UBadge
             :label="termData.category"
             :color="

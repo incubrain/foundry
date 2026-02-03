@@ -1,27 +1,30 @@
 <!-- ~/components/section/benefits.vue -->
 <script setup lang="ts">
 defineProps<{
-  title?: string;
-  description?: string;
-  headline?: string;
+  title?: string
+  description?: string
+  headline?: string
   items?: Array<{
-    id: string;
-    title: string;
-    description: string;
-    icon: string;
-  }>;
+    id: string
+    title: string
+    description: string
+    icon: string
+  }>
   cta?: {
-    headline?: string;
-    message?: string;
-    label?: string;
-    to?: string;
-    icon?: string;
-  };
-}>();
+    headline?: string
+    message?: string
+    label?: string
+    to?: string
+    icon?: string
+  }
+}>()
 </script>
 
 <template>
-  <SectionWrapper id="benefits" has-bottom>
+  <SectionWrapper
+    id="benefits"
+    has-bottom
+  >
     <SectionHeader
       :title="title"
       :description="description"
@@ -40,13 +43,22 @@ defineProps<{
         }"
       >
         <template #leading>
-          <UIcon :name="card.icon" class="size-5 text-secondary" />
+          <UIcon
+            :name="card.icon"
+            class="size-5 text-secondary"
+          />
         </template>
       </UPageCard>
     </UPageGrid>
 
-    <template v-if="cta" #cta>
-      <NavCta :title="cta.headline" :description="cta.message">
+    <template
+      v-if="cta"
+      #cta
+    >
+      <NavCta
+        :title="cta.headline"
+        :description="cta.message"
+      >
         <template #links>
           <UButton
             v-if="cta.label && cta.to"

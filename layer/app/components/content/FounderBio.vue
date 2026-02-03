@@ -1,14 +1,14 @@
 <!-- app/components/content/FounderBio.vue -->
 <script setup lang="ts">
 interface Props {
-  name: string;
-  intro: string;
-  avatar?: string;
+  name: string
+  intro: string
+  avatar?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
   avatar: undefined,
-});
+})
 </script>
 
 <template>
@@ -22,7 +22,9 @@ const props = withDefaults(defineProps<Props>(), {
           class="w-20 h-20 rounded-full object-cover border-2 border-primary/20 shrink-0"
         />
         <div class="flex-1">
-          <p class="text-lg text-muted leading-relaxed">{{ intro }}</p>
+          <p class="text-lg text-muted leading-relaxed">
+            {{ intro }}
+          </p>
         </div>
       </div>
     </div>

@@ -1,23 +1,23 @@
 <script setup lang="ts">
-import type { PagesCollectionItem } from '@nuxt/content';
+import type { PagesCollectionItem } from '@nuxt/content'
 
 interface Props {
   // Query parameters
-  collectionPath: string; // e.g., '/decisions/%', '/blog/%'
-  labelField?: keyof PagesCollectionItem; // Field to filter by (default: 'label')
-  sortField?: keyof PagesCollectionItem; // Field to sort by (default: 'date')
-  sortOrder?: 'ASC' | 'DESC'; // Sort order (default: 'DESC')
+  collectionPath: string // e.g., '/decisions/%', '/blog/%'
+  labelField?: keyof PagesCollectionItem // Field to filter by (default: 'label')
+  sortField?: keyof PagesCollectionItem // Field to sort by (default: 'date')
+  sortOrder?: 'ASC' | 'DESC' // Sort order (default: 'DESC')
 
   // Display customization
-  showAuthor?: boolean; // Show author attribution
-  showImage?: boolean; // Show featured images
-  showScrollTop?: boolean; // Show scroll-to-top button
-  scrollTopThreshold?: number; // Scroll threshold for button (default: 500)
+  showAuthor?: boolean // Show author attribution
+  showImage?: boolean // Show featured images
+  showScrollTop?: boolean // Show scroll-to-top button
+  scrollTopThreshold?: number // Scroll threshold for button (default: 500)
 
   // Empty state
-  emptyTitle?: string;
-  emptyDescription?: string;
-  emptyIcon?: string;
+  emptyTitle?: string
+  emptyDescription?: string
+  emptyIcon?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -31,13 +31,13 @@ const props = withDefaults(defineProps<Props>(), {
   emptyTitle: 'No items yet',
   emptyDescription: 'Check back soon for updates.',
   emptyIcon: 'i-lucide-inbox',
-});
+})
 
 // Author data (only if showAuthor)
-const { getFounder } = useContentCache();
+const { getFounder } = useContentCache()
 const { data: founderData } = props.showAuthor
   ? await getFounder()
-  : { data: ref(null) };
+  : { data: ref(null) }
 
 const authors = computed(() =>
   props.showAuthor && founderData.value
@@ -45,13 +45,13 @@ const authors = computed(() =>
         {
           name: `${founderData.value.given_name} ${founderData.value.surname}`,
           avatar: founderData.value.avatar,
-          to: founderData.value.links?.find((link) => link.label === 'GitHub')
+          to: founderData.value.links?.find(link => link.label === 'GitHub')
             ?.url,
           target: '_blank',
         },
       ]
     : [],
-);
+)
 
 // Query items
 const { data: items, pending } = useAsyncData(
@@ -59,7 +59,7 @@ const { data: items, pending } = useAsyncData(
   () => {
     let query = queryCollection('pages')
       .select('path', props.labelField, props.sortField, 'title', 'description')
-      .where('path', 'LIKE', props.collectionPath);
+      .where('path', 'LIKE', props.collectionPath)
 
     // Add image to select if needed
     if (props.showImage) {
@@ -70,49 +70,59 @@ const { data: items, pending } = useAsyncData(
         'title',
         'description',
         'image',
-      );
+      )
     }
 
     // Filter by label field if it exists
     if (props.labelField) {
-      query = query.where(props.labelField, 'IS NOT NULL');
+      query = query.where(props.labelField, 'IS NOT NULL')
     }
 
     // Sort
-    query = query.order(props.sortField, props.sortOrder);
+    query = query.order(props.sortField, props.sortOrder)
 
-    return query.all();
+    return query.all()
   },
-);
+)
 
 // Scroll-to-top functionality
-const showScrollTop = ref(false);
+const showScrollTop = ref(false)
 
 onMounted(() => {
   if (props.showScrollTop) {
     const handleScroll = () => {
-      showScrollTop.value = window?.scrollY > props.scrollTopThreshold;
-    };
-    window?.addEventListener('scroll', handleScroll);
-    onUnmounted(() => window?.removeEventListener('scroll', handleScroll));
+      showScrollTop.value = window?.scrollY > props.scrollTopThreshold
+    }
+    window?.addEventListener('scroll', handleScroll)
+    onUnmounted(() => window?.removeEventListener('scroll', handleScroll))
   }
-});
+})
 
 const scrollToTop = () => {
-  window?.scrollTo({ top: 0, behavior: 'smooth' });
-};
+  window?.scrollTo({ top: 0, behavior: 'smooth' })
+}
 </script>
 
 <template>
   <UPageBody>
     <UContainer>
       <!-- Loading state -->
-      <div v-if="pending" class="space-y-12">
-        <div v-for="i in 3" :key="i" class="space-y-4">
+      <div
+        v-if="pending"
+        class="space-y-12"
+      >
+        <div
+          v-for="i in 3"
+          :key="i"
+          class="space-y-4"
+        >
           <USkeleton class="h-8 w-1/3" />
           <USkeleton class="h-4 w-full" />
           <USkeleton class="h-4 w-5/6" />
-          <USkeleton v-if="showImage" class="h-64 w-full rounded-lg" />
+          <USkeleton
+            v-if="showImage"
+            class="h-64 w-full rounded-lg"
+          />
         </div>
       </div>
 
@@ -125,7 +135,10 @@ const scrollToTop = () => {
       />
 
       <!-- Changelog list -->
-      <UChangelogVersions v-else :indicator="false">
+      <UChangelogVersions
+        v-else
+        :indicator="false"
+      >
         <UChangelogVersion
           v-for="item in items"
           :key="String(item[labelField])"
@@ -147,7 +160,10 @@ const scrollToTop = () => {
             <div class="flex flex-col items-end gap-3 text-right">
               <!-- Date -->
               <div class="flex items-center gap-2">
-                <UIcon name="i-lucide-calendar" class="size-3.5 text-muted" />
+                <UIcon
+                  name="i-lucide-calendar"
+                  class="size-3.5 text-muted"
+                />
                 <NuxtTime
                   class="text-xs text-muted font-medium tracking-wide"
                   locale="en-US"
@@ -159,7 +175,10 @@ const scrollToTop = () => {
               </div>
 
               <!-- Badge (label) -->
-              <UBadge v-if="item[labelField]" variant="subtle">
+              <UBadge
+                v-if="item[labelField]"
+                variant="subtle"
+              >
                 {{ item[labelField] }}
               </UBadge>
             </div>

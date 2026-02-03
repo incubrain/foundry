@@ -1,8 +1,8 @@
 <script setup lang="ts">
 defineProps<{
-  title: string;
-  icon: string;
-}>();
+  title: string
+  icon: string
+}>()
 </script>
 
 <template>
@@ -15,7 +15,10 @@ defineProps<{
   >
     <template #header>
       <div class="flex items-start gap-4">
-        <UIcon :name="icon" class="size-6 text-primary shrink-0" />
+        <UIcon
+          :name="icon"
+          class="size-6 text-primary shrink-0"
+        />
         <h3 class="text-lg font-bold text-highlighted">
           {{ title }}
         </h3>

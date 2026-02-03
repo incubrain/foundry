@@ -31,7 +31,7 @@ const props = defineProps<{
     src: string
     alt: string
   }
-}>();
+}>()
 </script>
 
 <template>
@@ -47,13 +47,19 @@ const props = defineProps<{
         target="_blank"
         class="mb-6 inline-flex items-center gap-2 rounded-full border border-neutral-800 bg-neutral-900/50 px-3 py-1 text-sm text-neutral-300 hover:border-neutral-700 hover:bg-neutral-800 transition-colors"
       >
-        <UIcon :name="badge.icon" class="size-4" />
+        <UIcon
+          :name="badge.icon"
+          class="size-4"
+        />
         <span class="font-medium text-white">{{ badge.label }}</span>
         <span>{{ badge.description }}</span>
       </a>
 
       <!-- Intro -->
-      <div v-if="intro" class="text-center max-w-3xl mx-auto space-y-6 mb-8">
+      <div
+        v-if="intro"
+        class="text-center max-w-3xl mx-auto space-y-6 mb-8"
+      >
         <h1 class="font-black text-5xl sm:text-6xl lg:text-7xl tracking-tight leading-[1.1]">
           <span class="block text-white">{{ intro.title }}</span>
           <span class="block bg-linear-to-r from-primary-400 to-primary-600 bg-clip-text text-transparent">
@@ -66,7 +72,10 @@ const props = defineProps<{
       </div>
 
       <!-- CTAs -->
-      <div v-if="cta" class="flex flex-col sm:flex-row items-center justify-center gap-4">
+      <div
+        v-if="cta"
+        class="flex flex-col sm:flex-row items-center justify-center gap-4"
+      >
         <ConvertInternal
           v-if="cta.primary?.offerSlug"
           :offer-slug="cta.primary.offerSlug"
@@ -94,7 +103,10 @@ const props = defineProps<{
       </div>
 
       <!-- Media -->
-      <div v-if="media" class="relative w-full max-w-4xl mx-auto mt-12">
+      <div
+        v-if="media"
+        class="relative w-full max-w-4xl mx-auto mt-12"
+      >
         <div class="rounded-xl bg-neutral-900 border border-neutral-800 p-2 shadow-2xl">
           <NuxtImg
             :src="media.src"

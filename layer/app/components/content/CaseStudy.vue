@@ -1,24 +1,24 @@
 <!-- apps/docs/app/components/content/CaseStudy.vue -->
 <script setup lang="ts">
 interface Client {
-  name: string;
-  role: string;
-  company: string;
-  avatar?: string;
-  website?: string;
-  action?: string;
+  name: string
+  role: string
+  company: string
+  avatar?: string
+  website?: string
+  action?: string
 }
 
 interface Props {
-  client: Client;
-  quote: string;
+  client: Client
+  quote: string
   partner?: {
-    label?: string;
-    logos?: Array<{ src: string; alt: string }>;
-  };
+    label?: string
+    logos?: Array<{ src: string, alt: string }>
+  }
 }
 
-const props = defineProps<Props>();
+const props = defineProps<Props>()
 </script>
 
 <template>
@@ -52,7 +52,10 @@ const props = defineProps<Props>();
         </div>
 
         <!-- Trust Signals -->
-        <div v-if="partner?.logos?.length" class="flex items-center gap-3 pt-2">
+        <div
+          v-if="partner?.logos?.length"
+          class="flex items-center gap-3 pt-2"
+        >
           <span class="text-xs text-muted">{{ partner?.label }}</span>
           <div class="flex gap-3">
             <NuxtImg
@@ -66,7 +69,10 @@ const props = defineProps<Props>();
         </div>
 
         <!-- Visit Website -->
-        <div v-if="client.website" class="flex justify-end">
+        <div
+          v-if="client.website"
+          class="flex justify-end"
+        >
           <UButton
             :to="client.website"
             :label="client.action || 'Visit Website'"

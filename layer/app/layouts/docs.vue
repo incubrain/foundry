@@ -1,21 +1,21 @@
 <script setup lang="ts">
-import type { ContentNavigationItem } from '@nuxt/content';
+import type { ContentNavigationItem } from '@nuxt/content'
 
-const appConfig = useAppConfig();
-const route = useRoute();
+const appConfig = useAppConfig()
+const route = useRoute()
 
 // Use unified content page composable
-const { collection, getPage, setContext } = useContentPage();
+const { collection, getPage, setContext } = useContentPage()
 
 // Fetch page data
-const { data: page } = await getPage();
+const { data: page } = await getPage()
 
 if (!page.value) {
   throw createError({
     statusCode: 404,
     statusMessage: 'Page not found',
     fatal: true,
-  });
+  })
 }
 
 // Fetch navigation for sidebar
@@ -26,13 +26,13 @@ const { data: docsNavigation } = await useAsyncData(
     watch: [collection],
     transform: (data: ContentNavigationItem[]) => {
       return (
-        data.find((item) => item.path === `${collection.value}`)?.children ||
-        data ||
-        []
-      );
+        data.find(item => item.path === `${collection.value}`)?.children
+        || data
+        || []
+      )
     },
   },
-);
+)
 
 // Fetch surround (prev/next)
 const { data: surround } = await useAsyncData(
@@ -44,37 +44,37 @@ const { data: surround } = await useAsyncData(
   {
     watch: [() => route.path, collection],
   },
-);
+)
 
 // Publish context for components
 watchEffect(() => {
-  if (!page.value || page.value.path !== route.path) return;
+  if (!page.value || page.value.path !== route.path) return
   setContext(page.value, {
     navigation: docsNavigation.value,
     surround: surround.value,
     meta: { editPath: route.path },
-  });
-});
+  })
+})
 
 // SEO
 watchEffect(() => {
-  if (!page.value) return;
-  const title = page.value.seo?.title || page.value.title;
-  const description = page.value.seo?.description || page.value.description;
-  useSeoMeta({ title, ogTitle: title, description, ogDescription: description });
-});
+  if (!page.value) return
+  const title = page.value.seo?.title || page.value.title
+  const description = page.value.seo?.description || page.value.description
+  useSeoMeta({ title, ogTitle: title, description, ogDescription: description })
+})
 
 // GitHub edit link
-const github = appConfig.github;
+const github = appConfig.github
 const editLink = computed(() =>
   github
     ? [github.url, 'edit', github.branch, github.rootDir, 'content', route.path]
         .filter(Boolean)
         .join('/')
     : null,
-);
+)
 
-provide('navigation_docs', docsNavigation);
+provide('navigation_docs', docsNavigation)
 
 useHead({
   link: [
@@ -85,29 +85,32 @@ useHead({
       crossorigin: 'anonymous',
     },
   ],
-});
+})
 
 // Content ready state (for citations/bibliography)
-const contentReady = ref(false);
+const contentReady = ref(false)
 
 watch(
   page,
   async (newPage) => {
-    contentReady.value = false;
+    contentReady.value = false
     if (newPage) {
-      await nextTick();
-      await nextTick();
-      contentReady.value = true;
+      await nextTick()
+      await nextTick()
+      contentReady.value = true
     }
   },
   { immediate: true },
-);
+)
 </script>
 
 <template>
   <UMain>
     <UContainer>
-      <UPage v-if="page" :key="route.path">
+      <UPage
+        v-if="page"
+        :key="route.path"
+      >
         <!-- LEFT: Static navigation -->
         <template #left>
           <UPageAside>
@@ -167,20 +170,23 @@ watch(
             </USeparator>
 
             <UContentSurround
-              :surround="surround"
               :key="`surround-${route.path}`"
+              :surround="surround"
             />
             <Bibliography :key="`bibliography-${route.path}`" />
           </template>
         </UPageBody>
 
         <!-- RIGHT: Dynamic TOC -->
-        <template v-if="page?.body?.toc?.links?.length" #right>
+        <template
+          v-if="page?.body?.toc?.links?.length"
+          #right
+        >
           <UContentToc
+            :key="`toc-${route.path}`"
             highlight
             :title="appConfig.toc?.title || 'Table of Contents'"
             :links="page.body.toc.links"
-            :key="`toc-${route.path}`"
           >
             <template #bottom>
               <DocsAsideRightBottom />

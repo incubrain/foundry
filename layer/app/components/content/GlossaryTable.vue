@@ -1,37 +1,37 @@
 <script setup lang="ts">
-import type { BadgeProps } from '@nuxt/ui';
+import type { BadgeProps } from '@nuxt/ui'
 
-const { allTermsWithCategory, categoryColors } = useGlossary();
+const { allTermsWithCategory, categoryColors } = useGlossary()
 
 // Sort alphabetically
 const allTerms = computed(() => {
   return [...allTermsWithCategory.value].sort((a, b) =>
     a.term.localeCompare(b.term),
-  );
-});
+  )
+})
 
 // Cast to BadgeProps color type
 const categoryColor = computed<Record<string, BadgeProps['color']>>(() => {
-  return categoryColors.value as Record<string, BadgeProps['color']>;
-});
+  return categoryColors.value as Record<string, BadgeProps['color']>
+})
 
 // Watch for hash changes
-const route = useRoute();
-const globalFilter = ref('' as string);
+const route = useRoute()
+const globalFilter = ref('' as string)
 
 watch(
   () => route.query,
   (newQuery) => {
     if (newQuery) {
       nextTick(() => {
-        globalFilter.value = String(newQuery.search ?? '');
-      });
+        globalFilter.value = String(newQuery.search ?? '')
+      })
     }
   },
   {
     immediate: true,
   },
-);
+)
 </script>
 
 <template>

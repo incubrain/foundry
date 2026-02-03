@@ -1,29 +1,35 @@
 <script setup lang="ts">
 const props = defineProps<{
-  title?: string;
-  description?: string;
+  title?: string
+  description?: string
   items?: Array<{
-    quote: string;
-    name: string;
-    role: string;
-    avatarUrl?: string;
-    link?: string;
-    highlight?: boolean;
-  }>;
+    quote: string
+    name: string
+    role: string
+    avatarUrl?: string
+    link?: string
+    highlight?: boolean
+  }>
   cta?: {
-    headline?: string;
-    message?: string;
-    label?: string;
-    to?: string;
-  };
-}>();
+    headline?: string
+    message?: string
+    label?: string
+    to?: string
+  }
+}>()
 
-const testimonials = computed(() => props.items || []);
+const testimonials = computed(() => props.items || [])
 </script>
 
 <template>
-  <SectionWrapper id="results" has-bottom>
-    <SectionHeader :title="title" :description="description" />
+  <SectionWrapper
+    id="results"
+    has-bottom
+  >
+    <SectionHeader
+      :title="title"
+      :description="description"
+    />
 
     <UPageColumns class="mt-12 sm:mt-16">
       <UPageCard
@@ -42,16 +48,26 @@ const testimonials = computed(() => props.items || []);
               :alt="testimonial.name"
             />
             <div>
-              <div class="font-medium text-white">{{ testimonial.name }}</div>
-              <div class="text-sm text-neutral-500">{{ testimonial.role }}</div>
+              <div class="font-medium text-white">
+                {{ testimonial.name }}
+              </div>
+              <div class="text-sm text-neutral-500">
+                {{ testimonial.role }}
+              </div>
             </div>
           </div>
         </template>
       </UPageCard>
     </UPageColumns>
 
-    <template v-if="cta" #cta>
-      <NavCta :title="cta.headline" :description="cta.message">
+    <template
+      v-if="cta"
+      #cta
+    >
+      <NavCta
+        :title="cta.headline"
+        :description="cta.message"
+      >
         <template #links>
           <UButton
             v-if="cta.label && cta.to"

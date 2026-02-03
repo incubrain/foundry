@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import { useIntersectionObserver, useMediaControls } from '@vueuse/core';
+import { useIntersectionObserver, useMediaControls } from '@vueuse/core'
 
 interface Props {
-  src: string;
-  alt?: string;
-  poster?: string;
-  aspectRatio?: 'square' | 'video' | 'portrait' | 'wide' | 'auto';
-  autoplay?: boolean;
-  loop?: boolean;
-  muted?: boolean;
-  loading?: 'eager' | 'lazy';
+  src: string
+  alt?: string
+  poster?: string
+  aspectRatio?: 'square' | 'video' | 'portrait' | 'wide' | 'auto'
+  autoplay?: boolean
+  loop?: boolean
+  muted?: boolean
+  loading?: 'eager' | 'lazy'
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -20,68 +20,68 @@ const props = withDefaults(defineProps<Props>(), {
   loop: false,
   loading: 'lazy',
   poster: undefined,
-});
+})
 
-const containerRef = ref<HTMLElement>();
-const videoRef = ref<HTMLVideoElement>();
+const containerRef = ref<HTMLElement>()
+const videoRef = ref<HTMLVideoElement>()
 
-const isLoading = ref(true);
-const hasError = ref(false);
-const shouldLoad = ref(props.loading === 'eager');
-const showControls = ref(false);
+const isLoading = ref(true)
+const hasError = ref(false)
+const shouldLoad = ref(props.loading === 'eager')
+const showControls = ref(false)
 
 const { playing, waiting, muted } = useMediaControls(videoRef, {
   src: computed(() => (shouldLoad.value ? props.src : '')),
-});
+})
 
 if (props.loading === 'lazy') {
   useIntersectionObserver(
     containerRef,
     ([{ isIntersecting }]) => {
       if (isIntersecting && !shouldLoad.value) {
-        shouldLoad.value = true;
+        shouldLoad.value = true
       }
     },
     { threshold: 0.1 },
-  );
+  )
 }
 
 const handleLoadedData = () => {
-  isLoading.value = false;
-  hasError.value = false;
-};
+  isLoading.value = false
+  hasError.value = false
+}
 
 const handleError = () => {
-  isLoading.value = false;
-  hasError.value = true;
-};
+  isLoading.value = false
+  hasError.value = true
+}
 
 const togglePlay = () => {
-  playing.value = !playing.value;
-};
+  playing.value = !playing.value
+}
 
 const toggleMute = () => {
-  muted.value = !muted.value;
-};
+  muted.value = !muted.value
+}
 
 // Autoplay logic
 watchEffect(() => {
   if (
-    videoRef.value &&
-    props.autoplay &&
-    props.muted &&
-    shouldLoad.value &&
-    !hasError.value
+    videoRef.value
+    && props.autoplay
+    && props.muted
+    && shouldLoad.value
+    && !hasError.value
   ) {
-    playing.value = true;
+    playing.value = true
   }
-});
+})
 
 watchEffect(() => {
   if (videoRef.value) {
-    muted.value = props.muted;
+    muted.value = props.muted
   }
-});
+})
 
 const aspectRatioClass = {
   square: 'aspect-square',
@@ -89,14 +89,14 @@ const aspectRatioClass = {
   portrait: 'aspect-[3/4]',
   wide: 'aspect-[21/9]',
   auto: 'aspect-auto',
-}[props.aspectRatio];
+}[props.aspectRatio]
 
 const rootClasses = computed(() => [
   'relative overflow-hidden bg-black transition-all duration-300 rounded-lg',
   aspectRatioClass,
   isLoading.value && shouldLoad.value && 'animate-pulse',
   hasError.value && 'bg-red-900/50',
-]);
+])
 </script>
 
 <template>
@@ -118,7 +118,10 @@ const rootClasses = computed(() => [
       @loadeddata="handleLoadedData"
       @error="handleError"
     >
-      <source :src="src" type="video/mp4" />
+      <source
+        :src="src"
+        type="video/mp4"
+      >
       <p>Your browser doesn't support video playback.</p>
     </video>
 
@@ -154,7 +157,10 @@ const rootClasses = computed(() => [
       v-if="isLoading && shouldLoad"
       class="absolute inset-0 flex items-center justify-center"
     >
-      <UIcon name="i-lucide-loader" class="size-8 animate-spin text-white" />
+      <UIcon
+        name="i-lucide-loader"
+        class="size-8 animate-spin text-white"
+      />
     </div>
 
     <!-- Error State -->
@@ -162,9 +168,16 @@ const rootClasses = computed(() => [
       v-if="hasError"
       class="absolute inset-0 flex flex-col items-center justify-center text-center p-6 text-white"
     >
-      <UIcon name="i-lucide-video-off" class="size-12 mb-2" />
-      <p class="text-sm mb-3">Failed to load video</p>
-      <p class="text-xs opacity-75">{{ src }}</p>
+      <UIcon
+        name="i-lucide-video-off"
+        class="size-12 mb-2"
+      />
+      <p class="text-sm mb-3">
+        Failed to load video
+      </p>
+      <p class="text-xs opacity-75">
+        {{ src }}
+      </p>
     </div>
 
     <!-- Not Loaded Yet -->
@@ -172,7 +185,10 @@ const rootClasses = computed(() => [
       v-if="!shouldLoad"
       class="absolute inset-0 flex items-center justify-center"
     >
-      <UIcon name="i-lucide-video" class="size-8 text-white" />
+      <UIcon
+        name="i-lucide-video"
+        class="size-8 text-white"
+      />
     </div>
 
     <!-- Buffering State -->
@@ -180,7 +196,10 @@ const rootClasses = computed(() => [
       v-if="waiting && !hasError && !isLoading"
       class="absolute inset-0 flex items-center justify-center"
     >
-      <UIcon name="i-lucide-loader" class="size-6 animate-spin text-white" />
+      <UIcon
+        name="i-lucide-loader"
+        class="size-6 animate-spin text-white"
+      />
     </div>
   </div>
 </template>

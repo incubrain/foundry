@@ -1,27 +1,27 @@
 <script setup lang="ts">
-import type { AccordionItem, TabsItem } from '@nuxt/ui';
+import type { AccordionItem, TabsItem } from '@nuxt/ui'
 
 defineProps<{
-  title?: string;
-  description?: string;
+  title?: string
+  description?: string
   cta?: {
-    headline?: string;
-    message?: string;
-    label?: string;
-    to?: string;
-    icon?: string;
-  };
-}>();
+    headline?: string
+    message?: string
+    label?: string
+    to?: string
+    icon?: string
+  }
+}>()
 
 const { data: faqFiles } = await useAsyncData('faqs', () =>
   queryCollection('faq').all(),
-);
+)
 
 // Build tab items from file metadata
 const tabItems = computed<TabsItem[]>(() => {
-  if (!faqFiles.value) return [];
+  if (!faqFiles.value) return []
 
-  return faqFiles.value.map((file) => ({
+  return faqFiles.value.map(file => ({
     label: file.label,
     icon: file.icon,
     value: file.type,
@@ -32,37 +32,43 @@ const tabItems = computed<TabsItem[]>(() => {
       size: 'xs',
     },
     slot: file.type,
-  }));
-});
+  }))
+})
 
-const activeTab = ref(faqFiles.value?.[0]?.type || '');
+const activeTab = ref(faqFiles.value?.[0]?.type || '')
 
 const activeFaqs = computed(() => {
-  const file = faqFiles.value?.find((f) => f.type === activeTab.value);
-  if (!file) return [];
+  const file = faqFiles.value?.find(f => f.type === activeTab.value)
+  if (!file) return []
 
-  return file.items.map((item) => ({
+  return file.items.map(item => ({
     label: item.label,
     content: item.content,
     icon: file.icon,
     color: file.color,
-  }));
-});
+  }))
+})
 
 // Build accordion items for active tab
 const accordionItems = computed(() =>
-  activeFaqs.value.map((faq) => ({
+  activeFaqs.value.map(faq => ({
     label: faq.label,
     content: faq.content,
     icon: faq.icon,
     color: faq.color,
   })),
-);
+)
 </script>
 
 <template>
-  <SectionWrapper id="faq" has-bottom>
-    <SectionHeader :title="title" :description="description" />
+  <SectionWrapper
+    id="faq"
+    has-bottom
+  >
+    <SectionHeader
+      :title="title"
+      :description="description"
+    />
 
     <UTabs
       v-model="activeTab"
@@ -101,12 +107,21 @@ const accordionItems = computed(() =>
       }"
     />
 
-    <div v-if="accordionItems.length" class="w-full mx-auto">
+    <div
+      v-if="accordionItems.length"
+      class="w-full mx-auto"
+    >
       <FaqAccordion :items="accordionItems" />
     </div>
 
-    <template v-if="cta" #cta>
-      <NavCta :title="cta.headline" :description="cta.message">
+    <template
+      v-if="cta"
+      #cta
+    >
+      <NavCta
+        :title="cta.headline"
+        :description="cta.message"
+      >
         <template #links>
           <UButton
             v-if="cta.label && cta.to"

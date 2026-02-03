@@ -1,13 +1,15 @@
-import { createResolver } from '@nuxt/kit';
+import { createResolver } from '@nuxt/kit'
 
-const { resolve } = createResolver(import.meta.url);
+const { resolve } = createResolver(import.meta.url)
 
-const SITE_URL = 'https://astronera.org';
+const SITE_URL = 'https://astronera.org'
 
 export default defineNuxtConfig({
   extends: ['@incubrain/foundry'],
 
   modules: ['nuxt-studio', 'nuxt-llms'],
+
+  css: [resolve('./app/assets/theme.css')],
 
   site: {
     name: 'AstronEra',
@@ -20,22 +22,6 @@ export default defineNuxtConfig({
         cited: 'Cited',
         defn: 'Defn',
       },
-    },
-  },
-
-  css: [resolve('./app/assets/theme.css')],
-
-  llms: {
-    domain: SITE_URL,
-    title: 'Dark Sky Conservation in Maharashtra',
-    description: 'Dark Sky Conservation in Maharashtra',
-    notes: [
-      'The documentation only includes Dark Sky Conservation in Maharashtra docs.',
-      'The content is automatically generated from the same source as the official documentation.',
-    ],
-    full: {
-      title: 'Complete Documentation',
-      description: 'The complete documentation including all content',
     },
   },
 
@@ -65,6 +51,36 @@ export default defineNuxtConfig({
     },
   },
 
+  vite: {
+    server: {
+      fs: {
+        allow: [
+          // pnpm workspace HRM fix
+          resolve('../../'),
+          resolve('../../layer'),
+        ],
+      },
+      watch: {
+        // critical for pnpm + symlinks
+        followSymlinks: true,
+      },
+    },
+  },
+
+  llms: {
+    domain: SITE_URL,
+    title: 'Dark Sky Conservation in Maharashtra',
+    description: 'Dark Sky Conservation in Maharashtra',
+    notes: [
+      'The documentation only includes Dark Sky Conservation in Maharashtra docs.',
+      'The content is automatically generated from the same source as the official documentation.',
+    ],
+    full: {
+      title: 'Complete Documentation',
+      description: 'The complete documentation including all content',
+    },
+  },
+
   studio: {
     meta: {
       components: {
@@ -81,20 +97,4 @@ export default defineNuxtConfig({
       private: false,
     },
   },
-
-  vite: {
-    server: {
-      fs: {
-        allow: [
-          // pnpm workspace HRM fix
-          resolve('../../'),
-          resolve('../../layer'),
-        ],
-      },
-      watch: {
-        // critical for pnpm + symlinks
-        followSymlinks: true,
-      },
-    },
-  },
-});
+})

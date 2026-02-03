@@ -5,4 +5,4 @@ export default defineNuxtConfig({
     name: 'Founder Funnel Docs',
     description: 'Documentation for Founder Funnel',
   },
-});
+})

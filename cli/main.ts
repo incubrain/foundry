@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { createCLI } from './cli';
+import { createCLI } from './cli'
 
 const cli = createCLI({
   name: 'create-foundry',
@@ -7,6 +7,6 @@ const cli = createCLI({
   setup: {
     defaults: {},
   },
-});
+})
 
-cli.runMain();
+cli.runMain()

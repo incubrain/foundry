@@ -1,5 +1,5 @@
-import { z, property } from '@nuxt/content';
-import { ICON_LIBRARIES } from './shared/constants';
+import { z, property } from '@nuxt/content'
+import { ICON_LIBRARIES } from './shared/constants'
 
 export const baseConfigSchema = z.object({
   business: z.object({
@@ -10,7 +10,7 @@ export const baseConfigSchema = z.object({
     mission: z.string(),
   }),
   socials: z.record(z.string(), z.string()).optional(),
-});
+})
 
 export const baseFaqSchema = z.object({
   type: z.string(),
@@ -26,7 +26,7 @@ export const baseFaqSchema = z.object({
       content: z.string(),
     }),
   ),
-});
+})
 
 export const basePageSchema = z.object({
   label: z.string().optional(),
@@ -49,7 +49,7 @@ export const basePageSchema = z.object({
       }),
     )
     .optional(),
-});
+})
 
 export const baseReferencesSchema = z.object({
   category: z.object({
@@ -69,7 +69,7 @@ export const baseReferencesSchema = z.object({
       url: z.string().optional(),
     }),
   ),
-});
+})
 
 export const baseGlossarySchema = z.object({
   category: z.object({
@@ -85,7 +85,7 @@ export const baseGlossarySchema = z.object({
       definition: z.string(),
     }),
   ),
-});
+})
 
 // Reusable navigation link schema
 const navigationLinkSchema = z.object({
@@ -96,12 +96,12 @@ const navigationLinkSchema = z.object({
     iconLibraries: [...ICON_LIBRARIES],
   }),
   target: z.string().optional(),
-});
+})
 
 // Navigation link with children (for footer columns)
 const navigationColumnSchema = navigationLinkSchema.extend({
   children: z.array(navigationLinkSchema).optional(),
-});
+})
 
 export const bannerSchema = z.object({
   title: z.string().optional(),
@@ -124,7 +124,7 @@ export const bannerSchema = z.object({
       }),
     )
     .optional(),
-});
+})
 
 export const baseNavigationSchema = z.object({
   // inherit broken for nuxt/ui pending fix: https://github.com/nuxt/ui/issues/5919
@@ -141,4 +141,4 @@ export const baseNavigationSchema = z.object({
     columns: z.array(navigationColumnSchema).optional(),
     bottom: z.array(navigationLinkSchema).optional(),
   }),
-});
+})

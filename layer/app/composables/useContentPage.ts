@@ -1,26 +1,26 @@
-import type { PageCollections } from '@nuxt/content';
+import type { PageCollections } from '@nuxt/content'
 
 export interface ContentPageContext {
   /** Which content collection produced this page */
-  collection: string;
+  collection: string
 
   /** The actual page document (Nuxt Content item) */
-  page: any | null;
+  page: any | null
 
   /** Optional navigation tree (docs sidebar, etc.) */
-  navigation?: any;
+  navigation?: any
 
   /** Optional prev/next surround data */
-  surround?: any;
+  surround?: any
 
   /** Optional SEO overrides */
   seo?: {
-    title?: string;
-    description?: string;
-  };
+    title?: string
+    description?: string
+  }
 
   /** Arbitrary extra metadata (edit links, flags, etc.) */
-  meta?: Record<string, any>;
+  meta?: Record<string, any>
 }
 
 /**
@@ -37,24 +37,24 @@ export interface ContentPageContext {
  * ```
  */
 export const useContentPage = () => {
-  const route = useRoute();
-  const { getCollectionForRoute } = useContentConfig();
+  const route = useRoute()
+  const { getCollectionForRoute } = useContentConfig()
 
   // Shared state (for components that need access without re-fetching)
-  const context = useState<ContentPageContext | null>('content-page', () => null);
+  const context = useState<ContentPageContext | null>('content-page', () => null)
 
   // Dynamically determine collection based on route
   const collection = computed(
     () => getCollectionForRoute(route.path) as keyof PageCollections,
-  );
+  )
 
   // Clear context immediately when route changes (before new data loads)
   watch(
     () => route.path,
     () => {
-      context.value = null;
+      context.value = null
     },
-  );
+  )
 
   /**
    * Fetch page data for the current route.
@@ -64,14 +64,14 @@ export const useContentPage = () => {
     return useAsyncData(
       () => `page-${collection.value}-${route.path}`,
       () => {
-        console.log('[useContentPage] Querying:', collection.value, route.path);
-        return queryCollection(collection.value).path(route.path).first();
+        console.log('[useContentPage] Querying:', collection.value, route.path)
+        return queryCollection(collection.value).path(route.path).first()
       },
       {
         watch: [() => route.path, collection],
       },
-    );
-  };
+    )
+  }
 
   /**
    * Update the shared context (call after fetching page data).
@@ -82,8 +82,8 @@ export const useContentPage = () => {
     extras?: Partial<Omit<ContentPageContext, 'collection' | 'page' | 'seo'>>,
   ) => {
     if (!page) {
-      context.value = null;
-      return;
+      context.value = null
+      return
     }
 
     context.value = {
@@ -94,8 +94,8 @@ export const useContentPage = () => {
         description: page.seo?.description || page.description,
       },
       ...extras,
-    };
-  };
+    }
+  }
 
   return {
     /** Current collection (computed from route) */
@@ -109,5 +109,5 @@ export const useContentPage = () => {
 
     /** Shared context state (read-only for components) */
     context,
-  };
-};
+  }
+}

@@ -11,11 +11,11 @@ const props = withDefaults(defineProps<{
   description: string
   url?: string
 }>(), {
-    label: 'Share Page',
-    size: 'xl',
-    color: 'primary',
-    variant: 'subtle',
-    trailingIcon: 'i-lucide-share'
+  label: 'Share Page',
+  size: 'xl',
+  color: 'primary',
+  variant: 'subtle',
+  trailingIcon: 'i-lucide-share',
 })
 
 const selected = ref(undefined)
@@ -27,32 +27,32 @@ const items = computed(() => {
     {
       label: 'Share on Twitter/X',
       icon: 'i-lucide-twitter',
-      value: 'twitter'
+      value: 'twitter',
     },
     {
       label: 'Share on LinkedIn',
       icon: 'i-lucide-linkedin',
-      value: 'linkedin'
+      value: 'linkedin',
     },
     {
       label: 'Share on Facebook',
       icon: 'i-lucide-facebook',
-      value: 'facebook'
+      value: 'facebook',
     },
     {
       label: 'Share via Email',
       icon: 'i-lucide-mail',
-      value: 'email'
+      value: 'email',
     },
     {
-      type: 'separator' 
+      type: 'separator',
     },
     {
       label: copied.value ? 'Copied!' : 'Copy Link',
       icon: copied.value ? 'i-lucide-check' : 'i-lucide-link',
       value: 'copy',
-      chip: copied.value ? { color: 'success' } : undefined
-    }
+      chip: copied.value ? { color: 'success' } : undefined,
+    },
   ]
   return baseItems
 })
@@ -79,9 +79,9 @@ const handleSelect = (value: string) => {
   const url = shareUrl.value
   const title = encodeText(props.title || '')
   const description = encodeText(props.description || '')
-  
+
   let shareLink = ''
-  
+
   switch (value) {
     case 'twitter':
       shareLink = `https://twitter.com/intent/tweet?text=${title}&url=${encodeText(url)}`
@@ -99,11 +99,11 @@ const handleSelect = (value: string) => {
       copyLink()
       break
   }
-  
+
   if (shareLink) {
     window.open(shareLink, '_blank', 'noopener,noreferrer,width=600,height=600')
   }
-  
+
   // Reset selection
   nextTick(() => {
     selected.value = undefined
@@ -122,12 +122,13 @@ const copyLink = async () => {
   try {
     await navigator.clipboard.writeText(shareUrl.value)
     copied.value = true
-    
+
     // Reset after 2 seconds
     setTimeout(() => {
       copied.value = false
     }, 2000)
-  } catch (err) {
+  }
+  catch (err) {
     console.error('Failed to copy:', err)
   }
 }
@@ -146,7 +147,10 @@ const copyLink = async () => {
 
     <template #content>
       <div class="flex flex-col gap-1 p-2 min-w-48">
-        <template v-for="item in items" :key="item.value || item.type">
+        <template
+          v-for="item in items"
+          :key="item.value || item.type"
+        >
           <div
             v-if="item.type === 'separator'"
             class="my-1 h-px bg-border"
@@ -174,4 +178,3 @@ const copyLink = async () => {
     </template>
   </UPopover>
 </template>
-

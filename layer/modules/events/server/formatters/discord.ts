@@ -1,19 +1,19 @@
-import type { SpamFlags } from '../../server/utils/anti-spam';
+import type { SpamFlags } from '../../server/utils/anti-spam'
 
 export function formatDiscordMessage(data: {
-  formData?: Record<string, any>;
-  flags: SpamFlags;
+  formData?: Record<string, any>
+  flags: SpamFlags
 }) {
-  const risk =
-    data.flags.score > 50 ? '⚠️' : data.flags.score > 20 ? '⚡' : '✅';
-  const primaryEmail = data.formData?.email || 'No Email';
+  const risk
+    = data.flags.score > 50 ? '⚠️' : data.flags.score > 20 ? '⚡' : '✅'
+  const primaryEmail = data.formData?.email || 'No Email'
 
-  const color =
-    data.flags.score > 50
-      ? 0xff6b6b
+  const color
+    = data.flags.score > 50
+      ? 0xFF6B6B
       : data.flags.score > 20
-        ? 0xffd93d
-        : 0x00ff00;
+        ? 0xFFD93D
+        : 0x00FF00
 
   const discordFields = [
     { name: '📧 Email', value: `\`${primaryEmail}\``, inline: false },
@@ -28,7 +28,7 @@ export function formatDiscordMessage(data: {
     data.flags.score > 0
       ? { name: '⚠️ Risk', value: `${data.flags.score}/100`, inline: true }
       : null,
-  ].filter(Boolean);
+  ].filter(Boolean)
 
   return {
     content: `${risk} **New Lead**`,
@@ -39,5 +39,5 @@ export function formatDiscordMessage(data: {
         timestamp: new Date().toISOString(),
       },
     ],
-  };
+  }
 }

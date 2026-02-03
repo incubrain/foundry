@@ -1,38 +1,38 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue';
-import { useIntersectionObserver, useScroll } from '@vueuse/core';
-import type { PageHeroProps, PageHeroSlots } from '@nuxt/ui';
+import { ref, computed } from 'vue'
+import { useIntersectionObserver, useScroll } from '@vueuse/core'
+import type { PageHeroProps, PageHeroSlots } from '@nuxt/ui'
 
-const props = defineProps<PageHeroProps>();
-const heroRef = ref<HTMLElement | null>(null);
+const props = defineProps<PageHeroProps>()
+const heroRef = ref<HTMLElement | null>(null)
 
-const { trackEvent } = useEvents();
-const hasTriggered = ref(false);
+const { trackEvent } = useEvents()
+const hasTriggered = ref(false)
 
 const { stop } = useIntersectionObserver(
   heroRef,
   ([entry]) => {
-    if (!entry?.isIntersecting || hasTriggered.value) return;
+    if (!entry?.isIntersecting || hasTriggered.value) return
 
-    hasTriggered.value = true;
+    hasTriggered.value = true
 
     trackEvent({
       id: 'hero_view',
       type: 'hero_view',
       target: 'page_hero',
-    });
+    })
 
-    stop();
+    stop()
   },
   { threshold: 0.2 },
-);
+)
 
 // Extend slots to include overlap slot
 interface ExtendedSlots extends PageHeroSlots {
-  overlap(): any;
+  overlap(): any
 }
 
-defineSlots<ExtendedSlots>();
+defineSlots<ExtendedSlots>()
 </script>
 
 <template>
@@ -51,7 +51,10 @@ defineSlots<ExtendedSlots>();
             headline: 'text-secondary-300 font-bold',
           }"
         >
-          <template v-for="(_, slot) in $slots" #[slot]="scope">
+          <template
+            v-for="(_, slot) in $slots"
+            #[slot]="scope"
+          >
             <slot
               v-if="slot !== 'overlap'"
               :name="slot as keyof PageHeroSlots"

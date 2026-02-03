@@ -1,7 +1,7 @@
-import { z } from 'zod';
-import { queryCollection } from '@nuxt/content/server';
-import type { Collections } from '@nuxt/content';
-import { inferSiteURL } from '../../../shared/utils/meta';
+import { z } from 'zod'
+import { queryCollection } from '@nuxt/content/server'
+import type { Collections } from '@nuxt/content'
+import { inferSiteURL } from '../../../shared/utils/meta'
 
 export default defineMcpTool({
   description: `Retrieves the full content and details of a specific documentation page.
@@ -25,8 +25,8 @@ WORKFLOW: This tool returns the complete page content including title, descripti
   },
   cache: '1h',
   handler: async ({ path }) => {
-    const event = useEvent();
-    const siteUrl = import.meta.dev ? 'http://localhost:3000' : inferSiteURL();
+    const event = useEvent()
+    const siteUrl = import.meta.dev ? 'http://localhost:3000' : inferSiteURL()
 
     try {
       const page = await queryCollection(
@@ -35,15 +35,15 @@ WORKFLOW: This tool returns the complete page content including title, descripti
       )
         .where('path', '=', path)
         .select('title', 'path', 'description')
-        .first();
+        .first()
 
       if (!page) {
-        return errorResult('Page not found');
+        return errorResult('Page not found')
       }
 
       const content = await $fetch<string>(`/raw${path}.md`, {
         baseURL: siteUrl,
-      });
+      })
 
       return jsonResult({
         title: page.title,
@@ -51,9 +51,10 @@ WORKFLOW: This tool returns the complete page content including title, descripti
         description: page.description,
         content,
         url: `${siteUrl}${page.path}`,
-      });
-    } catch {
-      return errorResult('Failed to get page');
+      })
+    }
+    catch {
+      return errorResult('Failed to get page')
     }
   },
-});
+})

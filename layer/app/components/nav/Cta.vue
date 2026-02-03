@@ -1,19 +1,19 @@
 <script setup lang="ts">
 interface Props {
   cta?: {
-    headline?: string;
-    message?: string;
-    primary?: boolean;
+    headline?: string
+    message?: string
+    primary?: boolean
     button: {
-      label: string;
-      to: string;
-      icon: string;
-    };
-  };
-  title?: string;
-  description?: string;
-  variant?: 'outline' | 'solid' | 'soft' | 'subtle' | 'naked';
-  orientation?: 'vertical' | 'horizontal';
+      label: string
+      to: string
+      icon: string
+    }
+  }
+  title?: string
+  description?: string
+  variant?: 'outline' | 'solid' | 'soft' | 'subtle' | 'naked'
+  orientation?: 'vertical' | 'horizontal'
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -22,13 +22,13 @@ const props = withDefaults(defineProps<Props>(), {
   description: undefined,
   variant: 'outline',
   orientation: 'vertical',
-});
+})
 
 // Computed values to handle mix of direct props and cta object
-const displayTitle = computed(() => props.title || props.cta?.headline);
+const displayTitle = computed(() => props.title || props.cta?.headline)
 const displayDescription = computed(
   () => props.description || props.cta?.message,
-);
+)
 // Generate links only if cta object is present and using default button logic
 const defaultLinks = computed(() => {
   if (props.cta && !props.cta.primary) {
@@ -41,10 +41,10 @@ const defaultLinks = computed(() => {
         variant: 'subtle',
         size: 'lg',
       },
-    ];
+    ]
   }
-  return [];
-});
+  return []
+})
 </script>
 
 <template>
@@ -82,7 +82,10 @@ const defaultLinks = computed(() => {
         <slot name="links" />
       </template>
 
-      <template v-if="cta?.primary" #footer>
+      <template
+        v-if="cta?.primary"
+        #footer
+      >
         <div class="max-w-2xl mx-auto pt-4">
           <ConvertForm
             location="section-cta"

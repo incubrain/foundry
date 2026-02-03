@@ -1,23 +1,23 @@
 <script setup lang="ts">
-import { useClipboard } from '@vueuse/core';
-import { useRuntimeConfig } from '#imports';
+import { useClipboard } from '@vueuse/core'
+import { useRuntimeConfig } from '#imports'
 
-const route = useRoute();
-const toast = useToast();
-const appBaseURL = useRuntimeConfig().app?.baseURL || '/';
+const route = useRoute()
+const toast = useToast()
+const appBaseURL = useRuntimeConfig().app?.baseURL || '/'
 
-const { copy, copied } = useClipboard();
+const { copy, copied } = useClipboard()
 
 const markdownLink = computed(
   () => `${window?.location?.origin}${appBaseURL}raw${route.path}.md`,
-);
+)
 const items = [
   [
     {
       label: 'Copy Link',
       icon: 'i-lucide-link',
       onSelect() {
-        copy(markdownLink.value);
+        copy(markdownLink.value)
       },
     },
     {
@@ -44,11 +44,11 @@ const items = [
       label: 'Copy MCP Server URL',
       icon: 'i-lucide-link',
       onSelect() {
-        copy(`${window?.location?.origin}${appBaseURL}mcp`);
+        copy(`${window?.location?.origin}${appBaseURL}mcp`)
         toast.add({
           title: 'Copied to clipboard',
           icon: 'i-lucide-check-circle',
-        });
+        })
       },
     },
     {
@@ -58,11 +58,11 @@ const items = [
       to: `/mcp/deeplink`,
     },
   ],
-];
+]
 
 async function copyPage() {
-  const page = await $fetch<string>(`/raw${route.path}.md`);
-  copy(page);
+  const page = await $fetch<string>(`/raw${route.path}.md`)
+  copy(page)
 }
 </script>
 

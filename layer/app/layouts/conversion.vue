@@ -1,41 +1,41 @@
 <script setup lang="ts">
-const route = useRoute();
+const route = useRoute()
 
 // Use unified content page composable
-const { getPage, setContext } = useContentPage();
+const { getPage, setContext } = useContentPage()
 
 // Get business name from site config
-const { getSiteConfig } = useContentCache();
-const { data: siteConfig } = await getSiteConfig();
-const pageTitle = computed(() => siteConfig.value?.business?.name || 'Welcome');
+const { getSiteConfig } = useContentCache()
+const { data: siteConfig } = await getSiteConfig()
+const pageTitle = computed(() => siteConfig.value?.business?.name || 'Welcome')
 
 // Fetch page data
-const { data: page } = await getPage();
+const { data: page } = await getPage()
 
 if (!page.value) {
   throw createError({
     statusCode: 404,
     statusMessage: 'Page not found',
     fatal: true,
-  });
+  })
 }
 
 // Publish context for components
 watchEffect(() => {
-  if (!page.value || page.value.path !== route.path) return;
-  setContext(page.value);
-});
+  if (!page.value || page.value.path !== route.path) return
+  setContext(page.value)
+})
 
 // SEO
 watchEffect(() => {
-  if (!page.value) return;
+  if (!page.value) return
   useSeoMeta({
     title: page.value.title,
     description: page.value.description,
     ogTitle: page.value.title,
     ogDescription: page.value.description,
-  });
-});
+  })
+})
 
 // OG Image generation
 watch(
@@ -49,11 +49,11 @@ watch(
           description: newPage.description,
           image: siteConfig.value?.business?.logo,
         },
-      });
+      })
     }
   },
   { immediate: true },
-);
+)
 </script>
 
 <template>
@@ -81,7 +81,10 @@ watch(
       <!-- Content wrapper -->
       <UContainer class="relative z-10">
         <div class="max-w-3xl mx-auto">
-          <UPageHero :title="page?.title" :description="page?.description" />
+          <UPageHero
+            :title="page?.title"
+            :description="page?.description"
+          />
           <slot />
         </div>
       </UContainer>

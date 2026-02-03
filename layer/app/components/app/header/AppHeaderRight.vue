@@ -1,26 +1,29 @@
 <script setup lang="ts">
-import type { HeaderConfig } from '#navigation';
+import type { HeaderConfig } from '#navigation'
 
-const headerData = inject<Ref<HeaderConfig>>('navigation_header');
+const headerData = inject<Ref<HeaderConfig>>('navigation_header')
 
-const showSearch = computed(() => headerData?.value?.showSearch ?? true);
-const showColorMode = computed(() => headerData?.value?.showColorMode ?? true);
+const showSearch = computed(() => headerData?.value?.showSearch ?? true)
+const showColorMode = computed(() => headerData?.value?.showColorMode ?? true)
 
 const socialLinks = computed(() => {
-  if (!headerData?.value?.socials) return [];
+  if (!headerData?.value?.socials) return []
 
   return Object.entries(headerData.value.socials).map(([key, url]) => ({
     'icon': key === 'email' ? 'i-lucide-mail' : `i-simple-icons-${key}`,
     'to': url,
     'target': '_blank',
     'aria-label': key,
-  }));
-});
+  }))
+})
 </script>
 
 <template>
   <div class="flex items-center gap-1">
-    <UContentSearchButton v-if="showSearch" class="lg:hidden" />
+    <UContentSearchButton
+      v-if="showSearch"
+      class="lg:hidden"
+    />
 
     <ClientOnly>
       <UColorModeButton v-if="showColorMode" />

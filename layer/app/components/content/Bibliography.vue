@@ -1,17 +1,17 @@
 <!-- components/Bibliography.vue -->
 <script setup lang="ts">
-const route = useRoute();
-const { citations, allRefs } = useCitations();
+const route = useRoute()
+const { citations, allRefs } = useCitations()
 
 const sortedRefs = computed(() => {
   if (!allRefs.value?.length || !citations.value.length) {
-    return [];
+    return []
   }
 
   return citations.value
-    .map((id) => allRefs.value.find((r: any) => r.id === id))
-    .filter(Boolean);
-});
+    .map(id => allRefs.value.find((r: any) => r.id === id))
+    .filter(Boolean)
+})
 </script>
 
 <template>

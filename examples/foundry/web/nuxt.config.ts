@@ -1,9 +1,9 @@
-import { createResolver } from '@nuxt/kit';
-import { getActiveConfigSource } from '../../../layer/shared/config-resolver';
+import { createResolver } from '@nuxt/kit'
+import { getActiveConfigSource } from '../../../layer/shared/config-resolver'
 
-const { resolve } = createResolver(import.meta.url);
-const { contentRoot, publicDir } = getActiveConfigSource(resolve, 'web');
-const SITE_URL = process.env.NUXT_SITE_URL;
+const { resolve } = createResolver(import.meta.url)
+const { contentRoot, publicDir } = getActiveConfigSource(resolve, 'web')
+const SITE_URL = process.env.NUXT_SITE_URL
 
 export default defineNuxtConfig({
   extends: ['@incubrain/foundry'],
@@ -11,6 +11,10 @@ export default defineNuxtConfig({
   site: {
     name: 'Founder Funnel',
     description: 'Open-source funnel for technical founders',
+  },
+
+  dir: {
+    public: publicDir,
   },
 
   routeRules: {
@@ -34,10 +38,6 @@ export default defineNuxtConfig({
     // Documentation
     '/decisions': { appLayout: 'default', swr: 3600 },
     '/decisions/**': { appLayout: 'article', swr: 3600 },
-  },
-
-  dir: {
-    public: publicDir,
   },
 
   llms: {
@@ -108,4 +108,4 @@ export default defineNuxtConfig({
       private: false,
     },
   },
-});
+})

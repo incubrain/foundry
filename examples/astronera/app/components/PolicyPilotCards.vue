@@ -1,19 +1,19 @@
 <script setup lang="ts">
 interface CardContent {
-  title: string;
-  description: string;
+  title: string
+  description: string
   cta: {
-    label: string;
-    to: string;
-    icon?: string;
-  };
+    label: string
+    to: string
+    icon?: string
+  }
 }
 
 interface Props {
-  items?: CardContent[];
+  items?: CardContent[]
 }
 
-defineProps<Props>();
+defineProps<Props>()
 </script>
 
 <template>
@@ -27,7 +27,9 @@ defineProps<Props>();
       }"
     >
       <template #header>
-        <h3 class="text-xl font-semibold">{{ item.title }}</h3>
+        <h3 class="text-xl font-semibold">
+          {{ item.title }}
+        </h3>
       </template>
 
       <NuxtImg

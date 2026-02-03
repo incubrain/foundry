@@ -1,8 +1,8 @@
 import { ref, onMounted } from 'vue'
 
 export const useStarfield = (starCount = 60, shootingStarCount = 4) => {
-  const stars = ref<{ id: number; style: Record<string, string> }[]>([])
-  const shootingStars = ref<{ id: number; style: Record<string, string> }[]>([])
+  const stars = ref<{ id: number, style: Record<string, string> }[]>([])
+  const shootingStars = ref<{ id: number, style: Record<string, string> }[]>([])
   const isClient = ref(false)
 
   onMounted(() => {

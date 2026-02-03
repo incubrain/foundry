@@ -1,8 +1,8 @@
-import { createResolver } from '@nuxt/kit';
-import { getActiveConfigSource } from '../../../layer/shared/config-resolver';
+import { createResolver } from '@nuxt/kit'
+import { getActiveConfigSource } from '../../../layer/shared/config-resolver'
 
-const { resolve } = createResolver(import.meta.url);
-const { contentRoot, publicDir } = getActiveConfigSource(resolve, 'web');
+const { resolve } = createResolver(import.meta.url)
+const { contentRoot, publicDir } = getActiveConfigSource(resolve, 'web')
 
 export default defineNuxtConfig({
   extends: ['@incubrain/foundry'],
@@ -25,4 +25,4 @@ export default defineNuxtConfig({
       private: false,
     },
   },
-});
+})

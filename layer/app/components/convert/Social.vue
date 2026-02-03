@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import type { ButtonProps } from '@nuxt/ui';
+import type { ButtonProps } from '@nuxt/ui'
 
 interface Props {
-  location: string;
-  size?: ButtonProps['size'];
-  variant?: ButtonProps['variant'];
-  color?: ButtonProps['color'];
-  rounded?: boolean;
-  gap?: 'tight' | 'normal' | 'relaxed';
-  showEmail?: boolean; // NEW: Show email button
+  location: string
+  size?: ButtonProps['size']
+  variant?: ButtonProps['variant']
+  color?: ButtonProps['color']
+  rounded?: boolean
+  gap?: 'tight' | 'normal' | 'relaxed'
+  showEmail?: boolean // NEW: Show email button
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -18,52 +18,55 @@ const props = withDefaults(defineProps<Props>(), {
   rounded: true,
   gap: 'normal',
   showEmail: false, // Default: don't show email
-});
+})
 
-const { getFounder } = useContentCache();
-const { data: founder } = await getFounder();
-const { trackEvent } = useEvents();
+const { getFounder } = useContentCache()
+const { data: founder } = await getFounder()
+const { trackEvent } = useEvents()
 
 const gapClasses = {
   tight: 'gap-1',
   normal: 'gap-3',
   relaxed: 'gap-4',
-};
+}
 
 const handleClick = (platform: string, url: string) => {
   trackEvent({
     id: `offer_click_${props.location}_${platform.toLowerCase()}`,
     type: 'offer_click',
     target: 'social_external',
-  });
-};
+  })
+}
 
 // Email link (if showEmail is true)
 const emailLink = computed(() => {
-  if (!props.showEmail || !founder.value?.email) return null;
+  if (!props.showEmail || !founder.value?.email) return null
 
   return {
     label: 'Email',
     url: `mailto:${founder.value.email}`,
     icon: 'i-lucide-mail',
-  };
-});
+  }
+})
 
 // Combine email + social links
 const allLinks = computed(() => {
-  const links = [...(founder.value?.links || [])];
+  const links = [...(founder.value?.links || [])]
 
   // Prepend email link if enabled
   if (emailLink.value) {
-    links.unshift(emailLink.value);
+    links.unshift(emailLink.value)
   }
 
-  return links;
-});
+  return links
+})
 </script>
 
 <template>
-  <div v-if="allLinks.length" :class="['flex flex-wrap', gapClasses[gap]]">
+  <div
+    v-if="allLinks.length"
+    :class="['flex flex-wrap', gapClasses[gap]]"
+  >
     <UButton
       v-for="link in allLinks"
       :key="link.url"

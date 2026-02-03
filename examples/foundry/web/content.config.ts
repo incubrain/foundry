@@ -1,16 +1,16 @@
 // templates/foundry/content.config.ts
-import { defineContentConfig, z, defineCollection } from '@nuxt/content';
-import { createResolver } from '@nuxt/kit';
+import { defineContentConfig, z, defineCollection } from '@nuxt/content'
+import { createResolver } from '@nuxt/kit'
 import {
   baseConfigSchema,
   baseFaqSchema,
   baseNavigationSchema,
   basePageSchema,
-} from '../../../layer/content.collections';
-import { getActiveConfigSource } from '../../../layer/shared/config-resolver';
+} from '../../../layer/content.collections'
+import { getActiveConfigSource } from '../../../layer/shared/config-resolver'
 
-const { resolve } = createResolver(import.meta.url);
-const { contentDir: cwd } = getActiveConfigSource(resolve, 'web');
+const { resolve } = createResolver(import.meta.url)
+const { contentDir: cwd } = getActiveConfigSource(resolve, 'web')
 
 // ==========================================
 // EXTEND BASE SCHEMA
@@ -20,7 +20,7 @@ const extendedPagesSchema = basePageSchema.merge(
   z.object({
     testMergeField: z.string().optional(),
   }),
-);
+)
 
 // ==========================================
 // SINGLE CONTENT CONFIG
@@ -62,4 +62,4 @@ export default defineContentConfig({
       schema: baseNavigationSchema,
     }),
   },
-});
+})

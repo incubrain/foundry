@@ -1,19 +1,19 @@
 <script setup lang="ts">
-const route = useRoute();
-const { routing } = useContentConfig();
+const route = useRoute()
+const { routing } = useContentConfig()
 
 // Use unified content page composable
-const { collection, getPage, setContext } = useContentPage();
+const { collection, getPage, setContext } = useContentPage()
 
 // Fetch article data
-const { data: article } = await getPage();
+const { data: article } = await getPage()
 
 if (!article.value) {
   throw createError({
     statusCode: 404,
     statusMessage: 'Page not found',
     fatal: true,
-  });
+  })
 }
 
 // Fetch surround (prev/next)
@@ -26,22 +26,22 @@ const { data: surround } = await useAsyncData(
   {
     watch: [() => route.path, collection],
   },
-);
+)
 
 // Publish context for components
 watchEffect(() => {
-  if (!article.value || article.value.path !== route.path) return;
-  setContext(article.value, { surround: surround.value });
-});
+  if (!article.value || article.value.path !== route.path) return
+  setContext(article.value, { surround: surround.value })
+})
 
 // SEO
 watchEffect(() => {
-  if (!article.value) return;
+  if (!article.value) return
   useHead({
     title: article.value.title,
     meta: [{ name: 'description', content: article.value.description }],
-  });
-});
+  })
+})
 </script>
 
 <template>
@@ -69,7 +69,10 @@ watchEffect(() => {
               v-if="article?.label"
               class="flex items-center gap-2 px-3 py-1.5 rounded-md bg-primary/10 border border-primary/20"
             >
-              <UIcon name="i-lucide-tag" class="size-4 text-primary" />
+              <UIcon
+                name="i-lucide-tag"
+                class="size-4 text-primary"
+              />
               <span class="font-mono font-semibold text-primary text-sm">
                 {{ article.label }}
               </span>
@@ -79,7 +82,10 @@ watchEffect(() => {
               v-if="article?.publishedAt"
               class="flex items-center gap-2 text-muted"
             >
-              <UIcon name="i-lucide-calendar" class="size-4" />
+              <UIcon
+                name="i-lucide-calendar"
+                class="size-4"
+              />
               <NuxtTime
                 :datetime="article.publishedAt"
                 year="numeric"
@@ -98,7 +104,10 @@ watchEffect(() => {
           </p>
         </template>
 
-        <template v-if="article?.image" #default>
+        <template
+          v-if="article?.image"
+          #default
+        >
           <NuxtImg
             :src="article.image"
             :alt="article.title"

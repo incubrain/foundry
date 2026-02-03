@@ -1,18 +1,18 @@
 <script setup lang="ts">
-import type { HeaderConfig } from '#navigation';
+import type { HeaderConfig } from '#navigation'
 
-const route = useRoute();
+const route = useRoute()
 
-const headerData = inject<Ref<HeaderConfig>>('navigation_header');
+const headerData = inject<Ref<HeaderConfig>>('navigation_header')
 
 const navigation = computed(() => {
-  if (!headerData?.value?.navigation?.length) return [];
+  if (!headerData?.value?.navigation?.length) return []
 
-  return headerData.value.navigation.map((item) => ({
+  return headerData.value.navigation.map(item => ({
     ...item,
     active: item.to === route.path,
-  }));
-});
+  }))
+})
 </script>
 
 <template>

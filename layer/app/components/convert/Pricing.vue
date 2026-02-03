@@ -1,27 +1,27 @@
 <!-- app/components/convert/Pricing.vue -->
 <script setup lang="ts">
 interface BookingOption {
-  url: string;
-  title: string;
-  price: string;
-  originalPrice?: string;
-  priceNote?: string; // used for billing cycle details in our data
-  priceInterval?: string; // explicitly passed in markdown
-  description: string;
-  badge?: string;
-  location: string;
-  buttonLabel?: string;
-  buttonVariant?: 'solid' | 'outline' | 'soft' | 'subtle';
-  buttonColor?: 'primary' | 'secondary' | 'neutral';
-  highlighted?: boolean;
-  features?: string[] | { title: string; icon: string }[];
+  url: string
+  title: string
+  price: string
+  originalPrice?: string
+  priceNote?: string // used for billing cycle details in our data
+  priceInterval?: string // explicitly passed in markdown
+  description: string
+  badge?: string
+  location: string
+  buttonLabel?: string
+  buttonVariant?: 'solid' | 'outline' | 'soft' | 'subtle'
+  buttonColor?: 'primary' | 'secondary' | 'neutral'
+  highlighted?: boolean
+  features?: string[] | { title: string, icon: string }[]
 }
 
 interface Props {
-  options: BookingOption[];
+  options: BookingOption[]
 }
 
-defineProps<Props>();
+defineProps<Props>()
 </script>
 
 <template>

@@ -1,17 +1,17 @@
 <script setup lang="ts">
 interface Props {
-  quote?: string;
-  name?: string;
-  title?: string;
-  subtitle?: string;
-  avatar?: string;
+  quote?: string
+  name?: string
+  title?: string
+  subtitle?: string
+  avatar?: string
 }
 
-const props = defineProps<Props>();
+const props = defineProps<Props>()
 
-const site = inject<any>('site_config', ref(null));
+const site = inject<any>('site_config', ref(null))
 
-const socials = computed(() => site.value?.socials ?? {});
+const socials = computed(() => site.value?.socials ?? {})
 
 const socialLinks = computed(() =>
   Object.entries(socials.value).map(([key, url]) => ({
@@ -20,11 +20,11 @@ const socialLinks = computed(() =>
     'target': '_blank',
     'aria-label': `${key} social link`,
   })),
-);
+)
 
 defineSlots<{
-  default(props?: {}): any;
-}>();
+  default(props?: {}): any
+}>()
 </script>
 
 <template>
@@ -47,7 +47,10 @@ defineSlots<{
       <p class="text-base md:text-lg text-muted font-medium">
         {{ title }}
       </p>
-      <p v-if="subtitle" class="text-sm md:text-base text-muted/80">
+      <p
+        v-if="subtitle"
+        class="text-sm md:text-base text-muted/80"
+      >
         {{ subtitle }}
       </p>
     </div>
@@ -57,7 +60,6 @@ defineSlots<{
       <blockquote
         class="border-l-4 border-primary p-6 italic text-lg md:text-xl leading-relaxed bg-primary/10"
       >
-      
         <!-- Quote content -->
         <slot />
       </blockquote>

@@ -1,20 +1,20 @@
 <script setup lang="ts">
 defineProps<{
   img: {
-    src: string;
-    alt: string;
-  };
+    src: string
+    alt: string
+  }
   cta: {
-    label: string;
-    to: string;
-    icon?: string;
-  };
-}>();
+    label: string
+    to: string
+    icon?: string
+  }
+}>()
 
 defineSlots<{
-  title(props?: {}): any;
-  default(props?: {}): any;
-}>();
+  title(props?: {}): any
+  default(props?: {}): any
+}>()
 </script>
 
 <template>

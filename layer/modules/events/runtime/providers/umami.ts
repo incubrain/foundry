@@ -1,11 +1,11 @@
-import type { EventPayload } from '../types/events';
+import type { EventPayload } from '../types/events'
 
 export default defineNuxtPlugin({
   name: 'events-provider-umami',
   dependsOn: ['events-core'],
   setup(nuxtApp) {
     nuxtApp.hook('events:track', async (payload: EventPayload) => {
-      const { $scripts } = nuxtApp;
+      const { $scripts } = nuxtApp
 
       if ($scripts?.umamiAnalytics?.proxy) {
         try {
@@ -16,11 +16,12 @@ export default defineNuxtPlugin({
             target: payload.target,
             timestamp: payload.timestamp,
             ...payload.data,
-          });
-        } catch (error) {
-          console.error('[Umami Provider] Track failed:', error);
+          })
+        }
+        catch (error) {
+          console.error('[Umami Provider] Track failed:', error)
         }
       }
-    });
+    })
   },
-});
+})

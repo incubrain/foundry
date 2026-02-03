@@ -1,13 +1,13 @@
-import type { TrackedEvents } from '../types/events';
+import type { TrackedEvents } from '../types/events'
 
 export const EVENT_METADATA: Partial<
   Record<
     TrackedEvents,
     {
-      label: string;
-      description: string;
-      icon: string;
-      category: 'form' | 'conversion' | 'engagement';
+      label: string
+      description: string
+      icon: string
+      category: 'form' | 'conversion' | 'engagement'
     }
   >
 > = {
@@ -35,4 +35,4 @@ export const EVENT_METADATA: Partial<
     icon: 'i-lucide-eye',
     category: 'engagement',
   },
-} as const;
+} as const

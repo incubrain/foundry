@@ -1,10 +1,10 @@
-import { defineContentConfig, defineCollection } from '@nuxt/content';
+import { defineContentConfig, defineCollection } from '@nuxt/content'
 import {
   baseConfigSchema,
   baseFaqSchema,
   baseNavigationSchema,
   basePageSchema,
-} from '@incubrain/foundry/content.collections';
+} from '@incubrain/foundry/content.collections'
 
 export default defineContentConfig({
   collections: {
@@ -38,4 +38,4 @@ export default defineContentConfig({
       schema: baseNavigationSchema,
     }),
   },
-});
+})

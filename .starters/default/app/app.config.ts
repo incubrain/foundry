@@ -22,4 +22,4 @@ export default defineAppConfig({
       success: '/success',
     },
   },
-});
+})

@@ -1,10 +1,10 @@
-import type { IconProps } from '@nuxt/ui';
+import type { IconProps } from '@nuxt/ui'
 
 export const STATUS_ICONS: Record<string, IconProps & { class: string }> = {
   statusAvailable: { name: 'i-lucide-check', class: 'text-success' },
   statusBeta: { name: 'i-lucide-flask-conical', class: 'text-info' },
   statusComingSoon: { name: 'i-lucide-clock', class: 'text-warning' },
-};
+}
 
 /**
  * Icon Library Configuration
@@ -20,6 +20,6 @@ export const STATUS_ICONS: Record<string, IconProps & { class: string }> = {
  */
 
 // Consider adding this as an ENV
-export const ICON_LIBRARIES = ['lucide', 'simple-icons'] as const;
+export const ICON_LIBRARIES = ['lucide', 'simple-icons'] as const
 
-export type IconLibrary = (typeof ICON_LIBRARIES)[number];
+export type IconLibrary = (typeof ICON_LIBRARIES)[number]

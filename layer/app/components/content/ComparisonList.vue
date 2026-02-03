@@ -1,39 +1,39 @@
 <!-- app/components/content/ComparisonList.vue -->
 <script setup lang="ts">
 interface ComparisonItem {
-  text: string;
+  text: string
 }
 
 interface Column {
-  title: string;
-  icon?: string;
-  color?: 'error' | 'warning' | 'neutral' | 'success' | 'info' | 'primary';
-  description?: string;
-  items?: ComparisonItem[];
+  title: string
+  icon?: string
+  color?: 'error' | 'warning' | 'neutral' | 'success' | 'info' | 'primary'
+  description?: string
+  items?: ComparisonItem[]
 }
 
 interface Props {
-  title?: string;
-  left: Column;
-  right: Column;
+  title?: string
+  left: Column
+  right: Column
 }
 
 const props = withDefaults(defineProps<Props>(), {
   title: undefined,
-});
+})
 
 // Set defaults for columns if not provided
 const leftColumn = computed(() => ({
   icon: props.left.icon || 'i-lucide-x',
   color: props.left.color || 'error',
   ...props.left,
-}));
+}))
 
 const rightColumn = computed(() => ({
   icon: props.right.icon || 'i-lucide-check',
   color: props.right.color || 'success',
   ...props.right,
-}));
+}))
 
 const colorClasses = {
   error: 'text-error',
@@ -42,16 +42,19 @@ const colorClasses = {
   success: 'text-success',
   info: 'text-info',
   primary: 'text-primary',
-};
+}
 
-const leftColorClass = computed(() => colorClasses[leftColumn.value.color]);
-const rightColorClass = computed(() => colorClasses[rightColumn.value.color]);
+const leftColorClass = computed(() => colorClasses[leftColumn.value.color])
+const rightColorClass = computed(() => colorClasses[rightColumn.value.color])
 </script>
 
 <template>
   <section class="my-12">
     <!-- Section Title (optional) -->
-    <h2 v-if="title" class="text-2xl font-bold text-highlighted mb-8">
+    <h2
+      v-if="title"
+      class="text-2xl font-bold text-highlighted mb-8"
+    >
       {{ title }}
     </h2>
 
@@ -69,11 +72,17 @@ const rightColorClass = computed(() => colorClasses[rightColumn.value.color]);
           </h3>
         </div>
 
-        <p v-if="leftColumn.description" class="text-muted leading-relaxed">
+        <p
+          v-if="leftColumn.description"
+          class="text-muted leading-relaxed"
+        >
           {{ leftColumn.description }}
         </p>
 
-        <ul v-if="leftColumn.items?.length" class="space-y-3">
+        <ul
+          v-if="leftColumn.items?.length"
+          class="space-y-3"
+        >
           <li
             v-for="(item, index) in leftColumn.items"
             :key="index"
@@ -100,11 +109,17 @@ const rightColorClass = computed(() => colorClasses[rightColumn.value.color]);
           </h3>
         </div>
 
-        <p v-if="rightColumn.description" class="text-muted leading-relaxed">
+        <p
+          v-if="rightColumn.description"
+          class="text-muted leading-relaxed"
+        >
           {{ rightColumn.description }}
         </p>
 
-        <ul v-if="rightColumn.items?.length" class="space-y-3">
+        <ul
+          v-if="rightColumn.items?.length"
+          class="space-y-3"
+        >
           <li
             v-for="(item, index) in rightColumn.items"
             :key="index"
@@ -121,7 +136,10 @@ const rightColorClass = computed(() => colorClasses[rightColumn.value.color]);
     </div>
 
     <!-- Optional Alert Slot -->
-    <div v-if="$slots.default" class="mt-8">
+    <div
+      v-if="$slots.default"
+      class="mt-8"
+    >
       <slot />
     </div>
   </section>

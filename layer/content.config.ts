@@ -1,6 +1,6 @@
-import { defineContentConfig, defineCollection } from '@nuxt/content';
-import { useNuxt } from '@nuxt/kit';
-import { joinURL } from 'ufo';
+import { defineContentConfig, defineCollection } from '@nuxt/content'
+import { useNuxt } from '@nuxt/kit'
+import { joinURL } from 'ufo'
 import {
   basePageSchema,
   baseGlossarySchema,
@@ -8,10 +8,10 @@ import {
   baseNavigationSchema,
   baseConfigSchema,
   baseFaqSchema,
-} from './content.collections';
+} from './content.collections'
 
-const { options } = useNuxt();
-const cwd = joinURL(options.rootDir, 'content');
+const { options } = useNuxt()
+const cwd = joinURL(options.rootDir, 'content')
 
 export default defineContentConfig({
   collections: {
@@ -83,4 +83,4 @@ export default defineContentConfig({
       schema: baseNavigationSchema,
     }),
   },
-});
+})

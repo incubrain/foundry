@@ -1,45 +1,46 @@
 // composables/useDevConfig.ts
 export const useDevConfig = () => {
-  const isClient = import.meta.client;
-  const isDev = import.meta.dev;
+  const isClient = import.meta.client
+  const isDev = import.meta.dev
 
   // SSR-safe reduced API
   if (!isClient || !isDev) {
     return {
       clearAllStorage: () => {},
       getStorageSnapshot: () => ({}),
-    };
+    }
   }
 
-  const toast = useToast();
-  const { local, session } = useAppStorage();
+  const toast = useToast()
+  const { local, session } = useAppStorage()
 
   const getStorageSnapshot = () => {
-    if (import.meta.server) return { localStorage_items: {}, sessionStorage_items: {} };
+    if (import.meta.server) return { localStorage_items: {}, sessionStorage_items: {} }
 
     try {
-      const localStorage_items = local.all();
-      const sessionStorage_items = session.all();
+      const localStorage_items = local.all()
+      const sessionStorage_items = session.all()
 
-      return { localStorage_items, sessionStorage_items };
-    } catch (e) {
-      return { localStorage_items: {}, sessionStorage_items: {} };
+      return { localStorage_items, sessionStorage_items }
     }
-  };
+    catch (e) {
+      return { localStorage_items: {}, sessionStorage_items: {} }
+    }
+  }
 
   const clearAllStorage = async () => {
-    if (!isDev) return;
-    const before = getStorageSnapshot();
-    
-    local.clear();
-    session.clear();
+    if (!isDev) return
+    const before = getStorageSnapshot()
 
-    const after = getStorageSnapshot();
-    console.info('Storage cleared:', { before, after });
+    local.clear()
+    session.clear()
 
-    const totalCleared =
-      Object.keys(before.localStorage_items).length +
-      Object.keys(before.sessionStorage_items).length;
+    const after = getStorageSnapshot()
+    console.info('Storage cleared:', { before, after })
+
+    const totalCleared
+      = Object.keys(before.localStorage_items).length
+        + Object.keys(before.sessionStorage_items).length
 
     toast.add?.({
       title: 'Development Storage Cleared',
@@ -52,21 +53,21 @@ export const useDevConfig = () => {
           onClick: () => window?.location.reload(),
         },
       ],
-    });
+    })
 
-    setTimeout(() => window?.location.reload(), 3000);
-  };
+    setTimeout(() => window?.location.reload(), 3000)
+  }
 
   if (typeof window !== 'undefined') {
     // @ts-expect-error devTools extension
     window.devTools = {
       clearAll: clearAllStorage,
       snapshot: getStorageSnapshot,
-    };
+    }
   }
 
   return {
     clearAllStorage,
     getStorageSnapshot,
-  };
-};
+  }
+}

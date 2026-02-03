@@ -1,7 +1,7 @@
 <script setup lang="ts">
-const site = inject<any>('site_config', ref(null));
+const site = inject<any>('site_config', ref(null))
 
-const socials = computed(() => site.value?.socials ?? {});
+const socials = computed(() => site.value?.socials ?? {})
 
 const links = computed(() =>
   Object.entries(socials.value).map(([key, url]) => ({
@@ -10,7 +10,7 @@ const links = computed(() =>
     'target': '_blank',
     'aria-label': `${key} social link`,
   })),
-);
+)
 </script>
 
 <template>

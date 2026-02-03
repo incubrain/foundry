@@ -32,4 +32,4 @@ export default defineAppConfig({
       sources: '/resources/references',
     },
   },
-});
+})

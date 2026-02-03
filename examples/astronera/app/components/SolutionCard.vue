@@ -12,22 +12,22 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  color: 'success'
+  color: 'success',
 })
 </script>
 
 <template>
-  <UCard 
-  :ui="{
-    root: 'h-full shadow-lg text-left flex flex-col bg-muted',
-    body: 'p-4 sm:p-6 grow',
-  }"
+  <UCard
+    :ui="{
+      root: 'h-full shadow-lg text-left flex flex-col bg-muted',
+      body: 'p-4 sm:p-6 grow',
+    }"
   >
     <template #header>
       <div class="flex items-center gap-3">
-        <UIcon 
-          :name="icon" 
-          class="size-7 text-primary shrink-0" 
+        <UIcon
+          :name="icon"
+          class="size-7 text-primary shrink-0"
         />
         <h3 class="text-xl font-bold text-gray-900 dark:text-white">
           {{ title }}
@@ -36,7 +36,10 @@ const props = withDefaults(defineProps<Props>(), {
     </template>
 
     <!-- Subtitle slot -->
-    <div v-if="$slots.subtitle" class="text-gray-700 dark:text-gray-300 mb-4">
+    <div
+      v-if="$slots.subtitle"
+      class="text-gray-700 dark:text-gray-300 mb-4"
+    >
       <slot name="subtitle" />
     </div>
 
@@ -44,15 +47,18 @@ const props = withDefaults(defineProps<Props>(), {
     <slot />
 
     <!-- Items list (stays as prop - requires consistent styling) -->
-    <div v-if="items?.length" class="space-y-3 mt-4">
-      <p 
-        v-for="(item, idx) in items" 
+    <div
+      v-if="items?.length"
+      class="space-y-3 mt-4"
+    >
+      <p
+        v-for="(item, idx) in items"
         :key="idx"
         class="text-gray-600 dark:text-gray-400"
       >
-        <UBadge 
-          :label="item.label" 
-          :color="color" 
+        <UBadge
+          :label="item.label"
+          :color="color"
           variant="soft"
           class="inline-block mr-1"
         />
@@ -61,7 +67,10 @@ const props = withDefaults(defineProps<Props>(), {
     </div>
 
     <!-- Footer slot for alerts or other content -->
-    <template v-if="$slots.footer" #footer>
+    <template
+      v-if="$slots.footer"
+      #footer
+    >
       <slot name="footer" />
     </template>
   </UCard>

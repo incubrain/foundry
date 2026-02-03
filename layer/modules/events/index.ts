@@ -5,8 +5,8 @@ import {
   createResolver,
   addServerHandler,
   addComponentsDir,
-} from '@nuxt/kit';
-import type { ModuleOptions } from './runtime/types/events';
+} from '@nuxt/kit'
+import type { ModuleOptions } from './runtime/types/events'
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
@@ -27,38 +27,38 @@ export default defineNuxtModule<ModuleOptions>({
   },
 
   setup(options, nuxt) {
-    const resolver = createResolver(import.meta.url);
+    const resolver = createResolver(import.meta.url)
 
     // Add core plugin (always)
     addPlugin({
       src: resolver.resolve('./runtime/plugins/events.client.ts'),
       mode: 'client',
-    });
+    })
 
     // Register components
     addComponentsDir({
       path: resolver.resolve('./runtime/components'),
       watch: true,
-    });
+    })
 
     // Auto-import useEvents composable
     addImports({
       name: 'useEvents',
       from: resolver.resolve('./runtime/composables/useEvents.ts'),
-    });
+    })
 
     addImports({
       name: 'useUserIdentity',
       from: resolver.resolve('./runtime/composables/useUserIdentity.ts'),
-    });
+    })
 
     // Add selected provider plugins
     options.providers.forEach((provider) => {
       addPlugin({
         src: resolver.resolve(`./runtime/providers/${provider}.ts`),
         mode: 'client',
-      });
-    });
+      })
+    })
 
     // Always add webhook provider if webhook is enabled (client-side)
     // Actually, user should add 'webhook' to providers list if they want client-side triggering
@@ -69,7 +69,7 @@ export default defineNuxtModule<ModuleOptions>({
     // Expose to runtime config
     nuxt.options.runtimeConfig.public.events = {
       debug: options.debug,
-    };
+    }
 
     if (options.webhook.enabled) {
       // @ts-ignore
@@ -77,14 +77,14 @@ export default defineNuxtModule<ModuleOptions>({
         route: '/api/v1/webhook',
         method: 'post',
         handler: resolver.resolve('./server/handlers/webhook.post'),
-      });
+      })
     }
   },
-});
+})
 
 // Export types
 export type {
   ModuleOptions,
   EventPayload,
   AnalyticsProvider,
-} from './runtime/types/events';
+} from './runtime/types/events'
