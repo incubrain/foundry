@@ -7,7 +7,7 @@ const SITE_URL = 'https://astronera.org';
 export default defineNuxtConfig({
   extends: ['@incubrain/foundry'],
 
-  modules: ['nuxt-studio'],
+  modules: ['nuxt-studio', 'nuxt-llms'],
 
   site: {
     name: 'AstronEra',

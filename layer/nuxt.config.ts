@@ -13,7 +13,6 @@ export default defineNuxtConfig({
     '@nuxtjs/robots',
     '@nuxtjs/mcp-toolkit',
     'nuxt-og-image',
-    'nuxt-llms',
     '@nuxtjs/seo',
     '@vueuse/nuxt',
     '@nuxt/scripts',

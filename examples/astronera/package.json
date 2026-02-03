@@ -12,6 +12,7 @@
     "@incubrain/foundry": "workspace:*",
     "better-sqlite3": "^12.5.0",
     "nuxt": "^4.3.0",
+    "nuxt-llms": "^0.2.0",
     "nuxt-studio": "^1.2.0"
   }
 }

@@ -22,10 +22,11 @@
     "repomix": "repomix --ignore='examples,deploy,public,**/public/**,context,**/assets/**,**/decisions/**,.claude,**/content/**/*.{md,yml},apps/docs/**.md'",
     "repomix:new": "{ git ls-files --others --exclude-standard; git diff --name-only; git diff --cached --name-only; } | sort -u | repomix --stdin -o repomix-changed.xml",
     "typecheck": "nuxt typecheck layer",
-    "verify": "pnpm run dev:prepare && pnpm run lint && pnpm run typecheck",
-    "layer:release": "release-it --config .release-it.layer.json",
+    "verify": "nuxt prepare layer && pnpm run lint && pnpm run typecheck",
+    "layer:check": "pnpm pack --dry-run --filter @incubrain/foundry",
+    "layer:patch": "release-it patch --config .release-it.layer.json",
+    "layer:bump": "release-it bump --config .release-it.layer.json",
     "layer:publish": "cd layer && npm publish --access public",
-    "release": "pnpm run layer:release && pnpm run layer:publish",
     "cli:build": "pnpm --filter create-foundry build",
     "cli:publish": "cd cli && npm publish --access public",
     "kanban": "npx vibe-kanban"
@@ -41,5 +42,5 @@
     "typescript": "^5.9.3",
     "vue-tsc": "^3.2.2"
   },
-  "packageManager": "pnpm@10.12.0"
+  "packageManager": "pnpm@10.28.2"
 }

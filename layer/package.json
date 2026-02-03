@@ -58,7 +58,6 @@
     "katex": "^0.16.27",
     "minimark": "^0.2.0",
     "motion-v": "^1.9.0",
-    "nuxt-llms": "^0.2.0",
     "nuxt-og-image": "^5.1.13",
     "rehype-katex": "^7.0.1",
     "remark-math": "^6.0.0",
@@ -79,6 +78,7 @@
   "peerDependencies": {
     "better-sqlite3": "12.x",
     "nuxt-studio": "^1.2.0",
+    "nuxt-llms": "^0.2.0",
     "nuxt": "4.x"
   },
   
@@ -87,6 +87,9 @@
       "optional": true
     },
     "nuxt-studio": {
+      "optional": true
+    },
+    "nuxt-llms": {
       "optional": true
     }
   },
