@@ -10,12 +10,12 @@ export default defineNuxtSchema({
         collections: group({
           title: 'Collections',
           description:
-            'Content collections. Each can be a string (name) or object { name, prefix?, backLabel? }.',
+            'Content collections. Each can be a string (name) or object { name, type, prefix?, backLabel? }.',
           icon: 'i-lucide-database',
           fields: {
             docs: group({
               title: 'Docs',
-              description: 'Documentation collection configuration.',
+              description: 'Documentation collection configuration (page type).',
               icon: 'i-lucide-book',
               fields: {
                 name: field({
@@ -24,18 +24,25 @@ export default defineNuxtSchema({
                   description: 'Name of the docs collection.',
                   default: 'docs',
                 }),
+                type: field({
+                  type: 'string',
+                  title: 'Collection Type',
+                  description: 'Type of collection: "page" (routable) or "data" (not routable).',
+                  default: 'page',
+                  required: ['page', 'data'],
+                }),
                 prefix: field({
                   type: 'string',
                   title: 'URL Prefix',
                   description:
-                    'URL prefix for docs (e.g., "" for /docs, "/api" for /api/docs).',
-                  default: '',
+                    'URL prefix for docs (e.g., "/docs", "/darksky").',
+                  default: '/docs',
                 }),
               },
             }),
             pages: group({
               title: 'Pages',
-              description: 'Pages collection configuration (articles, etc.).',
+              description: 'Pages collection configuration (page type).',
               icon: 'i-lucide-file',
               fields: {
                 name: field({
@@ -44,11 +51,18 @@ export default defineNuxtSchema({
                   description: 'Name of the pages collection.',
                   default: 'pages',
                 }),
+                type: field({
+                  type: 'string',
+                  title: 'Collection Type',
+                  description: 'Type of collection: "page" (routable) or "data" (not routable).',
+                  default: 'page',
+                  required: ['page', 'data'],
+                }),
                 prefix: field({
                   type: 'string',
                   title: 'URL Prefix',
-                  description: 'URL prefix for articles section.',
-                  default: '/articles',
+                  description: 'URL prefix for pages (e.g., "/" for root).',
+                  default: '/',
                 }),
                 backLabel: field({
                   type: 'string',
@@ -60,7 +74,7 @@ export default defineNuxtSchema({
             }),
             glossary: group({
               title: 'Glossary',
-              description: 'Glossary collection configuration.',
+              description: 'Glossary collection configuration (data type).',
               icon: 'i-lucide-book-open',
               fields: {
                 name: field({
@@ -69,41 +83,94 @@ export default defineNuxtSchema({
                   description: 'Name of the glossary collection.',
                   default: 'glossary',
                 }),
-                prefix: field({
+                type: field({
                   type: 'string',
-                  title: 'URL Prefix',
-                  description: 'URL path for glossary page.',
-                  default: '/glossary',
+                  title: 'Collection Type',
+                  description: 'Type of collection: "page" (routable) or "data" (not routable).',
+                  default: 'data',
+                  required: ['page', 'data'],
                 }),
               },
             }),
-            references: field({
-              type: 'string',
-              title: 'References Collection',
-              description: 'Collection name for references/citations.',
+            references: group({
+              title: 'References',
+              description: 'References collection configuration (data type).',
               icon: 'i-lucide-quote',
-              default: 'references',
+              fields: {
+                name: field({
+                  type: 'string',
+                  title: 'Collection Name',
+                  description: 'Name of the references collection.',
+                  default: 'references',
+                }),
+                type: field({
+                  type: 'string',
+                  title: 'Collection Type',
+                  description: 'Type of collection: "page" (routable) or "data" (not routable).',
+                  default: 'data',
+                  required: ['page', 'data'],
+                }),
+              },
             }),
-            faq: field({
-              type: 'string',
-              title: 'FAQ Collection',
-              description: 'Collection name for FAQs.',
+            faq: group({
+              title: 'FAQ',
+              description: 'FAQ collection configuration (data type).',
               icon: 'i-lucide-help-circle',
-              default: 'faq',
+              fields: {
+                name: field({
+                  type: 'string',
+                  title: 'Collection Name',
+                  description: 'Name of the FAQ collection.',
+                  default: 'faq',
+                }),
+                type: field({
+                  type: 'string',
+                  title: 'Collection Type',
+                  description: 'Type of collection: "page" (routable) or "data" (not routable).',
+                  default: 'data',
+                  required: ['page', 'data'],
+                }),
+              },
             }),
-            config: field({
-              type: 'string',
-              title: 'Config Collection',
-              description: 'Collection name for site configuration.',
+            config: group({
+              title: 'Config',
+              description: 'Config collection configuration (data type).',
               icon: 'i-lucide-settings',
-              default: 'config',
+              fields: {
+                name: field({
+                  type: 'string',
+                  title: 'Collection Name',
+                  description: 'Name of the config collection.',
+                  default: 'config',
+                }),
+                type: field({
+                  type: 'string',
+                  title: 'Collection Type',
+                  description: 'Type of collection: "page" (routable) or "data" (not routable).',
+                  default: 'data',
+                  required: ['page', 'data'],
+                }),
+              },
             }),
-            navigation: field({
-              type: 'string',
-              title: 'Navigation Collection',
-              description: 'Collection name for navigation.',
+            navigation: group({
+              title: 'Navigation',
+              description: 'Navigation collection configuration (data type).',
               icon: 'i-lucide-menu',
-              default: 'navigation',
+              fields: {
+                name: field({
+                  type: 'string',
+                  title: 'Collection Name',
+                  description: 'Name of the navigation collection.',
+                  default: 'navigation',
+                }),
+                type: field({
+                  type: 'string',
+                  title: 'Collection Type',
+                  description: 'Type of collection: "page" (routable) or "data" (not routable).',
+                  default: 'data',
+                  required: ['page', 'data'],
+                }),
+              },
             }),
             searchable: field({
               type: 'array',

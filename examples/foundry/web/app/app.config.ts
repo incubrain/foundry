@@ -18,11 +18,10 @@ export default defineAppConfig({
 
   content: {
     collections: {
-      // Glossary with custom prefix
-      glossary: { name: 'glossary', prefix: '/resources/glossary' },
-      // Simple string collections
-      references: 'references',
-      navigation: 'navigation',
+      // Data collections (not routable)
+      glossary: { name: 'glossary', type: 'data' },
+      references: { name: 'references', type: 'data' },
+      navigation: { name: 'navigation', type: 'data' },
       searchable: ['pages'],
     },
   },

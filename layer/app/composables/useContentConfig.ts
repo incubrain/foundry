@@ -2,12 +2,20 @@ import { inject, type Ref } from 'vue';
 import type { ContentNavigationItem, Collections } from '@nuxt/content';
 
 /**
+ * Collection type - matches Nuxt Content's collection types
+ * - 'page': Markdown files with routes (routable)
+ * - 'data': YAML/JSON data files (not routable)
+ */
+type CollectionType = 'page' | 'data';
+
+/**
  * Collection config can be a string (name only) or object with routing info
  */
 type CollectionConfig =
   | keyof Collections
   | {
       name: keyof Collections;
+      type?: CollectionType;
       prefix?: string;
       backLabel?: string;
     };
@@ -97,6 +105,7 @@ export const useContentConfig = () => {
 
   /**
    * Build route patterns from collection prefixes in app.config.ts
+   * Only considers collections with type: 'page' (routable collections)
    * Returns patterns sorted by specificity (longest prefix first)
    */
   const getRoutePatterns = (): RoutePatternConfig[] => {
@@ -110,12 +119,16 @@ export const useContentConfig = () => {
       // Skip non-collection entries like 'searchable'
       if (key === 'searchable') continue;
 
-      if (typeof config === 'object' && config !== null && 'prefix' in config) {
-        const prefix = config.prefix as string;
-        if (prefix) {
+      // Only consider object configs with type: 'page' (routable collections)
+      if (typeof config === 'object' && config !== null) {
+        const collectionType = (config as { type?: CollectionType }).type;
+        const prefix = (config as { prefix?: string }).prefix;
+
+        // Only include page-type collections with a prefix
+        if (collectionType === 'page' && prefix) {
           patterns.push({
             pattern: prefix,
-            collection: (config.name || key) as keyof Collections,
+            collection: ((config as { name?: string }).name || key) as keyof Collections,
           });
         }
       }

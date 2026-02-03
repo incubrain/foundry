@@ -12,8 +12,9 @@ export default defineAppConfig({
 
   content: {
     collections: {
-      navigation: 'navigation',
-      config: 'config',
+      // Data collections (not routable)
+      navigation: { name: 'navigation', type: 'data' },
+      config: { name: 'config', type: 'data' },
       searchable: ['pages'],
     },
     routing: {

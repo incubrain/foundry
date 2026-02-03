@@ -1,22 +1,24 @@
 export default defineAppConfig({
   // Content configuration
-  // Each collection can be a string (name only) or object { name, prefix?, backLabel? }
+  // Each collection can be:
+  // - string: name only (for data collections)
+  // - object: { name, type: 'page'|'data', prefix?, backLabel? }
   content: {
     collections: {
-      // Documentation - with URL prefix
-      docs: { name: 'docs', prefix: '/docs' },
-      // Pages collection - with articles routing
+      // Page collections (routable - type: 'page')
+      docs: { name: 'docs', type: 'page', prefix: '/docs' },
       pages: {
         name: 'pages',
-        prefix: '/articles',
+        type: 'page',
+        prefix: '/',
         backLabel: 'Back to Articles',
       },
-      // Data collections (string shorthand)
-      references: 'references',
-      glossary: 'glossary',
-      faq: 'faq',
-      config: 'config',
-      navigation: 'navigation',
+      // Data collections (not routable - type: 'data' or string shorthand)
+      references: { name: 'references', type: 'data' },
+      glossary: { name: 'glossary', type: 'data' },
+      faq: { name: 'faq', type: 'data' },
+      config: { name: 'config', type: 'data' },
+      navigation: { name: 'navigation', type: 'data' },
       // Collections to include in search
       searchable: ['docs'],
     },

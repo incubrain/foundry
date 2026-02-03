@@ -1,10 +1,20 @@
 import type { Collections } from '@nuxt/content';
 
-// Collection config can be a string (collection name) or object with routing info
+/**
+ * Collection type - matches Nuxt Content's collection types
+ * - 'page': Markdown files with routes (routable)
+ * - 'data': YAML/JSON data files (not routable)
+ */
+type CollectionType = 'page' | 'data';
+
+/**
+ * Collection config can be a string (collection name) or object with routing info
+ */
 type CollectionConfig =
   | keyof Collections
   | {
       name: keyof Collections;
+      type?: CollectionType;
       prefix?: string;
       backLabel?: string;
     };

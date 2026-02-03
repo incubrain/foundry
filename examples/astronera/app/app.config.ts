@@ -18,14 +18,14 @@ export default defineAppConfig({
 
   content: {
     collections: {
-      // Docs with custom prefix
-      docs: { name: 'docs', prefix: '/darksky' },
-      // Glossary with custom prefix
-      glossary: { name: 'glossary', prefix: '/resources/glossary' },
-      // Simple string collections
-      references: 'references',
-      navigation: 'navigation',
-      config: 'config',
+      // Page collections (routable)
+      docs: { name: 'docs', type: 'page', prefix: '/darksky' },
+      pages: { name: 'pages', type: 'page', prefix: '/' },
+      // Data collections (not routable)
+      glossary: { name: 'glossary', type: 'data' },
+      references: { name: 'references', type: 'data' },
+      navigation: { name: 'navigation', type: 'data' },
+      config: { name: 'config', type: 'data' },
       searchable: ['docs'],
     },
     routing: {
