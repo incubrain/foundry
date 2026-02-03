@@ -1,72 +1,51 @@
-# Founder Funnel Starter
+# Foundry Starter
 
-A minimal starter template for [Founder Funnel](https://github.com/incubrain/foundry) — the validation tool for technical founders.
+Minimal starter template for [Foundry](https://github.com/incubrain/foundry).
 
 ## Setup
 
-Install dependencies:
-
 ```bash
 npm install
-```
-
-Copy the example environment file:
-
-```bash
 cp .env.example .env
 ```
 
 ## Development
 
-Start the development server:
-
 ```bash
 npm run dev
 ```
 
-Your site will be running at `http://localhost:3000`.
+Site runs at `http://localhost:3000`.
 
 ## Production
 
-Build for production:
-
 ```bash
 npm run build
-```
-
-Preview the production build:
-
-```bash
 npm run preview
 ```
 
-## Project Structure
+## Structure
 
 ```
 content/
-├── config/         Site configuration (YAML)
+├── config/         Site config (YAML)
 ├── faq/            FAQ entries (YAML)
 └── pages/          Landing pages (Markdown)
-    ├── index.md    Homepage with progressive validation stages
-    ├── about.md    About page
-    ├── offers/     Offer/conversion pages
-    └── success/    Post-conversion pages
 app/
-├── app.config.ts   App-level configuration
-├── assets/         Custom theme CSS
-└── components/     Custom components and overrides
-public/             Static assets (favicons, images)
+├── app.config.ts   App config
+├── assets/         Theme CSS
+└── components/     Custom components
+public/             Static assets
 ```
 
 ## Customization
 
-- **Content:** Edit YAML and Markdown files in `content/`
-- **Theme:** Override brand colors in `app/assets/theme.css`
-- **Components:** Add custom components in `app/components/`
-- **Config:** Adjust app settings in `app/app.config.ts`
+- **Content:** Edit files in `content/`
+- **Theme:** Override colors in `app/assets/theme.css`
+- **Components:** Add to `app/components/`
 
-## Learn More
+## Links
 
-- [Founder Funnel Layer](https://github.com/incubrain/foundry)
-- [Nuxt Documentation](https://nuxt.com)
+- [Foundry](https://github.com/incubrain/foundry)
+- [Nuxt](https://nuxt.com)
 - [Nuxt Content](https://content.nuxt.com)

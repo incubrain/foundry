@@ -1,14 +1,11 @@
 # create-foundry
 
-CLI tool to scaffold a new [Founder Funnel](https://github.com/incubrain/foundry) project.
+CLI to scaffold a new [Foundry](https://github.com/incubrain/foundry) project.
 
 ## Usage
 
 ```bash
-# Create a new project
 npx create-foundry my-project
-
-# Navigate and start
 cd my-project
 npm install
 npm run dev
@@ -23,17 +20,12 @@ npm run dev
 
 ## Templates
 
-- **default** — Minimal starter with landing page, signal capture, and FAQ
+- **default** — Minimal starter with landing page and signal capture
 
 ## Development
 
 ```bash
-# Install dependencies
 pnpm install
-
-# Build the CLI
 pnpm build
-
-# Run locally
 pnpm dev my-test-project
 ```

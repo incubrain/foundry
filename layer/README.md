@@ -1,83 +1,48 @@
-# Dark Sky Maharashtra Documentation
+# @incubrain/foundry
 
-Authority documentation system demonstrating the Founder Funnel docs feature.
+A Nuxt layer for building validation landing pages and authority documentation sites.
+
+## Installation
+
+```bash
+npm install @incubrain/foundry
+```
+
+Add to your `nuxt.config.ts`:
+
+```ts
+export default defineNuxtConfig({
+  extends: ['@incubrain/foundry']
+})
+```
+
+## Features
+
+- **Landing Pages** — Section-driven pages with signal capture (email, presales, bookings)
+- **Documentation** — Authority docs with citations, cross-linking, and MCP integration
+- **Event Tracking** — Analytics-agnostic event system with webhook streaming
+- **Nuxt Content** — Markdown-first content with MDC component support
+- **Nuxt UI v3** — Pre-styled components with Tailwind v4
 
 ## Quick Start
 
 ```bash
-pnpm install
-pnpm dev
+# Create a new project
+npx create-foundry my-project
+cd my-project
+npm install
+npm run dev
 ```
 
-Visit http://localhost:3000
+## Requirements
 
-## Key Features
+- Nuxt 4.x
+- Node.js 18+
 
-### 1. Auto-Discovering References
+## Documentation
 
-Write inline citations that automatically collect and render at page bottom:
+Full documentation: [foundry.incubrain.org](https://foundry.incubrain.org)
 
-```markdown
-MPCB guidelines:reference{id="mpcb-2024" source="MPCB Guidelines" url="/sources/mpcb.pdf" credibility="government"}.
-```
+## License
 
-### 2. Smart Cross-Linking
-
-- **Auto-tracked links** — All `[text](/path)` links tracked automatically
-- **Bidirectional references** — See which pages link to current page
-- **Related content** — Auto-discovered by tags, categories, links
-- **Visual indicators** — Different icons for policy/research/implementation links
-
-### 3. MCP Resources
-
-Source PDFs exposed to AI tools via `/api/mcp` endpoint.
-
-### 4. Sources Tracking
-
-Visit `/sources` for verification status of all source documents.
-
-## Content Structure
-
-```
-content/
-├── 1.policy/          # Government policies, regulations
-├── 2.research/        # Scientific studies, data
-└── 3.implementation/  # Practical guides
-```
-
-## Adding Content
-
-Create new page:
-```bash
-touch content/2.research/new-study.md
-```
-
-With frontmatter:
-```yaml
----
-title: Study Title
-category: research
-tags: [astronomy, data]
-related: [/policy/guidelines]
----
-```
-
-Add inline references:
-```markdown
-Study findings:reference{id="study-2024" source="Study Name" url="/sources/study.pdf" credibility="academic"}.
-```
-
-## Components
-
-- `Reference` — Inline citation
-- `References` — Auto-rendered list
-- `RelatedContent` — Related pages
-- `BackLinks` — Pages linking here
-- `SmartLink` — Visual link indicators
-- `SourcesTable` — All sources
-
-## Learn More
-
-- [Nuxt Content Docs](https://content.nuxt.com/)
-- [MCP Protocol](https://modelcontextprotocol.io/)
-- [Founder Funnel](https://github.com/incubrain/foundry)
+MIT
