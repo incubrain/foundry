@@ -41,7 +41,7 @@ watch(
       <UInput
         v-model="globalFilter"
         placeholder="Search terms..."
-        icon="i-heroicons-magnifying-glass"
+        icon="i-lucide-search"
         class="flex-1"
       />
     </div>

@@ -68,7 +68,7 @@ const sortedRefs = computed(() => {
           >
             View PDF
             <UIcon
-              name="i-heroicons-arrow-top-right-on-square"
+              name="i-lucide-external-link"
               class="w-3 h-3"
             />
           </a>
@@ -80,7 +80,7 @@ const sortedRefs = computed(() => {
           >
             View Source
             <UIcon
-              name="i-heroicons-arrow-top-right-on-square"
+              name="i-lucide-external-link"
               class="w-3 h-3"
             />
           </a>

@@ -11,7 +11,7 @@
 # Critical
 
 
-- [ ] replace all `heroicons` usage with `lucide` icon equivalents
+- [x] replace all `heroicons` usage with `lucide` icon equivalents
 - [ ] check linting in pnpm workspace, this will likely be broken
 - [ ] add built with `@incubrain/foundry` to footer - this should also contain the version number which should be extracted from the package.json
   - To enhance this, add basic telemetry piped to the incubrain server for understanding usage, and listing their website on our docs page

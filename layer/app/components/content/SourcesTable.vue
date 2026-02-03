@@ -65,8 +65,8 @@ const getLinkInfo = (source: any) => {
     return {
       primary: pdfLink,
       secondary: webLink,
-      primaryIcon: 'i-heroicons-document-text',
-      secondaryIcon: 'i-heroicons-arrow-top-right-on-square-20-solid',
+      primaryIcon: 'i-lucide-file-text',
+      secondaryIcon: 'i-lucide-external-link',
       primaryLabel: 'PDF',
       secondaryLabel: 'Website',
     }
@@ -74,14 +74,14 @@ const getLinkInfo = (source: any) => {
   else if (pdfLink) {
     return {
       primary: pdfLink,
-      primaryIcon: 'i-heroicons-document-text',
+      primaryIcon: 'i-lucide-file-text',
       primaryLabel: 'View PDF',
     }
   }
   else if (webLink) {
     return {
       primary: webLink,
-      primaryIcon: 'i-heroicons-arrow-top-right-on-square-20-solid',
+      primaryIcon: 'i-lucide-external-link',
       primaryLabel: 'Visit Website',
     }
   }
@@ -155,7 +155,7 @@ const columns: TableColumn<any>[] = [
       <UInput
         v-model="globalFilter"
         placeholder="Search sources..."
-        icon="i-heroicons-magnifying-glass"
+        icon="i-lucide-search"
         class="flex-1"
       />
     </div>
