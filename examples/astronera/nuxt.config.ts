@@ -2,7 +2,7 @@ import { createResolver } from '@nuxt/kit'
 
 const { resolve } = createResolver(import.meta.url)
 
-const SITE_URL = 'https://astronera.org'
+const SITE_URL = process.env.NUXT_PUBLIC_SITE_URL || 'https://astronera.org'
 
 export default defineNuxtConfig({
   extends: ['@incubrain/foundry'],

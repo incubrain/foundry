@@ -9,3 +9,9 @@
 - [ ] add starfield to dark mode of website, probably just the homepage
 - [ ] add ae logo with 'astronera' text in logo to footer, also mention our partnership with DarkSky International here (site.business.mission)
   - "Through research, policy design, and internationally benchmarked frameworks, we are working to support Maharashtra in addressing light pollution as a public health, biodiversity, and climate concern."
+
+
+- [ ] add appropriate redirects for these
+  - https://astronera-website.up.railway.app/__sitemap__/blog.xml
+  - https://astronera-website.up.railway.app/__sitemap__/policies.xml
+  - https://astronera-website.up.railway.app/__sitemap__/main.xml
