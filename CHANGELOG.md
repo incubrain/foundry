@@ -16,10 +16,10 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
-- Replace heroicons with Lucide icons
-- Bump Nuxt to 4.3.0
-- Bump Nuxt Studio to 1.2.0
-- Add "Built with @incubrain/foundry" to footer
+- Bump `nuxt` to `4.3.0`
+- Bump `nuxt-studio` to `1.2.0`
+- `nuxt-llms` added as optional `peerDependencies` as `defineNuxtConfig.llms` requires user driven config
+- Add "Built with @incubrain/foundry Vx.x.x" to footer, infers version from `package.json`
 
 ## [0.5.0] - 2026-01-31
 

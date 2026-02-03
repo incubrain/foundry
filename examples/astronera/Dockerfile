@@ -33,7 +33,8 @@ COPY examples/astronera/package.json examples/astronera/
 # ------------------------------------------------
 # 3. Install ONLY astronera (uses root lockfile)
 # ------------------------------------------------
-RUN --mount=type=cache,id=pnpm-store,target=/root/.local/share/pnpm/store \
+
+RUN --mount=type=cache,id=s/f12e2404-569b-40d1-a825-14d68880dea3-pnpm-store,target=/root/.local/share/pnpm/store \
     pnpm install \
     --filter ./examples/astronera... \
     --frozen-lockfile \
