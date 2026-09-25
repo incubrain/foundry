@@ -11,6 +11,7 @@ import type { AiAgentPurpose } from '../../../../shared/ai-agents'
 export type SignalKind = 'event' | 'log'
 export type SignalSeverity = 'error' | 'warning'
 export type VisitorClass = 'human' | 'agent' | 'bot'
+export type VisitorDevice = 'mobile' | 'tablet' | 'desktop'
 
 /**
  * What an `agent`'s fetch is for. **Additive** to `class`, never a replacement:
@@ -48,6 +49,15 @@ export interface SignalVisitor {
    * the vendor does not tell you what the fetch was for.
    */
   subclass?: VisitorSubclass
+  /**
+   * `device` / `browser` / `os` — stamped server-side in `appendSignal()` from
+   * the request User-Agent (see `server/utils/visitor-device.ts`). Family names
+   * only (`'Chrome'`, `'iOS'`), never versions. Unset for crawlers, bare HTTP
+   * clients and anything else that isn't a browser on a mobile/tablet/desktop.
+   */
+  device?: VisitorDevice
+  browser?: string
+  os?: string
 }
 
 export interface SignalRow {

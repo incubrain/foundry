@@ -44,6 +44,7 @@ layer/modules/events/
         ├── signal-env.ts             # Pure env:'local' precedence rule (dev default vs explicit override)
         ├── signal-export.ts          # Bearer auth check + query parsing
         ├── visitor-class.ts          # UA → human/agent/bot + agent sub-class
+        ├── visitor-device.ts         # UA → device/browser/os family (bowser)
         └── visitor-hash.ts           # Daily-salted visitor hash + salt rotation
 ```
 
@@ -80,7 +81,7 @@ page GETs      → server/middleware/page-request.ts ─────────
 not inside this module — this module's own File Map above only covers `layer/modules/events/`.
 
 - **Envelope:** `{ id, seq, ts, site, kind: 'event'|'log', name, severity?, visitor?, page?, referrer?, utm?, review?, data?, env? }`,
-  where `visitor` is `{ hash?, class?, subclass? }`. Rows from before the ev2.3 cutover
+  where `visitor` is `{ hash?, class?, subclass?, device?, browser?, os? }`. Rows from before the ev2.3 cutover
   carry `visitor.anonId` instead of `hash`.
 - **Review binding:** `review` is its own top-level field, read from a `?polaris_review=<token>`
   query param by `pageContext()`. It is **never** merged into `utm` and **never** persisted —
@@ -121,6 +122,13 @@ not inside this module — this module's own File Map above only covers `layer/m
   `Applebot-Extended` beats a shorter `Applebot` and `Ai2Bot-Dolma` beats
   `AI2Bot`. `describeVisitor()` returns `{ class, subclass? }`;
   `classifyVisitor()` remains the class-only shorthand.
+- **Device / browser / OS:** `appendSignal()` stamps `visitor.device` (`'mobile' | 'tablet' |
+  'desktop'`), `visitor.browser` and `visitor.os` from the request UA on every row that has a
+  request (`server/utils/visitor-device.ts`). Family names only (`Chrome`, `iOS`), never
+  versions — less fingerprinting surface, and no feature needs them. Parsed by `bowser` (MIT,
+  bundled types, ~8 KB gzipped, server bundle only); `ua-parser-js` was rejected — v2 is AGPL,
+  v1 ships no types. Crawlers, TVs and bare HTTP clients get none of the three:
+  `visitor.class` already says what they are. Client-supplied values are dropped.
 - **Local debugging against Polaris:** `env: 'local'` is stamped on every row by
   `appendSignal()` (`server/utils/signal-buffer.ts`) — the single choke point every
   capture path funnels through — whenever the server is running in dev mode

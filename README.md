@@ -63,7 +63,7 @@ SignalRow {
   kind: 'event' | 'log',
   name,
   severity?,   // logs
-  visitor?,    // { hash, class: 'human' | 'agent' | 'bot', ... } — stamped server-side
+  visitor?,    // { hash, class: 'human' | 'agent' | 'bot', device, browser, os, ... } — server-side
   page?, referrer?, utm?,
   review?,     // ?polaris_review=<token> — this page load only, never persisted
   data?

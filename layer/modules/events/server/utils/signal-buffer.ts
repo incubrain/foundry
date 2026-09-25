@@ -2,6 +2,7 @@ import type { Storage } from 'unstorage'
 import type { H3Event } from 'h3'
 import type { SignalInput, SignalRow, SignalVisitor } from '../../runtime/types/signal'
 import { resolveSignalEnv } from './signal-env'
+import { describeDevice } from './visitor-device'
 import { createSaltKeeper, hashVisitor } from './visitor-hash'
 import type { SaltKeeper } from './visitor-hash'
 
@@ -152,27 +153,37 @@ function resolveEnvMarker(event?: H3Event): 'local' | undefined {
  * connection; without it every visitor would hash to the proxy's address.
  * Undefined when there is no request, or no address to hash.
  */
-async function resolveVisitorHash(site: string, event?: H3Event): Promise<string | undefined> {
+async function resolveVisitorHash(
+  site: string,
+  userAgent: string | undefined,
+  event?: H3Event,
+): Promise<string | undefined> {
   const ip = event && getRequestIP(event, { xForwardedFor: true })
   if (!ip) return undefined
   salts ??= createSaltKeeper(useStorage('signals'))
-  return hashVisitor({ salt: await salts.current(), site, ip, userAgent: getHeader(event, 'user-agent') })
+  return hashVisitor({ salt: await salts.current(), site, ip, userAgent })
 }
 
 /**
  * The one choke point every capture path funnels through (ingest, webhook,
- * error hook, page_request middleware, mcp middleware) — so `site`,
- * `visitor.hash` and the `env: 'local'` debug marker are stamped exactly once,
- * here, rather than at each call site. A caller-supplied `visitor.hash` is
- * never trusted: it is always replaced, or dropped when there is no request.
+ * error hook, page_request middleware, mcp middleware) — so `site`, the
+ * request-derived visitor fields (`hash`, `device`, `browser`, `os`) and the
+ * `env: 'local'` debug marker are stamped exactly once, here, rather than at
+ * each call site. Caller-supplied values for those visitor fields are never
+ * trusted: they are replaced from the request, or dropped when there is none.
  */
 export async function appendSignal(input: SignalInput, event?: H3Event): Promise<SignalRow> {
   const { visitor: claimed, ...row } = input
   const env = row.env ?? resolveEnvMarker(event)
   const site = row.site || resolveSite(event)
-  const { hash: _untrusted, ...visitor } = claimed ?? {}
-  const hash = await resolveVisitorHash(site, event)
-  const stamped: SignalVisitor = hash ? { ...visitor, hash } : visitor
+  const { hash: _h, device: _d, browser: _b, os: _o, ...visitor } = claimed ?? {}
+  const userAgent = event ? getHeader(event, 'user-agent') : undefined
+  const hash = await resolveVisitorHash(site, userAgent, event)
+  const stamped: SignalVisitor = {
+    ...visitor,
+    ...(hash ? { hash } : {}),
+    ...describeDevice(userAgent),
+  }
 
   return getSignalBuffer().append({
     ...row,
