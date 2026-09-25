@@ -38,10 +38,11 @@ layer/modules/events/
     ├── middleware/
     │   └── page-request.ts           # Every document GET → `page_request` row (non-JS visitors)
     ├── plugins/
-    │   └── signal-errors.ts          # Nitro request errors → signal buffer
+    │   ├── signal-errors.ts          # Nitro request errors → signal buffer
+    │   └── signal-storage.ts         # Mounts `signals` to fs when NUXT_SIGNAL_STORE_DIR is set
     └── utils/
         ├── page-request.ts           # Page-visit filter rules + fire-and-forget append
-        ├── signal-buffer.ts          # Capped ring buffer (unstorage) + appendSignal
+        ├── signal-buffer.ts          # Capped, time-retained ring buffer (unstorage) + appendSignal
         ├── signal-env.ts             # Pure env:'local' precedence rule (dev default vs explicit override)
         ├── signal-export.ts          # Bearer auth check + query parsing
         └── visitor-class.ts          # UA → human/agent/bot + agent sub-class
@@ -134,10 +135,23 @@ not inside this module — this module's own File Map above only covers `layer/m
   `resolveSignalEnv()` (`server/utils/signal-env.ts`) for the precedence rule, unit-tested
   in isolation from Nitro.
 - **Cursor:** `seq` is monotonic. Consumers send back the last `cursor` they saw.
-- **Buffer:** `useStorage('signals')` (memory by default — mount fs/KV in `nitro.storage`
-  to survive restarts). Capacity `events.signals.capacity`, default 100 000 rows; oldest evicted.
-  Sized for the identity stream: ~60 rows per visit × ~200 sessions/day ≈ 12k rows/day, so the
-  buffer holds ~8 days and a consumer can be down for a week without losing rows.
+- **Buffer:** `useStorage('signals')` — memory by default; `server/plugins/signal-storage.ts`
+  mounts it to the unstorage `fs` driver when `NUXT_SIGNAL_STORE_DIR` is set (a Railway
+  Volume mount path), so a redeploy/restart doesn't lose unpulled rows. Capacity
+  `events.signals.capacity`, default 170 000 rows; oldest evicted. Sized for the identity
+  stream: ~60 rows per visit × ~200 sessions/day ≈ 12k rows/day, so the buffer covers the
+  full 14-day retention window (below) with headroom, and a consumer can be down for the
+  whole window without losing rows.
+- **Retention:** rows older than 14 days (`DEFAULT_SIGNAL_RETENTION_MS`,
+  `server/utils/signal-buffer.ts`) are pruned on append, independent of the capacity cap —
+  a quiet site doesn't hold rows forever just because it's nowhere near full. Both eviction
+  rules (capacity + retention) advance one `oldest` cursor, persisted in `meta` alongside
+  `head` so it survives a restart too. Pruning only ever removes exact `row:<seq>` keys —
+  never a blanket `storage.clear()` — since the `signals` mount also carries other keys
+  (`meta`, and the visitor-hash salt from `product-validator-ev2.3`).
+- **Capacity warning:** at ≥90% of capacity, `appendSignal()` appends one `quota_low`
+  log Site Event (`kind: 'log', severity: 'warning', data: { used, capacity, ratio }`),
+  edge-triggered so it fires once per crossing rather than on every append while full.
 - **Auth:** export requires `Authorization: Bearer <NUXT_SIGNAL_EXPORT_TOKEN>`. Missing/wrong
   token → 401. Token not configured → 503 (never open by default).
 - **Client batching:** `useSignalQueue()` debounces POSTs (~800 ms, max 50 rows) and flushes
@@ -290,7 +304,7 @@ await appendSignal({ kind: 'log', severity: 'warning', name: 'quota_low', data: 
 
 ```ts
 events: {
-  signals: { enabled: true, capacity: 100_000, captureErrors: true },
+  signals: { enabled: true, capacity: 170_000, captureErrors: true },
   debug: true,   // console.info every tracked event (client)
 }
 ```
@@ -304,8 +318,13 @@ That's the whole surface. There is no `providers` and no `webhook` option.
 - `NUXT_PUBLIC_SIGNAL_ENV` — Overrides the `env:'local'` debug marker's dev-mode default;
   `local` stamps it even on a non-dev server, `production` suppresses it even under
   `import.meta.dev`. See "Local debugging against Polaris" above.
+- `NUXT_SIGNAL_STORE_DIR` — Absolute directory to persist the `signals` ring buffer to
+  (`server/plugins/signal-storage.ts`), e.g. a Railway Volume's mount path. Unset → the
+  in-memory driver (default; fine for dev/tests, loses unpulled rows on restart). Read from
+  `process.env` at Nitro startup, not baked into `nitro.storage` at build time, since a host
+  like Railway injects its runtime env into the running container independently of the build.
 
-Nothing else. If you're adding a fourth env var to this module, you're probably adding a
+Nothing else. If you're adding a fifth env var to this module, you're probably adding a
 feature that doesn't capture signal.
 
 ## Design Principles

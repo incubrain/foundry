@@ -212,7 +212,7 @@ export default defineNuxtConfig({
       enabled: true,
       // Sized for the always-on identity stream — see DEFAULT_SIGNAL_CAPACITY
       // in modules/events/server/utils/signal-buffer.ts for the arithmetic.
-      capacity: 100_000,
+      capacity: 170_000,
       captureErrors: true,
     },
     debug: true,

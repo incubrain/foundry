@@ -164,8 +164,10 @@ external tools for these.
   changing event code. See `modules/events/*`.
 - Signal pull, not webhook push: client events, server errors, and form captures all
   call `appendSignal()` (`layer/modules/events/server/utils/signal-buffer.ts`) into a
-  capped ring buffer (`useStorage('signals')`, 100,000-row default — sized for the
-  always-on identity-event stream). Ingest lands via
+  capped, time-retained ring buffer (`useStorage('signals')`, 170,000-row default / 14-day
+  retention — sized for the always-on identity-event stream). Memory by default; set
+  `NUXT_SIGNAL_STORE_DIR` to a directory (e.g. a Railway Volume mount path) to persist it
+  to disk across restarts (`server/plugins/signal-storage.ts`). Ingest lands via
   `POST /api/_signals/ingest` (client rows), `POST /api/v1/webhook` (form capture),
   `POST /mcp` tool calls (`layer/server/utils/mcp-signal.ts` → `mcp_tool_called`, always
   `visitor.class: 'agent'`), and every document GET
