@@ -92,11 +92,6 @@ declare module 'nuxt/app' {
       from: resolver.resolve('./runtime/composables/useEvents.ts'),
     })
 
-    addImports({
-      name: 'useUserIdentity',
-      from: resolver.resolve('./runtime/composables/useUserIdentity.ts'),
-    })
-
     // Expose to runtime config
     nuxt.options.runtimeConfig.public.events = {
       debug: options.debug,

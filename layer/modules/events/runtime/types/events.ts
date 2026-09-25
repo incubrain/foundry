@@ -21,7 +21,6 @@ export type EventTarget = OfferTarget
  */
 export interface BaseEventPayload {
   id: string
-  userId?: string
   timestamp: number
   action?: string // Optional in new system?
   location?: string

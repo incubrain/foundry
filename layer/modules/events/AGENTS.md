@@ -16,8 +16,7 @@ layer/modules/events/
 │   │   └── signal.ts                 # SignalRow envelope (events AND logs)
 │   ├── composables/
 │   │   ├── useEvents.ts              # Main event tracking API
-│   │   ├── useSignalQueue.ts         # Client batch queue → /api/_signals/ingest
-│   │   └── useUserIdentity.ts        # Anonymous UUID generation/persistence
+│   │   └── useSignalQueue.ts         # Client batch queue → /api/_signals/ingest
 │   ├── plugins/
 │   │   ├── events.client.ts          # Core plugin (hook infra + `debug` console echo)
 │   │   ├── errors.client.ts          # window.onerror / rejections / Vue errors → signals
@@ -44,7 +43,8 @@ layer/modules/events/
         ├── signal-buffer.ts          # Capped ring buffer (unstorage) + appendSignal
         ├── signal-env.ts             # Pure env:'local' precedence rule (dev default vs explicit override)
         ├── signal-export.ts          # Bearer auth check + query parsing
-        └── visitor-class.ts          # UA → human/agent/bot + agent sub-class
+        ├── visitor-class.ts          # UA → human/agent/bot + agent sub-class
+        └── visitor-hash.ts           # Daily-salted visitor hash + salt rotation
 ```
 
 ## Key Architecture
@@ -80,12 +80,14 @@ page GETs      → server/middleware/page-request.ts ─────────
 not inside this module — this module's own File Map above only covers `layer/modules/events/`.
 
 - **Envelope:** `{ id, seq, ts, site, kind: 'event'|'log', name, severity?, visitor?, page?, referrer?, utm?, review?, data?, env? }`,
-  where `visitor` is `{ anonId?, class?, subclass? }`.
+  where `visitor` is `{ hash?, class?, subclass? }`. Rows from before the ev2.3 cutover
+  carry `visitor.anonId` instead of `hash`.
 - **Review binding:** `review` is its own top-level field, read from a `?polaris_review=<token>`
   query param by `pageContext()`. It is **never** merged into `utm` and **never** persisted —
   only rows emitted while that tagged URL is current carry it. That is the whole design: an
-  external reviewer needs exactly one tagged row to bind the token to a `visitor.anonId`, and
-  persisting it would stamp every later row on every later page instead.
+  external reviewer needs exactly one tagged row to bind the token to a `visitor.hash`, and
+  persisting it would stamp every later row on every later page instead. The hash rotates at
+  UTC midnight, so a binding is only good for the day it was made.
 - **Visitor classification:** every ingest/append path stamps `visitor.class:
   'human' | 'agent' | 'bot'` server-side from the request's `User-Agent`
   (`server/utils/visitor-class.ts`) — a hand-rolled matcher, checked against
@@ -268,8 +270,23 @@ Honeypot filled in, or `timeOnForm` under 2s → treated as a bot and silently a
 (no error surfaced, so bots don't learn they were caught). Checked inline in
 `webhook.post.ts` — no dedicated util or rate limiter.
 
-### Anonymous Identity
-`useUserIdentity().getUserId()` returns `user_<uuid>`. Persists to localStorage via `useAppStorage()`. SSR-safe (empty string on server). If storage throws outright — private mode, blocked site data — it falls back to a per-page-load id rather than throwing on every visitor.
+### Anonymous Identity (cookieless)
+`visitor.hash` = `sha256(daily_salt + site + ip + user_agent)`, truncated to 16 hex chars,
+stamped by `appendSignal()` on every row that has a request (`server/utils/visitor-hash.ts`,
+decision product-validator-ev2.1). Nothing is stored on the device, so no consent is needed
+under ePrivacy Art. 5(3). The client sends no identity at all; a client-supplied hash is
+dropped, and the ingest schema strips a stale client's `anonId`.
+
+- **IP:** `getRequestIP(event, { xForwardedFor: true })` — Railway's proxy terminates the
+  connection. The raw IP is only a digest input; it is never stored.
+- **Salt:** random, one key (`visitor-salt`) in the `signals` storage, replaced on the first
+  append of each UTC day. Overwriting the key is the deletion of the old salt, so past
+  hashes can't be recomputed. On the memory driver a restart mints a new salt, splitting a
+  day's visitors at the restart; a persistent `signals` mount avoids that.
+- **Trade:** one value per visitor per day. Same-day features (uniques, sessions, bounce,
+  funnels, review binding) work; cross-day returning-visitor recognition is gone on purpose.
+- **Legacy:** older builds stored `foundry_userId` in localStorage; `events.client.ts` removes
+  it on boot. `useUserIdentity()` no longer exists.
 
 ## How to Modify
 
@@ -311,6 +328,6 @@ feature that doesn't capture signal.
 ## Design Principles
 
 1. No database — the buffer is a transient ring consumers pull from, not storage
-2. No auth — anonymous UUID sufficient for signal capture
+2. No auth — a server-side daily visitor hash is sufficient for signal capture
 3. No analytics vendors — one pipe out, the consumer decides what to do with it
 4. No second destination — adding a fan-out target means two sources of truth

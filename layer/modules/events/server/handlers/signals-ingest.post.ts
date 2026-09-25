@@ -14,8 +14,10 @@ const rowSchema = z.object({
   kind: z.enum(['event', 'log']),
   name: z.string().min(1).max(64),
   severity: z.enum(['error', 'warning']).optional(),
+  // No identity field: `visitor.hash` is stamped server-side by appendSignal(),
+  // and zod strips anything else — including the `anonId` a stale cached
+  // client may still send.
   visitor: z.object({
-    anonId: z.string().max(128).optional(),
     // Accepted but ignored — `class`/`subclass` are always overwritten
     // server-side below, from the request UA.
     class: z.enum(['human', 'agent', 'bot']).optional(),
