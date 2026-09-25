@@ -69,7 +69,8 @@ steps:
     code: "extends: ['@incubrain/foundry']"
   - n: "02"
     name: Stream
-    detail: Every event inked to a buffer you own — nothing pushed, everything pulled.
+    detail: Every event inked to a durable buffer you own — 14 days on disk,
+      nothing pushed, everything pulled, even if nobody's watching yet.
     code: GET /api/_signals/export
   - n: "03"
     name: Decide
@@ -87,15 +88,17 @@ channels:
     detail: Email, presales, bookings — demand lands as signal rows, not inbox noise.
   - ch: CH 02
     name: Events
-    detail: Section views and offer clicks — which promise pulled, which one died.
+    detail: Section views, offer clicks, outbound links, and file downloads —
+      which promise pulled, which one died.
   - ch: CH 03
     name: Errors
-    detail: Server and client failures, same stream — a broken site is the loudest
-      signal.
+    detail: Server and client failures, plus 404s that catch a dead campaign
+      link — same stream, a broken site is the loudest signal.
   - ch: CH 04
     name: Visitors
-    detail: Every row stamped human, agent, or bot — watch the species shift on your
-      own site.
+    detail: Every row stamped human, agent, or bot, plus device, browser, and OS
+      — a daily-salted hash counts visitors with no cookies, no consent
+      banner, EU-compliant by design.
 endpoints:
   - path: /api/_signals/export
     note: bearer · pull
@@ -114,7 +117,11 @@ endpoints:
   - path: /robots.txt
     note: crawler policy
 body: No dashboards, no on-site analytics — interpretation belongs to the
-  consumer. Four channels, one buffer, one authenticated export.
+  consumer. Four channels, one durable buffer (14 days on disk), one
+  authenticated export. On our own sites, that export already feeds an
+  internal operator surface — it catches a hijacked or expired domain even
+  when the page still returns 200, warns before a certificate lapses, and
+  reads per-site views, funnels, and real-time traffic.
 plate: PLATE III — CHANNELS
 title: One drum, every signal.
 ---
@@ -168,6 +175,16 @@ entries:
   - date: 2026-08-31
     entry: v0.8.0 published to npm. Two production sites streaming — astronera.org
       and incubrain.org.
+    status: RECORDED
+  - date: 2026-09-25
+    entry: Site Events move onto a durable volume — 14-day retention, cookieless
+      visitor hashing, outbound/download/404 tracking, device and browser
+      stamps.
+    status: RECORDED
+  - date: 2026-09-25
+    entry: The internal operator surface reading this export adds site-identity
+      checks, domain/SSL-expiry warnings, and per-site analytics with funnels
+      and a real-time view.
     status: RECORDED
   - date: —
     entry: Third-party adoption beyond our own sites.

@@ -7,7 +7,10 @@ items:
     content: Nuxt 4, Tailwind 4, TypeScript. Foundry is a Nuxt layer — one extends line in your config and your app inherits the sections, capture endpoints, SEO, RSS, and MCP surface.
 
   - label: Where do my signals go?
-    content: Into a capped ring buffer on your own server. Nothing is pushed to a third party — you pull the raw record from the export endpoint with a token you control.
+    content: Into a capped ring buffer on your own server, persisted to disk with 14-day retention — nothing pushed to a third party, you pull the raw record from the export endpoint with a token you control.
+
+  - label: Do you use cookies to count visitors?
+    content: No. Visitor identity is a server-side hash salted per day — no cookies, no localStorage, no fingerprinting library. EU-compliant by design, and there's no consent banner to build.
 
   - label: What does "agent-readable" mean here?
     content: Every page is server-rendered — no JavaScript needed to read it. Sites also emit sitemap, robots, and llms.txt, expose MCP tools, and classify every visitor as human, agent, or bot.
