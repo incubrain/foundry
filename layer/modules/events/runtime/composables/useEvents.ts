@@ -4,9 +4,6 @@ export const useEvents = () => {
   const nuxtApp = useNuxtApp()
 
   const trackEvent = async (event: TrackEventInput) => {
-    // Assumes useUserIdentity is available in the runtime context
-    const { getUserId } = useUserIdentity()
-
     const payload: EventPayload = {
       id: event.id || crypto.randomUUID(),
       type: event.type,
@@ -14,10 +11,7 @@ export const useEvents = () => {
       location: event.location,
       target: event.target,
       timestamp: Date.now(),
-      data: {
-        ...event.data,
-        userId: getUserId(),
-      },
+      data: { ...event.data },
     }
 
     // Emit hook for all providers

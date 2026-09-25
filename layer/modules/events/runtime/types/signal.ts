@@ -11,6 +11,7 @@ import type { AiAgentPurpose } from '../../../../shared/ai-agents'
 export type SignalKind = 'event' | 'log'
 export type SignalSeverity = 'error' | 'warning'
 export type VisitorClass = 'human' | 'agent' | 'bot'
+export type VisitorDevice = 'mobile' | 'tablet' | 'desktop'
 
 /**
  * What an `agent`'s fetch is for. **Additive** to `class`, never a replacement:
@@ -25,7 +26,15 @@ export type VisitorClass = 'human' | 'agent' | 'bot'
 export type VisitorSubclass = AiAgentPurpose
 
 export interface SignalVisitor {
-  anonId?: string
+  /**
+   * Cookieless visitor identity: `sha256(daily_salt + site + ip + user_agent)`,
+   * truncated, stamped server-side in `appendSignal()` (see
+   * `server/utils/visitor-hash.ts`). Stable for one visitor within a UTC day,
+   * unlinkable across days. Replaced the client-stored `anonId`
+   * (decision product-validator-ev2.1) — rows from before the cutover carry
+   * `anonId` instead. Client-supplied values are never trusted.
+   */
+  hash?: string
   /**
    * Stamped server-side from the request User-Agent at ingest/append time
    * (see `server/utils/visitor-class.ts`). Client-supplied values are never
@@ -40,6 +49,15 @@ export interface SignalVisitor {
    * the vendor does not tell you what the fetch was for.
    */
   subclass?: VisitorSubclass
+  /**
+   * `device` / `browser` / `os` — stamped server-side in `appendSignal()` from
+   * the request User-Agent (see `server/utils/visitor-device.ts`). Family names
+   * only (`'Chrome'`, `'iOS'`), never versions. Unset for crawlers, bare HTTP
+   * clients and anything else that isn't a browser on a mobile/tablet/desktop.
+   */
+  device?: VisitorDevice
+  browser?: string
+  os?: string
 }
 
 export interface SignalRow {
@@ -60,7 +78,7 @@ export interface SignalRow {
    * page the event was emitted from. Its own top-level field — never squatted
    * into `utm` — and deliberately NOT persisted: only rows emitted during that
    * one page load carry it, which is all an external reviewer needs to bind the
-   * tag to a `visitor.anonId`. See `pageContext()` in `runtime/utils/signal.ts`.
+   * tag to a `visitor.hash`. See `pageContext()` in `runtime/utils/signal.ts`.
    */
   review?: string
   data?: Record<string, unknown>

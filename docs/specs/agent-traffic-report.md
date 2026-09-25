@@ -100,9 +100,10 @@ Each verified against the code, not assumed.
 - **Prerendered / CDN-served pages produce nothing.** The middleware is Nitro-side: a fully
   static route served from a CDN never reaches it. The prerender crawl itself is excluded on
   purpose (`import.meta.prerender` / `x-nitro-prerender`).
-- **No identity on `page_request`.** `capturePageRequest()` stamps
-  `visitor: describeVisitor(ua)` — `class` and `subclass` only, no `anonId`. Every metric
-  here is a **row count**, not a visitor count. Uniques are not derivable.
+- **Identity on `page_request` is daily only.** Since product-validator-ev2.3,
+  `appendSignal()` stamps a cookieless `visitor.hash` on every row with a request, so
+  same-day uniques are derivable; the hash rotates at UTC midnight, so cross-day uniques
+  are not. Metrics here remain **row counts** unless stated otherwise.
 - **No page attribution on `mcp_tool_called`.** No `page` field; `visitor.class` is hardcoded
   `'agent'` from the transport rather than the UA. Tool + args are all there is.
 - **Missing UA is `bot`, not unclassified.** `describeVisitor(undefined)` returns
@@ -118,8 +119,7 @@ Each verified against the code, not assumed.
   (`product-validator-m0f.15`), now landed.
 - **No real-time.** The consumer polls a cursor. Freshness is the poll interval; nothing
   here is a live counter.
-- **No session stitching or unique visitors.** `page_request` has no `anonId` and this
-  report deliberately does not try to join server rows to client `ui.*` rows by
+- **No session stitching.** This report deliberately does not try to join server rows to client `ui.*` rows by
   `page` + `ts` proximity — that heuristic would manufacture the double-count §2 forbids.
 - **No bot-vs-agent adjudication beyond the UA.** No reverse-DNS, no IP-range verification,
   no behavioural inference. If the UA lies, the row lies.

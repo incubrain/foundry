@@ -63,7 +63,7 @@ SignalRow {
   kind: 'event' | 'log',
   name,
   severity?,   // logs
-  visitor?,    // { class: 'human' | 'agent' | 'bot', ... } — stamped server-side
+  visitor?,    // { hash, class: 'human' | 'agent' | 'bot', device, browser, os, ... } — server-side
   page?, referrer?, utm?,
   review?,     // ?polaris_review=<token> — this page load only, never persisted
   data?
@@ -72,6 +72,11 @@ SignalRow {
 
 - **Client events** go through `useEvents()` → the signal provider → a debounced batch
   queue, flushed with `sendBeacon` on `pagehide`.
+- **Privacy: no cookies, no stored ID.** Visitors are counted with `visitor.hash`, a
+  server-side `sha256(daily_salt + site + ip + user_agent)`. The salt rotates at UTC
+  midnight and the old one is deleted, so a visitor is one value for a day and unlinkable
+  across days. Nothing is written to the visitor's device and the raw IP is never stored,
+  so no consent banner is needed for signal capture.
 - **Identity events** are always on for every visitor: `ui.click` (`{ target, label?,
   section? }`), `ui.section` (`{ section, visible }`), and `ui.page` (`{ from? }`). They are
   content-free by construction — authored element identity and labels only, never pixel

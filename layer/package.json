@@ -55,6 +55,7 @@
     "@vueuse/core": "^14.4.0",
     "@vueuse/integrations": "^14.4.0",
     "@vueuse/nuxt": "^14.4.0",
+    "bowser": "^2.14.1",
     "defu": "^6.1.6",
     "exsolve": "^1.1.1",
     "motion-v": "^2.3.0",

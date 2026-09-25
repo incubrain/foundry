@@ -16,7 +16,7 @@ export const truncate = (value: unknown, max: number): string | undefined =>
  * `review` is read straight off `location.search` on every call and is never
  * written to storage: only rows emitted while the tagged URL is the current one
  * carry it. That is deliberate — an external reviewer needs exactly one tagged
- * row to learn the visitor's `anonId`, and persisting the tag would stamp every
+ * row to learn the visitor's `hash`, and persisting the tag would stamp every
  * later row on every later page instead.
  */
 export function pageContext(): Pick<SignalInput, 'page' | 'referrer' | 'utm' | 'review'> {
@@ -39,16 +39,18 @@ export function pageContext(): Pick<SignalInput, 'page' | 'referrer' | 'utm' | '
   }
 }
 
-/** Analytics event payload → signal envelope. */
+/**
+ * Analytics event payload → signal envelope. No `visitor`: every visitor field
+ * (`hash`, `class`, …) is stamped server-side at ingest, never sent from here.
+ */
 export function toSignalRow(payload: EventPayload): SignalInput {
-  const { userId, ...data } = (payload.data ?? {}) as Record<string, unknown>
+  const data = (payload.data ?? {}) as Record<string, unknown>
 
   return {
     id: payload.id,
     ts: payload.timestamp,
     kind: 'event',
     name: payload.type,
-    visitor: userId ? { anonId: String(userId) } : undefined,
     ...pageContext(),
     data: {
       ...data,
