@@ -38,10 +38,10 @@ layer/modules/events/
     ├── middleware/
     │   └── page-request.ts           # Every document GET → `page_request` row (non-JS visitors)
     ├── plugins/
-    │   ├── signal-errors.ts          # Nitro request errors → signal buffer
+    │   ├── signal-errors.ts          # Nitro request errors → signal buffer (+ 404 → http.not_found)
     │   └── signal-storage.ts         # Mounts `signals` to fs when NUXT_SIGNAL_STORE_DIR is set
     └── utils/
-        ├── page-request.ts           # Page-visit filter rules + fire-and-forget append
+        ├── page-request.ts           # Page-visit filter rules + fire-and-forget append + 404 noise filter
         ├── signal-buffer.ts          # Capped, time-retained ring buffer (unstorage) + appendSignal
         ├── signal-env.ts             # Pure env:'local' precedence rule (dev default vs explicit override)
         ├── signal-export.ts          # Bearer auth check + query parsing
@@ -229,6 +229,23 @@ none of them are HTML.
 
 Fire-and-forget like `captureMcpToolCall()`: the middleware returns nothing, awaits nothing,
 and swallows every failure. A dropped row costs a data point; a thrown one costs the page.
+
+### 404s (`http.not_found`)
+`server/plugins/signal-errors.ts` special-cases a thrown `statusCode: 404` (the catch-all
+page, `layer/app/pages/[...slug].vue`, is the only surface that throws one): instead of the
+usual `server_error` log row, it appends `{ kind: 'event', name: 'http.not_found', page,
+referrer?, visitor }` — product-validator-ev2.6. A 404 isn't a crash, so it gets its own
+Site Event rather than inflating the error-log stream; the point is catching a campaign link
+that silently lands on a missing page, which `server_error` alerting isn't shaped for.
+
+`isNotableNotFound()` (`server/utils/page-request.ts`) decides whether a 404 is worth the
+row: it reuses `isPageRequest()`'s asset/internal-route filtering (`/_nuxt/`, `favicon.ico`,
+`/api/*`, …), then additionally drops `visitor.class: 'bot'` traffic and a short list of
+vulnerability-scanner probe paths (`/wp-admin`, `/wp-login.php`, `/.env`, `/.git`,
+`/phpmyadmin`, `/administrator`, `/cgi-bin`, …) that 404 on every public server by
+construction and say nothing about a broken link. Matching is prefix-on-a-path-boundary
+(`/wp-admin` or `/wp-admin/…`, never a bare substring), so a legitimate page like
+`/wp-admin-consulting` isn't mistaken for a probe.
 
 ### Identity Events (always on, content-free)
 `runtime/plugins/identity.client.ts` emits a behaviour stream for **every** visitor through the

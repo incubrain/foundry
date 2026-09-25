@@ -172,11 +172,12 @@ external tools for these.
   `POST /mcp` tool calls (`layer/server/utils/mcp-signal.ts` → `mcp_tool_called`, always
   `visitor.class: 'agent'`), and every document GET
   (`layer/modules/events/server/middleware/page-request.ts` → `page_request`, the only
-  ingest path a visitor that runs no JavaScript reaches) and outbound-link/download clicks
-  (`ui.outbound`); an external consumer pulls everything back out with
-  `GET /api/_signals/export` (bearer `NUXT_SIGNAL_EXPORT_TOKEN`, `since`/`limit` params).
-  There are no outbound webhooks and no analytics providers — see
-  `layer/modules/events/AGENTS.md`, which also carries the `page_request` vs `ui.page`
+  ingest path a visitor that runs no JavaScript reaches), outbound-link/download clicks
+  (`ui.outbound`) and a thrown 404 (`http.not_found`, from the catch-all page); an external
+  consumer pulls everything back out with `GET /api/_signals/export` (bearer
+  `NUXT_SIGNAL_EXPORT_TOKEN`, `since`/`limit` params). There are no outbound webhooks and no
+  analytics providers — see `layer/modules/events/AGENTS.md`, which also carries the
+  `page_request` vs `ui.page`
   dedupe rule (they are different facts; never sum them).
 - AI-crawler policy: `layer/modules/ai-robots.ts` writes robots.txt groups from the same
   UA taxonomy the visitor classifier uses (`layer/shared/ai-agents.ts`). Answer engines

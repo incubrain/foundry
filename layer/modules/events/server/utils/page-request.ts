@@ -1,4 +1,5 @@
 import type { H3Event } from 'h3'
+import type { VisitorClass } from '../../runtime/types/signal'
 import { appendSignal } from './signal-buffer'
 import { describeVisitor } from './visitor-class'
 
@@ -156,8 +157,48 @@ export function pageFromPath(path: string): string {
   return (path.split('?')[0] || '/').slice(0, MAX_PAGE)
 }
 
-const truncate = (value: string | undefined, max: number) =>
+export const truncate = (value: string | undefined, max: number) =>
   value ? value.slice(0, max) : undefined
+
+/**
+ * Path prefixes that 404 by construction and mean nothing about a broken
+ * link — vulnerability scanners probe every public server on the internet
+ * for these within minutes of it going live. `http.not_found` (see
+ * `server/plugins/signal-errors.ts`) skips them the same way it skips
+ * `visitor.class: 'bot'` traffic and asset noise, so the Site Event stays a
+ * signal a founder can act on (a campaign link that silently 404s) rather
+ * than scanner background noise.
+ */
+const PROBE_PREFIXES = [
+  '/wp-admin', '/wp-login.php', '/wp-content', '/wp-includes', '/wp-json',
+  '/xmlrpc.php', '/.env', '/.git', '/phpmyadmin', '/administrator', '/cgi-bin',
+]
+
+/**
+ * Is a 404 on this request worth an `http.not_found` Site Event?
+ *
+ * Reuses {@link isPageRequest}'s asset/internal-route filtering (so
+ * `/_nuxt/*`, `favicon.ico`, `/api/*`, etc. are already excluded the same way
+ * they are for `page_request`), then additionally drops bot traffic and the
+ * scanner-probe paths above — neither is "a visitor hit a missing page."
+ */
+/**
+ * Prefix match on a path *segment* boundary — `pathname === prefix` or
+ * `pathname.startsWith(prefix + '/')` — so `/wp-admin-consulting` (a real page
+ * that merely shares a prefix) doesn't get mistaken for a probe of `/wp-admin`.
+ */
+const matchesProbe = (pathname: string) =>
+  PROBE_PREFIXES.some(prefix => pathname === prefix || pathname.startsWith(`${prefix}/`))
+
+export function isNotableNotFound(candidate: PageRequestCandidate, visitorClass?: VisitorClass): boolean {
+  if (visitorClass === 'bot') return false
+  if (!isPageRequest(candidate)) return false
+
+  const pathname = (candidate.path.split('?')[0] || '/').toLowerCase()
+  if (matchesProbe(pathname)) return false
+
+  return true
+}
 
 /**
  * Append one `page_request` row for a document GET.
