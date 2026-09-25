@@ -1,5 +1,44 @@
 # Changelog
 
+## [0.9.0](https://github.com/incubrain/foundry/compare/v0.8.0...v0.9.0) (2026-09-25)
+
+### Features
+
+* **a11y:** add axe-core WCAG A/AA gate over playground rendering routes (product-validator-m0f.10) ([a5d1829](https://github.com/incubrain/foundry/commit/a5d1829890b216928aa0f1dff8551ce117efb133))
+* **events:** capture page visits server-side so non-JS crawlers leave signal (product-validator-m0f.3) ([71a51e3](https://github.com/incubrain/foundry/commit/71a51e3bd93ac858d21a61e884bd2c44e631b80f))
+* **events:** cookieless daily-salted visitor hash replaces stored visitor ID (product-validator-ev2.3) ([37b8c55](https://github.com/incubrain/foundry/commit/37b8c55df2d1db3fcf3266be015d85fbafd301db))
+* **events:** emit ui.outbound Site Events for outbound links and downloads ([ceceeef](https://github.com/incubrain/foundry/commit/ceceeef5ef79c0f44d4335924f0dda8c4048faeb))
+* **events:** identity events + Polaris review binding in the signal stream ([7ac07dc](https://github.com/incubrain/foundry/commit/7ac07dc1edc01a4103f46e4a029d4820a416c34a))
+* **events:** persist Site Events on a Railway Volume with 14-day retention ([acae801](https://github.com/incubrain/foundry/commit/acae8016feb747737b4b654980b891277d049d4f))
+* **events:** record 404s as http.not_found Site Events ([8e3cadb](https://github.com/incubrain/foundry/commit/8e3cadb6247ff6b461392188b46b68944dedf287))
+* **events:** stamp signal rows with env:'local' in dev mode ([a2ca2b4](https://github.com/incubrain/foundry/commit/a2ca2b4496e955dbfe65fe036b267e65d77e9e38))
+* **events:** stamp visitor device, browser and OS server-side (product-validator-ev2.4) ([19dc964](https://github.com/incubrain/foundry/commit/19dc9646eee1c6fa0eb939f36389084989cb3429))
+* **events:** sub-classify agent traffic by fetch purpose (product-validator-m0f.2) ([38dcd90](https://github.com/incubrain/foundry/commit/38dcd906adbc448366e86af2e3824a75c2a3a338))
+* **geo:** citation-first content patterns — answer-first, sourced stats, expert quotes (product-validator-m0f.7) ([8ece233](https://github.com/incubrain/foundry/commit/8ece233fc58cc4c0d4c0fbfa983df78f8f0798ea))
+* **llms:** ship llms.txt + llms-full.txt from the layer by default (product-validator-m0f.9) ([30846e4](https://github.com/incubrain/foundry/commit/30846e4abe61f154067a8969cbe51c912f5d8c0b))
+* **markdown:** serve raw markdown on any Nitro deploy (product-validator-m0f.8) ([5f62338](https://github.com/incubrain/foundry/commit/5f623380c34b9db23cd9ec54ced31292e4acc9c9))
+* **seo:** emit FAQPage and Organization JSON-LD from existing content (product-validator-m0f.6) ([59d3e43](https://github.com/incubrain/foundry/commit/59d3e4311dc47ac6dd67a36c5db44a380378b5e7))
+* **server:** add /api/_health liveness endpoint for Polaris monitoring ([f1804c9](https://github.com/incubrain/foundry/commit/f1804c9c0f24bad871687112d65ded75c41a905e))
+* **signal,seo:** capture MCP tool calls + ship a deliberate AI-crawler robots policy ([237cf00](https://github.com/incubrain/foundry/commit/237cf004ca4685a3688573607edaca28e523647d))
+* **site:** PLATE IV — live tail of the page's own signal emissions ([8803ed1](https://github.com/incubrain/foundry/commit/8803ed109443694e7581605b5daa49e44ad27bd3))
+* **site:** rebuild foundry.incubrain.org as The Station Record — agent-first one-pager ([f9961e3](https://github.com/incubrain/foundry/commit/f9961e382dc5e660ab694ceb007d03ed1b251d4d))
+
+### Bug Fixes
+
+* **deps:** resolve 112/113 Dependabot alerts via dedupe + targeted overrides ([48d3501](https://github.com/incubrain/foundry/commit/48d35019e0f85b8ed4c25cc88d86a24ccf8b694f)), closes [#265](https://github.com/incubrain/foundry/issues/265)
+* **deps:** resolve 4 moderate Dependabot alerts in transitive deps (product-validator-8x2) ([1704af3](https://github.com/incubrain/foundry/commit/1704af3da20a706da22ae70cf1bf7291e68ff961))
+* **deps:** restore pre-dedupe lockfile graph — ebi.3's regenerated lockfile broke @nuxt/test-utils h3-next resolution (16 unit files failed to spawn); minimal @unhead/vue-only delta instead. Plus beads ledger export. ([b716885](https://github.com/incubrain/foundry/commit/b716885969f88dad4fd3d6bae0b3e854f1d96441))
+* **docker:** example image never installed the workspace layer ([50e8809](https://github.com/incubrain/foundry/commit/50e8809047592c52f0851bfdc9b75be1ddf676e2))
+* **events:** count agent-native document requests as page_request signals (product-validator-m0f.15) ([892a958](https://github.com/incubrain/foundry/commit/892a958c66f733c963d320dfa826a9df6e71f914))
+* **layer:** align searchable config schema to the flat shape useSearch reads ([5832497](https://github.com/incubrain/foundry/commit/583249723870e7b87f84d808453d1eef8e7689ff))
+* **layer:** pass UPageHeader title via prop to eliminate hydration mismatch (product-validator-740) ([2f06951](https://github.com/incubrain/foundry/commit/2f069510c308b35149df1d004c459360977afdd9)), closes [#title](https://github.com/incubrain/foundry/issues/title)
+* **layer:** re-add explicit @unhead/vue dependency to resolve peer ambiguity ([154576f](https://github.com/incubrain/foundry/commit/154576fe06f3531c7f61d26d82f7739529fe7cd3))
+* **layer:** ship the AppConfig type augmentation to consumer typechecks ([1482ed7](https://github.com/incubrain/foundry/commit/1482ed7f873704bcfb016a03b71856864f2e23cc))
+* **layer:** SSR the ConvertInternal offer query + add no-JS content regression net (product-validator-m0f.4) ([92b594c](https://github.com/incubrain/foundry/commit/92b594cf7651e127bc0804ea28c951b41cc29306))
+* **layer:** stop shipping type errors into consumer typechecks ([3d3c5cd](https://github.com/incubrain/foundry/commit/3d3c5cd4cf8839fcb986117715d683e62713b47e))
+* **layout:** move UPageHero from default layout into catch-all page (product-validator-s5s) ([30e2c43](https://github.com/incubrain/foundry/commit/30e2c431b6bc9c3219db31929e501bd50619f648))
+* **signal:** count cached MCP tool calls in the signal stream (product-validator-m0f.13) ([4918c6b](https://github.com/incubrain/foundry/commit/4918c6bc4c08a12ce26f6339687012adf29b831b))
+
 ## [0.8.0](https://github.com/incubrain/foundry/compare/v0.7.2...v0.8.0) (2026-08-20)
 
 ### Features
