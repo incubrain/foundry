@@ -13,6 +13,7 @@ export type TrackedEvents
     | 'ui.click'
     | 'ui.section'
     | 'ui.page'
+    | 'ui.outbound'
 
 export type EventTarget = OfferTarget
 

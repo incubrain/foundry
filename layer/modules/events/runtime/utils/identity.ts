@@ -132,6 +132,77 @@ export const createClickEmitter = (
   }
 }
 
+export interface OutboundClick {
+  /** Target hostname only — never the full URL, path or query. */
+  host: string
+  kind: 'outbound' | 'download'
+  /** Lower-cased file extension, without the dot. Only set for `kind: 'download'`. */
+  ext?: string
+}
+
+/**
+ * File extensions that mark a link as a download regardless of host — the
+ * click leaves the page (or opens a save dialog) the same way a navigation
+ * to another site does, so it gets the same treatment as an outbound link.
+ */
+const DOWNLOAD_EXTENSIONS = new Set([
+  'pdf', 'doc', 'docx', 'xls', 'xlsx', 'csv', 'ppt', 'pptx',
+  'zip', 'rar', '7z', 'tar', 'gz',
+  'dmg', 'exe', 'msi', 'pkg',
+])
+
+const EXTENSION_PATTERN = /\.([a-z0-9]+)$/i
+
+/**
+ * Resolve a raw click target to an outbound-link/download identity, or
+ * `undefined` for an ordinary same-site link. `currentHost` is injectable for
+ * tests; production callers rely on the `window.location.hostname` default.
+ *
+ * Only `http(s)` links are considered — `mailto:`/`tel:`/`javascript:` etc.
+ * have no meaningful "host" in this sense and are left alone. A link is a
+ * `download` when it names a known document/archive/installer extension
+ * (checked first, since a `.pdf` hosted on the same site is still a file
+ * leaving the page) or carries the `download` attribute; otherwise it's
+ * `outbound` when its hostname differs from the current one.
+ */
+export const resolveOutbound = (
+  node: unknown,
+  currentHost: string = window.location.hostname,
+): OutboundClick | undefined => {
+  const start = asElement(node)
+  if (!start || start.closest(IGNORE_SELECTOR)) return undefined
+
+  const anchor = start.closest('a[href]')
+  if (!anchor) return undefined
+
+  let url: URL
+  try {
+    url = new URL(anchor.getAttribute('href') || '', window.location.href)
+  }
+  catch {
+    return undefined
+  }
+
+  if (url.protocol !== 'http:' && url.protocol !== 'https:') return undefined
+
+  const ext = EXTENSION_PATTERN.exec(url.pathname)?.[1]?.toLowerCase()
+  const isDownload = anchor.hasAttribute('download') || (!!ext && DOWNLOAD_EXTENSIONS.has(ext))
+
+  if (isDownload) return { host: url.hostname, kind: 'download', ...(ext ? { ext } : {}) }
+  if (url.hostname.toLowerCase() !== currentHost.toLowerCase()) {
+    return { host: url.hostname, kind: 'outbound' }
+  }
+
+  return undefined
+}
+
+/** Wrap `emit` for a raw DOM click event; returns a DOM click handler. */
+export const createOutboundEmitter = (emit: (outbound: OutboundClick) => void) =>
+  (event: { target?: unknown } | null | undefined) => {
+    const outbound = resolveOutbound(event?.target)
+    if (outbound) emit(outbound)
+  }
+
 /** How long a section must hold a visibility state before it is worth a row. */
 export const SECTION_SETTLE_MS = 400
 

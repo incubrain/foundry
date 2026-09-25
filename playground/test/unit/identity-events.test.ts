@@ -2,9 +2,11 @@ import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 import {
   MAX_LABEL,
   createClickEmitter,
+  createOutboundEmitter,
   createSectionTracker,
   labelOf,
   resolveClick,
+  resolveOutbound,
   sectionIdOf,
   targetIdOf,
 } from '@incubrain/foundry/modules/events/runtime/utils/identity'
@@ -279,6 +281,128 @@ describe('createSectionTracker', () => {
     tracker.stop()
     vi.advanceTimersByTime(1000)
 
+    expect(emit).not.toHaveBeenCalled()
+  })
+})
+
+describe('resolveOutbound: outbound links and downloads', () => {
+  // The test document's own origin is the "same site" — resolveOutbound
+  // resolves a relative/same-origin href against `window.location.href`, and
+  // this environment's origin isn't ours to rewrite via history.replaceState
+  // (that throws SecurityError for a different origin), so links are built
+  // from it rather than a hardcoded domain.
+  const site = window.location.origin
+  const host = window.location.hostname
+
+  it('ignores a same-site absolute link', () => {
+    const find = render(`<a href="${site}/about">About</a>`)
+
+    expect(resolveOutbound(find('a'))).toBeUndefined()
+  })
+
+  it('ignores a relative link (always same-site)', () => {
+    const find = render('<a href="/pricing">Pricing</a>')
+
+    expect(resolveOutbound(find('a'))).toBeUndefined()
+  })
+
+  it('flags a different host as outbound, host only', () => {
+    const find = render('<a href="https://partner.example/deal?ref=123">Partner</a>')
+
+    expect(resolveOutbound(find('a'))).toEqual({ host: 'partner.example', kind: 'outbound' })
+  })
+
+  it('is case-insensitive comparing hosts', () => {
+    const find = render(`<a href="HTTP://${host.toUpperCase()}/about">About</a>`)
+
+    expect(resolveOutbound(find('a'))).toBeUndefined()
+  })
+
+  it('flags a known document extension as a download even on the same site', () => {
+    const find = render('<a href="/files/report.pdf">Report</a>')
+
+    expect(resolveOutbound(find('a'))).toEqual({ host, kind: 'download', ext: 'pdf' })
+  })
+
+  it('flags an external download with both host and ext', () => {
+    const find = render('<a href="https://cdn.example.org/report.zip">Zip</a>')
+
+    expect(resolveOutbound(find('a'))).toEqual({ host: 'cdn.example.org', kind: 'download', ext: 'zip' })
+  })
+
+  it('recognises the download attribute even without a matching extension', () => {
+    const find = render('<a href="/export" download>Export</a>')
+
+    expect(resolveOutbound(find('a'))).toEqual({ host, kind: 'download' })
+  })
+
+  it('resolves a click on inner markup up to the anchor', () => {
+    const find = render('<a href="https://partner.example"><span>Go</span></a>')
+
+    expect(resolveOutbound(find('span'))).toEqual({ host: 'partner.example', kind: 'outbound' })
+  })
+
+  it('ignores a click with no anchor ancestor', () => {
+    const find = render('<button>Go</button>')
+
+    expect(resolveOutbound(find('button'))).toBeUndefined()
+  })
+
+  it('ignores mailto: and tel: links — no meaningful host', () => {
+    const find = render(`
+      <a id="mail" href="mailto:hi@example.com">Email</a>
+      <a id="tel" href="tel:+1234567890">Call</a>
+    `)
+
+    expect(resolveOutbound(find('#mail'))).toBeUndefined()
+    expect(resolveOutbound(find('#tel'))).toBeUndefined()
+  })
+
+  it('honours data-signal-ignore on an ancestor', () => {
+    const find = render('<div data-signal-ignore><a href="https://partner.example">Go</a></div>')
+
+    expect(resolveOutbound(find('a'))).toBeUndefined()
+  })
+
+  it('accepts an explicit currentHost for testability', () => {
+    const find = render(`<a href="${site}/about">About</a>`)
+
+    expect(resolveOutbound(find('a'), 'other.example')).toEqual({ host, kind: 'outbound' })
+  })
+
+  it('never includes the path or query in the payload', () => {
+    const find = render('<a href="https://partner.example/deal/secret?token=abc">Go</a>')
+    const outbound = resolveOutbound(find('a'))
+
+    expect(Object.keys(outbound!).sort()).toEqual(['host', 'kind'])
+    expect(JSON.stringify(outbound)).not.toContain('secret')
+    expect(JSON.stringify(outbound)).not.toContain('token')
+  })
+})
+
+describe('createOutboundEmitter', () => {
+  it('emits for an outbound click', () => {
+    const find = render('<a href="https://partner.example">Go</a>')
+    const emit = vi.fn()
+
+    createOutboundEmitter(emit)({ target: find('a') })
+
+    expect(emit).toHaveBeenCalledWith({ host: 'partner.example', kind: 'outbound' })
+  })
+
+  it('emits nothing for a same-site link', () => {
+    const find = render('<a href="/about">About</a>')
+    const emit = vi.fn()
+
+    createOutboundEmitter(emit)({ target: find('a') })
+
+    expect(emit).not.toHaveBeenCalled()
+  })
+
+  it('survives a null target', () => {
+    const emit = vi.fn()
+
+    expect(() => createOutboundEmitter(emit)(null)).not.toThrow()
     expect(emit).not.toHaveBeenCalled()
   })
 })

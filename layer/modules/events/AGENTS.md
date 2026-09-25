@@ -239,6 +239,7 @@ normal `events:track` pipeline, so each row already carries `page`, `ts`, `visit
 | `ui.click` | `{ target, label?, section? }` |
 | `ui.section` | `{ section, visible }` |
 | `ui.page` | `{ from? }` — route change, and the first load |
+| `ui.outbound` | `{ host, kind: 'outbound' \| 'download', ext? }` |
 
 **Content-free is a hard rule:** no pixel coordinates, no input values, no keystrokes. `target`
 is built from authored attributes only (`data-signal-target` → `tag#id` → `tag[data-testid]` →
@@ -259,6 +260,19 @@ ten sections emits nothing rather than twenty rows, and an on-screen section nev
 request UA at ingest and consumers filter on it. A second, weaker client verdict would only be
 overwritten. Emission is also fully guarded — a dropped row costs a data point, a thrown one
 costs the visit.
+
+**`ui.outbound`** (product-validator-ev2.5) fires on a click that either targets a different
+host than the current page (`kind: 'outbound'`) or names a document/archive/installer
+extension — `pdf`, `zip`, `csv`, `xlsx`, `pptx`, `docx`, `dmg`, and siblings
+(`DOWNLOAD_EXTENSIONS`, `runtime/utils/identity.ts`) — or carries the `download` attribute
+(`kind: 'download'`). `data.host` is the target's hostname only — never the full URL, path
+or query string. `mailto:`/`tel:`/non-`http(s)` links have no meaningful host and are
+skipped. It goes through the same `emit()` → `trackEvent` → hook → queue pipe as
+`ui.click`/`ui.section`/`ui.page`, so it's fire-and-forget by construction and never blocks
+the navigation or download the click triggers; the existing `sendBeacon` flush on `pagehide`
+(`useSignalQueue.ts`) is what gets a same-tab outbound navigation's row out before the page
+unloads, and a `target="_blank"` link or a download that never navigates just rides the
+normal debounced flush since the page stays open.
 
 ### Form Submission Flow
 `useFormCapture()` validates client-side, then POSTs straight to `/api/v1/webhook` →
