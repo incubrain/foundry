@@ -330,3 +330,12 @@ tools. You do NOT need to manually instruct subagents about context-mode.
 | `ctx stats` | Call the `ctx_stats` MCP tool and display the full output verbatim |
 | `ctx doctor` | Call the `ctx_doctor` MCP tool, run the returned shell command, display as checklist |
 | `ctx upgrade` | Call the `ctx_upgrade` MCP tool, run the returned shell command, display as checklist |
+
+## Relationships
+
+- **Site Event vs Probe.** Site Events are recorded *by* the site (inside Foundry); Probes are made *of* the site from outside (Polaris). A Probe cannot be backfilled from the site, because the failures it exists to catch — expired domain, DNS pointing elsewhere, host down — never reach Foundry. The backfill evidence for a Polaris outage is the continuity of Site Events, which requires the Site Event buffer to be durable (not the default memory driver).
+- **Foundry ends at the stream; Polaris owns interpretation.** Analytics (page views, scroll depth, …) are Site Events; bounce rate, durations and funnels are derived in Polaris from raw rows.
+
+## Flagged ambiguities
+
+- **"signal".** Foundry prose and code (`SignalRow`, `/api/_signals/export`) use "signal" for every recorded row; Polaris's glossary defines a *signal* as one of exactly four states (Aimed, Waiting on me, Rotting, Broken). In prose, say **Site Event** for Foundry rows. Code identifiers are unchanged for now.

@@ -18,3 +18,5 @@
 | Documentation | docs, reference | Markdown guides and examples for using Foundry in a Nuxt 4 project. |
 | MCP | tool-integration, model-context-protocol | Tools exposing Foundry capabilities to Claude for AI-assisted site building. |
 | Verdaccio | local registry, publish:local | Local private npm registry used to publish `@incubrain/foundry` prerelease builds so external consumer repos (astronera, incubrain) can test layer changes without a real npm release. |
+| Site Event | signal row, signal event, event row | One first-party row Foundry records about its own site (email capture, presale, booking, error, page view, scroll depth) into the durable buffer Polaris pulls. Code type is still `SignalRow`. Not a Polaris *signal* — that term is Polaris's closed four-state set. |
+| Probe | uptime check, ping, health check | An outside check Polaris makes against a site's **public** URL: uptime, site-identity assertion (`/api/_health` `siteId` must match the registry), domain expiry (RDAP), SSL expiry. A site can never record its own Probes — a parked or expired domain never reaches Foundry. |
