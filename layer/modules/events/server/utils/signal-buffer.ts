@@ -12,21 +12,35 @@ import type { SaltKeeper } from './visitor-hash'
  * Before identity events a visit produced ~5-8 rows (a couple of section views,
  * maybe an offer click, the odd error). The always-on click + section-visibility
  * stream adds roughly 10-50 rows per visitor-minute; at ~30/min over a ~2 minute
- * engaged session that is ~60 rows per visit — about 10x the old volume. Raising
- * 10_000 → 100_000 keeps the retention the old number bought: at a modelled 200
- * sessions/day (~12k rows/day) the buffer holds ~8 days, so an external consumer
- * can be down for a week without losing rows. Cost is bounded — ~350 bytes of
- * serialised row, so ~35 MB at a full 100_000 in the default memory driver.
+ * engaged session that is ~60 rows per visit — about 10x the old volume. At a
+ * modelled 200 sessions/day (~12k rows/day), 170_000 rows covers the full
+ * `DEFAULT_SIGNAL_RETENTION_MS` window (14 days) with headroom, so a consumer
+ * that's down for the entire retention window still catches up without gaps.
+ * Cost is bounded — ~350 bytes of serialised row, so ~60 MB at a full 170_000
+ * in the default memory driver. Set `NUXT_SIGNAL_STORE_DIR` (see
+ * `server/plugins/signal-storage.ts`) to mount `signals` onto disk instead —
+ * e.g. a Railway Volume — so the buffer survives a restart.
  */
-export const DEFAULT_SIGNAL_CAPACITY = 100_000
+export const DEFAULT_SIGNAL_CAPACITY = 170_000
 /** Raised with the buffer: a consumer catching up over a 10x deeper buffer pages half as often. */
 export const MAX_EXPORT_LIMIT = 2000
+/**
+ * Time-based retention, independent of the capacity cap: a row older than this
+ * is pruned even if the buffer is nowhere near full (a quiet site would
+ * otherwise hold rows indefinitely). 14 days matches the epic's retention
+ * promise (product-validator-ev2).
+ */
+export const DEFAULT_SIGNAL_RETENTION_MS = 14 * 24 * 60 * 60 * 1000
+/** `used / capacity` at which a `quota_low` warning row is appended once (edge-triggered). */
+const NEAR_CAPACITY_RATIO = 0.9
 
 const META_KEY = 'meta'
 const rowKey = (seq: number) => `row:${seq}`
 
 export interface SignalBufferOptions {
   capacity?: number
+  /** Rows older than this are pruned on append, regardless of capacity. */
+  retentionMs?: number
 }
 
 export interface SignalReadResult {
@@ -34,38 +48,90 @@ export interface SignalReadResult {
   cursor: number
 }
 
+export interface SignalBufferUsage {
+  used: number
+  capacity: number
+}
+
 export interface SignalBuffer {
   append: (input: SignalInput) => Promise<SignalRow>
   read: (sinceSeq?: number, limit?: number) => Promise<SignalReadResult>
+  /** Live row count vs capacity — used by the singleton to decide when to warn. */
+  usage: () => Promise<SignalBufferUsage>
   capacity: number
 }
 
 /**
- * Capped ring buffer over an unstorage driver (memory by default — mount
- * `signals` to fs/KV in nuxt.config to survive restarts). `seq` is the cursor.
+ * Capped, time-retained ring buffer over an unstorage driver (memory by
+ * default — `server/plugins/signal-storage.ts` mounts `signals` onto disk via
+ * `NUXT_SIGNAL_STORE_DIR` so it survives restarts). `seq` is the cursor.
+ *
+ * Two eviction rules, both enforced on every append and merged into one
+ * `oldest` cursor (persisted in `meta` alongside `head` so both survive a
+ * restart): the hard `capacity` cap, and `retentionMs` — a row older than the
+ * window is pruned even when the buffer is far from full.
  */
 export function createSignalBuffer(
   storage: Storage,
   options: SignalBufferOptions = {},
 ): SignalBuffer {
   const capacity = Math.max(1, options.capacity ?? DEFAULT_SIGNAL_CAPACITY)
+  const retentionMs = Math.max(0, options.retentionMs ?? DEFAULT_SIGNAL_RETENTION_MS)
 
   let head: number | null = null
+  let oldest: number | null = null
   // Serialises appends so `seq` stays monotonic under concurrent requests.
   let tail: Promise<unknown> = Promise.resolve()
 
-  const loadHead = async () => {
-    if (head === null) {
-      const meta = await storage.getItem<{ head?: number }>(META_KEY)
+  const loadMeta = async () => {
+    if (head === null || oldest === null) {
+      const meta = await storage.getItem<{ head?: number, oldest?: number }>(META_KEY)
       head = Number(meta?.head) || 0
+      oldest = Number(meta?.oldest) || 1
     }
-    return head
+    return { head, oldest }
   }
 
-  const oldestSeq = (current: number) => Math.max(1, current - capacity + 1)
+  /**
+   * Advance the `oldest` cursor forward, removing everything it passes: first
+   * unconditionally up to the hard capacity floor, then — only while
+   * `retentionMs` is enabled — while the next row in line is older than the
+   * cutoff. Rows are appended in roughly chronological order, so a single
+   * forward walk (not a full scan) is enough to find the retained window.
+   *
+   * Scoped to exact `row:<seq>` keys only — never `storage.clear()` or a
+   * prefix sweep. The `signals` mount also carries other keys (`meta`, and
+   * the identity branch's `visitor-salt`); a blanket clear would take those
+   * out too.
+   */
+  const prune = async (capacityFloor: number, currentHead: number) => {
+    let cursor = oldest ?? 1
 
-  const append = async (input: SignalInput): Promise<SignalRow> => {
-    const seq = (await loadHead()) + 1
+    while (cursor < capacityFloor) {
+      await storage.removeItem(rowKey(cursor))
+      cursor++
+    }
+
+    if (retentionMs > 0) {
+      const cutoff = Date.now() - retentionMs
+      while (cursor <= currentHead) {
+        const candidate = await storage.getItem<SignalRow>(rowKey(cursor))
+        if (!candidate) {
+          cursor++
+          continue
+        }
+        if (candidate.ts >= cutoff) break
+        await storage.removeItem(rowKey(cursor))
+        cursor++
+      }
+    }
+
+    oldest = cursor
+  }
+
+  const writeRow = async (input: SignalInput): Promise<SignalRow> => {
+    const { head: currentHead } = await loadMeta()
+    const seq = currentHead + 1
     head = seq
 
     const row: SignalRow = {
@@ -77,16 +143,16 @@ export function createSignalBuffer(
     }
 
     await storage.setItem(rowKey(seq), row)
-    if (seq - capacity >= 1) await storage.removeItem(rowKey(seq - capacity))
-    await storage.setItem(META_KEY, { head: seq })
+    await prune(Math.max(1, seq - capacity + 1), seq)
+    await storage.setItem(META_KEY, { head: seq, oldest })
 
     return row
   }
 
   const read = async (sinceSeq = 0, limit = 100): Promise<SignalReadResult> => {
-    const current = await loadHead()
+    const { head: current, oldest: floor } = await loadMeta()
     const max = Math.min(Math.max(1, Math.trunc(limit) || 1), MAX_EXPORT_LIMIT)
-    const from = Math.max(Math.trunc(sinceSeq) + 1, oldestSeq(current))
+    const from = Math.max(Math.trunc(sinceSeq) + 1, floor)
 
     const rows: SignalRow[] = []
     for (let seq = from; seq <= current && rows.length < max; seq++) {
@@ -101,14 +167,20 @@ export function createSignalBuffer(
     }
   }
 
+  const usage = async (): Promise<SignalBufferUsage> => {
+    const { head: current, oldest: floor } = await loadMeta()
+    return { used: Math.max(0, current - floor + 1), capacity }
+  }
+
   return {
     // Chain every append onto the queue so callers can fire-and-forget.
     append: (input) => {
-      const next = tail.then(() => append(input))
+      const next = tail.then(() => writeRow(input))
       tail = next.catch(() => {})
       return next
     },
     read,
+    usage,
     capacity,
   }
 }
@@ -117,6 +189,11 @@ export function createSignalBuffer(
 
 let buffer: SignalBuffer | null = null
 let salts: SaltKeeper | null = null
+// Edge-triggered: one `quota_low` row per crossing into the danger zone, not
+// one per append while it stays there. Lives here (not in `createSignalBuffer`)
+// so the pure ring-buffer unit tests — several of which use a tiny capacity on
+// purpose, to exercise wraparound — never trip it and get a surprise extra row.
+let warnedNearCapacity = false
 
 function getSignalBuffer(): SignalBuffer {
   if (!buffer) {
@@ -128,6 +205,32 @@ function getSignalBuffer(): SignalBuffer {
     })
   }
   return buffer
+}
+
+/**
+ * After every append, check whether the live buffer just crossed
+ * `NEAR_CAPACITY_RATIO` and, if so, append one `quota_low` warning row.
+ * Fire-and-forget and re-entrant-safe: the warning row is itself an append,
+ * which re-runs this check, but the latch is set before that recursive call
+ * starts, so it sees itself already warned and returns without looping.
+ */
+async function warnIfNearCapacity(): Promise<void> {
+  const { used, capacity } = await getSignalBuffer().usage()
+  const ratio = used / capacity
+
+  if (ratio < NEAR_CAPACITY_RATIO) {
+    warnedNearCapacity = false
+    return
+  }
+  if (warnedNearCapacity) return
+
+  warnedNearCapacity = true
+  await appendSignal({
+    kind: 'log',
+    severity: 'warning',
+    name: 'quota_low',
+    data: { used, capacity, ratio: Number(ratio.toFixed(3)) },
+  })
 }
 
 /** `runtimeConfig.public.siteId`, falling back to the request host. */
@@ -185,12 +288,15 @@ export async function appendSignal(input: SignalInput, event?: H3Event): Promise
     ...describeDevice(userAgent),
   }
 
-  return getSignalBuffer().append({
+  const appended = getSignalBuffer().append({
     ...row,
     site,
     ...(Object.keys(stamped).length ? { visitor: stamped } : {}),
     ...(env ? { env } : {}),
   })
+  // Never let the capacity check slow down or fail the caller's own append.
+  void appended.then(() => warnIfNearCapacity()).catch(() => {})
+  return appended
 }
 
 export function readSignals(sinceSeq = 0, limit = 100): Promise<SignalReadResult> {

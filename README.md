@@ -175,7 +175,7 @@ capture signal.
 events: {
   signals: {
     enabled: true,        // signal capture on/off
-    capacity: 100_000,    // ring buffer size
+    capacity: 170_000,    // ring buffer size (14 days)
     captureErrors: true,  // client errors → the stream
   },
   debug: true,            // echo events to the console in dev

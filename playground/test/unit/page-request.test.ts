@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import {
+  isNotableNotFound,
   isPageRequest,
   pageFromPath,
   pageRequestFormat,
@@ -162,6 +163,62 @@ describe('pageRequestFormat', () => {
   it('labels an ordinary page as html', () => {
     expect(pageRequestFormat(crawlerGet('/pricing'))).toBe('html')
     expect(pageRequestFormat(browserNavigation('/pricing'))).toBe('html')
+  })
+})
+
+describe('isNotableNotFound', () => {
+  it('accepts a 404 on an ordinary page path', () => {
+    expect(isNotableNotFound(crawlerGet('/blog/deleted-post'))).toBe(true)
+  })
+
+  it('accepts a 404 for agent traffic (only bot is excluded)', () => {
+    expect(isNotableNotFound(crawlerGet('/blog/deleted-post'), 'agent')).toBe(true)
+    expect(isNotableNotFound(crawlerGet('/blog/deleted-post'), 'human')).toBe(true)
+  })
+
+  it('rejects bot traffic', () => {
+    expect(isNotableNotFound(crawlerGet('/blog/deleted-post'), 'bot')).toBe(false)
+  })
+
+  it('rejects asset and internal-route noise, same as isPageRequest', () => {
+    const paths = [
+      '/favicon.ico',
+      '/_nuxt/entry.abc123.js',
+      '/api/_signals/export',
+      '/robots.txt',
+    ]
+
+    for (const path of paths) expect(isNotableNotFound(crawlerGet(path)), path).toBe(false)
+  })
+
+  it('rejects a non-GET', () => {
+    expect(isNotableNotFound({ ...crawlerGet('/pricing'), method: 'POST' })).toBe(false)
+  })
+
+  it('rejects well-known vulnerability-scanner probes', () => {
+    const paths = [
+      '/wp-admin',
+      '/wp-admin/setup-config.php',
+      '/wp-login.php',
+      '/wp-content/plugins/x',
+      '/wp-json/wp/v2/users',
+      '/xmlrpc.php',
+      '/.env',
+      '/.git/config',
+      '/phpmyadmin',
+      '/administrator/index.php',
+      '/cgi-bin/test.sh',
+    ]
+
+    for (const path of paths) expect(isNotableNotFound(crawlerGet(path)), path).toBe(false)
+  })
+
+  it('is case-insensitive matching probe prefixes', () => {
+    expect(isNotableNotFound(crawlerGet('/WP-ADMIN/setup.php'))).toBe(false)
+  })
+
+  it('does not treat a lookalike path as a probe', () => {
+    expect(isNotableNotFound(crawlerGet('/wp-admin-consulting'))).toBe(true)
   })
 })
 

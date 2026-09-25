@@ -3,6 +3,7 @@ import { useEvents } from '../composables/useEvents'
 import {
   SECTION_SELECTOR,
   createClickEmitter,
+  createOutboundEmitter,
   createSectionTracker,
 } from '../utils/identity'
 
@@ -51,6 +52,20 @@ export default defineNuxtPlugin({
     })
 
     useEventListener(document, 'click', onClick, { capture: true, passive: true })
+
+    // === ui.outbound ===
+    // Fires through the same `emit()` → trackEvent → hook → queue pipe as
+    // every other identity event: fire-and-forget, so it never blocks or
+    // delays the navigation/download the click is triggering. The queue's own
+    // `sendBeacon` flush on `pagehide` (`useSignalQueue.ts`) is what gets a
+    // same-tab outbound navigation's row out before the page unloads; a
+    // `target="_blank"` link or a download that never navigates just rides
+    // the normal debounced flush since the page stays open.
+    const onOutboundClick = createOutboundEmitter((outbound) => {
+      emit({ type: 'ui.outbound', data: { ...outbound } })
+    })
+
+    useEventListener(document, 'click', onOutboundClick, { capture: true, passive: true })
 
     // === ui.section ===
     if (typeof IntersectionObserver !== 'undefined') {

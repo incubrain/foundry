@@ -14,7 +14,7 @@ import type { ModuleOptions } from './runtime/types/events'
 // Not imported directly: that file is nitro-server-only (relies on h3/nitro
 // auto-imports) and pulling it into this module-setup file drags it into the
 // Nuxt "node" typecheck project, which doesn't have those globals.
-const DEFAULT_SIGNAL_CAPACITY = 100_000
+const DEFAULT_SIGNAL_CAPACITY = 170_000
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
@@ -121,6 +121,10 @@ declare module 'nuxt/app' {
         method: 'get',
         handler: resolver.resolve('./server/handlers/signals-export.get'),
       })
+
+      // Mounts `signals` onto disk when NUXT_SIGNAL_STORE_DIR is set (Railway
+      // Volume), memory otherwise. See server/plugins/signal-storage.ts.
+      addServerPlugin(resolver.resolve('./server/plugins/signal-storage'))
 
       // Server-side page visits. The client identity stream only ever sees
       // visitors that run JS; this is the ingest path for the ones that don't

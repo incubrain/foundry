@@ -37,10 +37,11 @@ layer/modules/events/
     ├── middleware/
     │   └── page-request.ts           # Every document GET → `page_request` row (non-JS visitors)
     ├── plugins/
-    │   └── signal-errors.ts          # Nitro request errors → signal buffer
+    │   ├── signal-errors.ts          # Nitro request errors → signal buffer (+ 404 → http.not_found)
+    │   └── signal-storage.ts         # Mounts `signals` to fs when NUXT_SIGNAL_STORE_DIR is set
     └── utils/
-        ├── page-request.ts           # Page-visit filter rules + fire-and-forget append
-        ├── signal-buffer.ts          # Capped ring buffer (unstorage) + appendSignal
+        ├── page-request.ts           # Page-visit filter rules + fire-and-forget append + 404 noise filter
+        ├── signal-buffer.ts          # Capped, time-retained ring buffer (unstorage) + appendSignal
         ├── signal-env.ts             # Pure env:'local' precedence rule (dev default vs explicit override)
         ├── signal-export.ts          # Bearer auth check + query parsing
         ├── visitor-class.ts          # UA → human/agent/bot + agent sub-class
@@ -144,10 +145,23 @@ not inside this module — this module's own File Map above only covers `layer/m
   `resolveSignalEnv()` (`server/utils/signal-env.ts`) for the precedence rule, unit-tested
   in isolation from Nitro.
 - **Cursor:** `seq` is monotonic. Consumers send back the last `cursor` they saw.
-- **Buffer:** `useStorage('signals')` (memory by default — mount fs/KV in `nitro.storage`
-  to survive restarts). Capacity `events.signals.capacity`, default 100 000 rows; oldest evicted.
-  Sized for the identity stream: ~60 rows per visit × ~200 sessions/day ≈ 12k rows/day, so the
-  buffer holds ~8 days and a consumer can be down for a week without losing rows.
+- **Buffer:** `useStorage('signals')` — memory by default; `server/plugins/signal-storage.ts`
+  mounts it to the unstorage `fs` driver when `NUXT_SIGNAL_STORE_DIR` is set (a Railway
+  Volume mount path), so a redeploy/restart doesn't lose unpulled rows. Capacity
+  `events.signals.capacity`, default 170 000 rows; oldest evicted. Sized for the identity
+  stream: ~60 rows per visit × ~200 sessions/day ≈ 12k rows/day, so the buffer covers the
+  full 14-day retention window (below) with headroom, and a consumer can be down for the
+  whole window without losing rows.
+- **Retention:** rows older than 14 days (`DEFAULT_SIGNAL_RETENTION_MS`,
+  `server/utils/signal-buffer.ts`) are pruned on append, independent of the capacity cap —
+  a quiet site doesn't hold rows forever just because it's nowhere near full. Both eviction
+  rules (capacity + retention) advance one `oldest` cursor, persisted in `meta` alongside
+  `head` so it survives a restart too. Pruning only ever removes exact `row:<seq>` keys —
+  never a blanket `storage.clear()` — since the `signals` mount also carries other keys
+  (`meta`, and the visitor-hash salt from `product-validator-ev2.3`).
+- **Capacity warning:** at ≥90% of capacity, `appendSignal()` appends one `quota_low`
+  log Site Event (`kind: 'log', severity: 'warning', data: { used, capacity, ratio }`),
+  edge-triggered so it fires once per crossing rather than on every append while full.
 - **Auth:** export requires `Authorization: Bearer <NUXT_SIGNAL_EXPORT_TOKEN>`. Missing/wrong
   token → 401. Token not configured → 503 (never open by default).
 - **Client batching:** `useSignalQueue()` debounces POSTs (~800 ms, max 50 rows) and flushes
@@ -226,6 +240,23 @@ none of them are HTML.
 Fire-and-forget like `captureMcpToolCall()`: the middleware returns nothing, awaits nothing,
 and swallows every failure. A dropped row costs a data point; a thrown one costs the page.
 
+### 404s (`http.not_found`)
+`server/plugins/signal-errors.ts` special-cases a thrown `statusCode: 404` (the catch-all
+page, `layer/app/pages/[...slug].vue`, is the only surface that throws one): instead of the
+usual `server_error` log row, it appends `{ kind: 'event', name: 'http.not_found', page,
+referrer?, visitor }` — product-validator-ev2.6. A 404 isn't a crash, so it gets its own
+Site Event rather than inflating the error-log stream; the point is catching a campaign link
+that silently lands on a missing page, which `server_error` alerting isn't shaped for.
+
+`isNotableNotFound()` (`server/utils/page-request.ts`) decides whether a 404 is worth the
+row: it reuses `isPageRequest()`'s asset/internal-route filtering (`/_nuxt/`, `favicon.ico`,
+`/api/*`, …), then additionally drops `visitor.class: 'bot'` traffic and a short list of
+vulnerability-scanner probe paths (`/wp-admin`, `/wp-login.php`, `/.env`, `/.git`,
+`/phpmyadmin`, `/administrator`, `/cgi-bin`, …) that 404 on every public server by
+construction and say nothing about a broken link. Matching is prefix-on-a-path-boundary
+(`/wp-admin` or `/wp-admin/…`, never a bare substring), so a legitimate page like
+`/wp-admin-consulting` isn't mistaken for a probe.
+
 ### Identity Events (always on, content-free)
 `runtime/plugins/identity.client.ts` emits a behaviour stream for **every** visitor through the
 normal `events:track` pipeline, so each row already carries `page`, `ts`, `visitor` and `review`:
@@ -235,6 +266,7 @@ normal `events:track` pipeline, so each row already carries `page`, `ts`, `visit
 | `ui.click` | `{ target, label?, section? }` |
 | `ui.section` | `{ section, visible }` |
 | `ui.page` | `{ from? }` — route change, and the first load |
+| `ui.outbound` | `{ host, kind: 'outbound' \| 'download', ext? }` |
 
 **Content-free is a hard rule:** no pixel coordinates, no input values, no keystrokes. `target`
 is built from authored attributes only (`data-signal-target` → `tag#id` → `tag[data-testid]` →
@@ -255,6 +287,19 @@ ten sections emits nothing rather than twenty rows, and an on-screen section nev
 request UA at ingest and consumers filter on it. A second, weaker client verdict would only be
 overwritten. Emission is also fully guarded — a dropped row costs a data point, a thrown one
 costs the visit.
+
+**`ui.outbound`** (product-validator-ev2.5) fires on a click that either targets a different
+host than the current page (`kind: 'outbound'`) or names a document/archive/installer
+extension — `pdf`, `zip`, `csv`, `xlsx`, `pptx`, `docx`, `dmg`, and siblings
+(`DOWNLOAD_EXTENSIONS`, `runtime/utils/identity.ts`) — or carries the `download` attribute
+(`kind: 'download'`). `data.host` is the target's hostname only — never the full URL, path
+or query string. `mailto:`/`tel:`/non-`http(s)` links have no meaningful host and are
+skipped. It goes through the same `emit()` → `trackEvent` → hook → queue pipe as
+`ui.click`/`ui.section`/`ui.page`, so it's fire-and-forget by construction and never blocks
+the navigation or download the click triggers; the existing `sendBeacon` flush on `pagehide`
+(`useSignalQueue.ts`) is what gets a same-tab outbound navigation's row out before the page
+unloads, and a `target="_blank"` link or a download that never navigates just rides the
+normal debounced flush since the page stays open.
 
 ### Form Submission Flow
 `useFormCapture()` validates client-side, then POSTs straight to `/api/v1/webhook` →
@@ -315,7 +360,7 @@ await appendSignal({ kind: 'log', severity: 'warning', name: 'quota_low', data: 
 
 ```ts
 events: {
-  signals: { enabled: true, capacity: 100_000, captureErrors: true },
+  signals: { enabled: true, capacity: 170_000, captureErrors: true },
   debug: true,   // console.info every tracked event (client)
 }
 ```
@@ -329,8 +374,13 @@ That's the whole surface. There is no `providers` and no `webhook` option.
 - `NUXT_PUBLIC_SIGNAL_ENV` — Overrides the `env:'local'` debug marker's dev-mode default;
   `local` stamps it even on a non-dev server, `production` suppresses it even under
   `import.meta.dev`. See "Local debugging against Polaris" above.
+- `NUXT_SIGNAL_STORE_DIR` — Absolute directory to persist the `signals` ring buffer to
+  (`server/plugins/signal-storage.ts`), e.g. a Railway Volume's mount path. Unset → the
+  in-memory driver (default; fine for dev/tests, loses unpulled rows on restart). Read from
+  `process.env` at Nitro startup, not baked into `nitro.storage` at build time, since a host
+  like Railway injects its runtime env into the running container independently of the build.
 
-Nothing else. If you're adding a fourth env var to this module, you're probably adding a
+Nothing else. If you're adding a fifth env var to this module, you're probably adding a
 feature that doesn't capture signal.
 
 ## Design Principles
