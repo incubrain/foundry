@@ -1,8 +1,7 @@
 # CLAUDE.md
 
 Guidance for Claude Code in this repository. Reference detail — architecture, file
-locations, workflows, and the full context-mode tool-routing rules (redirected tools, the
-tool-selection hierarchy, the `ctx` command reference) — lives in `CONTEXT.md`. Canonical
+locations and workflows — lives in `CONTEXT.md`. Canonical
 terms are in `GLOSSARY.md`.
 
 ## Project
@@ -24,22 +23,6 @@ day-to-day workflow (verdaccio cross-repo testing, module guides, visual testing
 Before building: does VueUse solve this? does an existing component handle it? is this a
 real (not imagined) problem? will it capture signal faster? If all four are "no," don't
 build it.
-
-## Hard-blocked commands — do NOT retry
-
-`curl`, `wget`, inline HTTP (`fetch('http`, `requests.get(`, `requests.post(`,
-`http.get(`, `http.request(`), and `WebFetch` are intercepted by a PreToolUse hook and
-replaced with an error message. Do not retry them in Bash. Use
-`ctx_fetch_and_index(url, source)` then `ctx_search(queries)` for web pages, or
-`ctx_execute(language, code)` to run HTTP calls in the sandbox — only stdout enters context.
-
-## Bash — short output only
-
-Bash is for short-output commands and mutations only (`git`, `mkdir`, `rm`, `mv`, `cd`,
-`ls`, `pnpm install`). Anything printing more than ~20 lines — including `grep` over a large
-tree — floods context if run directly; route it through `ctx_batch_execute(commands,
-queries)` or `ctx_execute(language: "shell", …)` instead, so only the derived answer enters
-context. Full tool-selection hierarchy and the `ctx` command table are in `CONTEXT.md`.
 
 ## Issue tracking — beads (`bd`)
 
