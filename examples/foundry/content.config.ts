@@ -1,6 +1,7 @@
 import { defineContentConfig, defineCollection } from '@nuxt/content'
 
 import {
+  baseBlogSchema,
   baseConfigSchema,
   baseFaqSchema,
   basePageSchema,
@@ -17,6 +18,16 @@ export default defineContentConfig({
         prefix: '/',
       },
       schema: basePageSchema,
+    }),
+
+    // Blog — posts go live at their `publishAt` (foundry.blog in nuxt.config.ts)
+    blog: defineCollection({
+      type: 'page',
+      source: {
+        include: 'blog/**/*.md',
+        prefix: '/blog',
+      },
+      schema: baseBlogSchema,
     }),
 
     // FAQ data

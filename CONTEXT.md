@@ -208,7 +208,8 @@ external tools for these.
 
 ```bash
 layer/                         → Nuxt layer (core reusable code)
-layer/modules/                 → Feature modules (events, rss)
+layer/modules/                 → Feature modules (events, rss, blog)
+layer/bin/                     → `foundry-blog` — plain-ESM writer for the blog (CLI + stdio MCP)
 examples/foundry/              → Founder Funnel example app
 shared/config/                 → Configuration files
 shared/types/                  → TypeScript types
@@ -232,6 +233,7 @@ guides. Read the relevant guide when working on that module (not autoloaded):
 
 - [layer/modules/events/AGENTS.md](layer/modules/events/AGENTS.md) — Event tracking and signal export
 - [layer/modules/rss/AGENTS.md](layer/modules/rss/AGENTS.md) — RSS feed generation
+- [layer/modules/blog/AGENTS.md](layer/modules/blog/AGENTS.md) — Scheduled blog + the `foundry-blog` writer (CLI/MCP): liveness is decided per request in JS, `/blog/**` is never prerendered, user docs in `layer/modules/blog/README.md`
 
 > The `changelog` module (`Changelog.vue`, `useChangelog`, `changelog` collection) was removed —
 > a validation page has no need for a changelog.
