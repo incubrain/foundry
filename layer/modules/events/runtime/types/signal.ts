@@ -9,7 +9,7 @@
 import type { AiAgentPurpose } from '../../../../shared/ai-agents'
 
 export type SignalKind = 'event' | 'log'
-export type SignalSeverity = 'error' | 'warning'
+export type SignalSeverity = 'error' | 'warning' | 'info'
 export type VisitorClass = 'human' | 'agent' | 'bot'
 export type VisitorDevice = 'mobile' | 'tablet' | 'desktop'
 
@@ -100,8 +100,38 @@ export type SignalInput
   = Omit<SignalRow, 'seq' | 'id' | 'ts' | 'site'>
     & Partial<Pick<SignalRow, 'id' | 'ts' | 'site'>>
 
+/**
+ * Lineage + health of the buffer a cursor belongs to. Returned by
+ * `GET /api/_signals/export` (token-gated — it carries traffic volume) so a
+ * consumer can tell a quiet site from a lossy one without scanning rows.
+ */
+export interface SignalStoreMeta {
+  /** `'memory'` (default — a restart loses unpulled rows) or `'fs'` (survives restart). */
+  driver: string
+  /** Live seq span `oldestSeq..headSeq` (0 when empty). */
+  rows: number
+  headSeq: number
+  /** `null` while the buffer is empty. */
+  oldestSeq: number | null
+  /** `ts` of the oldest retained row; `null` while empty. */
+  oldestTs: number | null
+  capacity: number
+  retentionDays: number
+  /** Rows dropped by capacity or retention since this process booted. */
+  evictedSinceBoot: number
+}
+
 export interface SignalExportResponse {
   rows: SignalRow[]
   cursor: number
   site: string
+  /**
+   * Opaque id of the buffer a `seq` belongs to. `seq` is only comparable within
+   * one epoch: the memory driver mints a new epoch every boot (seq restarts at
+   * 1), the fs driver keeps it across restarts. A consumer that sees it change
+   * must reset its cursor — comparing `cursor` values alone cannot tell a
+   * restart from a quiet site.
+   */
+  epoch: string
+  meta: SignalStoreMeta
 }
