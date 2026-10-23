@@ -36,7 +36,11 @@ export const basePageSchema = z.object({
   image: property(z.string().optional()).editor({ input: 'media' }),
   navigation: z.boolean().optional(),
   layout: z.string().optional(),
-  hero: z.boolean().optional().default(true),
+  // Opt-in (product-validator-4bc): `hero: true` makes the catch-all render an
+  // automatic UPageHero from `title`/`description`. It used to default to true,
+  // which stacked a duplicate <h1> above every page that builds its own hero
+  // (landing pages, article layouts, section-based pages).
+  hero: z.boolean().optional().default(false),
   // Answer-first content (product-validator-m0f.7): a direct, quotable
   // summary an author sets once in frontmatter instead of hand-placing an
   // AnswerBlock in every article body. Optional and additive — existing
@@ -141,8 +145,8 @@ export const baseNavigationSchema = z.object({
     title: z.string().optional(),
     socials: z.record(z.string(), z.string()).optional(),
     navigation: z.array(navigationLinkSchema).optional(),
-    showSearch: z.boolean().optional().default(true),
-    showColorMode: z.boolean().optional().default(true),
+    showSearch: z.boolean().optional().default(false),
+    showColorMode: z.boolean().optional().default(false),
   }),
   footer: z.object({
     columns: z.array(navigationColumnSchema).optional(),

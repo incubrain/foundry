@@ -54,6 +54,42 @@ describe('UPageHero SSR ownership (product-validator-s5s)', () => {
 })
 
 // ----------------------------------------------------------------------------
+// Hero is opt-in (product-validator-4bc)
+//
+// `basePageSchema.hero` defaults to false. It used to default to true, so every
+// content page without a `hero:` key got an automatic UPageHero from its SEO
+// title — a duplicate <h1> above pages that build their own heading. These
+// assertions read the raw SSR markup (scripts stripped), where a doubled
+// hero shows up as two <h1>.
+// ----------------------------------------------------------------------------
+
+/** Visible text of every <h1> in the zero-JS view of a response. */
+function h1Texts(html: string): string[] {
+  return [...renderedBody(html).matchAll(/<h1\b[^>]*>([\s\S]*?)<\/h1>/gi)].map(match =>
+    match[1]!.replace(/<!--[\s\S]*?-->/g, '').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim(),
+  )
+}
+
+describe('hero is opt-in (product-validator-4bc)', () => {
+  it('a content page with no hero: key renders no automatic UPageHero — only its own h1', async () => {
+    // render-default.md has no `hero:` key (title "Render Default") and its
+    // body opens with `# Own Heading`. The auto hero used to add a second
+    // <h1> carrying the page title.
+    expect(h1Texts(await $fetch<string>('/render-default'))).toEqual(['Own Heading'])
+  })
+
+  it('a layout-owned heading is not doubled by an automatic hero', async () => {
+    // render-article.md has no `hero:` key; the article layout's UPageHeader
+    // owns the single <h1>.
+    expect(h1Texts(await $fetch<string>('/render-article'))).toEqual(['Render Article'])
+  })
+
+  it('hero: true still renders the automatic hero — exactly one h1', async () => {
+    expect(h1Texts(await $fetch<string>('/render-hero'))).toEqual(['Render Hero'])
+  })
+})
+
+// ----------------------------------------------------------------------------
 // No-JS critical content (product-validator-m0f.4)
 //
 // AI crawlers execute zero JavaScript. Anything a marketing or docs route
