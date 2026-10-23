@@ -1,6 +1,7 @@
 import { z } from 'zod'
 import { appendSignal } from '../utils/signal-buffer'
 import { describeVisitor } from '../utils/visitor-class'
+import { ensureRequestId, zodIssueCodes } from '../utils/page-request'
 
 // Strict schema matching FieldDef types from useFormCapture
 const captureSchema = z.object({
@@ -20,12 +21,14 @@ const captureSchema = z.object({
 const MIN_FORM_TIME_MS = 2000
 
 export default defineEventHandler(async (event) => {
-  const body = await readBody(event)
-  const { formData, antiSpam } = body
+  // A missing, malformed or non-object body falls through to schema validation
+  // below (→ 400) instead of a destructuring TypeError (→ 500).
+  const body = await readBody(event).catch(() => undefined)
+  const { formData, antiSpam } = (body && typeof body === 'object' ? body : {}) as { formData?: unknown, antiSpam?: { honeypot?: unknown, timeOnForm?: unknown } }
 
   // === MINIMAL ANTI-SPAM CHECK ===
   // Honeypot filled in, or submitted faster than a human could type => bot.
-  const isHoneypot = Boolean(antiSpam?.honeypot?.trim())
+  const isHoneypot = typeof antiSpam?.honeypot === 'string' && antiSpam.honeypot.trim() !== ''
   const isTooFast = typeof antiSpam?.timeOnForm === 'number' && antiSpam.timeOnForm < MIN_FORM_TIME_MS
 
   if (isHoneypot || isTooFast) {
@@ -41,11 +44,13 @@ export default defineEventHandler(async (event) => {
   const parsed = captureSchema.safeParse({ formData })
 
   if (!parsed.success) {
-    // Thrown errors are picked up by the Nitro error hook and land in the
-    // signal buffer as a `kind: 'log'` row — don't append one here too.
+    // Thrown errors are picked up by the Nitro error hook, which writes the one
+    // `ingest_rejected` row from `data.issues` (path:code only, never field
+    // values) — don't append one here too.
     throw createError({
       statusCode: 400,
       statusMessage: `Form capture validation failed: ${parsed.error.issues.map((e: { message: string }) => e.message).join(', ')}`,
+      data: { issues: zodIssueCodes(parsed.error.issues) },
     })
   }
 
@@ -55,7 +60,7 @@ export default defineEventHandler(async (event) => {
     kind: 'event',
     name: 'form_submitted',
     visitor: describeVisitor(getHeader(event, 'user-agent')),
-    data: { formData: parsed.data.formData },
+    data: { formData: parsed.data.formData, requestId: ensureRequestId(event) },
   }, event)
 
   return {
