@@ -8,6 +8,13 @@
 
 import type { AiAgentPurpose } from '../../../../shared/ai-agents'
 
+/**
+ * Max length of a free-text row field (`page`, `referrer`). The client truncates
+ * to this and the ingest handler rejects anything longer — one shared number so a
+ * long referrer can never 400 a whole batch.
+ */
+export const SIGNAL_TEXT_MAX = 512
+
 export type SignalKind = 'event' | 'log'
 export type SignalSeverity = 'error' | 'warning'
 export type VisitorClass = 'human' | 'agent' | 'bot'
