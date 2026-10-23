@@ -7,6 +7,7 @@
     "dev": "pnpm run --filter @incubrain/foundry dev",
     "build": "pnpm run --filter @incubrain/foundry build",
     "dev:foundry": "nuxt dev examples/foundry",
+    "dev:playground": "nuxi dev playground --port 3100",
     "build:foundry": "nuxt build examples/foundry > build.log 2>&1",
     "build:ci": "node scripts/build-diagnostic.mjs",
     "build:ci:layer": "node scripts/build-diagnostic.mjs layer",
@@ -28,7 +29,10 @@
     "layer:publish:local": "pnpm --filter @incubrain/foundry publish:local",
     "test": "vitest",
     "test:watch": "vitest --watch",
-    "test:coverage": "vitest --coverage"
+    "test:coverage": "vitest --coverage",
+    "test:e2e": "pnpm --dir playground run test:e2e",
+    "smoke": "node scripts/smoke.mjs",
+    "smoke:browser": "node scripts/browser-smoke.mjs"
   },
   "dependencies": {
     "@nuxt/eslint": "^1.17.0",
