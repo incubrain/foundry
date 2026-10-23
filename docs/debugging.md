@@ -86,10 +86,31 @@ full-page PNG per route x viewport (`home-mobile.png`). Open the PNG first when 
 | `http`, `request-failed` | error same-origin, warn third-party | a subresource answered `>=400` or failed |
 | `overflow` | error on mobile, warn on desktop | `scrollWidth` exceeds the 390px viewport; names the first offending elements |
 | `h1` | warn | not exactly one `<h1>` on the rendered DOM — a doubled hero shows as two |
-| `telemetry` | error | no `ui.page` row reached ingest within 6s of load, or ingest answered `>=400` |
+| `telemetry` | error | no `ui.page` row reached ingest within 6s of load (of hydration on a dev server), or ingest answered `>=400` |
 | `nav` | error / warn | a header link did not navigate (hash links count: the hash must change), or redirected |
 
 Nav is checked on the first route at desktop width, so a hamburger-only mobile menu is not covered.
+
+### Dev-mode caveats
+
+A Vite dev server (`pnpm dev:playground`, `pnpm dev:foundry`, a consumer's `nuxt dev`) transforms each
+module the first time a page asks for it. On a **cold** server the first routes therefore load hundreds
+of modules after `load`: the network stays busy for 10s+ (`network-idle` warns) and the app hydrates
+late, so `ui.page` can land after the 6s window (`telemetry` error) while the same routes pass on a
+warm server or a built preview. The HMR websocket is not the cause (Playwright ignores sockets for
+network idle); the pending requests are `/_nuxt/@fs/...` modules.
+
+The browser runner detects a Vite dev server (the document carries `/@vite/client`) and, instead of
+network idle, waits for hydration (up to 40s, plus a 500ms settle) and starts the 6s telemetry window
+there. It reports `dev server` in the summary and `options.devServer` in `report.json`. A
+`dev-hydration` warn means the page never finished hydrating in 40s, which is a real problem.
+
+- A finding that appears on a first (cold) dev run and is gone on a second was compile time. One that
+  survives a warm dev server or a `CI_PRERENDER=true pnpm build:ci:foundry` preview is a defect.
+- Dev also adds `hints:*` console warnings (nuxt-hints, e.g. html-validate and lazy-load hints) that a
+  production build does not emit; judge markup and hydration findings against a built preview too.
+- Edit nothing under the site while a run is in flight: HMR and full reloads mid-run produce
+  navigations, timeouts and missing `ui.page` rows that are not defects.
 
 ## UA classification
 
