@@ -1,6 +1,7 @@
 import type { Storage } from 'unstorage'
 import type { H3Event } from 'h3'
-import type { SignalInput, SignalRow, SignalVisitor } from '../../runtime/types/signal'
+import { consola } from 'consola'
+import type { SignalInput, SignalRow, SignalStoreMeta, SignalVisitor } from '../../runtime/types/signal'
 import { resolveSignalEnv } from './signal-env'
 import { describeDevice } from './visitor-device'
 import { createSaltKeeper, hashVisitor } from './visitor-hash'
@@ -36,11 +37,27 @@ const NEAR_CAPACITY_RATIO = 0.9
 
 const META_KEY = 'meta'
 const rowKey = (seq: number) => `row:${seq}`
+const DAY_MS = 24 * 60 * 60 * 1000
+
+const log = consola.withTag('foundry')
+
+interface StoredMeta {
+  head?: number
+  oldest?: number
+  epoch?: string
+}
 
 export interface SignalBufferOptions {
   capacity?: number
   /** Rows older than this are pruned on append, regardless of capacity. */
   retentionMs?: number
+  /**
+   * Which unstorage driver backs this buffer — reported verbatim in the export
+   * `meta` and `/api/_health`. The buffer cannot tell by itself (the Nitro
+   * `signals` mount is a prefixed view of the root storage); the singleton
+   * reads it off the mount. Defaults to `'memory'`.
+   */
+  driver?: string
 }
 
 export interface SignalReadResult {
@@ -53,11 +70,20 @@ export interface SignalBufferUsage {
   capacity: number
 }
 
+export interface SignalBufferSnapshot {
+  epoch: string
+  meta: SignalStoreMeta
+}
+
 export interface SignalBuffer {
   append: (input: SignalInput) => Promise<SignalRow>
   read: (sinceSeq?: number, limit?: number) => Promise<SignalReadResult>
   /** Live row count vs capacity — used by the singleton to decide when to warn. */
   usage: () => Promise<SignalBufferUsage>
+  /** Epoch + lineage/health numbers for the export. Reads at most `meta` and the oldest row. */
+  snapshot: () => Promise<SignalBufferSnapshot>
+  /** Driver + epoch only — one `meta` read the first time, none after. Cheap enough for `/api/_health`. */
+  identity: () => Promise<{ driver: string, epoch: string }>
   capacity: number
 }
 
@@ -70,6 +96,11 @@ export interface SignalBuffer {
  * `oldest` cursor (persisted in `meta` alongside `head` so both survive a
  * restart): the hard `capacity` cap, and `retentionMs` — a row older than the
  * window is pruned even when the buffer is far from full.
+ *
+ * `meta` also carries the buffer's `epoch`: an id minted once, when the storage
+ * has none, and kept for as long as the storage keeps `meta`. `seq` restarts at
+ * 1 whenever the storage is empty (every boot on the memory driver), so a seq
+ * only means something together with the epoch it was issued under.
  */
 export function createSignalBuffer(
   storage: Storage,
@@ -77,19 +108,44 @@ export function createSignalBuffer(
 ): SignalBuffer {
   const capacity = Math.max(1, options.capacity ?? DEFAULT_SIGNAL_CAPACITY)
   const retentionMs = Math.max(0, options.retentionMs ?? DEFAULT_SIGNAL_RETENTION_MS)
+  const driver = options.driver ?? 'memory'
 
-  let head: number | null = null
-  let oldest: number | null = null
+  let head = 0
+  let oldest = 1
+  let epoch = ''
+  let evicted = 0
+  // One shared load, so concurrent first callers (an append racing a health
+  // check) cannot each mint a different epoch.
+  let loading: Promise<void> | null = null
   // Serialises appends so `seq` stays monotonic under concurrent requests.
   let tail: Promise<unknown> = Promise.resolve()
 
-  const loadMeta = async () => {
-    if (head === null || oldest === null) {
-      const meta = await storage.getItem<{ head?: number, oldest?: number }>(META_KEY)
+  const loadMeta = (): Promise<void> => {
+    loading ??= (async () => {
+      const meta = await storage.getItem<StoredMeta>(META_KEY)
       head = Number(meta?.head) || 0
       oldest = Number(meta?.oldest) || 1
-    }
-    return { head, oldest }
+
+      // A crash between a row's write and the `meta` write that follows it
+      // leaves rows past the persisted head. Re-issuing those seqs would hand a
+      // consumer that already pulled them a second, different row under the
+      // same cursor — skip past them instead.
+      while (await storage.hasItem(rowKey(head + 1))) head++
+
+      const stored = typeof meta?.epoch === 'string' && meta.epoch ? meta.epoch : ''
+      epoch = stored || crypto.randomUUID()
+      if (!stored) {
+        // Persist right away: a fs-backed buffer that is read (health, export)
+        // but not yet appended to must not change epoch on the next restart.
+        await storage.setItem(META_KEY, { head, oldest, epoch }).catch((error) => {
+          log.warn(`signal buffer could not persist its epoch: ${String(error?.message ?? error)}`)
+        })
+      }
+    })().catch((error) => {
+      loading = null
+      throw error
+    })
+    return loading
   }
 
   /**
@@ -105,10 +161,11 @@ export function createSignalBuffer(
    * out too.
    */
   const prune = async (capacityFloor: number, currentHead: number) => {
-    let cursor = oldest ?? 1
+    let cursor = oldest
 
     while (cursor < capacityFloor) {
       await storage.removeItem(rowKey(cursor))
+      evicted++
       cursor++
     }
 
@@ -122,6 +179,7 @@ export function createSignalBuffer(
         }
         if (candidate.ts >= cutoff) break
         await storage.removeItem(rowKey(cursor))
+        evicted++
         cursor++
       }
     }
@@ -130,9 +188,8 @@ export function createSignalBuffer(
   }
 
   const writeRow = async (input: SignalInput): Promise<SignalRow> => {
-    const { head: currentHead } = await loadMeta()
-    const seq = currentHead + 1
-    head = seq
+    await loadMeta()
+    const seq = head + 1
 
     const row: SignalRow = {
       ...input,
@@ -142,17 +199,30 @@ export function createSignalBuffer(
       seq,
     }
 
+    // `head` moves only once the row is stored. Advancing it first meant a
+    // failed write still consumed the seq, and every later append wrote past a
+    // hole that no consumer could ever fill.
     await storage.setItem(rowKey(seq), row)
-    await prune(Math.max(1, seq - capacity + 1), seq)
-    await storage.setItem(META_KEY, { head: seq, oldest })
+    head = seq
+
+    // The row is durable from here on. Housekeeping failing must not turn a
+    // stored row into a rejected append: log it and let the next append retry.
+    try {
+      await prune(Math.max(1, seq - capacity + 1), seq)
+      await storage.setItem(META_KEY, { head, oldest, epoch })
+    }
+    catch (error) {
+      log.warn(`signal buffer housekeeping failed after seq ${seq}: ${String((error as Error)?.message ?? error)}`)
+    }
 
     return row
   }
 
   const read = async (sinceSeq = 0, limit = 100): Promise<SignalReadResult> => {
-    const { head: current, oldest: floor } = await loadMeta()
+    await loadMeta()
+    const current = head
     const max = Math.min(Math.max(1, Math.trunc(limit) || 1), MAX_EXPORT_LIMIT)
-    const from = Math.max(Math.trunc(sinceSeq) + 1, floor)
+    const from = Math.max(Math.trunc(sinceSeq) + 1, oldest)
 
     const rows: SignalRow[] = []
     for (let seq = from; seq <= current && rows.length < max; seq++) {
@@ -168,8 +238,33 @@ export function createSignalBuffer(
   }
 
   const usage = async (): Promise<SignalBufferUsage> => {
-    const { head: current, oldest: floor } = await loadMeta()
-    return { used: Math.max(0, current - floor + 1), capacity }
+    await loadMeta()
+    return { used: Math.max(0, head - oldest + 1), capacity }
+  }
+
+  const snapshot = async (): Promise<SignalBufferSnapshot> => {
+    await loadMeta()
+    const rows = Math.max(0, head - oldest + 1)
+    const oldestRow = rows ? await storage.getItem<SignalRow>(rowKey(oldest)) : null
+
+    return {
+      epoch,
+      meta: {
+        driver,
+        rows,
+        headSeq: head,
+        oldestSeq: rows ? oldest : null,
+        oldestTs: oldestRow?.ts ?? null,
+        capacity,
+        retentionDays: retentionMs / DAY_MS,
+        evictedSinceBoot: evicted,
+      },
+    }
+  }
+
+  const identity = async () => {
+    await loadMeta()
+    return { driver, epoch }
   }
 
   return {
@@ -181,6 +276,8 @@ export function createSignalBuffer(
     },
     read,
     usage,
+    snapshot,
+    identity,
     capacity,
   }
 }
@@ -195,6 +292,11 @@ let salts: SaltKeeper | null = null
 // purpose, to exercise wraparound — never trip it and get a surprise extra row.
 let warnedNearCapacity = false
 
+/** Name of the unstorage driver the `signals` mount resolved to (`'fs'` when `signal-storage.ts` mounted a volume). */
+function signalDriverName(): string {
+  return useStorage().getMount('signals').driver.name || 'memory'
+}
+
 function getSignalBuffer(): SignalBuffer {
   if (!buffer) {
     const capacity = Number(
@@ -202,9 +304,38 @@ function getSignalBuffer(): SignalBuffer {
     )
     buffer = createSignalBuffer(useStorage('signals'), {
       capacity: capacity || DEFAULT_SIGNAL_CAPACITY,
+      driver: signalDriverName(),
     })
   }
   return buffer
+}
+
+/** Epoch + lineage numbers for `GET /api/_signals/export` (token-gated). */
+export function readSignalSnapshot(): Promise<SignalBufferSnapshot> {
+  return getSignalBuffer().snapshot()
+}
+
+/**
+ * Driver + epoch for the unauthenticated `/api/_health`. At most one `meta`
+ * read, and none after the first: it never scans rows and carries no counts.
+ */
+export function readSignalIdentity(): Promise<{ driver: string, epoch: string }> {
+  return getSignalBuffer().identity()
+}
+
+/**
+ * Row ids are the server's. The client's `trackEvent` id is an event-*type* key
+ * (`section_view_<id>`, `hero_view`…), not a unique row id, and the same one
+ * arrives on every occurrence — so it can never be the row's identity: a
+ * consumer that dedupes on `id` (Polaris does) silently drops every repeat,
+ * which is exactly the single-seq holes and shared ids seen in its pulled
+ * stores. The claimed value is kept as `data.clientId`; `appendSignal` mints a
+ * fresh `id` in the buffer.
+ */
+export function withServerRowId(input: SignalInput): SignalInput {
+  const { id: clientId, ...rest } = input
+  if (!clientId) return rest
+  return { ...rest, data: { ...rest.data, clientId } }
 }
 
 /**
@@ -274,9 +405,10 @@ async function resolveVisitorHash(
  * `env: 'local'` debug marker are stamped exactly once, here, rather than at
  * each call site. Caller-supplied values for those visitor fields are never
  * trusted: they are replaced from the request, or dropped when there is none.
+ * The same goes for `id` — see `withServerRowId()`.
  */
 export async function appendSignal(input: SignalInput, event?: H3Event): Promise<SignalRow> {
-  const { visitor: claimed, ...row } = input
+  const { visitor: claimed, ...row } = withServerRowId(input)
   const env = row.env ?? resolveEnvMarker(event)
   const site = row.site || resolveSite(event)
   const { hash: _h, device: _d, browser: _b, os: _o, ...visitor } = claimed ?? {}

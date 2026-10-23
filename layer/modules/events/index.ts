@@ -126,6 +126,11 @@ declare module 'nuxt/app' {
       // Volume), memory otherwise. See server/plugins/signal-storage.ts.
       addServerPlugin(resolver.resolve('./server/plugins/signal-storage'))
 
+      // One startup report line + a `site_booted` row. Registered AFTER
+      // signal-storage on purpose: it reads which driver the `signals` mount
+      // ended up on, so the mount has to exist first.
+      addServerPlugin(resolver.resolve('./server/plugins/site-booted'))
+
       // Server-side page visits. The client identity stream only ever sees
       // visitors that run JS; this is the ingest path for the ones that don't
       // (GPTBot, ClaudeBot, PerplexityBot, no-JS browsers). Emits `page_request`
@@ -171,4 +176,5 @@ export type {
   SignalKind,
   SignalSeverity,
   SignalExportResponse,
+  SignalStoreMeta,
 } from './runtime/types/signal'
