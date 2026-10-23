@@ -60,3 +60,4 @@ tree.txt
 .dolt/
 *.db
 .beads-credential-key
+.claude/worktrees/

@@ -17,6 +17,8 @@ export default createConfigForNuxt({
     'cli/**/*.ts',
   ],
 }).append(
+  // Agent worktrees are full repo copies — never lint them as part of this tree.
+  { ignores: ['.claude/worktrees/**'] },
   ...pluginVueA11y.configs['flat/recommended'],
   {
     rules: {
