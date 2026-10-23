@@ -29,6 +29,11 @@
 
 - **Repeated events were dropped by consumers.** The client sent the event key as the row `id`, so a consumer deduping on `id` (Polaris) silently discarded every repeat of `section_view_*` and `hero_view` — single-seq holes and shared ids in its pulled stores. Fixed by server-assigned ids (above).
 - **A failed buffer write no longer burns a `seq`** and leaves a permanent hole; a failing prune or `meta` write after a stored row is logged instead of rejecting the append; the boot probe skips rows past a stale persisted head instead of re-issuing their `seq`.
+- **`docus.css` 404 in `nuxt dev`.** The layer's CSS template lived only in Nuxt's virtual FS, so every dev page (in consumers too) requested `/_nuxt/@fs/…/.nuxt/docus.css` and got a 404; the template is now written to disk.
+- **`NUXT_E3006` on Vue-only pages.** `useContentPage()`'s fetch resolved `undefined` when a route has no content doc (h3 sends `null` as an empty 204); it now resolves `null`.
+- **Dead `CommentToggle` reference removed** from `AppHeaderRight.vue` ("Failed to resolve component" on every dev page).
+- **Malformed ingest/webhook bodies return 400**, not 500 (and no longer land as `server_error`).
+- **Example landing page hydration mismatch** — `SignalToasts` teleports into `#teleports`; a body-targeted Teleport hydrates one node off whenever anything is prepended to `<body>`.
 
 ### Upgrade notes
 
