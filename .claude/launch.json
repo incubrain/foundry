@@ -6,6 +6,24 @@
       "runtimeExecutable": "pnpm",
       "runtimeArgs": ["dev:foundry"],
       "port": 3000
+    },
+    {
+      "name": "playground",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["dev:playground"],
+      "port": 3100
+    },
+    {
+      "name": "incubrain-website",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["--dir", "/Users/mac/Development/incubrain/incubrain-website", "dev", "--port", "3201"],
+      "port": 3201
+    },
+    {
+      "name": "astronera-website",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["--dir", "/Users/mac/Development/astronera/astronera-website", "dev", "--port", "3202"],
+      "port": 3202
     }
   ]
 }
