@@ -23,6 +23,7 @@
 - **`page` / `referrer` truncated to 512 characters on the client** (`SIGNAL_TEXT_MAX`, shared with the ingest schema) so one long referrer can no longer 400 a whole batch. `form_error` rows carry `data.error` (message only, 200 characters).
 - **`consola` is now a direct dependency** of the layer (it prints the boot report).
 - **The `FoundrySmoke` user agent is classed as automation** (`visitor.class: 'agent'`, `subclass: 'automation'`), so the smoke runners don't count as human traffic.
+- **`hero` is opt-in on content pages.** `basePageSchema.hero` now defaults to `false` (was `true`), so a page without a `hero:` key no longer gets an automatic `UPageHero` from its title/description — the duplicate `<h1>` that stacked above pages (landing pages, the `article` layout) that build their own heading. `hero: true` still renders the hero from the catch-all, server-side.
 
 ### Fixed
 
@@ -33,6 +34,7 @@
 
 - Consumers should reset their cursor when `epoch` changes and key rows on `(epoch, seq)`, not `id`.
 - Set `NUXT_PUBLIC_SITE_ID`, `NUXT_SIGNAL_EXPORT_TOKEN` and `NUXT_SIGNAL_STORE_DIR` in production; the boot report now warns when they are missing.
+- Content pages no longer get an automatic hero — add `hero: true` to pages that relied on it.
 
 ## [0.9.0](https://github.com/incubrain/foundry/compare/v0.8.0...v0.9.0) (2026-09-25)
 
