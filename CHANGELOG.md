@@ -1,5 +1,39 @@
 # Changelog
 
+## [Unreleased]
+
+### Added
+
+- **Request correlation** — every request gets an `x-request-id` (an inbound one is honoured only if it matches `/^[\w.-]{8,64}$/`, otherwise a UUID), echoed as a response header and stamped as `data.requestId` on `page_request`, `server_error`, `http.not_found`, `ingest_rejected`, `form_submitted` and `mcp_tool_called` rows. `server_error` also gains `data.method`, `data.path` (query stripped) and `data.status`.
+- **`ingest_rejected` log rows** — a refused capture POST (400/413/415 on `/api/_signals/ingest` or `/api/v1/webhook`) now leaves one `warning` row with zod `path:code` issues (never field values), rate-limited to one per `(path, status)` per minute per process.
+- **Buffer epoch** — the signal buffer carries an `epoch` id: a new one per boot on the memory driver, kept across restarts on the `fs` driver. `GET /api/_signals/export` now returns `epoch` and `meta` (`driver`, `rows`, `headSeq`, `oldestSeq`, `oldestTs`, `capacity`, `retentionDays`, `evictedSinceBoot`) on every page, and `GET /api/_health` returns `buildId` and `signals: { driver, epoch }`. All additive — `rows`, `cursor` and `site` are unchanged.
+- **Boot report** — one `foundry`-tagged console line at startup (version, site, driver, capacity, retention, export token yes/no, env, epoch), production warnings for an unset `NUXT_PUBLIC_SITE_ID`, the memory driver and an unset `NUXT_SIGNAL_EXPORT_TOKEN`, and a `site_booted` row (`severity: 'info'`, new) marking the restart in the stream.
+- **Client delivery reporting** — the signal queue retries a failed flush once (network error or 5xx), drops on 4xx, caps buffered rows at 200 and reports every drop as a `client_dropped` warning row (`reason`: `rejected`, `retry_exhausted` or `overflow`).
+- **More client error rows** — `chunk_error` (stale tab, missing chunk) and `app_error` join `vue_error`, `window_error` and `unhandled_rejection`. All client error rows are deduped on `(name, message)` for 10 s.
+- **Smoke runners and e2e in CI** — `pnpm smoke <url>` (HTTP contract) and `pnpm smoke:browser <url>` (render, hydrate, console errors, `ui.page` telemetry) work against any Foundry site; `pnpm dev:playground` and `pnpm test:e2e` are root scripts; CI gains an `e2e` job and a smoke of the built output. See `docs/debugging.md`.
+
+### Changed
+
+- **Row ids are server UUIDs.** `row.id` is always minted by the server; an `id` sent by the client is kept as `data.clientId`. Consumers that read `id` as an event key (`section_view_<id>`, `hero_view`) must read `data.clientId` instead.
+- **`server_error` volume drops sharply.** A thrown status below 500 never produces a `server_error` row (it used to include every 401/404/400). 404s remain `http.not_found`; refused capture POSTs become `ingest_rejected`. Alerts keyed on `server_error` volume will get quieter.
+- **`server_error` `data.message` is capped at 300 characters** (was 500).
+- **Ingest clamps `ts`.** A client `ts` outside `[now - 24h, now + 5min]` is replaced with the server clock. A non-JSON body is a 400, and a bad `/api/v1/webhook` body is a 400 (was a 500).
+- **`severity` gains `'info'`**, server-emitted only; ingest still accepts `error` and `warning` only.
+- **`events.debug` is dev-only.** The console echo of every event is on under `nuxt dev` and off everywhere else; production sites stop echoing events to the browser console on upgrade. Don't set `debug: true` in a base config. `runtimeConfig.public.debug` follows the same rule.
+- **`page` / `referrer` truncated to 512 characters on the client** (`SIGNAL_TEXT_MAX`, shared with the ingest schema) so one long referrer can no longer 400 a whole batch. `form_error` rows carry `data.error` (message only, 200 characters).
+- **`consola` is now a direct dependency** of the layer (it prints the boot report).
+- **The `FoundrySmoke` user agent is classed as automation** (`visitor.class: 'agent'`, `subclass: 'automation'`), so the smoke runners don't count as human traffic.
+
+### Fixed
+
+- **Repeated events were dropped by consumers.** The client sent the event key as the row `id`, so a consumer deduping on `id` (Polaris) silently discarded every repeat of `section_view_*` and `hero_view` — single-seq holes and shared ids in its pulled stores. Fixed by server-assigned ids (above).
+- **A failed buffer write no longer burns a `seq`** and leaves a permanent hole; a failing prune or `meta` write after a stored row is logged instead of rejecting the append; the boot probe skips rows past a stale persisted head instead of re-issuing their `seq`.
+
+### Upgrade notes
+
+- Consumers should reset their cursor when `epoch` changes and key rows on `(epoch, seq)`, not `id`.
+- Set `NUXT_PUBLIC_SITE_ID`, `NUXT_SIGNAL_EXPORT_TOKEN` and `NUXT_SIGNAL_STORE_DIR` in production; the boot report now warns when they are missing.
+
 ## [0.9.0](https://github.com/incubrain/foundry/compare/v0.8.0...v0.9.0) (2026-09-25)
 
 ### Features
