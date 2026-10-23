@@ -6,7 +6,8 @@
 //
 // Per route x viewport: console errors/warnings (Hydration flagged), pageerror, failed or
 // >=400 responses, mobile horizontal overflow, <h1> count, a full-page screenshot, and a
-// telemetry check (a `ui.page` row must reach POST /api/_signals/ingest within 6s of load).
+// telemetry check (a `ui.page` row must reach POST /api/_signals/ingest within 6s of load - of
+// hydration on a Vite dev server, which compiles modules on first request).
 // On the first route it also clicks every same-origin header nav link.
 // Output: logs/smoke/browser-<host>-<ts>/{report.json,summary.md,*.png}. Exit 1 on any
 // error-level finding. See docs/debugging.md.
@@ -35,6 +36,9 @@ const VIEWPORTS = {
 }
 const TELEMETRY_WINDOW_MS = 6000
 const NAV_TIMEOUT_MS = 45_000
+// Vite dev servers: see `devServer` below.
+const DEV_HYDRATION_TIMEOUT_MS = 40_000
+const DEV_SETTLE_MS = 500
 const INGEST_PATH = '/api/_signals/ingest'
 
 const { positionals, flags } = parseArgs(process.argv.slice(2))
@@ -106,6 +110,13 @@ else {
 }
 routes = routes.slice(0, maxRoutes)
 
+// A Vite dev server (`nuxt dev`) transforms every module the first time it is requested, so on a
+// cold server the network stays busy for 10s+ and the app hydrates well after `load` - which
+// reads as "network never went idle" and "no ui.page row within 6s" although both are fine on
+// a warm server or a build. Detect it once (the document carries the Vite client tag) and wait
+// for hydration instead of network idle. Production builds keep the network-idle wait.
+const devServer = local && /\/@vite\/client/.test((await request(base.href)).text)
+
 // -- browser --------------------------------------------------------------------------------
 async function launchBrowser() {
   const attempts = [
@@ -172,8 +183,27 @@ function cleanConsole(text) {
     .trim()
 }
 
+/**
+ * Dev-server wait (see `devServer`): hydration finished, plus a short fixed settle for the
+ * client plugins' first work. Resolves false when hydration did not finish in time; never throws.
+ */
+async function waitForDevHydration(page) {
+  const hydrated = await page.waitForFunction(() => {
+    try {
+      return window.useNuxtApp().isHydrating === false
+    }
+    catch { return false }
+  }, undefined, { timeout: DEV_HYDRATION_TIMEOUT_MS, polling: 100 }).then(() => true, () => false)
+  await page.waitForTimeout(DEV_SETTLE_MS)
+  return hydrated
+}
+
 /** Best-effort wait for the app to finish loading and hydrating; never throws. */
 async function settle(page) {
+  if (devServer) {
+    await waitForDevHydration(page)
+    return
+  }
   await page.waitForLoadState('networkidle', { timeout: 8000 }).catch(() => {})
   await page.waitForFunction(() => !window.useNuxtApp || !window.useNuxtApp().isHydrating, undefined, { timeout: 5000 }).catch(() => {})
 }
@@ -289,14 +319,23 @@ async function checkRoute({ route, viewportName }) {
     const response = await page.goto(url, { waitUntil: 'load', timeout: NAV_TIMEOUT_MS })
     navStatus = response?.status()
     const loadedAt = Date.now()
-    try {
-      await page.waitForLoadState('networkidle', { timeout: 10_000 })
+    let windowStart = loadedAt
+    if (devServer) {
+      if (!(await waitForDevHydration(page))) {
+        result.findings.push({ level: 'warn', type: 'dev-hydration', message: `not hydrated ${DEV_HYDRATION_TIMEOUT_MS / 1000}s after load (cold dev server?)` })
+      }
+      windowStart = Date.now()
     }
-    catch {
-      result.findings.push({ level: 'warn', type: 'network-idle', message: 'network never went idle within 10s of load' })
+    else {
+      try {
+        await page.waitForLoadState('networkidle', { timeout: 10_000 })
+      }
+      catch {
+        result.findings.push({ level: 'warn', type: 'network-idle', message: 'network never went idle within 10s of load' })
+      }
     }
-    // Telemetry: give the client up to TELEMETRY_WINDOW_MS after load to flush a ui.page row.
-    while (!state.ingest.some(entry => entry.names.includes('ui.page')) && Date.now() - loadedAt < TELEMETRY_WINDOW_MS) {
+    // Telemetry: give the client up to TELEMETRY_WINDOW_MS after load (dev: after hydration) to flush a ui.page row.
+    while (!state.ingest.some(entry => entry.names.includes('ui.page')) && Date.now() - windowStart < TELEMETRY_WINDOW_MS) {
       await page.waitForTimeout(150)
     }
     // Let the in-flight ingest response land so its status is judged.
@@ -355,7 +394,8 @@ async function checkNav(route) {
   const url = new URL(route, baseUrl).href
   try {
     await page.goto(url, { waitUntil: 'load', timeout: NAV_TIMEOUT_MS })
-    await page.waitForLoadState('networkidle', { timeout: 10_000 }).catch(() => {})
+    if (devServer) await waitForDevHydration(page)
+    else await page.waitForLoadState('networkidle', { timeout: 10_000 }).catch(() => {})
     // Prefer real <nav> landmarks inside <header>; fall back to any header anchor.
     let selector = 'header nav a[href], header [role="navigation"] a[href]'
     if (!(await page.locator(selector).count())) selector = 'header a[href]'
@@ -448,7 +488,7 @@ const report = {
   userAgent: SMOKE_UA,
   startedAt: new Date(started).toISOString(),
   durationMs,
-  options: { routes: routesArg, routesNote: routesNote || undefined, viewports: viewportNames, maxRoutes: Number.isFinite(maxRoutes) ? maxRoutes : null, telemetry: telemetryMode, concurrency },
+  options: { routes: routesArg, routesNote: routesNote || undefined, viewports: viewportNames, maxRoutes: Number.isFinite(maxRoutes) ? maxRoutes : null, telemetry: telemetryMode, concurrency, devServer },
   summary: { routes: routes.length, runs: results.length, errors: errors.length, warnings: warnings.length },
   results,
   nav,
@@ -477,7 +517,7 @@ const mark = findings => (findings.some(finding => finding.level === 'error') ? 
 const md = [
   `# Browser smoke — ${baseUrl}`,
   '',
-  `${browserLabel} · ${new Date(started).toISOString()} · ${(durationMs / 1000).toFixed(1)}s · telemetry ${telemetryMode}`,
+  `${browserLabel} · ${new Date(started).toISOString()} · ${(durationMs / 1000).toFixed(1)}s · telemetry ${telemetryMode}${devServer ? ' · Vite dev server (waits for hydration, not network idle)' : ''}`,
   `**${errors.length} error(s), ${warnings.length} warning(s)** across ${routes.length} route(s) x ${viewportNames.length} viewport(s)${routesNote ? ` (${routesNote})` : ''}`,
   '',
   '| route | viewport | status | h1 | scrollWidth | ui.page ingest | screenshot |',

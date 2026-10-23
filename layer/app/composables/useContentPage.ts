@@ -88,6 +88,10 @@ export const useContentPage = () => {
       key: `page-${collection.value}-${path}`,
       query: { collection: collection.value, path },
       watch: [() => route.path, collection],
+      // The endpoint answers `null` (no such doc) with an empty 204, which
+      // ofetch parses as `undefined` — Nuxt then warns NUXT_E3006 in dev and
+      // re-fetches on the client. Normalise to `null`.
+      transform: doc => doc ?? null,
     })
   }
 
