@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // HTTP smoke runner for any Foundry site.
 //
-//   pnpm smoke <baseUrl> [--token-env=VAR] [--write] [--sitemap-host-rewrite] [--json]
+//   pnpm smoke <baseUrl> [--token-env=VAR] [--write] [--sitemap-host-rewrite|--follow-sitemap-host] [--json]
 //
 // Checks run cheapest-first and each is recorded as pass | warn | fail | skip with
 // expected vs actual. Report: logs/smoke/http-<host>-<yyyymmddThhmmss>.json.
@@ -25,7 +25,7 @@ import {
   writeLog,
 } from './lib/smoke-common.mjs'
 
-const USAGE = 'Usage: pnpm smoke <baseUrl> [--token-env=VAR] [--write] [--sitemap-host-rewrite] [--json]'
+const USAGE = 'Usage: pnpm smoke <baseUrl> [--token-env=VAR] [--write] [--sitemap-host-rewrite|--follow-sitemap-host] [--json]'
 const PAGE_CONCURRENCY = 4
 const POLL_TIMEOUT_MS = 10_000
 const POLL_INTERVAL_MS = 400
@@ -47,7 +47,9 @@ if (!baseUrl) {
 const base = new URL(baseUrl)
 const local = isLocalHost(base.hostname)
 const writeMode = flags.write === true
-const rewriteHosts = flags['sitemap-host-rewrite'] === true
+// A local run must never silently test production: a site's sitemap names its prod host, so on
+// localhost targets <loc> hosts are rewritten onto the base unless --follow-sitemap-host is passed.
+const rewriteHosts = flags['sitemap-host-rewrite'] === true || (local && flags['follow-sitemap-host'] !== true)
 const jsonOutput = flags.json === true
 const tokenEnv = typeof flags['token-env'] === 'string' ? flags['token-env'] : ''
 const token = tokenEnv ? (process.env[tokenEnv] || '').trim() : ''
@@ -178,7 +180,7 @@ let pageUrls
   }
   else if (foreign.size) {
     status = 'warn'
-    actual += ` · ${foreign.size} other host(s) named in <loc>: ${[...foreign].join(', ')} (page checks hit those hosts; use --sitemap-host-rewrite to test ${base.host})`
+    actual += ` · ${foreign.size} other host(s) named in <loc>: ${[...foreign].join(', ')} (page checks hit those hosts; pass --sitemap-host-rewrite to test ${base.host} instead)`
   }
   else if (rewriteHosts) actual += ' · hosts rewritten onto base'
   rec.add('sitemap', 'GET /sitemap.xml', status, '200 with ≥1 <loc> (index followed)', actual, { ms: first?.ms })

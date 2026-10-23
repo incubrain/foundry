@@ -18,13 +18,15 @@ Both exit `1` on any `fail` / error-level finding, `2` on bad usage.
 ```bash
 pnpm dev:foundry          # examples/foundry on :3000
 pnpm dev:playground       # playground on :3100
-pnpm smoke http://localhost:3000 --sitemap-host-rewrite
+pnpm smoke http://localhost:3000
 pnpm smoke:browser http://localhost:3000
 ```
 
-`--sitemap-host-rewrite` matters locally: a site's sitemap names its production host, and without
-the flag the HTTP runner would fetch those production URLs (it warns when it sees them). The browser
-runner always keeps only the path of each sitemap URL.
+A site's sitemap names its production host. On a localhost base URL the HTTP runner rewrites every
+`<loc>` onto the base by default, so a local run never silently tests production; pass
+`--follow-sitemap-host` to fetch the named hosts instead. On a remote base it follows the sitemap and
+warns about foreign hosts (`--sitemap-host-rewrite` forces the rewrite). The browser runner always keeps
+only the path of each sitemap URL.
 
 **Built preview** — what CI does. The server is started and killed inside one command:
 
