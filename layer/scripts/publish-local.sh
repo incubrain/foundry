@@ -53,8 +53,11 @@ TOKEN=$(cat "$TOKEN_FILE")
 
 # Snapshot package.json so we can restore exactly what was there before,
 # regardless of git state. This lets you publish uncommitted changes safely.
-ORIGINAL_PKG="$(cat package.json)"
-trap 'printf "%s" "$ORIGINAL_PKG" > package.json' EXIT
+# A byte-exact copy: `$(cat …)` would strip the trailing newline and leave the
+# file dirty after every publish.
+PKG_SNAPSHOT=$(mktemp)
+cp package.json "$PKG_SNAPSHOT"
+trap 'cp "$PKG_SNAPSHOT" package.json; rm -f "$PKG_SNAPSHOT"' EXIT
 
 # Pick a unique prerelease version. e.g. 0.7.1-local.1700000000
 BASE="$(node -p "require('./package.json').version.split('-')[0]")"
@@ -66,7 +69,7 @@ pnpm version "$NEXT" --no-git-tag-version > /dev/null
 # Temp .npmrc carries the auth token only for this publish; no global config
 # changes, nothing for other deps to accidentally inherit.
 TMP_NPMRC=$(mktemp)
-trap 'rm -f "$TMP_NPMRC"; printf "%s" "$ORIGINAL_PKG" > package.json' EXIT
+trap 'rm -f "$TMP_NPMRC"; cp "$PKG_SNAPSHOT" package.json; rm -f "$PKG_SNAPSHOT"' EXIT
 echo "registry=$REGISTRY/" > "$TMP_NPMRC"
 # Scope-specific registry is required for pnpm publish to ignore the default
 # registry (npmjs.org) when publishing a @-scoped package.
