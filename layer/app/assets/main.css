@@ -3,8 +3,9 @@
    Generic design system - no project-specific branding
    ============================================================================ */
 
-@import 'tailwindcss';
-@import '@nuxt/ui';
+/* No `@import 'tailwindcss'` / `@import '@nuxt/ui'` here: modules/css.ts imports this
+   file into the one generated Tailwind entry, after both. Re-importing either would
+   compile Tailwind a second time. */
 
 /* ============================================================================
    DESIGN TOKENS - Generic System
@@ -128,14 +129,9 @@
      TYPOGRAPHY SYSTEM
      ────────────────────────────────────────────────────────────────────── */
 
-  /* Font families - System defaults */
-  --font-sans:
-    ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-    'Segoe UI Symbol', 'Noto Color Emoji';
-  --font-mono:
-    ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas,
-    'DejaVu Sans Mono', monospace;
-  --font-serif: ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
+  /* Font families: Tailwind's system stacks (--font-sans/-serif/-mono), not redefined
+     here. The old mono stack named 'Cascadia Code' early, and @nuxt/fonts' metric
+     fallback for it made Chrome render code in Courier New. */
 
   /* Type scale */
   --text-xs: 0.75rem;
