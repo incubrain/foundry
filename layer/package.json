@@ -64,7 +64,7 @@
     "tailwindcss": "^4.3.3",
     "ufo": "^1.6.3",
     "unstorage": "^1.17.5",
-    "zod": "^4.4.3",
+    "zod": "^4.6.6",
     "zod-to-json-schema": "^3.25.2"
   },
   "devDependencies": {
