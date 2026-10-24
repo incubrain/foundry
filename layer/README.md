@@ -31,6 +31,42 @@ Optional peer dependencies, added in your own app when you want them: `nuxt-stud
 (visual content editing), `@iconify-json/lucide` and `@iconify-json/simple-icons` (icon
 sets), `better-sqlite3`.
 
+## Styling
+
+The layer compiles Tailwind once per site. Its generated entry (`.nuxt/docus.css`)
+is the only stylesheet that imports `tailwindcss` and `@nuxt/ui`. It then imports the
+layer's own tokens and utilities, and after them your Tailwind CSS. Your stylesheet
+holds directives only:
+
+```css
+/* app/assets/css/theme.css — no @import 'tailwindcss', no @import '@nuxt/ui' */
+@theme static {
+  --color-primary-500: oklch(58% 0.15 250); /* bg-primary-500 etc. are generated */
+}
+
+@utility bg-hero { background-image: var(--hero); }
+```
+
+```ts
+// nuxt.config.ts
+css: ['~/assets/css/theme.css'],
+```
+
+- Any `css:` file that uses Tailwind directives (`@theme`, `@utility`, `@apply`,
+  `@variant`, `@custom-variant`, `@plugin`, `@source`, `@reference`) is taken out of
+  the list and imported into that single entry, after the layer's CSS. Your `@theme`
+  tokens override the layer's placeholders.
+- A `css:` file that still imports `tailwindcss` keeps working, but it runs a second
+  full compilation: every utility, the preflight and Nuxt UI's CSS ship twice. The build
+  warns about it. Delete its `@import 'tailwindcss'` and `@import '@nuxt/ui'` lines.
+  That second compile also re-emitted Tailwind's default theme after the layer's tokens.
+  Once you delete the imports, the layer's own values apply to any token you never set
+  (its `--font-sans` / `--font-mono` stacks, for example). Set those tokens in your
+  `@theme` if you relied on Tailwind's defaults.
+- Plain CSS (no Tailwind directives) stays a separate stylesheet. Keep a remote
+  `@import url(…)` (web fonts, for example) in a plain file, because an `@import`
+  inside the Tailwind entry would no longer be at the top of the stylesheet.
+
 ## What you get
 
 **Signal capture.** Client events (`useEvents()`) and client errors are batched to

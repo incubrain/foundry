@@ -3,8 +3,9 @@
    Generic design system - no project-specific branding
    ============================================================================ */
 
-@import 'tailwindcss';
-@import '@nuxt/ui';
+/* No `@import 'tailwindcss'` / `@import '@nuxt/ui'` here: modules/css.ts imports this
+   file into the one generated Tailwind entry, after both. Re-importing either would
+   compile Tailwind a second time. */
 
 /* ============================================================================
    DESIGN TOKENS - Generic System

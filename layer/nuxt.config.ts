@@ -89,7 +89,7 @@ export default defineNuxtConfig({
     layoutTransition: { name: 'layout', mode: 'out-in' },
   },
 
-  css: [resolve('./app/assets/main.css')],
+  // app/assets/main.css is imported by ./modules/css into the single Tailwind entry.
 
   router: {
     options: {
