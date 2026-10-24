@@ -12,6 +12,7 @@ export const useEvents = () => {
       target: event.target,
       timestamp: Date.now(),
       data: { ...event.data },
+      error: event.error,
     }
 
     // Emit hook for all providers

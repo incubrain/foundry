@@ -54,6 +54,25 @@ jobs:
       - run: npx nuxt prepare layer
       - run: pnpm run test -- --run
 
+  e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: npx nuxt prepare layer
+      - name: Install Playwright Chromium
+        run: pnpm exec playwright-core install --with-deps chromium
+      # Boots a real Nuxt dev server per spec (playground/test/e2e) — rendering,
+      # hydration, SEO, llms, MCP and signal-capture contracts. Specs run serially.
+      - name: E2E
+        run: pnpm run test:e2e
+
   build:
     needs: [quality, test]
     runs-on: ubuntu-latest
@@ -73,6 +92,23 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: npx nuxt prepare layer
       - run: pnpm run build:ci:${{ matrix.app }}
+      # Smoke the built output: boot .output, run the HTTP smoke with --write (ingest ->
+      # export round trip) against it, then kill the server. The token is a CI-only
+      # dummy shared by the server and the runner; it protects nothing.
+      - name: Smoke (built output)
+        env:
+          NUXT_SIGNAL_EXPORT_TOKEN: ci-smoke-token-not-a-secret
+          NITRO_PORT: 3300
+        run: |
+          node examples/${{ matrix.app }}/.output/server/index.mjs &
+          SERVER_PID=$!
+          trap 'kill $SERVER_PID 2>/dev/null || true' EXIT
+          for i in $(seq 1 60); do
+            curl -sf http://localhost:3300/api/_health >/dev/null && break
+            sleep 1
+          done
+          curl -sf http://localhost:3300/api/_health >/dev/null || { echo 'server did not start'; exit 1; }
+          pnpm smoke http://localhost:3300 --write --token-env=NUXT_SIGNAL_EXPORT_TOKEN --sitemap-host-rewrite
       - uses: actions/upload-artifact@v4
         if: failure()
         with:

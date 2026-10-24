@@ -1,7 +1,6 @@
 ---
 title: Foundry — Signal Station
 description: A Nuxt 4 layer that wraps your website in a recording instrument — every visit, capture, and error, human or machine, streamed raw to where you decide to double down or kill.
-hero: true
 navigation: false
 ---
 

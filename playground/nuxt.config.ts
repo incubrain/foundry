@@ -33,4 +33,11 @@ export default defineNuxtConfig({
       failOnError: false,
     },
   },
+
+  // `/render-headers` is a headers-only routeRules fixture with no page behind it
+  // (it 404s by design — the e2e test reads only the response header), so keep it
+  // out of /sitemap.xml where crawlers and the smoke runners would follow it.
+  sitemap: {
+    exclude: ['/render-headers'],
+  },
 })

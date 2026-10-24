@@ -1,5 +1,6 @@
 import type { H3Event } from 'h3'
 import { appendSignal } from '../../modules/events/server/utils/signal-buffer'
+import { ensureRequestId } from '../../modules/events/server/utils/page-request'
 
 /**
  * MCP tool calls → the signal buffer.
@@ -76,6 +77,8 @@ export function captureMcpToolCall(
         tool,
         args: summariseToolArgs(args),
         userAgent: event ? getHeader(event, 'user-agent') ?? null : null,
+        // Links the call to the request's other rows (page_request, server_error).
+        ...(event ? { requestId: ensureRequestId(event) } : {}),
       },
     }, event).catch(() => {
       // Buffer append failed — a dropped row must not surface to the agent.

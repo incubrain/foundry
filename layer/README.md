@@ -158,7 +158,7 @@ NUXT_PUBLIC_SITE_URL=https://example.com   # canonical URL, consumed by @nuxtjs/
 // nuxt.config.ts
 events: {
   signals: { enabled: true, capacity: 170_000, captureErrors: true },
-  debug: true,
+  debug: false,  // console.info every tracked event; the layer turns it on only under `nuxt dev`
 }
 ```
 

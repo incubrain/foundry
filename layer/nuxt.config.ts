@@ -52,7 +52,18 @@ export default defineNuxtConfig({
 
     devtools: { enabled: true },
 
+    runtimeConfig: {
+      public: {
+        debug: true,
+      },
+    },
+
     nitro: {
+      debug: true,
+    },
+
+    // Console echo of every event — dev only. Live consumer sites must stay quiet.
+    events: {
       debug: true,
     },
   },
@@ -137,7 +148,7 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      debug: true,
+      debug: false, // true only under $development (above)
       siteUrl: '',
       siteId: '', // NUXT_PUBLIC_SITE_ID — stamped on every signal row (falls back to request host)
       signalEnv: '', // NUXT_PUBLIC_SIGNAL_ENV — override for the env:'local' debug marker (see events/AGENTS.md)
@@ -215,7 +226,7 @@ export default defineNuxtConfig({
       capacity: 170_000,
       captureErrors: true,
     },
-    debug: true,
+    debug: false, // echo is dev-only: `$development.events.debug`
   },
 
   icon: {

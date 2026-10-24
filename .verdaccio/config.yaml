@@ -1,13 +1,14 @@
 # Local-only registry config for testing layer changes in external consumers.
-# Allows anonymous publish so devs don't have to `npm adduser`.
-# Storage and uplinks make this safe — only @incubrain/* packages stay local;
-# everything else proxies to public npm.
+# Bound to loopback, and publishing @incubrain/* needs a login: the publish
+# script (layer/scripts/publish-local.sh) registers a throwaway 'foundry-local'
+# user on first run, so devs never run `npm adduser` by hand. Only @incubrain/*
+# packages stay local; everything else proxies to public npm.
 storage: ./.verdaccio/storage
 auth:
   htpasswd:
     file: ./.verdaccio/htpasswd
     max_users: 10
-listen: 0.0.0.0:4873
+listen: 127.0.0.1:4873
 
 uplinks:
   npmjs:
@@ -16,18 +17,17 @@ uplinks:
 packages:
   '@incubrain/*':
     access: $all
-    # $all covers both anonymous and authenticated users. We auth as a
-    # throwaway 'foundry-local' user because the npm client refuses to send
-    # unauthenticated publish requests, even when verdaccio would accept them.
-    publish: $all
-    unpublish: $all
+    # Authenticated only, so no other process can plant an @incubrain build
+    # that consumers then install as if it came from this repo.
+    publish: $authenticated
+    unpublish: $authenticated
     # Don't proxy to public npm for our scoped packages — local versions win.
   '**':
     access: $all
     publish: $authenticated
     proxy: npmjs
 
-logs:
+log:
   type: stdout
   format: pretty
   level: warn

@@ -89,6 +89,7 @@ export const AI_AUTOMATION_AGENTS = [
   'Puppeteer',
   'Selenium',
   'Cypress',
+  'FoundrySmoke', // this repo's own smoke runners (scripts/smoke.mjs, scripts/browser-smoke.mjs)
 ] as const
 
 /**

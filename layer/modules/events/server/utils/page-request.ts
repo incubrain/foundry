@@ -1,3 +1,4 @@
+import { getHeader, setResponseHeader } from 'h3'
 import type { H3Event } from 'h3'
 import type { VisitorClass } from '../../runtime/types/signal'
 import { appendSignal } from './signal-buffer'
@@ -201,6 +202,121 @@ export function isNotableNotFound(candidate: PageRequestCandidate, visitorClass?
 }
 
 /**
+ * Request correlation — one id per request, shared by every row it produces.
+ *
+ * Without it nothing links a `page_request` to the `server_error` that request
+ * caused, or an `ingest_rejected` to the POST that was refused. The id is
+ * assigned once, by the page-request middleware (which sees every request:
+ * documents, `/api`, `/mcp`), kept on `event.context.foundryRequestId`, echoed
+ * as the `x-request-id` response header, and stamped as `data.requestId` on the
+ * rows that name it (`page_request`, `server_error`, `http.not_found`,
+ * `ingest_rejected`, `form_submitted`, `mcp_tool_called`).
+ *
+ * An inbound `x-request-id` is honoured only when it is a plain token —
+ * anything else is replaced, so a caller can neither inject header content nor
+ * stuff arbitrary text into the buffer through it.
+ */
+const REQUEST_ID_PATTERN = /^[\w.-]{8,64}$/
+
+export function resolveRequestId(incoming?: string | null): string {
+  return incoming && REQUEST_ID_PATTERN.test(incoming) ? incoming : crypto.randomUUID()
+}
+
+/**
+ * The request's id, assigning it (and the response header) on first call.
+ * Idempotent, so whichever middleware runs first wins and the rest reuse it —
+ * layer middleware order relative to the events module isn't something to
+ * depend on. Total: the header write is skipped once headers are flushed (the
+ * Nitro error hook runs late) and can never throw.
+ */
+export function ensureRequestId(event: H3Event): string {
+  const existing = event.context.foundryRequestId
+  if (typeof existing === 'string') return existing
+
+  const id = resolveRequestId(getHeader(event, 'x-request-id'))
+  event.context.foundryRequestId = id
+  try {
+    if (!event.node.res.headersSent) setResponseHeader(event, 'x-request-id', id)
+  }
+  catch {
+    // Headers already flushed, or no Node response shim — the id still stamps rows.
+  }
+  return id
+}
+
+/**
+ * Ingest rejections — `kind: 'log'`, `name: 'ingest_rejected'`.
+ *
+ * A malformed or oversize POST to the two capture endpoints is a client/probe
+ * problem, not a server crash, so it is no longer a `server_error`; but a
+ * broken tracker silently losing rows is exactly what an operator wants to
+ * see. The handlers throw `createError({ statusCode, data: { issues } })`
+ * and the Nitro error hook (`plugins/signal-errors.ts`) writes the one row —
+ * so the AGENTS.md rule "never appendSignal AND throw the same error" holds.
+ * `issues` are zod `path:code` strings only — never a field value.
+ */
+const REJECTION_PATHS = new Set(['/api/_signals/ingest', '/api/v1/webhook'])
+const REJECTION_STATUSES = new Set([400, 413, 415])
+const REJECTION_WINDOW_MS = 60_000
+const MAX_REJECTION_ISSUES = 10
+const MAX_ISSUE_CHARS = 100
+
+const rejectionLastSeen = new Map<string, number>()
+
+export function isIngestRejection(method: string, pathname: string, status: number): boolean {
+  return method.toUpperCase() === 'POST' && REJECTION_PATHS.has(pathname) && REJECTION_STATUSES.has(status)
+}
+
+/**
+ * Rate limit: one row per (path, status) per 60s, in-process. A broken client
+ * retrying every few seconds would otherwise flood the buffer with the same
+ * row. Keys are bounded (2 paths x 3 statuses), so the map cannot grow.
+ */
+export function allowRejectionRow(pathname: string, status: number, now = Date.now()): boolean {
+  const key = `${pathname} ${status}`
+  const last = rejectionLastSeen.get(key)
+  if (last !== undefined && now - last < REJECTION_WINDOW_MS) return false
+  rejectionLastSeen.set(key, now)
+  return true
+}
+
+/** Test seam — the limiter is module state. */
+export function resetRejectionLimiter(): void {
+  rejectionLastSeen.clear()
+}
+
+/** zod issues → `path.join('.') + ':' + code`, capped. Paths and codes only. */
+export function zodIssueCodes(issues: ReadonlyArray<{ path: ReadonlyArray<PropertyKey>, code: string }>): string[] {
+  return issues
+    .slice(0, MAX_REJECTION_ISSUES)
+    .map(issue => `${issue.path.map(String).join('.')}:${issue.code}`.slice(0, MAX_ISSUE_CHARS))
+}
+
+/** Re-validate whatever a handler hung off `createError({ data })` before it reaches a row. */
+export function readRejectionIssues(data: unknown): string[] {
+  const issues = (data as { issues?: unknown } | null | undefined)?.issues
+  if (!Array.isArray(issues)) return []
+  return issues
+    .filter((issue): issue is string => typeof issue === 'string')
+    .slice(0, MAX_REJECTION_ISSUES)
+    .map(issue => issue.slice(0, MAX_ISSUE_CHARS))
+}
+
+/**
+ * Ingest `ts` window. The buffer's retention prune walks rows assuming they are
+ * roughly chronological, so one client-supplied `ts` far in the past (or
+ * future) would wedge or skew it. Anything outside [now-24h, now+5min] — or
+ * missing, or not a number — is replaced with the server clock.
+ */
+const TS_PAST_MS = 24 * 60 * 60 * 1000
+const TS_FUTURE_MS = 5 * 60 * 1000
+
+export function clampClientTs(ts: number | undefined, now = Date.now()): number {
+  if (typeof ts === 'number' && ts >= now - TS_PAST_MS && ts <= now + TS_FUTURE_MS) return ts
+  return now
+}
+
+/**
  * Append one `page_request` row for a document GET.
  *
  * Fire-and-forget, exactly like `captureMcpToolCall()`: signal capture must
@@ -233,6 +349,7 @@ export function capturePageRequest(event: H3Event): void {
         // page_request without guessing format back out of `page`; see
         // AGENTS.md's page_request table.
         format: pageRequestFormat(candidate),
+        requestId: ensureRequestId(event),
       },
     }, event).catch(() => {
       // Buffer append failed — never surfaces to the visitor.

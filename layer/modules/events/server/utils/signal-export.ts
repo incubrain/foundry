@@ -1,4 +1,6 @@
 import { MAX_EXPORT_LIMIT } from './signal-buffer'
+import type { SignalBufferSnapshot, SignalReadResult } from './signal-buffer'
+import type { SignalExportResponse } from '../../runtime/types/signal'
 
 export interface ExportAuthFailure {
   ok: false
@@ -61,4 +63,16 @@ export function parseExportParams(query: Record<string, unknown>): ExportParams 
     since: Math.max(0, toInt(query.since, 0)),
     limit: Math.min(Math.max(1, toInt(query.limit, 100)), MAX_EXPORT_LIMIT),
   }
+}
+
+/**
+ * The export body. `rows` / `cursor` / `site` are the original contract and
+ * stay as they were; `epoch` and `meta` are additive.
+ */
+export function buildExportResponse(
+  page: SignalReadResult,
+  site: string,
+  snapshot: SignalBufferSnapshot,
+): SignalExportResponse {
+  return { rows: page.rows, cursor: page.cursor, site, epoch: snapshot.epoch, meta: snapshot.meta }
 }

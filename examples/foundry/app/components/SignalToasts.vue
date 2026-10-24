@@ -35,7 +35,10 @@ nuxtApp.hook('events:track', (payload: { id?: string, type?: string, target?: st
 </script>
 
 <template>
-  <Teleport to="body">
+  <!-- #teleports is Nuxt's SSR-safe target. `to="body"` makes Vue hydrate from
+       body.firstChild, so anything prepended to <body> (e.g. the direction-contract
+       comment) shifts the walk by one node and breaks hydration. -->
+  <Teleport to="#teleports">
     <!-- Visual mirror only: the live tail carries the aria-live region -->
     <div
       class="pointer-events-none fixed right-3 bottom-3 z-50 flex flex-col items-end gap-1.5 sm:right-5 sm:bottom-5"

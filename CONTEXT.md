@@ -9,13 +9,19 @@ anything reached only for deep work. Canonical terms are in `GLOSSARY.md`.
 
 ```bash
 pnpm dev:foundry     # examples/foundry dev server (local layer)
+pnpm dev:playground  # playground dev server on :3100
 
 pnpm lint            # ESLint check
 pnpm lint:fix        # ESLint autofix
 pnpm test            # Run tests
 pnpm typecheck       # Nuxt typecheck (layer)
 pnpm verify          # dev:prepare + lint + typecheck
+pnpm test:e2e        # playground e2e (boots a real Nuxt server per spec; also a CI job)
+pnpm smoke <url>         # HTTP smoke against any Foundry site (server contract)
+pnpm smoke:browser <url> # browser smoke: render, hydrate, console errors, ui.page telemetry
 ```
+
+Smoke runner flags, where to point them and how to read their reports: `docs/debugging.md`.
 
 ## External consumer repos
 
@@ -189,9 +195,12 @@ external tools for these.
   `visitor.class` enum.
 - Monitorability: `GET /api/_health` (`layer/server/api/_health.get.ts`) gives external
   monitors (Polaris) an unauthenticated liveness+identity check — `{ ok, service, version,
-  siteId, timestamp }`, `no-store`, no storage/content access. Page enumeration is
-  `/sitemap.xml` (via `@nuxtjs/seo`); the signal pipe's health is inferred from
-  `/api/_signals/export`'s 401/503-without-a-token response.
+  siteId, timestamp, buildId, signals: { driver, epoch } }`, `no-store`, no per-request
+  storage I/O. `signals` is lineage (`memory`|`fs`, and the buffer `epoch`), never volume.
+  `GET /api/_signals/export` (bearer) adds `epoch` and `meta` (`driver`, `rows`, `headSeq`,
+  `oldestSeq`, `oldestTs`, `capacity`, `retentionDays`, `evictedSinceBoot`) to every page;
+  a changed `epoch` means the buffer restarted and the consumer must reset its cursor. Page
+  enumeration is `/sitemap.xml` (via `@nuxtjs/seo`).
 - SSR: Nuxt 4, use `import.meta.client` guards for client-only APIs or
   `.client.ts|.server.ts` file naming.
 
@@ -247,8 +256,9 @@ used by this project is `.claude/skills.json`.
 ## Visual Testing
 
 Use the `browser-tester` sub-agent (or the `agent-browser` skill directly) to detect UI/UX
-bugs via annotated screenshots. The dev server must be running first (`pnpm dev:ff`, `pnpm
-dev:ib`, etc.).
+bugs via annotated screenshots. The dev server must be running first (`pnpm dev:foundry`,
+`pnpm dev:playground`, …) — see `docs/debugging.md` for the smoke runners and where to point
+them.
 
 **When to use:**
 - After implementing UI changes — verify layout, spacing, and styling
