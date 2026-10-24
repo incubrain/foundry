@@ -59,10 +59,11 @@ css: ['~/assets/css/theme.css'],
 - A `css:` file that still imports `tailwindcss` keeps working, but it runs a second
   full compilation: every utility, the preflight and Nuxt UI's CSS ship twice. The build
   warns about it. Delete its `@import 'tailwindcss'` and `@import '@nuxt/ui'` lines.
-  That second compile also re-emitted Tailwind's default theme after the layer's tokens.
-  Once you delete the imports, the layer's own values apply to any token you never set
-  (its `--font-sans` / `--font-mono` stacks, for example). Set those tokens in your
-  `@theme` if you relied on Tailwind's defaults.
+  That second compile also re-emitted Tailwind's and Nuxt UI's default theme after the
+  layer's tokens. Once you delete the imports, the layer's own values apply to any token
+  you never set: its `neutral-*` and `info-*` ramps replace Nuxt UI's `ui.colors` mapping
+  for those utilities. To keep that mapping, add
+  `@theme inline { --color-neutral-500: var(--ui-color-neutral-500); … }` to your stylesheet.
 - Plain CSS (no Tailwind directives) stays a separate stylesheet. Keep a remote
   `@import url(…)` (web fonts, for example) in a plain file, because an `@import`
   inside the Tailwind entry would no longer be at the top of the stylesheet.
