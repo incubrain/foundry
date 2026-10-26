@@ -3,12 +3,13 @@
     "requireCleanWorkingDir": true,
     "commitMessage": "chore(release): v${version}",
     "tagName": "v${version}",
-    "tagAnnotation": "Release v${version}"
+    "tagAnnotation": "Release v${version}",
+    "push": false,
+    "requireUpstream": false
   },
   "github": {
-    "release": true,
-    "releaseName": "v${version}",
-    "web": true
+    "release": false,
+    "web": false
   },
   "npm": {
     "publish": false
