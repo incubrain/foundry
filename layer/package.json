@@ -5,7 +5,7 @@
   "type": "module",
   "main": "./nuxt.config.ts",
   "bin": {
-    "foundry-blog": "./bin/foundry-blog.mjs"
+    "foundry-blog": "bin/foundry-blog.mjs"
   },
   "exports": {
     ".": "./nuxt.config.ts",
@@ -16,7 +16,7 @@
   "author": "IncuBrain",
   "repository": {
     "type": "git",
-    "url": "https://github.com/incubrain/foundry.git",
+    "url": "git+https://github.com/incubrain/foundry.git",
     "directory": "layer"
   },
   "files": [
