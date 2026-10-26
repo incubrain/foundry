@@ -242,7 +242,9 @@ export default defineNuxtConfig({
   },
   linkChecker: {
     failOnError: isCI,
-    excludeLinks: ['/pdfs/**'],
+    // /mcp is the MCP endpoint (POST); a GET there answers 405, which the
+    // checker reports as a broken link on any page that names it.
+    excludeLinks: ['/pdfs/**', '/mcp', '/mcp/**'],
   },
   seo: {
     redirectToCanonicalSiteUrl: true,
