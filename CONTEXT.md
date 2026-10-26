@@ -46,9 +46,10 @@ pnpm i -g verdaccio          # global install, ~30s
 pnpm verdaccio:start         # in a dedicated terminal — keep it running
 ```
 
-The config at `.verdaccio/config.yaml` allows the local `foundry-local` user to publish
-`@incubrain/*` packages. The user gets registered automatically on the first
-`publish:local` run; the token is cached in `.verdaccio/auth-token` (gitignored).
+The config at `.verdaccio/config.yaml` listens on 127.0.0.1 only and lets the local
+`foundry-local` user publish `@incubrain/*` packages. `publish:local` logs in as that user on
+every run (registering it on first use), so it works from any checkout or worktree, whichever
+one started verdaccio.
 
 ### Publishing the local layer
 
