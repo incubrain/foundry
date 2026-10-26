@@ -31,6 +31,12 @@ export default defineEventHandler(async (event) => {
   const request = parseMarkdownRequest(event.path, getRequestHeader(event, 'accept'))
   if (!request) return
 
+  // Blog posts are not served from the `pages` collection: leave `/raw/<blog>/x.md`
+  // to @nuxt/content's own raw route, which the blog module's guard gates on
+  // liveness (modules/blog/server/middleware/guard.ts).
+  const blogPrefix = (useRuntimeConfig(event).public.foundryBlog as { prefix?: string } | undefined)?.prefix
+  if (blogPrefix && (request.contentPath === blogPrefix || request.contentPath.startsWith(`${blogPrefix}/`))) return
+
   const source = await readContentSource(event, request.contentPath)
 
   if (source === null) {

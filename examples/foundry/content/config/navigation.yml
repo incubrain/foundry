@@ -22,6 +22,8 @@ footer:
   columns:
     - label: Station
       children:
+        - label: Blog
+          to: /blog
         - label: Source (GitHub)
           icon: i-simple-icons-github
           to: https://github.com/incubrain/foundry

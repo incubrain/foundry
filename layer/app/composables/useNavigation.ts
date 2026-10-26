@@ -72,12 +72,14 @@ export const useNavigation = async () => {
 
       const collections = await Promise.all(
         searchableCollections.map((collection: string) =>
+          // `label` is a pages-schema field; a consumer's other page collections
+          // (the blog has none) must not turn this into a TS2322 in their typecheck.
           queryCollectionNavigation(collection as keyof PageCollections, [
             'path',
             'title',
             'description',
             'label',
-          ])
+          ] as unknown as ['path'])
             .where('path', '<>', '/')
             .catch(() => [] as ContentNavigationItem[]),
         ),

@@ -72,6 +72,30 @@ export const basePageSchema = z.object({
     .optional(),
 })
 
+// Blog posts (product-validator-3bd.1). Consumers opt in by declaring a `blog`
+// page collection with this schema and enabling `foundry.blog` — see
+// modules/blog/README.md. `publishAt` is an ISO 8601 UTC string (`Z`), written
+// by the `foundry-blog` CLI; a post is LIVE when `draft` is false and
+// `publishAt` <= now, decided per request (never at build, never in SQL).
+export const baseBlogSchema = z.object({
+  title: z.string(),
+  description: z.string().optional(),
+  publishAt: z.string(),
+  draft: z.boolean().optional().default(false),
+  updatedAt: z.string().optional(),
+  canonical: z.string().url().optional(),
+  author: z.string().optional(),
+  tags: z.array(z.string()).default([]),
+  image: z
+    .object({
+      src: property(z.string()).editor({ input: 'media' }),
+      alt: z.string(),
+    })
+    .optional(),
+  // Producer record id, e.g. `polaris:article/<id>` — links a post back to its source.
+  source: z.string().optional(),
+})
+
 // Reusable navigation link schema
 const navigationLinkSchema = z.object({
   label: z.string(),

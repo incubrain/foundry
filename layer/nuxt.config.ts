@@ -41,6 +41,10 @@ export default defineNuxtConfig({
     // title/description defaults that make the module actually register its
     // routes (it silently no-ops without a `domain`).
     'nuxt-llms',
+    // Blog (off unless `foundry.blog.enabled`). Must stay AFTER 'nuxt-llms': its
+    // Nitro plugin filters not-live posts out of llms.txt / llms-full.txt, so it
+    // has to run after @nuxt/content's llms hooks (plugins run in this order).
+    resolve('./modules/blog'),
     '@nuxt/image',
     '@nuxtjs/mcp-toolkit',
     '@vueuse/nuxt',

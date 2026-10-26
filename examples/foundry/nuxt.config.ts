@@ -32,6 +32,11 @@ export default defineNuxtConfig({
     '/': { appLayout: 'landing' },
   },
 
+  // Scheduled blog: /blog + /blog/<slug>, posts live at their publishAt.
+  foundry: {
+    blog: { enabled: true },
+  },
+
   llms: {
     domain: SITE_URL,
     title: 'Foundry — Signal Station',
@@ -45,6 +50,11 @@ export default defineNuxtConfig({
           'The full system on one page: the agent-traffic reading, the wrap/stream/decide loop, signal channels, agent-first surfaces, and the honest station log.',
         contentCollection: 'pages',
         contentFilters: [{ field: 'path', operator: '=', value: '/' }],
+      },
+      {
+        title: 'Blog',
+        description: 'Posts that are live now. Drafts and scheduled posts are not listed.',
+        contentCollection: 'blog',
       },
     ],
 
