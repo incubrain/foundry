@@ -1,0 +1,18 @@
+[
+  {
+    "repo": "/Users/mac/Development/incubrain/incubrain-website",
+    "github": "incubrain/incubrain",
+    "pin": "exact",
+    "base": "develop",
+    "deploy": "railway:main",
+    "notes": "incubrain.org. Docker build (Dockerfile); Railway deploys main, so a bump lands on develop and goes live when develop is merged to main."
+  },
+  {
+    "repo": "/Users/mac/Development/astronera/astronera-website",
+    "github": "incubrain/astronera",
+    "pin": "exact",
+    "base": "develop",
+    "deploy": "railway:unverified",
+    "notes": "Railway service astronera-website.up.railway.app; which branch it deploys is unverified. Docker build (Dockerfile). origin/HEAD is develop; there is no main branch."
+  }
+]
