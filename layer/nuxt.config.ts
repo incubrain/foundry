@@ -189,7 +189,8 @@ export default defineNuxtConfig({
       crawlLinks: true,
       failOnError: isCI,
       autoSubfolderIndex: false,
-      ignore: ['/__og-image__', '/_ipx'],
+      // Prefix matches. /mcp is the MCP endpoint (POST); a GET answers 405.
+      ignore: ['/_ipx', '/mcp'],
     },
     compatibilityDate: {
       // Don't generate observability routes for now
