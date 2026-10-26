@@ -1,0 +1,48 @@
+name: Publish
+
+# Publishes @incubrain/foundry to npm when a v* tag is pushed (the release
+# formula pushes the tag after the release commit lands on main). Auth is npm
+# trusted publishing (OIDC): no token secret. Until incubrain/foundry is
+# registered as the package's trusted publisher on npmjs.com, the publish step
+# fails with ENEEDAUTH and the operator publishes by hand.
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: read
+  id-token: write # OIDC token for trusted publishing + provenance
+
+concurrency:
+  group: publish-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # Cheapest check first: never publish a version the tag does not name.
+      - name: Tag matches layer/package.json
+        run: |
+          TAG_VERSION="${GITHUB_REF_NAME#v}"
+          PKG_VERSION="$(node -p "require('./layer/package.json').version")"
+          if [ "$TAG_VERSION" != "$PKG_VERSION" ]; then
+            echo "::error::tag $GITHUB_REF_NAME names $TAG_VERSION but layer/package.json is $PKG_VERSION"
+            exit 1
+          fi
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          registry-url: https://registry.npmjs.org
+      # Trusted publishing needs npm >= 11.5.1; Node 22 ships npm 10.
+      - run: npm install -g npm@^11.5.1
+      - run: pnpm install --frozen-lockfile
+      - name: Verify (prepare, lint, typecheck)
+        run: pnpm run verify
+      - run: pnpm run test -- --run
+      - name: Publish
+        working-directory: layer
+        run: npm publish --provenance --access public
