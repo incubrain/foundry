@@ -189,7 +189,8 @@ export default defineNuxtConfig({
       crawlLinks: true,
       failOnError: isCI,
       autoSubfolderIndex: false,
-      ignore: ['/__og-image__', '/_ipx'],
+      // Prefix matches. /mcp is the MCP endpoint (POST); a GET answers 405.
+      ignore: ['/_ipx', '/mcp'],
     },
     compatibilityDate: {
       // Don't generate observability routes for now
@@ -242,7 +243,9 @@ export default defineNuxtConfig({
   },
   linkChecker: {
     failOnError: isCI,
-    excludeLinks: ['/pdfs/**'],
+    // /mcp is the MCP endpoint (POST); a GET there answers 405, which the
+    // checker reports as a broken link on any page that names it.
+    excludeLinks: ['/pdfs/**', '/mcp', '/mcp/**'],
   },
   seo: {
     redirectToCanonicalSiteUrl: true,
