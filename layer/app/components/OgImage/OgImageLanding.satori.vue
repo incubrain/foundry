@@ -11,6 +11,10 @@ const props = withDefaults(
 
 const title = computed(() => (props.title || '').slice(0, 60))
 const description = computed(() => (props.description || '').slice(0, 200))
+
+// The card is dark, so prefer the dark logo.
+const logo = useAppConfig().logo
+const logoSrc = logo?.dark || logo?.light
 </script>
 
 <template>
@@ -59,7 +63,15 @@ const description = computed(() => (props.description || '').slice(0, 200))
 
     <div class="flex flex-col justify-center p-8">
       <div class="flex justify-center mb-8">
-        <AppLogo />
+        <!-- A plain public path, not <AppLogo />: that renders through /_ipx,
+             which og-image can't read at prerender time, so the render 500s. -->
+        <img
+          v-if="logoSrc"
+          :src="logoSrc"
+          :alt="logo?.alt"
+          height="24"
+          class="rounded-full"
+        >
       </div>
       <h1
         v-if="title"
