@@ -1,7 +1,7 @@
 # Local-only registry config for testing layer changes in external consumers.
 # Bound to loopback, and publishing @incubrain/* needs a login: the publish
-# script (layer/scripts/publish-local.sh) registers a throwaway 'foundry-local'
-# user on first run, so devs never run `npm adduser` by hand. Only @incubrain/*
+# script (layer/scripts/publish-local.sh) logs in as a throwaway 'foundry-local'
+# user (registering it on first use), so devs never run `npm adduser` by hand. Only @incubrain/*
 # packages stay local; everything else proxies to public npm.
 storage: ./.verdaccio/storage
 auth:

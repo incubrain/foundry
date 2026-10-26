@@ -13,14 +13,15 @@
 #
 # Auth: verdaccio rejects unauthenticated publishes even when the package's
 # `publish` ACL is `$anonymous` — the npm client refuses to send no-auth
-# requests. We register a throwaway local user on first run and cache the
-# token in .verdaccio/auth-token (gitignored).
+# requests. Every run logs in as a throwaway local user with fixed
+# credentials, which also registers it on first use. Nothing is cached, so
+# any checkout or worktree can publish to a registry another one started:
+# verdaccio answers a second no-auth registration of the user with 409.
 set -e
 
 REGISTRY="http://localhost:4873"
 PKG_DIR="$(cd "$(dirname "$0")/.." && pwd)"
-REPO_ROOT="$(cd "$PKG_DIR/.." && pwd)"
-TOKEN_FILE="$REPO_ROOT/.verdaccio/auth-token"
+LOCAL_USER="foundry-local"
 
 cd "$PKG_DIR"
 
@@ -32,24 +33,19 @@ if ! curl -fs "$REGISTRY/-/ping" >/dev/null 2>&1 \
   exit 1
 fi
 
-# Register a local user on first run; cache the token thereafter.
-if [ ! -f "$TOKEN_FILE" ]; then
-  echo "→ Registering local verdaccio user (one-time)"
-  TOKEN=$(node -e "
-    fetch('$REGISTRY/-/user/org.couchdb.user:foundry-local', {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: 'foundry-local', password: 'foundry-local', email: 'foundry-local@example.com' }),
-    })
-    .then(r => r.json())
-    .then(b => { if (!b.token) { console.error(b); process.exit(1) } process.stdout.write(b.token) })
-    .catch(e => { console.error(e.message); process.exit(1) })
-  ")
-  mkdir -p "$REPO_ROOT/.verdaccio"
-  echo "$TOKEN" > "$TOKEN_FILE"
-  chmod 600 "$TOKEN_FILE"
-fi
-TOKEN=$(cat "$TOKEN_FILE")
+# Log in as the local user. Basic auth makes verdaccio log in an existing
+# user; when the user is absent it registers it instead.
+TOKEN=$(node -e "
+  const auth = Buffer.from('$LOCAL_USER:$LOCAL_USER').toString('base64')
+  fetch('$REGISTRY/-/user/org.couchdb.user:$LOCAL_USER', {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json', Authorization: 'Basic ' + auth },
+    body: JSON.stringify({ name: '$LOCAL_USER', password: '$LOCAL_USER', email: '$LOCAL_USER@example.com' }),
+  })
+  .then(r => r.json())
+  .then(b => { if (!b.token) { console.error(b); process.exit(1) } process.stdout.write(b.token) })
+  .catch(e => { console.error(e.message); process.exit(1) })
+")
 
 # Snapshot package.json so we can restore exactly what was there before,
 # regardless of git state. This lets you publish uncommitted changes safely.
