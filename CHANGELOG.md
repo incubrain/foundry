@@ -1,11 +1,5 @@
 # Changelog
 
-## Unreleased
-
-### Features
-
-* **blog:** git-based blog with render-time scheduling (product-validator-3bd.1). `baseBlogSchema` (`@incubrain/foundry/schemas`) + a `blog` page collection + `foundry: { blog: { enabled: true } }` give `/blog`, `/blog/<slug>` and `/blog/rss.xml`; a post is live only when `draft` is false and `publishAt <= now`, decided per request (never prerendered). Not-live posts are also kept out of llms.txt / llms-full.txt, the sitemap, `/raw/**.md` and the generic content page endpoint. New `foundry-blog` bin (`list | get | upsert | schedule | unpublish | mcp`) writes and commits posts, with a stdio MCP server over the same functions. Adds `yaml` and `@modelcontextprotocol/sdk` dependencies. Residual leak: Nuxt Content's own query endpoint — see `layer/modules/blog/README.md`.
-
 ## [0.9.0](https://github.com/incubrain/foundry/compare/v0.8.0...v0.9.0) (2026-09-25)
 
 ### Features
