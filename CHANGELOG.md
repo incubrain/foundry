@@ -1,5 +1,31 @@
 # Changelog
 
+## [0.10.0](https://github.com/incubrain/foundry/compare/v0.9.0...v0.10.0) (2026-10-26)
+
+### Features
+
+* **blog:** baseBlogSchema, scheduling core and the foundry-blog writer (product-validator-3bd.1) ([deeab39](https://github.com/incubrain/foundry/commit/deeab39e66f9b5c26c0bf3d13bb62b1b52fcc3c9))
+* **blog:** the /blog module, leak guards, example app and docs (product-validator-3bd.1) ([c3e7358](https://github.com/incubrain/foundry/commit/c3e7358032cea0ac6b1aa6797917ec4f693f4b66))
+* **debug:** http + browser smoke runners, e2e CI job, built-output smoke (product-validator-4n6.4) ([e3c7446](https://github.com/incubrain/foundry/commit/e3c7446c4d759346950675e8cec68e1883437a26))
+* **events:** buffer epoch, export meta, health lineage, boot report; server-assigned row ids (product-validator-4n6.2) ([877d6c9](https://github.com/incubrain/foundry/commit/877d6c93418f6dbeb944168ffed17082be00630c))
+
+### Bug Fixes
+
+* **content:** make the page hero opt-in (hero defaults to false) ([d0b40c6](https://github.com/incubrain/foundry/commit/d0b40c67a57da445cc75510ea17388c021eb3ba2))
+* **css:** use Tailwind's system font stacks instead of the layer's ([d45d24a](https://github.com/incubrain/foundry/commit/d45d24ad9f36f035f151a35ff52fa90a80198f43))
+* **deps:** clear 74 of 82 Dependabot alerts via pnpm overrides and lockfile re-resolve ([cca7201](https://github.com/incubrain/foundry/commit/cca72014aeeb0b5911fca2964ce268998ca1daeb))
+* **dev:** clear dev-surface noise in playground smoke runs ([0b919c4](https://github.com/incubrain/foundry/commit/0b919c449627536bf9040aa21b4308d3369c9276))
+* **events:** report client delivery failures, truncate page/referrer, dev-only debug echo ([4c01703](https://github.com/incubrain/foundry/commit/4c01703b714f592d29522d498f7e90ffc19cc250))
+* **events:** stop 4xx server_error noise, record ingest rejections, correlate rows by request id ([cbb0c67](https://github.com/incubrain/foundry/commit/cbb0c670260eeffe0181b1ff916d9f5080fd3b0d))
+* **example:** teleport SignalToasts into [#teleports](https://github.com/incubrain/foundry/issues/teleports) to stop the landing-page hydration mismatch ([52567ad](https://github.com/incubrain/foundry/commit/52567adb6191c31acfcb369e1e1630bceceade66))
+* **smoke:** local runs rewrite sitemap hosts by default so they never test production ([dc4d24d](https://github.com/incubrain/foundry/commit/dc4d24dc1b41b43650007fff289fd2fce6139e07))
+* **visitor:** class the FoundrySmoke runners as automation, not human ([9f53cb3](https://github.com/incubrain/foundry/commit/9f53cb36fb629dfec71edf4e29cc3e134de89dc5))
+
+### Performance Improvements
+
+* **css:** compile Tailwind once per site ([ec21890](https://github.com/incubrain/foundry/commit/ec2189095e9326f4e3d7993164dca0f8ccca5ae4))
+* **header:** CSS transition for the menu toggle, drop motion-v ([80d7a4c](https://github.com/incubrain/foundry/commit/80d7a4c415672c66d9fc67725f580653e3141282))
+
 ## [0.9.0](https://github.com/incubrain/foundry/compare/v0.8.0...v0.9.0) (2026-09-25)
 
 ### Features
