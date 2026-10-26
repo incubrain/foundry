@@ -39,7 +39,6 @@ jobs:
         run: pnpm run lint
       - name: Typecheck
         run: pnpm run typecheck
-        continue-on-error: true # Pre-existing: ~48 files have type errors (missing auto-imports, content collection types). Fix separately.
 
   test:
     runs-on: ubuntu-latest
