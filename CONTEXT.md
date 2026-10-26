@@ -63,25 +63,31 @@ uncommitted changes are preserved.
 
 ### Consumer-side setup
 
-In each consumer repo (astronera, incubrain), add four scripts + the pre-commit guard:
+In each consumer repo (rows of `release/consumers.json`), add four scripts + the pre-commit guard:
 
 ```json
 "scripts": {
-  "postinstall":        "nuxt prepare && simple-git-hooks",
   "foundry:local":      "pnpm add @incubrain/foundry@local --registry http://localhost:4873",
-  "foundry:remote":     "pnpm add @incubrain/foundry@^0.7.0",
+  "foundry:remote":     "pnpm add --save-exact @incubrain/foundry@<published version>",
   "dev:foundry-local":  "pnpm foundry:local && pnpm dev",
   "build:foundry-local":"pnpm foundry:local && pnpm build"
-},
-"devDependencies": {
-  "simple-git-hooks": "^2.11.1"
-},
-"simple-git-hooks": {
-  "pre-commit": "bash scripts/foundry-guard.sh"
 }
 ```
 
-And `scripts/foundry-guard.sh` (the pre-commit hook):
+The consumers use beads, so git runs hooks from `.beads/hooks` (`core.hooksPath`). Call the
+guard from `.beads/hooks/pre-commit`, above the beads section, and stop on its failure:
+
+```sh
+bash scripts/foundry-guard.sh || exit 1
+```
+
+Without `|| exit 1` the hook's status comes from the beads section, so the guard prints its error
+and the commit still goes through. Don't use simple-git-hooks: on every install it rewrites the
+hooks in `core.hooksPath`, overwriting the beads pre-commit and deleting the other beads hooks. To
+check a consumer, `git config core.hooksPath` must print `.beads/hooks`, and a commit of a
+`-local.` pin in a scratch worktree must be refused.
+
+And `scripts/foundry-guard.sh`:
 
 ```bash
 #!/usr/bin/env bash
