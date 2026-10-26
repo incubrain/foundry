@@ -25,10 +25,10 @@ Smoke runner flags, where to point them and how to read their reports: `docs/deb
 
 ## External consumer repos
 
-These consume the published `@incubrain/foundry` layer (separate git repos):
-
-- `astronera` → `/Users/mac/Development/astronera/astronera` (`@astronera/web`)
-- `incubrain` → check `/Users/mac/Development/incubrain/incubrain-founder` or similar before assuming
+`release/consumers.json` lists every repo that installs the published `@incubrain/foundry`
+from npm: one row per consumer with its path, GitHub repo, pin style, base branch and deploy
+target. The release pours one consumer bump per row. `workspace:` and `link:` dependents
+(`examples/*`, `playground`, gr-portal's `link:` to a local checkout) are not consumers.
 
 When verifying a layer change against a consumer, see the verdaccio workflow below.
 
